@@ -1,0 +1,38 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app users
+
+Resources:
+  ClapAppUsersTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+      TableName: 'clap-app-users'
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-users-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppUsersTableArn:
+    Description: clap-app users Table ARN
+    Value: !GetAtt ClapAppUsersTable.Arn
+    Export:
+      Name: clap-app-users-table-arn
+
+  ClapAppUsersTableStreamArn:
+    Description: clap-app users table stream ARN
+    Value: !GetAtt ClapAppUsersTable.StreamArn
+    Export:
+      Name: clap-app-users-table-stream-arn
+

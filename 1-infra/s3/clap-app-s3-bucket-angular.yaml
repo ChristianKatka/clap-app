@@ -1,0 +1,66 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: S3 Bucket for clap-app angular
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Bucket name used to create s3 bucket
+    MinLength: '1'
+    MaxLength: '25'
+
+Resources:
+  ClapAppS3BucketAngular:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: !Ref BucketName
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+      Tags:
+        - Key: name
+          Value: clap-app-s3-bucket-angular
+
+
+  CloudFrontOAIs3BucketAngular:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: Origin Access Identity for distribution of s3 bucket for clap-app angular
+
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DependsOn: ClapAppS3BucketAngular
+    Properties:
+      Bucket: !Ref 'ClapAppS3BucketAngular'
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:GetObject
+            Effect: Allow
+            Resource: 
+                - !Sub "arn:aws:s3:::${ClapAppS3BucketAngular}/*"
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOAIs3BucketAngular.S3CanonicalUserId
+
+Outputs:
+  CloudFrontOAIs3BucketAngular:
+    Description: CloudFrontOAIs3BucketAngular
+    Value: !Ref CloudFrontOAIs3BucketAngular
+    Export:
+      Name: clap-app-s3-bucket-angular-cloudfront-oai
+
+  s3bucketName:
+    Description: clap-app angular s3 Bucket Name
+    Value: !Ref BucketName
+    Export:
+      Name: clap-app-angular-bucket-name
+
+  s3appDomainName:
+    Description: s3 Bucket Domain Name clap-app angular
+    Value: !GetAtt ClapAppS3BucketAngular.DomainName
+    Export:
+      Name: clap-app-angular-bucket-domain-name

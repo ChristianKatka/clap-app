@@ -1,0 +1,39 @@
+
+Description: S3 Bucket for clap app API koa lambda
+
+Resources:
+  ClapAppS3BucketAPILambda:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: clap-app-API-lambda
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            MaxAge: "300"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+      Tags:
+        - Key: name
+          Value: s3 bucket for clap-app API lambda
+
+
+Outputs:
+  ClapAppS3BucketAPILambdaDomainName:
+    Description: clap-app API lambda s3 Bucket Domain Name
+    Value: !GetAtt ClapAppS3BucketAPILambda.DomainName
+    Export:
+      Name: clap-app-API-lambda-bucket-domain-name
+

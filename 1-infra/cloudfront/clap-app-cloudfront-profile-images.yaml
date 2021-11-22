@@ -1,0 +1,34 @@
+Description: clap-app profile images Cloudfront distribution for fetching private s3 images with origin access identity
+
+Resources:
+  CloudfrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+          - Id: !Join
+                - ""
+                - - "id-"
+                  - Fn::ImportValue: "clap-app-profile-images-s3-bucket-domain-name"
+            DomainName: 'clap-app-profile-images.s3-eu-west-1.amazonaws.com'
+            S3OriginConfig:
+              OriginAccessIdentity: !Join
+                - ""
+                - - "origin-access-identity/cloudfront/"
+                  - Fn::ImportValue: "clap-app-profile-images-s3-bucket-cloudfront-oai"
+        Enabled: 'true'
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          TargetOriginId: !Join
+                - ""
+                - - "id-"
+                  - Fn::ImportValue: "clap-app-profile-images-s3-bucket-domain-name"
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: 'true'

@@ -1,0 +1,39 @@
+
+Description: S3 Bucket for reactive cleanup lambda
+
+Resources:
+  ClapAppReactiveCleanupLambda:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: clap-app-reactive-cleanup-lamda
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            MaxAge: "300"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+      Tags:
+        - Key: name
+          Value: S3 Bucket for clap-app reactive cleanup lambda
+
+
+Outputs:
+  ClapAppReactiveCleanupLambdaDomainName:
+    Description: S3 Bucket for clap-app reactive cleanup lambda Domain Name
+    Value: !GetAtt ClapAppReactiveCleanupLambda.DomainName
+    Export:
+      Name: clap-app-reactive-cleanup-lambda-domain-name
+

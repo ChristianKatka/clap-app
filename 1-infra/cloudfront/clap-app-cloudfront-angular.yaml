@@ -1,0 +1,80 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template for creating Cloudfront distribution from S3 with origin access identity and DNS records
+
+
+# OSTA DOMAIN ENNEKÖ KIRJOTAT TÄN LOPPUUN
+Resources:
+  CloudfrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        HttpVersion: 'http2'
+        Origins:
+          - Id: !Join
+                - ""
+                - - "id-"
+                  - Fn::ImportValue: "clap-app-angular-bucket-domain-name"
+            DomainName: !Join
+              - ''
+              - - Fn::ImportValue: 'clap-app-angular-bucket-name'
+                - !Sub '.s3-${AWS::Region}.amazonaws.com'
+            S3OriginConfig:
+              OriginAccessIdentity: !Join
+                - ""
+                - - "origin-access-identity/cloudfront/"
+                  - Fn::ImportValue: "clap-app-s3-bucket-angular-cloudfront-oai"
+        Enabled: 'true'
+        DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+        Aliases:
+          - ahmappi.com
+        DefaultCacheBehavior:
+          CachedMethods:
+            - GET
+            - HEAD
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+            - PUT
+            - PATCH
+            - POST
+            - DELETE
+          Compress: true
+          DefaultTTL: 86400
+          MaxTTL: 604800
+          # CloudFront to route requests to when they use the default cache behavior.
+          TargetOriginId: !Join
+                - ""
+                - - "id-"
+                  - Fn::ImportValue: "app-bucket-domain-name-ahmatuntiseuranta"
+
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+        PriceClass: PriceClass_100
+
+        ViewerCertificate:
+          AcmCertificateArn: arn:aws:acm:us-east-1:177244120069:certificate/4a5213a3-040a-4019-9750-5626de57e7bc
+          MinimumProtocolVersion: TLSv1.2_2018
+          SslSupportMethod: sni-only
+
+  DnsRecord:
+    Type: AWS::Route53::RecordSet
+    DependsOn: CloudfrontDistribution
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt CloudfrontDistribution.DomainName
+        # Constant value for CloudFront: Z2FDTNDATAQYW2
+        HostedZoneId: 'Z2FDTNDATAQYW2'
+      # route53 hosted zone id 
+      HostedZoneId: Z05467282WNO6D1YQMXJ1
+      Name: ahmappi.com
+      Type: A

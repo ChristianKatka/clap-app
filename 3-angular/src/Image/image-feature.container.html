@@ -1,0 +1,29 @@
+<main fxLayout="column" fxLayoutAlign="center center">
+  <section [style.width]="'90%'">
+    <div
+      class="mat-elevation-z3"
+      style="
+        margin-top: 5rem;
+        padding: 1rem;
+        background-color: aliceblue;
+        border-radius: 8px;
+      "
+    >
+      <h1>Lisää uusi kuva</h1>
+      <app-images-container [images]="images$ | async"></app-images-container>
+
+      <div style="margin-top: 2rem; margin-bottom: 2rem"></div>
+
+      <div *ngIf="imageUploading$ | async as imageUploading">
+        <app-progress-bar [value]="imageUploading.uploadProgress"></app-progress-bar>
+        <p>{{ imageUploading.uploadProgress }}%</p>
+      </div>
+
+      <div *ngIf="!(imageUploading$ | async)" class="not-uploading"></div>
+
+      <div style="margin-top: 2rem; margin-bottom: 2rem"></div>
+
+      <app-upload-image-container></app-upload-image-container>
+    </div>
+  </section>
+</main>

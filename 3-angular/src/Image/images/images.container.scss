@@ -1,0 +1,22 @@
+.default-image {
+  animation: fadein 2s;
+  height: 15rem;
+  width: 100%;
+  border-radius: 6px;
+  background-color: gray;
+}
+
+img {
+  animation: fadein 2s;
+  height: 15rem;
+  width: 100%;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

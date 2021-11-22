@@ -1,0 +1,9 @@
+<p *ngIf="text.length <= this.trunctateMaxLength">{{text}}</p>
+<p *ngIf="text.length >= this.trunctateMaxLength && !trunctate">
+  {{trunctateText()}}
+  <span (click)="trunctateToggle()">Näytä vähemmän</span>
+</p>
+<p *ngIf="text.length >= this.trunctateMaxLength && trunctate">
+  {{trunctateText()}}
+  <span (click)="trunctateToggle()">...Näytä lisää</span>
+</p>

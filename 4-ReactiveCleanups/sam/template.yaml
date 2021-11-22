@@ -1,0 +1,266 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Reactive cleanups powered by Lambda functions
+
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Path: '/'
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+
+  AllowLambdaDynamoDB:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - LambdaExecutionRole
+    Properties:
+      PolicyName: 'AllowLambdaDynamoDB'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:*
+            Resource:
+              - '*'
+      Roles:
+        - !Ref LambdaExecutionRole
+
+  AllowDynamoDBStreamSource:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - LambdaExecutionRole
+    Properties:
+      PolicyName: 'AllowDynamoDBStreamSource'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:GetRecords
+              - dynamodb:GetShardIterator
+              - dynamodb:DescribeStream
+              - dynamodb:ListStreams
+            Resource:
+              - Fn::ImportValue: images-table-stream-arn
+      Roles:
+        - !Ref LambdaExecutionRole
+
+  AllowLambdaImageBucket:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - LambdaExecutionRole
+    Properties:
+      PolicyName: 'AllowLambdaImageBucket'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:ListBucket
+            Resource:
+              - Fn::ImportValue: s3-bucket-image-upload-arn
+          - Effect: Allow
+            Action:
+              - s3:DeleteObject
+              - s3:DeleteObjectVersion
+            Resource:
+              - !Join
+                - ''
+                - - Fn::ImportValue: s3-bucket-image-upload-arn
+                  - /*
+      Roles:
+        - !Ref LambdaExecutionRole
+
+  ImageDeletedLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../build
+      Handler: image-deleted-lambda.handler
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: nodejs12.x
+      Timeout: 30
+
+  ImageStreamEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    DependsOn:
+      - AllowDynamoDBStreamSource
+    Properties:
+      EventSourceArn:
+        Fn::ImportValue: images-table-stream-arn
+      FunctionName: !GetAtt ImageDeletedLambda.Arn
+      StartingPosition: 'TRIM_HORIZON'
+# ---
+# AWSTemplateFormatVersion: '2010-09-09'
+# Transform: AWS::Serverless-2016-10-31
+# Description: Reactive cleanups powered by Lambda functions
+# Parameters:
+#   ApplicationName:
+#     Type: String
+#     Description: Application name user for cloudformation deployments
+#     MinLength: '1'
+#     MaxLength: '40'
+#   EnvironmentName:
+#     Type: String
+#     Description: staging or production
+#     MinLength: '1'
+#     MaxLength: '20'
+#     AllowedValues:
+#       - staging
+#       - production
+
+# Resources:
+#   LambdaExecutionRole:
+#     Type: AWS::IAM::Role
+#     Properties:
+#       AssumeRolePolicyDocument:
+#         Version: '2012-10-17'
+#         Statement:
+#           Effect: Allow
+#           Principal:
+#             Service: lambda.amazonaws.com
+#           Action: sts:AssumeRole
+#       Path: '/'
+#       Policies:
+#         - PolicyName: root
+#           PolicyDocument:
+#             Version: '2012-10-17'
+#             Statement:
+#               - Effect: Allow
+#                 Action:
+#                   - logs:CreateLogGroup
+#                   - logs:CreateLogStream
+#                   - logs:PutLogEvents
+#                 Resource: arn:aws:logs:*:*:*
+
+#   AllowLambdaDynamoDB:
+#     Type: AWS::IAM::Policy
+#     DependsOn:
+#       - LambdaExecutionRole
+#     Properties:
+#       PolicyName: 'AllowLambdaDynamoDB'
+#       PolicyDocument:
+#         Version: '2012-10-17'
+#         Statement:
+#           - Effect: Allow
+#             Action:
+#               - dynamodb:*
+#             Resource:
+#               - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${ApplicationName}-*'
+#       Roles:
+#         - !Ref LambdaExecutionRole
+
+#   AllowDynamoDBStreamSource:
+#     Type: AWS::IAM::Policy
+#     DependsOn:
+#       - LambdaExecutionRole
+#     Properties:
+#       PolicyName: 'AllowDynamoDBStreamSource'
+#       PolicyDocument:
+#         Version: '2012-10-17'
+#         Statement:
+#           - Effect: Allow
+#             Action:
+#               - dynamodb:GetRecords
+#               - dynamodb:GetShardIterator
+#               - dynamodb:DescribeStream
+#               - dynamodb:ListStreams
+#             Resource:
+#               - Fn::ImportValue: !Sub ${ApplicationName}-coaching-reviews-table-stream-arn
+#               - Fn::ImportValue: !Sub ${ApplicationName}-coaching-reviews-medias-table-stream-arn
+#               - Fn::ImportValue: !Sub ${ApplicationName}-exercises-medias-table-stream-arn
+#       Roles:
+#         - !Ref LambdaExecutionRole
+
+#   AllowLambdaMediaBucket:
+#     Type: AWS::IAM::Policy
+#     DependsOn:
+#       - LambdaExecutionRole
+#     Properties:
+#       PolicyName: 'AllowLambdaMediaBucket'
+#       PolicyDocument:
+#         Version: '2012-10-17'
+#         Statement:
+#           - Effect: Allow
+#             Action:
+#               - s3:ListBucket
+#             Resource:
+#               - Fn::ImportValue: !Sub ${ApplicationName}-${EnvironmentName}-s3-media-bucket-arn
+#           - Effect: Allow
+#             Action:
+#               - s3:DeleteObject
+#               - s3:DeleteObjectVersion
+#             Resource:
+#               - !Join
+#                 - ''
+#                 - - Fn::ImportValue: !Sub ${ApplicationName}-${EnvironmentName}-s3-media-bucket-arn
+#                   - /*
+#       Roles:
+#         - !Ref LambdaExecutionRole
+
+#   CoachingReviewDeletedLambda:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       CodeUri: ../build
+#       Handler: coaching-review-deleted-lambda.handler
+#       MemorySize: 128
+#       Role: !GetAtt LambdaExecutionRole.Arn
+#       Runtime: nodejs12.x
+#       Timeout: 30
+#       Environment:
+#         Variables:
+#           APPLICATION_NAME: !Ref ApplicationName
+#           ENVIRONMENT_NAME: !Ref EnvironmentName
+
+#   CoachingReviewStreamEventSourceMapping:
+#     Type: AWS::Lambda::EventSourceMapping
+#     DependsOn:
+#       - AllowDynamoDBStreamSource
+#     Properties:
+#       EventSourceArn:
+#         Fn::ImportValue: !Sub ${ApplicationName}-coaching-reviews-table-stream-arn
+#       FunctionName: !GetAtt CoachingReviewDeletedLambda.Arn
+#       StartingPosition: 'TRIM_HORIZON'
+
+#   CoachingReviewMediaDeletedLambda:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       CodeUri: ../build
+#       Handler: coaching-review-media-deleted-lambda.handler
+#       MemorySize: 128
+#       Role: !GetAtt LambdaExecutionRole.Arn
+#       Runtime: nodejs12.x
+#       Timeout: 30
+#       Environment:
+#         Variables:
+#           APPLICATION_NAME: !Ref ApplicationName
+#           ENVIRONMENT_NAME: !Ref EnvironmentName
+
+#   CoachingReviewMediaStreamEventSourceMapping:
+#     Type: AWS::Lambda::EventSourceMapping
+#     DependsOn:
+#       - AllowDynamoDBStreamSource
+#     Properties:
+#       EventSourceArn:
+#         Fn::ImportValue: !Sub ${ApplicationName}-coaching-reviews-medias-table-stream-arn
+#       FunctionName: !GetAtt CoachingReviewMediaDeletedLambda.Arn
+#       StartingPosition: 'TRIM_HORIZON'
