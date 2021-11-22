@@ -9,7 +9,7 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 TARGET_ACCOUNT_ID="177244120069"
 REGION="eu-west-1"
 
-TEMPLATE_FILE="clap-app-s3-bucket-angular.yaml"
+TEMPLATE_FILE="./s3/clap-app-s3-bucket-angular.yaml"
 # cloudformation stack name. näkyy graafisest liittymästä
 STACK_NAME="clap-app-s3-bucket-angular"
 BUCKET_NAME="clap-app-angular"

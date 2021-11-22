@@ -1,0 +1,23 @@
+<mjml>
+  <mj-body background-color="#ffffff">
+    <mj-section>
+      <mj-column padding-top="10%">
+        <mj-image width="100px" src=""></mj-image>
+        </mj-column> 
+        </mj-section>
+        <mj-section>
+      <mj-column>
+        <mj-text align="center" font-size="24px" padding="25px 0" font-weight="bold">{{ message.title }}</mj-text>
+        <mj-divider border-color="#74BF4D" width="10%"></mj-divider>
+        <mj-text align="center" font-size="18px">
+          <p>{{ message.text }}</p>
+        </mj-text>
+        </mj-column>
+        </mj-section>
+        <mj-section>
+        <mj-column width="35%" background-color="#e5e5e5">
+            <mj-text align="center" font-size="32px" background-color="#808080">{{ message.code }}</mj-text>
+          </mj-column>
+          </mj-section>
+  </mj-body>
+</mjml>

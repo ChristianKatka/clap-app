@@ -9,7 +9,7 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 TARGET_ACCOUNT_ID="177244120069"
 REGION="eu-west-1"
 
-TEMPLATE_FILE="clap-app-cloudfront-profile-images.yaml"
+TEMPLATE_FILE="./cloudfront/clap-app-cloudfront-profile-images.yaml"
 # cloudformation stack name. näkyy graafisest liittymästä
 STACK_NAME="clap-app-cloudfront-profile-images"
 

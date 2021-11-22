@@ -9,7 +9,7 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 TARGET_ACCOUNT_ID="177244120069"
 REGION="eu-west-1"
 
-TEMPLATE_FILE="clap-app-dynamodb-users-table.yaml"
+TEMPLATE_FILE="./dynamodb/clap-app-dynamodb-users-table.yaml"
 # cloudformation stack name. näkyy graafisest liittymästä
 STACK_NAME="clap-app-dynamodb-users-table"
 

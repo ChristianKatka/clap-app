@@ -1,0 +1,196 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: ClapApp Cognito Custom messages powered by Lambda
+
+
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+
+  AllowLambdaDynamoDB:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - LambdaExecutionRole
+    Properties:
+      PolicyName: 'AllowLambdaDynamoDB'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:*
+            Resource:
+              - '*'
+      Roles:
+        - !Ref LambdaExecutionRole
+
+  CognitoLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../build
+      Handler: lambda.handler
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: nodejs12.x
+      Timeout: 5
+      # Environment:
+      #   Variables:
+      #     TAG_APPLICATION: !Ref ApplicationName
+      #     TAG_ENVIRONMENT: !Ref EnvironmentName
+      #     DOMAIN: !FindInMap [Environment, !Ref 'EnvironmentName', 'AppDomain']
+
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: 'false'
+        UnusedAccountValidityDays: 7
+      AutoVerifiedAttributes:
+        - 'email'
+      # EmailConfiguration:
+      #   ReplyToEmailAddress: !FindInMap [Environment, !Ref 'EnvironmentName', 'UserPoolReplyToEmail']
+      #   EmailSendingAccount: DEVELOPER
+      #   SourceArn: !Sub
+      #     - arn:aws:ses:${AWS::Region}:${AWS::AccountId}:identity/${SESIdentityDomain}
+      #     - { SESIdentityDomain: !FindInMap [Environment, !Ref 'EnvironmentName', 'SESIdentityDomain'] }
+      #   From: !FindInMap [Environment, !Ref 'EnvironmentName', 'UserPoolReplyToEmail']
+      LambdaConfig:
+        # CreateAuthChallenge: !GetAtt CognitoLambda.Arn
+        CustomMessage: !GetAtt CognitoLambda.Arn
+        # DefineAuthChallenge: !GetAtt CognitoLambda.Arn
+        PostAuthentication: !GetAtt CognitoLambda.Arn
+        PostConfirmation: !GetAtt CognitoLambda.Arn
+        # PreAuthentication: !GetAtt CognitoLambda.Arn
+        # PreSignUp: !If [IsStaging, !GetAtt CognitoLambda.Arn, !Ref AWS::NoValue]
+        # VerifyAuthChallengeResponse: !GeXtAtt CognitoLambda.Arn
+      MfaConfiguration: 'OFF'
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: 'false'
+          RequireNumbers: 'false'
+          RequireSymbols: 'false'
+          RequireUppercase: 'false'
+      UserPoolName: "clap-app-user-pool"
+      UserPoolTags:
+        Application: "clap-app"
+
+  CognitoUserPoolClient:
+    Type: "AWS::Cognito::UserPoolClient"
+    Properties:
+      ClientName: clap-app-user-pool-client
+      GenerateSecret: 'false'
+      RefreshTokenValidity: 30
+      UserPoolId: !Ref CognitoUserPool
+
+  CognitoLambdaInvocationPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt CognitoLambda.Arn
+      Principal: cognito-idp.amazonaws.com
+      SourceArn: !GetAtt CognitoUserPool.Arn
+
+  IdentityPool:
+    Type: "AWS::Cognito::IdentityPool"
+    Properties:
+      IdentityPoolName: "clap-app-identity-pool"
+      AllowUnauthenticatedIdentities: 'false'
+      DeveloperProviderName: "clap-app-developer-provided-name"
+      CognitoIdentityProviders:
+        - ClientId: !Ref CognitoUserPoolClient
+          ProviderName: !GetAtt CognitoUserPool.ProviderName
+          ServerSideTokenCheck: 'false'
+
+  AuthenticatedRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          Effect: "Allow"
+          Principal:
+            Federated: cognito-identity.amazonaws.com
+          Action: sts:AssumeRoleWithWebIdentity
+      Policies:
+        - PolicyName: authenticated
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "mobileanalytics:PutEvents"
+                  - "cognito-sync:*"
+                  - "cognito-identity:*"
+                Resource: "*"
+      RoleName: "clap-app-Cognito-Authenticated-Role"
+
+  UnauthenticatedRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          Effect: "Allow"
+          Principal:
+            Federated: cognito-identity.amazonaws.com
+          Action: sts:AssumeRoleWithWebIdentity
+      Policies:
+        - PolicyName: authenticated
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "mobileanalytics:PutEvents"
+                  - "cognito-sync:*"
+                Resource: "*"
+      RoleName: "clap-app-Cognito-Unauthenticated-Role"
+
+  IdentityPoolRoles:
+    Type: "AWS::Cognito::IdentityPoolRoleAttachment"
+    Properties:
+      IdentityPoolId: !Ref IdentityPool
+      Roles:
+        authenticated: !GetAtt AuthenticatedRole.Arn
+        unauthenticated: !GetAtt UnauthenticatedRole.Arn
+
+Outputs:
+  IdentityPoolId:
+    Description: Cognito Identity Pool ID
+    Value: !Ref IdentityPool
+    Export:
+      Name: clap-app-cognito-identitypool-id
+
+  UserpoolId:
+    Description: Cognito User Pool ID
+    Value: !Ref CognitoUserPool
+    Export:
+      Name: clap-app-cognito-userpool-id
+
+  UserpoolClientId:
+    Description: Cognito User Pool Client ID
+    Value: !Ref CognitoUserPoolClient
+    Export:
+      Name: clap-app-cognito-userpool-client-id

@@ -1,12 +1,12 @@
 
-Description: S3 Bucket for clap app API koa lambda
+Description: S3 Bucket for reactive cognito lambda
 
 Resources:
-  ClapAppS3BucketAPILambda:
+  ClapAppReactiveCognitoLambda:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
-      BucketName: clap-app-api-lambda
+      BucketName: clap-app-reactive-cognito-lamda
       PublicAccessBlockConfiguration:
         BlockPublicAcls : true
         BlockPublicPolicy : true
@@ -27,13 +27,13 @@ Resources:
               - "*"
       Tags:
         - Key: name
-          Value: s3 bucket for clap-app API lambda
+          Value: S3 Bucket for clap-app reactive cognito lambda
 
 
 Outputs:
-  ClapAppS3BucketAPILambdaDomainName:
-    Description: clap-app API lambda s3 Bucket Domain Name
-    Value: !GetAtt ClapAppS3BucketAPILambda.DomainName
+  ClapAppReactiveCognitoLambdaDomainName:
+    Description: S3 Bucket for clap-app reactive cognito lambda Domain Name
+    Value: !GetAtt ClapAppReactiveCognitoLambda.DomainName
     Export:
-      Name: clap-app-API-lambda-bucket-domain-name
+      Name: clap-app-reactive-cognito-lambda-domain-name
 

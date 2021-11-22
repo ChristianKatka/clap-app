@@ -1,0 +1,10 @@
+{
+  "watch": ["src/**/*.ts", ".env"],
+  "ext": "ts,js,.env",
+  "ignore": ["src/**/*.spec.ts"],
+  "verbose": false,
+  "exec": "ts-node src/dev.ts",
+  "env": {
+    "NODE_ENV": "prod"
+  }
+}
