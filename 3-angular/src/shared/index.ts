@@ -4,11 +4,17 @@ import { IconPipe } from './pipes/icon-type.pipe';
 import { FileSelectDirective } from './file-select/file-select.directive';
 import { FileSelectComponent } from './file-select/file-select.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { LogoComponent } from './logo/logo.component';
+import { AlertComponent } from './info-boxes/alert.component';
+import { InfoComponent } from './info-boxes/info.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
   FileSelectComponent,
   ProgressBarComponent,
+  LogoComponent,
+  AlertComponent,
+  InfoComponent,
 ];
 export const pipes = [BooleanPipe, IconPipe];
 export const directives = [FileSelectDirective];

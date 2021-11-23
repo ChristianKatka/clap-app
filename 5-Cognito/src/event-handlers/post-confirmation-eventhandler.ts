@@ -11,6 +11,8 @@ export class PostConfirmationEventHandler {
     event: CognitoUserPoolTriggerEvent,
     context: Context
   ) {
+    console.log('event');
+    
     const userName = event.userName;
     const sub = event.request.userAttributes.sub;
 

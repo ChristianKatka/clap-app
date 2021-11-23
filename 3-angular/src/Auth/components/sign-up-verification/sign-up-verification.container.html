@@ -1,0 +1,33 @@
+
+<main [style.width]="'100%'"  fxLayout="column" fxLayoutAlign="center center" >
+  <section fxLayout="column" fxLayoutAlign="center center" [style.width]="'90%'">
+    <app-logo [style.width.px]="300"></app-logo>
+    <h1>Vahvista tili</h1>
+  
+    <p>
+      Vahvista tilisi syöttämällä sähköpostiisi lähetetty aktivointikoodi alla
+      olevalla lomakkeella.
+    </p>
+  
+    <app-sign-up-verification-form
+      [username]="this.username$ | async"
+      [isSignUpCommunicating]="this.isSignUpCommunicating$ | async | onlyBoolean"
+      [isNewVerificationCodeSent]="this.isNewVerificationCodeSent$ | async | onlyBoolean"
+      [isNewVerificationCodeLimitExceeded]="
+        this.isNewVerificationCodeLimitExceeded$ | async | onlyBoolean
+      "
+      [isNewPasswordCodeFailedBecauseEmailNotVerified]="
+        this.isNewPasswordCodeFailedBecauseEmailNotVerified$ | async | onlyBoolean
+      "
+      [signUpVerificationCodeMismatch]="
+        this.signUpVerificationCodeMismatch$ | async | onlyBoolean
+      "
+      (newVerificationCodeOrderSubmitted)="onNewVerificationCodeOrderSubmitted()"
+      (signUpVerificationCodeSubmitted)="
+        onSignUpVerificationCodeSubmitted($event)
+      "
+    >
+    </app-sign-up-verification-form>
+  </section>
+  
+</main>

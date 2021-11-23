@@ -1,0 +1,13 @@
+<main fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="32px">
+  <app-logo size="small"></app-logo>
+
+  <app-sign-in-form
+    class="width-300-or-90-percent"
+    [username]="this.username$ | async"
+    [isSignInCommunicating]="this.isSignInCommunicating$ | async | onlyBoolean"
+    [isWrongUserNameOrPassword]="this.isWrongUserNameOrPassword$ | async | onlyBoolean"
+    [isUserNameJustVerified]="this.isUserNameJustVerified$ | async | onlyBoolean"
+    (signInDataSubmitted)="onSignInSubmit($event)"
+  >
+  </app-sign-in-form>
+</main>

@@ -1,0 +1,65 @@
+<mat-error class="errorbox" *ngIf="this.signUpVerificationCodeMismatch">
+  Syöttämäsi vahvistuskoodi ei ole oikea tai se on vanhentunut. Tarkista koodi
+  sähköpostistasi tai tilaa uusi koodi alla olevalla painikkeella.
+</mat-error>
+
+<mat-error class="errorbox" *ngIf="this.isNewVerificationCodeLimitExceeded">
+  Käyttäjätunnuksen <strong>{{ this.username }}</strong> uutta aktivointikoodia
+  on pyydetty liian monta kertaa lyhyen ajan sisällä. Tarkista sähköpostisi ja
+  tarvittaessa pyydä uutta aktivointikoodia pienen hetken kuluttua.
+</mat-error>
+
+<p class="info" *ngIf="this.isNewVerificationCodeSent">
+  Uusi vahvistuskoodi on lähetetty käyttäjätunnuksen
+  <strong>{{ this.username }}</strong> sähköpostiosoitteeseen.
+</p>
+
+<p class="info" *ngIf="this.isNewPasswordCodeFailedBecauseEmailNotVerified">
+  Käyttäjätunnusta <strong>{{ this.username }}</strong> ei ole vielä vahvistettu
+  eikä uutta salasanaa voi siksi tilata. Vahvista käyttäjätunnus käyttämällä
+  saamaasi aktivointikoodia. Tarvittaessa tilaa uusi koodi käyttäjätunnuksen
+  sähköpostiosoitteeseen alla olevalla painikkeella.
+</p>
+
+<form
+  fxLayout="column"
+  fxLayoutAlign="start"
+  fxLayoutGap="8px"
+  [formGroup]="confirmationCodeForm"
+>
+  <mat-form-field appearance="outline">
+    <mat-label>Aktivointikoodi</mat-label>
+
+    <input matInput type="text" formControlName="confirmationCode" />
+
+    <mat-error
+      *ngIf="confirmationCodeForm.get('confirmationCode')?.hasError('required')"
+    >
+      Aktivointikoodi on pakollinen
+    </mat-error>
+  </mat-form-field>
+
+  <div class="btn-area" fxLayout="row" fxLayoutAlign="space-between end">
+    <button
+      mat-button
+      color="primary"
+      (click)="newVerificationCode()"
+      [disabled]="this.isCommunicating || this.isNewVerificationCodeSent"
+    >
+      Pyydä uusi aktivointikoodi
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="
+        !confirmationCodeForm.value.confirmationCode ||
+        confirmationCodeForm.value.confirmationCode.length < 1 ||
+        confirmationCodeForm.invalid
+      "
+      (click)="submit()"
+    >
+      Lähetä
+    </button>
+  </div>
+</form>

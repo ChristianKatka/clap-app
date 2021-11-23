@@ -16,6 +16,10 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { ImageModule } from 'src/Image/image.module';
 import { SharedModule } from 'src/shared/shared.module';
+import { AuthModule } from 'src/Auth/auth.module';
+
+import { components } from ".";
+import { HomeModule } from 'src/Home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,10 +37,13 @@ import { SharedModule } from 'src/shared/shared.module';
     }),
     environment.production ? [] : StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(effects),
+    AuthModule,
     ImageModule,
-    SharedModule
+    SharedModule,
+    HomeModule,
+    MaterialModule,
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, ...components],
 })
 export class AppModule {}

@@ -4,7 +4,7 @@
   "config": {
     "region": "eu-west-1",
     "s3ReactiveLambdaBucket": "clap-app-reactive-cognito-lamda",
-    "myCloudFormationStackName": "clap-app-reactive-cognito-lamda"
+    "myCloudFormationStackName": "clap-app-cognito+reactive-cognito-lamda"
   },
   "scripts": {
     "start": "ts-node test/index.ts",
@@ -12,7 +12,7 @@
     "build": "tsc -p tsconfig.json && cp package.json build && cd build && npm install --production",
     "deleteobjectsins3": "aws s3 rm s3://$npm_package_config_s3ReactiveLambdaBucket --recursive",
     "package": "aws cloudformation package --template-file sam/template.yaml --s3-bucket $npm_package_config_s3ReactiveLambdaBucket --output-template dist/template-out.yaml --region $npm_package_config_region",
-    "deploy": "aws cloudformation deploy --template-file dist/template-out.yaml --stack-name $npm_package_config_myCloudFormationStackName --capabilities CAPABILITY_IAM --region $npm_package_config_region",
+    "deploy": "aws cloudformation deploy --template-file dist/template-out.yaml --stack-name $npm_package_config_myCloudFormationStackName --capabilities CAPABILITY_NAMED_IAM --region $npm_package_config_region",
     "package-deploy": "npm run package && npm run deploy",
     "build-package-deploy": "npm run build && npm run deleteobjectsins3 && npm run package && npm run deploy"
   },
@@ -35,6 +35,7 @@
     "@types/node": "^12.12.26",
     "aws-lambda": "^1.0.5",
     "aws-sdk": "^2.614.0",
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
     "tslint": "~6.0.0",
