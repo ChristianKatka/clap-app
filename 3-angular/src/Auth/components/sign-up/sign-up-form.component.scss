@@ -1,0 +1,23 @@
+
+
+form {
+  color: green;
+
+  u {
+    color: black;
+    cursor: pointer;
+  }
+
+  small {
+    padding: 0 24px 24px;
+    text-align: center;
+  }
+}
+
+mat-divider {
+  margin: 24px 0;
+}
+
+.toggleShowPasswordButton {
+  cursor: pointer;
+}

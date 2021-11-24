@@ -4,7 +4,7 @@
   "config": {
     "region": "eu-west-1",
     "s3ReactiveLambdaBucket": "clap-app-reactive-cognito-lamda",
-    "myCloudFormationStackName": "clap-app-cognito+reactive-cognito-lamda"
+    "myCloudFormationStackName": "clap-app-cognito-and-reactive-cognito-lamda"
   },
   "scripts": {
     "start": "ts-node test/index.ts",
@@ -18,7 +18,6 @@
   },
   "private": true,
   "dependencies": {
-    "bluebird": "^3.7.2",
     "handlebars": "^4.7.3",
     "lodash": "^4.17.15",
     "mjml": "^4.6.3",
@@ -28,7 +27,6 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.40",
-    "@types/bluebird": "^3.5.29",
     "@types/handlebars": "^4.1.0",
     "@types/lodash": "^4.14.149",
     "@types/mjml": "^4.0.4",

@@ -1,0 +1,138 @@
+<main>
+  <mat-error class="errorbox" *ngIf="this.isInvalidParameter">
+    Tarkista että sähköpostiosoite on oikea ja salasana on vähintään 8 merkkiä
+    pitkä.
+  </mat-error>
+  <form
+    fxLayout="column"
+    fxLayoutAlign="center stretch"
+    fxLayoutGap="8px"
+    [formGroup]="signUpUserDataForm"
+  >
+    <span fxLayoutAlign="center center">
+      <h1>Luo käyttäjätili</h1>
+    </span>
+    <mat-form-field appearance="outline">
+      <mat-label>Sähköpostiosoite</mat-label>
+
+      <input
+        matInput
+        type="email"
+        formControlName="emailAddress"
+        autocomplete="email"
+      />
+
+      <mat-error
+        *ngIf="signUpUserDataForm.get('emailAddress')?.hasError('required')"
+      >
+        Sähköpostiosoite on pakollinen
+      </mat-error>
+
+      <mat-error
+        *ngIf="
+          signUpUserDataForm.get('emailAddress')?.touched &&
+          signUpUserDataForm.get('emailAddress')?.hasError('email')
+        "
+      >
+        Syötä kelvollinen sähköpostiosoite
+      </mat-error>
+      <mat-icon matPrefix>account_circle</mat-icon>
+    </mat-form-field>
+  </form>
+
+  <form
+    [formGroup]="passwordsFormGroup"
+    fxLayout="column"
+    fxLayoutAlign="center stretch"
+    fxLayoutGap="8px"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Salasana</mat-label>
+
+      <input
+        matInput
+        id="password"
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+      />
+
+      <mat-error
+        *ngIf="passwordsFormGroup.get('password')?.hasError('minlength')"
+      >
+        Salasanan pitää olla vähintään 8 merkkiä pitkä
+      </mat-error>
+
+      <mat-error
+        *ngIf="passwordsFormGroup.get('password')?.hasError('required')"
+      >
+        Aseta salasana
+      </mat-error>
+      <mat-error
+        *ngIf="passwordsFormGroup.get('password')?.hasError('pattern')"
+      >
+        Välilyönnit ei sallittuja salasanan alussa tai lopussa
+      </mat-error>
+      <mat-icon matPrefix>lock</mat-icon>
+      <mat-icon
+        matSuffix
+        (click)="showPassword = !showPassword"
+        class="toggleShowPasswordButton"
+        >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Vahvista salasana</mat-label>
+
+      <input
+        matInput
+        [type]="showPasswordConfirm ? 'text' : 'password'"
+        id="passwordConfirm"
+        formControlName="passwordConfirm"
+        [errorStateMatcher]="matcher"
+      />
+      <mat-error
+        *ngIf="
+          passwordsFormGroup.get('passwordConfirm')?.dirty &&
+          passwordsFormGroup.hasError('notSame')
+        "
+      >
+        Salasanojen on täsmättävä
+      </mat-error>
+      <mat-icon matPrefix>lock</mat-icon>
+      <mat-icon
+        matSuffix
+        (click)="showPasswordConfirm = !showPasswordConfirm"
+        class="toggleShowPasswordButton"
+        >{{ showPasswordConfirm ? "visibility" : "visibility_off" }}</mat-icon
+      >
+    </mat-form-field>
+
+    <small>
+      Luomalla käyttäjätilin hyväksyt palvelumme<br />
+      <u (click)="onShowTermsOfService()">Käyttöehdot</u> ja
+      <u (click)="onShowPrivacyPolicy()">Tietosuojakäytännöt</u>
+    </small>
+
+    <button
+      *ngIf="!isCommunicating"
+      mat-raised-button
+      mat-button
+      color="primary"
+      [disabled]="signUpUserDataForm.invalid"
+      (click)="submit()"
+    >
+      Luo käyttäjätili
+    </button>
+    <clap-app-loading-spinner *ngIf="isCommunicating"></clap-app-loading-spinner>
+  </form>
+  <mat-divider></mat-divider>
+
+  <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="8px">
+    <p fxLayoutAlign="center center">
+      <span class="mat-small">Oletko jo rekisteröitynyt käyttäjäksi? </span>
+    </p>
+
+    <a mat-button routerLink="/sign-in" color="accent">Kirjaudu palveluun</a>
+  </div>
+</main>

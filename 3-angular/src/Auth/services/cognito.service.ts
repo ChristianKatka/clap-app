@@ -433,14 +433,18 @@ export class CognitoService {
       Pool: this.userPool,
       /* eslint-enable */
     };
+    console.log(userData);
 
     const currentUser = new CognitoUser(userData);
     this.user = currentUser;
+    console.log(currentUser);
 
     return new Observable((o: any) => {
       currentUser.confirmRegistration(code, true, (err: any, result: any) => {
         if (err) {
           o.error(err);
+          console.log('confirmRegistration error:');
+          console.log(err);
         } else {
           o.next(result);
           o.complete();

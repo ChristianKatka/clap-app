@@ -6,12 +6,12 @@ export const environment = {
   production: false,
   apiBaseUrl: 'https://lwx2dwf5z5.execute-api.eu-west-1.amazonaws.com',
   cognito: {
-    identityPoolId: 'eu-west-1:28e6a409-13a4-4db2-adbb-1b4275eb9f2a',
+    identityPoolId: 'eu-west-1:893f2177-ade3-48f6-a353-f297729679df',
     region: 'eu-west-1',
     poolData: {
       /* eslint-disable */
-      UserPoolId: 'eu-west-1_4bKx6pbAi',
-      ClientId: '2l5iv33tbqho12iodt25rf40l7',
+      UserPoolId: 'eu-west-1_iS1h5qUcn',
+      ClientId: 'dfaskgnq12t12ajd0i12lvuo7',
       /* eslint-enable */
     },
     mandatorySignIn: true,

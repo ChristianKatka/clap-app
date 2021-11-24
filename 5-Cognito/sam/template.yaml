@@ -54,11 +54,6 @@ Resources:
       Role: !GetAtt LambdaExecutionRole.Arn
       Runtime: nodejs12.x
       Timeout: 5
-      # Environment:
-      #   Variables:
-      #     TAG_APPLICATION: !Ref ApplicationName
-      #     TAG_ENVIRONMENT: !Ref EnvironmentName
-      #     DOMAIN: !FindInMap [Environment, !Ref 'EnvironmentName', 'AppDomain']
 
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
@@ -68,22 +63,10 @@ Resources:
         UnusedAccountValidityDays: 7
       AutoVerifiedAttributes:
         - 'email'
-      # EmailConfiguration:
-      #   ReplyToEmailAddress: !FindInMap [Environment, !Ref 'EnvironmentName', 'UserPoolReplyToEmail']
-      #   EmailSendingAccount: DEVELOPER
-      #   SourceArn: !Sub
-      #     - arn:aws:ses:${AWS::Region}:${AWS::AccountId}:identity/${SESIdentityDomain}
-      #     - { SESIdentityDomain: !FindInMap [Environment, !Ref 'EnvironmentName', 'SESIdentityDomain'] }
-      #   From: !FindInMap [Environment, !Ref 'EnvironmentName', 'UserPoolReplyToEmail']
       LambdaConfig:
-        # CreateAuthChallenge: !GetAtt CognitoLambda.Arn
-        CustomMessage: !GetAtt CognitoLambda.Arn
-        # DefineAuthChallenge: !GetAtt CognitoLambda.Arn
+        # CustomMessage: !GetAtt CognitoLambda.Arn
         PostAuthentication: !GetAtt CognitoLambda.Arn
-        PostConfirmation: !GetAtt CognitoLambda.Arn
-        # PreAuthentication: !GetAtt CognitoLambda.Arn
-        # PreSignUp: !If [IsStaging, !GetAtt CognitoLambda.Arn, !Ref AWS::NoValue]
-        # VerifyAuthChallengeResponse: !GeXtAtt CognitoLambda.Arn
+        PostConfirmation: !GetAtt CognitoLambda.Arn  
       MfaConfiguration: 'OFF'
       Policies:
         PasswordPolicy:

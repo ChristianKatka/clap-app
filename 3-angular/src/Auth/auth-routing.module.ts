@@ -5,8 +5,14 @@ import { SignInContainerComponent } from './components/sign-in/sign-in.container
 import { SignInNewPasswordRequiredContainerComponent } from './components/sign-in-new-password-required/sign-in-new-password-required.container'; // eslint-disable-line
 import { SignUpVerificationContainerComponent } from './components/sign-up-verification/sign-up-verification.container';
 import { UnauthenticatedGuard, SignUpVerificationGuard } from './guards';
+import { SignUpContainerComponent } from './components/sign-up/sign-up.container';
 
 export const authRoutes: Routes = [
+  {
+    path: 'sign-up',
+    canActivate: [UnauthenticatedGuard],
+    component: SignUpContainerComponent,
+  },
   {
     path: 'sign-up-verification',
     canActivate: [SignUpVerificationGuard],

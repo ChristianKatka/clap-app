@@ -1,0 +1,10 @@
+<main fxLayout="column" fxLayoutAlign="center center">
+  <h2>logo</h2>
+  <clap-app-sign-up-form
+    class="width-300-or-90-percent"
+    [isSignUpCommunicating]="isSignUpCommunicating$ | async | onlyBoolean"
+    (signUpDataSubmitted)="onSignUpDataSubmitted($event)"
+    (showTermsOfService)="onShowTermsOfService()"
+    (showPrivacyPolicy)="onShowPrivacyPolicy()"
+  ></clap-app-sign-up-form>
+</main>

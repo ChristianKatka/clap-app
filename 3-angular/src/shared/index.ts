@@ -7,6 +7,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { LogoComponent } from './logo/logo.component';
 import { AlertComponent } from './info-boxes/alert.component';
 import { InfoComponent } from './info-boxes/info.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -15,6 +16,7 @@ export const components: any[] = [
   LogoComponent,
   AlertComponent,
   InfoComponent,
+  LoadingSpinnerComponent
 ];
 export const pipes = [BooleanPipe, IconPipe];
 export const directives = [FileSelectDirective];

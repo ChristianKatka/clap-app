@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+button.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+section {
+  padding: 3rem 1.5rem;
+}
+
+p {
+  width: 55em;
+  max-width: 100%;
+}
