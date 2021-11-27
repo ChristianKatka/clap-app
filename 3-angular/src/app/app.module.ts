@@ -20,6 +20,7 @@ import { AuthModule } from 'src/Auth/auth.module';
 
 import { components } from ".";
 import { HomeModule } from 'src/Home/home.module';
+import { AboutModule } from 'src/About/about.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +43,7 @@ import { HomeModule } from 'src/Home/home.module';
     SharedModule,
     HomeModule,
     MaterialModule,
+    AboutModule
   ],
   providers: [],
   bootstrap: [AppComponent, ...components],

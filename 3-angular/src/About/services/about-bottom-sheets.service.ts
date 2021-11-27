@@ -16,9 +16,7 @@ export class AboutBottomSheetsService {
   constructor(private bottomSheet: MatBottomSheet) {}
 
   openPrivacyPolicyBottomSheet() {
-    this.privacyPolicySheetRef = this.bottomSheet.open(PrivacyPolicyComponent, {
-      panelClass: ['full-screen', 'primary-bg'],
-    });
+    this.privacyPolicySheetRef = this.bottomSheet.open(PrivacyPolicyComponent);
   }
 
   dismissPrivacyPolicyBottomSheet() {
@@ -31,9 +29,9 @@ export class AboutBottomSheetsService {
   openTermsOfServiceBottomSheet() {
     this.termsOfServiceSheetRef = this.bottomSheet.open(
       TermsOfServiceComponent,
-      {
-        panelClass: ['full-screen', 'primary-bg'],
-      }
+      // {
+      //   panelClass: ['full-screen', 'primary-bg'],
+      // }
     );
   }
 

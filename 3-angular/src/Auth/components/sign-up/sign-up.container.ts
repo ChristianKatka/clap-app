@@ -11,39 +11,7 @@ import { AboutActions } from 'src/About/store/actions';
   styleUrls: ['./sign-up.container.scss'],
 })
 export class SignUpContainerComponent {
-  isSignUpCommunicating$: Observable<boolean> = this.store.select(
-    AuthSignUpSelectors.getIsSignUpCommunicating
-  );
-  isInvalidParameter$: Observable<boolean> = this.store.select(
-    AuthSignUpSelectors.getIsInvalidParameter
-  );
-  usernameExists$: Observable<boolean> = this.store.select(
-    AuthSignUpSelectors.getSignUpUserNameExists
-  );
-  username$: Observable<string | undefined> = this.store.select(
-    AuthSignUpSelectors.getSignUpUsername
-  );
-
   constructor(private store: Store<AuthExtendedAppState>) {}
-
-  onSignUpDataSubmitted(userData: {
-    username: string;
-    email: string;
-    password: string;
-  }) {
-    const { username, email, password } = userData;
-
-    this.store.dispatch(
-      AuthSignUpActions.signUp({
-        username,
-        email,
-        password,
-        givenName: 'asd',
-        familyName: 'asd',
-      })
-    );
-  }
-
   onShowPrivacyPolicy() {
     this.store.dispatch(AboutActions.showPrivacyPolicy());
   }
@@ -51,4 +19,35 @@ export class SignUpContainerComponent {
   onShowTermsOfService() {
     this.store.dispatch(AboutActions.showTermsOfService());
   }
+
+  // isSignUpCommunicating$: Observable<boolean> = this.store.select(
+  //   AuthSignUpSelectors.getIsSignUpCommunicating
+  // );
+  // isInvalidParameter$: Observable<boolean> = this.store.select(
+  //   AuthSignUpSelectors.getIsInvalidParameter
+  // );
+  // usernameExists$: Observable<boolean> = this.store.select(
+  //   AuthSignUpSelectors.getSignUpUserNameExists
+  // );
+  // username$: Observable<string | undefined> = this.store.select(
+  //   AuthSignUpSelectors.getSignUpUsername
+  // );
+
+  // onSignUpDataSubmitted(userData: {
+  //   username: string;
+  //   email: string;
+  //   password: string;
+  // }) {
+  //   const { username, email, password } = userData;
+
+  //   this.store.dispatch(
+  //     AuthSignUpActions.signUp({
+  //       username,
+  //       email,
+  //       password,
+  //       givenName: 'asd',
+  //       familyName: 'asd',
+  //     })
+  //   );
+  // }
 }

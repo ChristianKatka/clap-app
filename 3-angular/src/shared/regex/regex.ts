@@ -5,5 +5,7 @@ export const noOnlyWhiteSpacePattern = /^(\s+\S+\s*)*(?!\s).*$/;
 //Cognito password regex
 export const noWhiteSpaceAtStartOrEndPattern = /^[\S]+.*[\S]+$/;
 
+export const onlyLettersAndNumbers = /^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$/;
+
 export const urlPattern =
   /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9-.]+\.[a-z]+(\/[a-zA-Z0-9#-]+\/?)*$/;

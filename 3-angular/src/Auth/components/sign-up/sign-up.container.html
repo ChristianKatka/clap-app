@@ -11,6 +11,9 @@
 
 <main fxLayoutAlign="center center">
   <section [style.width]="'90%'">
-    <clap-app-sign-up-form></clap-app-sign-up-form>
+    <clap-app-sign-up-form
+    (showTermsOfService)="onShowTermsOfService()"
+    (showPrivacyPolicy)="onShowPrivacyPolicy()"
+    ></clap-app-sign-up-form>
   </section>
 </main>

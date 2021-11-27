@@ -4,46 +4,72 @@
 
 <h1>Sign Up</h1>
 
-<form fxLayout="column" fxLayoutGap="15px">
-
+<form [formGroup]="signUpUserDataForm">
   <!-- EMAIL -->
-  <!-- <mat-error>Email is required</mat-error>
-  <mat-error> Input real email address </mat-error> -->
   <mat-form-field appearance="outline">
+    <mat-error *ngIf="signUpUserDataForm.get('email')?.hasError('required')"
+      >Email is required</mat-error
+    >
+    <mat-error *ngIf="signUpUserDataForm.get('email')?.hasError('email')">
+      Input real email address
+    </mat-error>
     <mat-label>Email</mat-label>
-    <input matInput type="email" autocomplete="email" />
+    <input
+      matInput
+      type="email"
+      autocomplete="email"
+      required
+      maxlength="40"
+      formControlName="email"
+    />
     <mat-icon matPrefix>mail</mat-icon>
     <mat-hint>E.g. funny.guy@gmail.com (You will login with email)</mat-hint>
   </mat-form-field>
 
-  <!-- USERNAME -->
-  <!-- <mat-error>Username is required</mat-error> -->
+  <!-- NICKNAME -->
   <mat-form-field appearance="outline">
-    <mat-label>Username</mat-label>
-    <input matInput type="text" />
+    <mat-error *ngIf="signUpUserDataForm.get('nickname')?.hasError('required')"
+      >Nickname is required</mat-error
+    >
+    <mat-error *ngIf="signUpUserDataForm.get('nickname')?.hasError('pattern')">
+      Only letters and numbers are allowed
+    </mat-error>
+    <mat-label>Nickname</mat-label>
+    <input
+      matInput
+      type="text"
+      required
+      maxlength="30"
+      formControlName="nickname"
+    />
     <mat-icon matPrefix>account_circle</mat-icon>
     <mat-hint>E.g. FunnyGuy123</mat-hint>
   </mat-form-field>
+</form>
 
+<form [formGroup]="passwordsFormGroup">
   <!-- PASSWORD -->
-  <!-- <mat-error>Password required length 8</mat-error>
-  <mat-error>Input password</mat-error>
-  <mat-error>
-    space is not allowed in the start or the end
-  </mat-error> -->
   <mat-form-field
     appearance="outline"
     hintLabel="Should be at least 8 characters long."
   >
+    <mat-error *ngIf="passwordsFormGroup.get('password')?.hasError('minlength')"
+      >Password required length 8</mat-error
+    >
+    <mat-error *ngIf="passwordsFormGroup.get('password')?.hasError('required')"
+      >Password is required</mat-error
+    >
+    <mat-error *ngIf="passwordsFormGroup.get('password')?.hasError('pattern')">
+      White space is not allowed in the start or the end
+    </mat-error>
     <mat-label>Password</mat-label>
     <input
       matInput
       [type]="showPassword ? 'text' : 'password'"
-      ngModel
-      name="password"
       required
       minlength="8"
-      #pwInput="ngModel"
+      maxlength="40"
+      formControlName="password"
     />
     <mat-icon matPrefix>lock</mat-icon>
     <mat-icon
@@ -52,16 +78,27 @@
       class="toggleShowPasswordButton"
       >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
     >
-    <mat-hint align="end"> {{ pwInput.value?.length }} / 8</mat-hint>
+    <mat-hint align="end">
+      {{ passwordsFormGroup.get("password")?.value?.length }} / 8</mat-hint
+    >
   </mat-form-field>
 
   <!-- CONFIRM PASSWORD -->
   <mat-form-field appearance="outline">
+    <mat-error
+      *ngIf="
+        passwordsFormGroup.get('passwordConfirm')?.dirty
+      "
+    >
+      Passwords need to be same
+    </mat-error>
     <mat-label>Confirm password</mat-label>
     <input
       matInput
+      maxlength="40"
+      [errorStateMatcher]="matcher"
       [type]="showPasswordConfirm ? 'text' : 'password'"
-      id="passwordConfirm"
+      formControlName="passwordConfirm"
     />
     <mat-icon matPrefix>lock</mat-icon>
     <mat-icon
@@ -70,32 +107,26 @@
       class="toggleShowPasswordButton"
       >{{ showPasswordConfirm ? "visibility" : "visibility_off" }}</mat-icon
     >
-    <mat-hint>Write password again</mat-hint>
+    <mat-hint>Should be same as password above</mat-hint>
   </mat-form-field>
-
-  <div
-    class="bottom-centered-items"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-  >
-    <small>
-      By signing up you accept the<br />
-      <b>Terms of Service</b> and
-      <b>Privacy Policy</b>
-    </small>
-
-    <button mat-raised-button mat-button color="primary">Sign Up</button>
-
-    <span>Already registered? <b routerLink="/sign-in">Login</b></span>
-  </div>
 </form>
+<div
+  class="bottom-centered-items"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <small>
+    By signing up you accept the<br />
+    <b (click)="this.showTermsOfService.emit()">Terms of Service</b> and
+    <b (click)="this.showPrivacyPolicy.emit()">Privacy Policy</b>
+  </small>
 
+  <button mat-raised-button mat-button color="primary" (click)="submit()">
+    Sign Up
+  </button>
 
-
-
-
-
-
+  <span>Already registered? <b routerLink="/sign-in">Login</b></span>
+</div>
 
 <!-- <main>
   <mat-error class="errorbox" *ngIf="this.isInvalidParameter">

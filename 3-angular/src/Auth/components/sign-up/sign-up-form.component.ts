@@ -7,7 +7,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { noWhiteSpaceAtStartOrEndPattern } from '@shared/regex/regex';
+import {
+  noWhiteSpaceAtStartOrEndPattern,
+  onlyLettersAndNumbers,
+} from '@shared/regex/regex';
 import { PasswordsErrorStateMatcher } from '../../utils/passwords-error-state-matcher';
 import { confirmPasswordsValidator } from './confirm-passwords.validator';
 
@@ -16,38 +19,48 @@ import { confirmPasswordsValidator } from './confirm-passwords.validator';
   templateUrl: './sign-up-form.component.html',
   styleUrls: ['./sign-up-form.component.scss'],
 })
-export class SignUpFormComponent implements OnChanges {
-  @Input()
-  set isSignUpCommunicating(isSignUpCommunicating: boolean) {
-    if (isSignUpCommunicating) {
-      this.isCommunicating = true;
-      this.signUpUserDataForm.disable();
-    } else {
-      this.isCommunicating = false;
-      this.signUpUserDataForm.enable();
-    }
-  }
-
-  @Input()
-  isInvalidParameter = false;
-
-  @Input()
-  presetEmail: string | undefined | null;
+export class SignUpFormComponent {
+  @Output()
+  showTermsOfService = new EventEmitter();
 
   @Output()
-  signUpDataSubmitted: EventEmitter<any> = new EventEmitter();
+  showPrivacyPolicy = new EventEmitter();
+
+  showPassword = false;
+  showPasswordConfirm = false;
+
+  // @Input()
+  // set isSignUpCommunicating(isSignUpCommunicating: boolean) {
+  //   if (isSignUpCommunicating) {
+  //     this.isCommunicating = true;
+  //     this.signUpUserDataForm.disable();
+  //   } else {
+  //     this.isCommunicating = false;
+  //     this.signUpUserDataForm.enable();
+  //   }
+  // }
+
+  // @Input()
+  // isInvalidParameter = false;
+
+  // @Input()
+  // presetEmail: string | undefined | null;
 
   @Output()
-  showTermsOfService: EventEmitter<string> = new EventEmitter();
+  signUp: EventEmitter<any> = new EventEmitter();
 
-  @Output()
-  showPrivacyPolicy: EventEmitter<string> = new EventEmitter();
+  // isCommunicating = false;
 
-  isCommunicating = false;
+  matcher = new PasswordsErrorStateMatcher();
 
   emailAddressFormControl = new FormControl(null, [
     Validators.email,
     Validators.required,
+  ]);
+  nicknameFormControl = new FormControl(null, [
+    Validators.required,
+    Validators.pattern(noWhiteSpaceAtStartOrEndPattern),
+    Validators.pattern(onlyLettersAndNumbers),
   ]);
 
   passwordsFormGroup = new FormGroup(
@@ -62,41 +75,45 @@ export class SignUpFormComponent implements OnChanges {
     [confirmPasswordsValidator]
   );
 
-  signUpUserDataForm = new FormGroup({
-    emailAddress: this.emailAddressFormControl,
-    passwords: this.passwordsFormGroup,
-  });
-
-  matcher = new PasswordsErrorStateMatcher();
-
-  showPassword: boolean = false;
-  showPasswordConfirm: boolean = false;
-
-  ngOnChanges(changes: any) {
-    if (changes && changes.presetEmail && changes.presetEmail.firstChange) {
-      this.emailAddressFormControl.setValue(changes.presetEmail.currentValue);
+  signUpUserDataForm = new FormGroup(
+    {
+      email: this.emailAddressFormControl,
+      nickname: this.nicknameFormControl,
+      passwords: this.passwordsFormGroup,
     }
-  }
+  );
 
-  checkPasswords(group: FormGroup) {
-    const pass = (group.controls as any).password.value;
-    const confirmPass = (group.controls as any).passwordConfirm.value;
-    return pass === confirmPass ? null : { notSame: true };
-  }
+  // showPassword: boolean = false;
+  // showPasswordConfirm: boolean = false;
+
+  // ngOnChanges(changes: any) {
+  //   if (changes && changes.presetEmail && changes.presetEmail.firstChange) {
+  //     this.emailAddressFormControl.setValue(changes.presetEmail.currentValue);
+  //   }
+  // }
+
+  // checkPasswords(group: FormGroup) {
+  //   const pass = (group.controls as any).password.value;
+  //   const confirmPass = (group.controls as any).passwordConfirm.value;
+  //   return pass === confirmPass ? null : { notSame: true };
+  // }
 
   submit() {
-    const { emailAddress, passwords } = this.signUpUserDataForm.value;
-    this.signUpDataSubmitted.next({
-      username: emailAddress,
-      email: emailAddress,
-      password: passwords.password,
-    });
-  }
+    // const { email, nickname, password, passwordConfirm } =
+    //   this.signUpUserDataForm.value;
+    // console.log({
+    //   username: email,
+    //   email,
+    //   nickname,
+    //   password,
+    //   passwordConfirm,
+    // });
 
-  onShowTermsOfService() {
-    this.showTermsOfService.emit();
-  }
-  onShowPrivacyPolicy() {
-    this.showPrivacyPolicy.emit();
+    // this.signUp.next({
+    //   username: email,
+    //   email,
+    //   nickname,
+    //   password,
+    // });
   }
 }
