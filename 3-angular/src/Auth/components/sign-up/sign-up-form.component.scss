@@ -1,23 +1,68 @@
+@import '../../../styles.scss';
 
 
-form {
-  color: green;
-
-  u {
-    color: black;
-    cursor: pointer;
-  }
-
-  small {
-    padding: 0 24px 24px;
-    text-align: center;
-  }
+.sign-up-image {
+  width: 15rem;
+  object-fit: cover;
 }
 
-mat-divider {
-  margin: 24px 0;
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+mat-icon {
+  color: rgb(53, 53, 53);
+}
+
+b {
+  cursor: pointer;
+  color: $clap-blue;
+}
+
+small {
+  text-align: center;
 }
 
 .toggleShowPasswordButton {
   cursor: pointer;
 }
+
+.bottom-centered-items {
+  margin-bottom: 1rem;
+}
+
+mat-error {
+  margin-bottom: 10px !important;
+}
+
+
+
+
+
+// form {
+//   color: green;
+
+//   u {
+//     color: black;
+//     cursor: pointer;
+//   }
+
+//   small {
+//     padding: 0 24px 24px;
+//     text-align: center;
+//   }
+// }
+
+// mat-divider {
+//   margin: 24px 0;
+// }
+
+// .toggleShowPasswordButton {
+//   cursor: pointer;
+// }

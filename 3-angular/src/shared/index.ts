@@ -8,6 +8,7 @@ import { LogoComponent } from './logo/logo.component';
 import { AlertComponent } from './info-boxes/alert.component';
 import { InfoComponent } from './info-boxes/info.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { SuccessComponent } from './success/success.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -16,7 +17,8 @@ export const components: any[] = [
   LogoComponent,
   AlertComponent,
   InfoComponent,
-  LoadingSpinnerComponent
+  LoadingSpinnerComponent,
+  SuccessComponent
 ];
 export const pipes = [BooleanPipe, IconPipe];
 export const directives = [FileSelectDirective];

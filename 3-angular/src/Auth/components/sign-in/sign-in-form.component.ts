@@ -28,6 +28,9 @@ export class SignInFormComponent {
   @Output()
   signInDataSubmitted: EventEmitter<any> = new EventEmitter<any>();
 
+  showPassword = false;
+
+
   signInForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),

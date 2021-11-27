@@ -1,4 +1,103 @@
-<main>
+<section fxLayoutAlign="center center">
+  <img class="sign-up-image" src="assets/art/secure_login.png" alt="" />
+</section>
+
+<h1>Sign Up</h1>
+
+<form fxLayout="column" fxLayoutGap="15px">
+
+  <!-- EMAIL -->
+  <!-- <mat-error>Email is required</mat-error>
+  <mat-error> Input real email address </mat-error> -->
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" autocomplete="email" />
+    <mat-icon matPrefix>mail</mat-icon>
+    <mat-hint>E.g. funny.guy@gmail.com (You will login with email)</mat-hint>
+  </mat-form-field>
+
+  <!-- USERNAME -->
+  <!-- <mat-error>Username is required</mat-error> -->
+  <mat-form-field appearance="outline">
+    <mat-label>Username</mat-label>
+    <input matInput type="text" />
+    <mat-icon matPrefix>account_circle</mat-icon>
+    <mat-hint>E.g. FunnyGuy123</mat-hint>
+  </mat-form-field>
+
+  <!-- PASSWORD -->
+  <!-- <mat-error>Password required length 8</mat-error>
+  <mat-error>Input password</mat-error>
+  <mat-error>
+    space is not allowed in the start or the end
+  </mat-error> -->
+  <mat-form-field
+    appearance="outline"
+    hintLabel="Should be at least 8 characters long."
+  >
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      [type]="showPassword ? 'text' : 'password'"
+      ngModel
+      name="password"
+      required
+      minlength="8"
+      #pwInput="ngModel"
+    />
+    <mat-icon matPrefix>lock</mat-icon>
+    <mat-icon
+      matSuffix
+      (click)="showPassword = !showPassword"
+      class="toggleShowPasswordButton"
+      >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+    >
+    <mat-hint align="end"> {{ pwInput.value?.length }} / 8</mat-hint>
+  </mat-form-field>
+
+  <!-- CONFIRM PASSWORD -->
+  <mat-form-field appearance="outline">
+    <mat-label>Confirm password</mat-label>
+    <input
+      matInput
+      [type]="showPasswordConfirm ? 'text' : 'password'"
+      id="passwordConfirm"
+    />
+    <mat-icon matPrefix>lock</mat-icon>
+    <mat-icon
+      matSuffix
+      (click)="showPasswordConfirm = !showPasswordConfirm"
+      class="toggleShowPasswordButton"
+      >{{ showPasswordConfirm ? "visibility" : "visibility_off" }}</mat-icon
+    >
+    <mat-hint>Write password again</mat-hint>
+  </mat-form-field>
+
+  <div
+    class="bottom-centered-items"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <small>
+      By signing up you accept the<br />
+      <b>Terms of Service</b> and
+      <b>Privacy Policy</b>
+    </small>
+
+    <button mat-raised-button mat-button color="primary">Sign Up</button>
+
+    <span>Already registered? <b routerLink="/sign-in">Login</b></span>
+  </div>
+</form>
+
+
+
+
+
+
+
+
+<!-- <main>
   <mat-error class="errorbox" *ngIf="this.isInvalidParameter">
     Tarkista että sähköpostiosoite on oikea ja salasana on vähintään 8 merkkiä
     pitkä.
@@ -135,4 +234,4 @@
 
     <a mat-button routerLink="/sign-in" color="accent">Kirjaudu palveluun</a>
   </div>
-</main>
+</main> -->

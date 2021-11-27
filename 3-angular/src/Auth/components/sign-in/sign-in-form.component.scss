@@ -1,3 +1,56 @@
+@import '../../../styles.scss';
+
+.login-image {
+  width: 15rem;
+  object-fit: cover;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+mat-icon {
+  color: rgb(53, 53, 53);
+}
+
+b {
+  cursor: pointer;
+  color: $clap-blue;
+}
+
+.toggleShowPasswordButton {
+  cursor: pointer;
+}
+
+.alert {
+  margin-bottom: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #efefef;
+  border-radius: 2px;
+
+  mat-icon {
+    color: $clap-error-red;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 app-info,
 app-alert {
   margin-bottom: 16px;

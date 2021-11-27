@@ -1,4 +1,4 @@
-<main fxLayout="column" fxLayoutAlign="center center">
+<!-- <main fxLayout="column" fxLayoutAlign="center center">
   <h2>logo</h2>
   <clap-app-sign-up-form
     class="width-300-or-90-percent"
@@ -7,4 +7,10 @@
     (showTermsOfService)="onShowTermsOfService()"
     (showPrivacyPolicy)="onShowPrivacyPolicy()"
   ></clap-app-sign-up-form>
+</main> -->
+
+<main fxLayoutAlign="center center">
+  <section [style.width]="'90%'">
+    <clap-app-sign-up-form></clap-app-sign-up-form>
+  </section>
 </main>

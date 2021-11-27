@@ -1,4 +1,46 @@
-<app-info
+<section fxLayoutAlign="center center">
+  <img class="login-image" src="assets/art/sign_in.png" alt="" />
+</section>
+
+<h1>Login</h1>
+
+<!-- <section class="alert" fxLayoutAlign="start center" fxLayoutGap="8px">
+  <mat-icon>error_outline</mat-icon>
+  <mat-error>
+    Syöttämäsi sähköpostiosoite tai salasana on virheellinen.
+    <br />
+  </mat-error>
+</section> -->
+
+<form fxLayout="column" fxLayoutAlign="center center">
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+
+    <input matInput type="email" autocomplete="email" />
+    <mat-icon matPrefix>mail</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+
+    <input matInput id="password" [type]="showPassword ? 'text' : 'password'" />
+    <mat-icon matPrefix>lock</mat-icon>
+    <mat-icon
+      matSuffix
+      (click)="showPassword = !showPassword"
+      class="toggleShowPasswordButton"
+      >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+    >
+  </mat-form-field>
+
+  <button mat-raised-button mat-button color="primary">Sign in</button>
+
+  <span>New to Clap-App? <b routerLink="/sign-in">Register</b></span>
+</form>
+
+
+
+<!-- <app-info
   *ngIf="this.isUserNameJustVerified"
   fxLayout="row"
   fxLayoutAlign="start center"
@@ -60,4 +102,4 @@
   >
     Kirjaudu sisään
   </button>
-</form>
+</form> -->

@@ -6,7 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { reducers } from './store/reducers';
 import { SharedModule } from 'src/shared/shared.module';
 import { StoreModule } from '@ngrx/store';
@@ -17,11 +17,12 @@ import { StoreModule } from '@ngrx/store';
     StoreModule.forFeature('auth', reducers),
     EffectsModule.forFeature(effects),
     ReactiveFormsModule,
+    FormsModule,
     MaterialModule,
     FlexLayoutModule,
     SharedModule,
-    AuthRoutingModule
+    AuthRoutingModule,
   ],
-  declarations: [...components]
+  declarations: [...components],
 })
 export class AuthModule {}
