@@ -125,54 +125,6 @@ export class SignInEffects {
     )
   );
 
-  requestNewPasswordCode$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthSignInActions.requestNewPasswordCode),
-      switchMap(({ username }) =>
-        this.cognitoService.requestChangePasswordCode(username).pipe(
-          map(() => AuthSignInActions.requestNewPasswordCodeSuccess()),
-
-          catchError((error: any) => {
-            if (error.code === 'LimitExceededException') {
-              return of(
-                AuthSignInActions.requestNewPasswordCodeFailureLimitExceeded()
-              );
-            } else if (error.code === 'UserNotFoundException') {
-              return of(
-                AuthSignInActions.requestNewPasswordCodeFailureUserNotFound()
-              );
-            } else if (error.code === 'InvalidParameterException') {
-              return of(
-                AuthSignInActions.requestNewPasswordCodeFailureInvalidParameter(
-                  {
-                    username,
-                  }
-                )
-              );
-            } else {
-              return of(AuthSignInActions.requestNewPasswordCodeFailure(error));
-            }
-          })
-        )
-      )
-    )
-  );
-
-  requestNewPasswordCodeSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthSignInActions.requestNewPasswordCodeSuccess),
-      map(() => AuthSignInActions.redirectToConfirmPassword())
-    )
-  );
-
-  requestNewPasswordCodeFailureInvalidParameter$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthSignInActions.requestNewPasswordCodeFailureInvalidParameter),
-      map(({ username }) =>
-        AuthSignUpActions.redirectToSignUpVerification({ username })
-      )
-    )
-  );
 
   // confirmNewPassword$ = createEffect(() =>
   //   this.actions$.pipe(
@@ -243,7 +195,8 @@ export class SignInEffects {
         if (username === undefined) {
           return of(
             AuthSignInActions.authenticateUserFailure({
-              error: 'Cannot change new password if username doesnt exist.',
+              error:
+                'Cannot change new password if username doesnt exist.',
             })
           );
         }

@@ -98,7 +98,7 @@ const signUpReducer = createReducer(
     communicating: false,
     newVerificationCodeLimitExceeded: false,
   })),
-  on(AuthSignUpActions.resendVerificationCode, (state) => ({
+  on(AuthSignUpActions.sendNewEmailConfirmationCode, (state) => ({
     ...state,
     communicating: true,
     newVerificationCodeSent: false,
@@ -106,14 +106,14 @@ const signUpReducer = createReducer(
     verificationCodeMismatch: false,
     newPasswordCodeFailedBecauseEmailNotVerified: false,
   })),
-  on(AuthSignUpActions.resendVerificationCodeSuccess, (state) => ({
+  on(AuthSignUpActions.sendNewEmailConfirmationCodeSuccess, (state) => ({
     ...state,
     communicating: false,
     newVerificationCodeSent: true,
     verificationCodeMismatch: false,
     newVerificationCodeLimitExceeded: false,
   })),
-  on(AuthSignUpActions.resendVerificationCodeFailureLimitExceeded, (state) => ({
+  on(AuthSignUpActions.sendNewEmailConfirmationCodeFailureLimitExceeded, (state) => ({
     ...state,
     communicating: false,
     newVerificationCodeSent: false,

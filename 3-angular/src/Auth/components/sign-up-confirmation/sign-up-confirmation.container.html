@@ -1,8 +1,8 @@
 <main fxLayoutAlign="center center">
   <section [style.width]="'90%'">
     <clap-app-sign-up-confirmation-form
-      (signUpConfirmationCodeSubmitted)="onSignUpConfirmationCodeSubmitted($event)"
-      (newConfirmationCodeOrderSubmitted)="onNewConfirmationCodeOrderSubmitted()"
+      (confirmationCodeSubmitted)="onConfirmationCodeSubmitted($event)"
+      (sendNewEmailConfirmationCode)="onSendNewEmailConfirmationCode()"
     ></clap-app-sign-up-confirmation-form>
   </section>
 </main>

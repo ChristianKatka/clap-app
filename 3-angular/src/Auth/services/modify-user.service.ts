@@ -1,22 +1,6 @@
 import { Injectable } from '@angular/core';
-import { isNil } from 'lodash-es';
-
-declare let AWS: any;
-import {
-  CognitoUserPool,
-  CognitoUserAttribute,
-  CognitoUser,
-  CognitoUserSession,
-  AuthenticationDetails,
-  UserData,
-  ICognitoUserAttributeData,
-} from 'amazon-cognito-identity-js';
-
-import { environment } from '../../environments/environment';
-import { Observable, from, of, throwError } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
-import { isObject } from 'lodash-es';
-import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
+import { CognitoUser } from 'amazon-cognito-identity-js';
+import { from } from 'rxjs';
 import { AuthenticateUserService } from './authenticate-user.service';
 
 @Injectable({

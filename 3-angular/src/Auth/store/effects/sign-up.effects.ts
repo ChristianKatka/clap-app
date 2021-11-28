@@ -114,9 +114,9 @@ export class SignUpEffects {
     )
   );
 
-  resendVerificationCode$ = createEffect(() =>
+  sendNewEmailConfirmationCode$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthSignUpActions.resendVerificationCode),
+      ofType(AuthSignUpActions.sendNewEmailConfirmationCode),
 
       withLatestFrom(
         this.store.select(AuthSignUpSelectors.getSignUpUserNameAndPassword)
@@ -125,15 +125,15 @@ export class SignUpEffects {
       switchMap(([payload, { username, password }]) => {
         if (username === undefined) {
           return of(
-            AuthSignUpActions.resendVerificationCodeFailure({
+            AuthSignUpActions.sendNewEmailConfirmationCodeFailure({
               error: 'Cannot sign up if username is missing.',
             })
           );
         }
 
-        return this.cognitoService.resendVerificationCode(username).pipe(
-          map((result: any) =>
-            AuthSignUpActions.resendVerificationCodeSuccess({
+        return this.cognitoService.sendNewEmailConfirmationCode(username).pipe(
+          map(() =>
+            AuthSignUpActions.sendNewEmailConfirmationCodeSuccess({
               username,
             })
           ),
@@ -141,11 +141,11 @@ export class SignUpEffects {
           catchError((error: any) => {
             if (error.code === 'LimitExceededException') {
               return of(
-                AuthSignUpActions.resendVerificationCodeFailureLimitExceeded()
+                AuthSignUpActions.sendNewEmailConfirmationCodeFailureLimitExceeded()
               );
             } else {
               return of(
-                AuthSignUpActions.resendVerificationCodeFailure({
+                AuthSignUpActions.sendNewEmailConfirmationCodeFailure({
                   error: error.code,
                 })
               );

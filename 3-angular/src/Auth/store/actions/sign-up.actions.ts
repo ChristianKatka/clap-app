@@ -52,22 +52,22 @@ export const confirmRegistrationFailureCodeMismatch = createAction(
   '[Auth] Confirm Registration Failure, code mismatch'
 );
 
-export const resendVerificationCode = createAction(
-  '[Auth] Resend Verification Code'
+export const sendNewEmailConfirmationCode = createAction(
+  '[Auth] Send New Email Confirmation Code'
 );
 
-export const resendVerificationCodeSuccess = createAction(
-  '[Auth] Resend Verification Code Success',
+export const sendNewEmailConfirmationCodeSuccess = createAction(
+  '[Auth] Send New Email Confirmation Code Success',
   props<{ username: string }>()
 );
 
-export const resendVerificationCodeFailure = createAction(
-  '[Auth] Resend Verification Code Failure',
+export const sendNewEmailConfirmationCodeFailure = createAction(
+  '[Auth] Send New Email Confirmation Code Failure',
   props<{ error: string }>()
 );
 
-export const resendVerificationCodeFailureLimitExceeded = createAction(
-  '[Auth] Resend Verification Code Failure, limit exceeded'
+export const sendNewEmailConfirmationCodeFailureLimitExceeded = createAction(
+  '[Auth] Send New Email Confirmation Code Failure, limit exceeded'
 );
 
 export const redirectToSignUp = createAction('[Auth] Redirect to Sign Up');

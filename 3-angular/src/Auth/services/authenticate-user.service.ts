@@ -1,29 +1,19 @@
-import { Injectable } from '@angular/core';
-import { isNil } from 'lodash-es';
 
+import { Injectable } from '@angular/core';
 declare let AWS: any;
 import {
-  CognitoUserPool,
-  CognitoUserAttribute,
   CognitoUser,
   CognitoUserSession,
   AuthenticationDetails,
-  UserData,
-  ICognitoUserAttributeData,
 } from 'amazon-cognito-identity-js';
-
 import { environment } from '../../environments/environment';
-import { Observable, from, of, throwError } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
-import { isObject } from 'lodash-es';
-import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticateUserService {
-  constructor() {}
-
+  
   public setCredentialsFromSession(session: CognitoUserSession) {
     const token = session.getIdToken().getJwtToken();
     const key =
@@ -37,10 +27,8 @@ export class AuthenticateUserService {
 
     const credentials = new AWS.CognitoIdentityCredentials(
       {
-        /* eslint-disable */
         IdentityPoolId: environment.cognito.identityPoolId,
         Logins: logins,
-        /* eslint-enable */
       },
       {
         region: environment.cognito.region,
@@ -64,12 +52,6 @@ export class AuthenticateUserService {
           onFailure: (err) => {
             reject(err);
           },
-          // mfaRequired: (challengeName, challengeParam) => {
-          //   const response: any = { ...user };
-          //   response.challengeName = challengeName;
-          //   response.challengeParam = challengeParam;
-          //   resolve(response);
-          // },
           newPasswordRequired: (userAttributes, requiredAttributes) => {
             const response: any = { ...currentUser };
             response.challengeName = 'NEW_PASSWORD_REQUIRED';
@@ -79,24 +61,6 @@ export class AuthenticateUserService {
             };
             resolve(response);
           },
-          // mfaSetup: (challengeName, challengeParam) => {
-          //   const response: any = { ...user };
-          //   response.challengeName = challengeName;
-          //   response.challengeParam = challengeParam;
-          //   resolve(response);
-          // },
-          // totpRequired: (challengeName, challengeParam) => {
-          //   const response: any = { ...user };
-          //   response.challengeName = challengeName;
-          //   response.challengeParam = challengeParam;
-          //   resolve(response);
-          // },
-          // selectMFAType: (challengeName, challengeParam) => {
-          //   const response: any = { ...user };
-          //   response.challengeName = challengeName;
-          //   response.challengeParam = challengeParam;
-          //   resolve(response);
-          // },
         });
       })
     );

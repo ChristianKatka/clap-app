@@ -30,13 +30,12 @@ export class SignUpConfirmationContainerComponent {
 
   constructor(private store: Store<AuthExtendedAppState>) {}
 
-  onSignUpConfirmationCodeSubmitted(code: string) {
+  onConfirmationCodeSubmitted(code: string) {
     this.store.dispatch(AuthSignUpActions.confirmRegistration({ code }));
   }
 
-  onNewConfirmationCodeOrderSubmitted() {
+  onSendNewEmailConfirmationCode() {
     console.log('send new confirmation code');
-    
-    // this.store.dispatch(AuthSignUpActions.resendVerificationCode());
+    this.store.dispatch(AuthSignUpActions.sendNewEmailConfirmationCode());
   }
 }

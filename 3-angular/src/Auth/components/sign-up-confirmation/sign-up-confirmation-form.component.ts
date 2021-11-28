@@ -34,10 +34,10 @@ export class SignUpConfirmationFormComponent {
   // signUpVerificationCodeMismatch = false;
 
   @Output()
-  signUpConfirmationCodeSubmitted: EventEmitter<string> = new EventEmitter();
+  confirmationCodeSubmitted: EventEmitter<string> = new EventEmitter();
 
   @Output()
-  newConfirmationCodeOrderSubmitted = new EventEmitter();
+  sendNewEmailConfirmationCode = new EventEmitter();
 
   // isCommunicating = false;
 
@@ -46,12 +46,12 @@ export class SignUpConfirmationFormComponent {
   });
 
   submit() {
-    this.signUpConfirmationCodeSubmitted.emit(
+    this.confirmationCodeSubmitted.emit(
       this.confirmationCodeForm.value.confirmationCode
     );
   }
 
-  newConfirmationCodeOrdered() {
-    this.newConfirmationCodeOrderSubmitted.emit();
+  newEmailConfirmationCodeOrdered() {
+    this.sendNewEmailConfirmationCode.emit();
   }
 }

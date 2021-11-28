@@ -19,8 +19,8 @@ export class AuthenticatedEffects {
     this.actions$.pipe(
       ofType(AuthenticatedActions.checkOldUserSession),
       switchMap(() => this.cognitoService.isSessionValid()),
-      switchMap((isValid) => {
-        if (isValid) {
+      switchMap((isSessionValid) => {
+        if (isSessionValid) {
           return this.cognitoService.getCurrentUser();
         } else {
           return of(undefined);
@@ -71,13 +71,13 @@ export class AuthenticatedEffects {
   );
 
   redirectToWelcomePage$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(
-      AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed,
-    ),
-    map(() => AuthenticatedActions.redirectToWelcomePage())
-  )
-);
+    this.actions$.pipe(
+      ofType(
+        AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed
+      ),
+      map(() => AuthenticatedActions.redirectToWelcomePage())
+    )
+  );
 
   constructor(
     private actions$: Actions,

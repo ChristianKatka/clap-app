@@ -45,7 +45,7 @@
     New confirmation code has been sent to email address:
     <strong> email</strong>
   </p> -->
-  <button mat-button>Get New Confirmation Code</button>
+  <button mat-button (click)="newEmailConfirmationCodeOrdered()">Get New Confirmation Code</button>
 </form>
 
 <!-- <mat-error class="errorbox" *ngIf="this.signUpVerificationCodeMismatch">
