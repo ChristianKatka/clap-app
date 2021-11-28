@@ -5,8 +5,8 @@ export const authenticateUser = createAction(
   props<{ username: string; password: string }>()
 );
 
-export const authenticateUserAfterUserVerified = createAction(
-  '[Auth] Authenticate User After User Verified',
+export const authenticateUserAfterUserEmailConfirmed = createAction(
+  '[Auth] Authenticate User After User Email Confirmed',
   props<{ username: string; password: string }>()
 );
 

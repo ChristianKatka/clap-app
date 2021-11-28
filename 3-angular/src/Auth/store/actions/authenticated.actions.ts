@@ -15,6 +15,14 @@ export const userAuthenticatedSuccess = createAction(
   '[Auth] User Authenticated Success'
 );
 
+export const userAuthenticatedSuccessAfterUserEmailConfirmed = createAction(
+  '[Auth] User Authenticated Success After User Email Confirmed'
+);
+
+export const redirectToWelcomePage = createAction(
+  '[Auth] Redirect To Welcome Page'
+);
+
 export const redirectToWelcomeNew = createAction(
   '[Auth] Redirect to Welcome New'
 );

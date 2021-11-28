@@ -1,4 +1,54 @@
-<mat-error class="errorbox" *ngIf="this.signUpVerificationCodeMismatch">
+<section fxLayoutAlign="center center">
+  <img class="login-image" src="assets/art/vault.png" alt="" />
+</section>
+
+<section
+  fxLayout="column"
+  fxLayoutGap="1rem"
+  fxLayoutAlign="space-around center"
+>
+  <h1>Email Confirmation</h1>
+
+  <p class="text-center">
+    We sent you an email with confirmation code. Input given confirmation code
+    to field below.
+  </p>
+</section>
+
+<form
+  class="activate-form"
+  fxLayout="column"
+  fxLayoutAlign="start"
+  fxLayoutGap="8px"
+  [formGroup]="confirmationCodeForm"
+>
+  <mat-form-field appearance="outline">
+    <mat-label>Confirmation Code</mat-label>
+    <input matInput type="tel" minlength="6" formControlName="confirmationCode"/>
+    <mat-error> Confirmation code is required </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
+
+  <!-- WRONG CODE ALERT -->
+  <!-- <section class="alert" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <mat-icon>error_outline</mat-icon>
+    <mat-error>
+      Confirmation code was incorrect or old. Please check code from your email
+      or get new code by pressing button below
+      <br />
+    </mat-error>
+  </section> -->
+
+  <mat-divider></mat-divider>
+  <!-- <p class="info">
+    New confirmation code has been sent to email address:
+    <strong> email</strong>
+  </p> -->
+  <button mat-button>Get New Confirmation Code</button>
+</form>
+
+<!-- <mat-error class="errorbox" *ngIf="this.signUpVerificationCodeMismatch">
   Syöttämäsi vahvistuskoodi ei ole oikea tai se on vanhentunut. Tarkista koodi
   sähköpostistasi tai tilaa uusi koodi alla olevalla painikkeella.
 </mat-error>
@@ -62,4 +112,4 @@
       Lähetä
     </button>
   </div>
-</form>
+</form> -->

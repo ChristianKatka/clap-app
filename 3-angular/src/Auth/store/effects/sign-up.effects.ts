@@ -5,7 +5,13 @@ import { AuthSignInActions, AuthSignUpActions } from '@auth/store/actions';
 import * as fromServices from '../../services/cognito.service';
 
 import { Observable, of } from 'rxjs';
-import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
+import {
+  switchMap,
+  map,
+  catchError,
+  withLatestFrom,
+  tap,
+} from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
 import { AuthSignUpSelectors } from '../selectors';
@@ -16,44 +22,39 @@ export class SignUpEffects {
   signUp$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthSignUpActions.signUp),
-      switchMap(({ username, password, email, givenName, familyName }) =>
-        this.cognitoService
-          .signUp(username, password, email, givenName, familyName)
-          .pipe(
-            map(() =>
-              AuthSignUpActions.signUpSuccess({
-                username,
-                password,
-                email,
-                givenName,
-                familyName,
-              })
-            ),
-
-            catchError((error: any, caught: Observable<any>) => {
-              let action$;
-
-              if (error.code === 'UsernameExistsException') {
-                action$ = of(
-                  AuthSignUpActions.signUpFailureUsernameExists({
-                    username,
-                  })
-                );
-              } else if (error.code === 'UserLambdaValidationException') {
-                action$ = of(AuthSignUpActions.signUpFailureTermsNotAccepted());
-              } else if (error.code === 'InvalidPasswordException') {
-                action$ = of(
-                  AuthSignUpActions.signUpFailurePasswordRequirements()
-                );
-              } else if (error.code === 'InvalidParameterException') {
-                action$ = of(AuthSignUpActions.signUpFailureInvalidParameter());
-              } else {
-                action$ = of(AuthSignUpActions.signUpFailure(error));
-              }
-
-              return action$;
+      switchMap(({ signUpUserData }) =>
+        this.cognitoService.signUp(signUpUserData).pipe(
+          tap((x) => console.log(x)),
+          map(() =>
+            AuthSignUpActions.signUpSuccess({
+              signUpUserData,
             })
-          )
+          ),
+
+          catchError((error: any, caught: Observable<any>) => {
+            let action$;
+
+            if (error.code === 'UsernameExistsException') {
+              action$ = of(
+                AuthSignUpActions.signUpFailureUsernameExists({
+                  username: signUpUserData.username,
+                })
+              );
+            } else if (error.code === 'UserLambdaValidationException') {
+              action$ = of(AuthSignUpActions.signUpFailureTermsNotAccepted());
+            } else if (error.code === 'InvalidPasswordException') {
+              action$ = of(
+                AuthSignUpActions.signUpFailurePasswordRequirements()
+              );
+            } else if (error.code === 'InvalidParameterException') {
+              action$ = of(AuthSignUpActions.signUpFailureInvalidParameter());
+            } else {
+              action$ = of(AuthSignUpActions.signUpFailure(error));
+            }
+
+            return action$;
+          })
+        )
       )
     )
   );
@@ -61,8 +62,11 @@ export class SignUpEffects {
   signUpSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthSignUpActions.signUpSuccess),
-      map(({ username, password }) =>
-        AuthSignUpActions.redirectToSignUpVerification({ username, password })
+      map(({ signUpUserData }) =>
+        AuthSignUpActions.redirectToSignUpVerification({
+          username: signUpUserData.username,
+          password: signUpUserData.password,
+        })
       )
     )
   );
@@ -70,8 +74,7 @@ export class SignUpEffects {
   confirmRegistration$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthSignUpActions.confirmRegistration),
-      map((action) => action.code),
-
+      map((payload) => payload.code),
       withLatestFrom(
         this.store.select(AuthSignUpSelectors.getSignUpUserNameAndPassword)
       ),
@@ -87,6 +90,7 @@ export class SignUpEffects {
         }
 
         return this.cognitoService.confirmRegistration(username, code).pipe(
+          tap((x) => console.log(x)),
           map(() =>
             AuthSignUpActions.confirmRegistrationSuccess({
               username,
@@ -156,7 +160,7 @@ export class SignUpEffects {
     this.actions$.pipe(
       ofType(AuthSignUpActions.confirmRegistrationSuccess),
       map(({ username, password }) =>
-        AuthSignInActions.authenticateUserAfterUserVerified({
+        AuthSignInActions.authenticateUserAfterUserEmailConfirmed({
           username,
           password,
         })

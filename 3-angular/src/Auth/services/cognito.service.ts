@@ -16,6 +16,9 @@ import { environment } from '../../environments/environment';
 import { Observable, from, of, throwError } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { isObject } from 'lodash-es';
+import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
+import { SignUpService } from './sign-up.service';
+import { AuthenticateUserService } from './authenticate-user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,13 +28,14 @@ export class CognitoService {
   private user: CognitoUser | null = null;
   private credentials: any;
 
-  constructor() {
+  constructor(
+    private signUpService: SignUpService,
+    private authenticateUserService: AuthenticateUserService
+  ) {
     AWS.config.region = environment.cognito.region;
-
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: environment.cognito.identityPoolId, // eslint-disable-line
     });
-
     this.userPool = new CognitoUserPool(environment.cognito.poolData);
   }
 
@@ -194,75 +198,72 @@ export class CognitoService {
     validationData?: { [key: string]: any }
   ): Observable<any> {
     const userData = {
-      /* eslint-disable */
       Username: userName,
       Pool: this.userPool,
-      /* eslint-enable */
     };
-
-    const user = new CognitoUser(userData);
-    this.user = user;
+    const currentUser = new CognitoUser(userData);
+    this.user = currentUser;
 
     const authenticationData = {
-      /* eslint-disable */
       Username: userName,
       Password: password,
       ValidationData: isObject(validationData) ? validationData : undefined,
-      /* eslint-enable */
     };
+    const authenticationDetails = new AuthenticationDetails(authenticationData);
 
-    const that = this;
-
-    const athenticationDetails = new AuthenticationDetails(authenticationData);
-
-    return from(
-      new Promise((resolve, reject) => {
-        user.authenticateUser(athenticationDetails, {
-          onSuccess: (session) => {
-            that.setCredentialsFromSession(session);
-            that.user = user;
-            resolve(user);
-          },
-          onFailure: (err) => {
-            reject(err);
-          },
-          mfaRequired: (challengeName, challengeParam) => {
-            const response: any = { ...user };
-            response.challengeName = challengeName;
-            response.challengeParam = challengeParam;
-            resolve(response);
-          },
-          newPasswordRequired: (userAttributes, requiredAttributes) => {
-            that.user = user;
-            const response: any = { ...user };
-            response.challengeName = 'NEW_PASSWORD_REQUIRED';
-            response.challengeParam = {
-              userAttributes,
-              requiredAttributes,
-            };
-            resolve(response);
-          },
-          mfaSetup: (challengeName, challengeParam) => {
-            const response: any = { ...user };
-            response.challengeName = challengeName;
-            response.challengeParam = challengeParam;
-            resolve(response);
-          },
-          totpRequired: (challengeName, challengeParam) => {
-            const response: any = { ...user };
-            response.challengeName = challengeName;
-            response.challengeParam = challengeParam;
-            resolve(response);
-          },
-          selectMFAType: (challengeName, challengeParam) => {
-            const response: any = { ...user };
-            response.challengeName = challengeName;
-            response.challengeParam = challengeParam;
-            resolve(response);
-          },
-        });
-      })
+    return this.authenticateUserService.authenticateUser(
+      currentUser,
+      authenticationDetails
     );
+
+    // return from(
+    //   new Promise((resolve, reject) => {
+    //     user.authenticateUser(athenticationDetails, {
+    //       onSuccess: (session) => {
+    //         that.setCredentialsFromSession(session);
+    //         that.user = user;
+    //         resolve(user);
+    //       },
+    //       onFailure: (err) => {
+    //         reject(err);
+    //       },
+    //       mfaRequired: (challengeName, challengeParam) => {
+    //         const response: any = { ...user };
+    //         response.challengeName = challengeName;
+    //         response.challengeParam = challengeParam;
+    //         resolve(response);
+    //       },
+    //       newPasswordRequired: (userAttributes, requiredAttributes) => {
+    //         that.user = user;
+    //         const response: any = { ...user };
+    //         response.challengeName = 'NEW_PASSWORD_REQUIRED';
+    //         response.challengeParam = {
+    //           userAttributes,
+    //           requiredAttributes,
+    //         };
+    //         resolve(response);
+    //       },
+    //       mfaSetup: (challengeName, challengeParam) => {
+    //         const response: any = { ...user };
+    //         response.challengeName = challengeName;
+    //         response.challengeParam = challengeParam;
+    //         resolve(response);
+    //       },
+    //       totpRequired: (challengeName, challengeParam) => {
+    //         const response: any = { ...user };
+    //         response.challengeName = challengeName;
+    //         response.challengeParam = challengeParam;
+    //         resolve(response);
+    //       },
+    //       selectMFAType: (challengeName, challengeParam) => {
+    //         const response: any = { ...user };
+    //         response.challengeName = challengeName;
+    //         response.challengeParam = challengeParam;
+    //         resolve(response);
+    //       },
+    //     });
+    //   })
+    // );
   }
 
   public resendVerificationCode(userName: string): Observable<any> {
@@ -288,50 +289,8 @@ export class CognitoService {
     });
   }
 
-  public signUp(
-    username: string,
-    password: string,
-    email: string,
-    givenName: string,
-    familyName: string
-  ): Observable<any> {
-    const userPool = this.userPool;
-
-    /* eslint-disable */
-    const userAttributes = [
-      new CognitoUserAttribute({
-        Name: 'email',
-        Value: email,
-      }),
-      new CognitoUserAttribute({
-        Name: 'given_name',
-        Value: givenName,
-      }),
-      new CognitoUserAttribute({
-        Name: 'family_name',
-        Value: familyName,
-      }),
-    ];
-    /* eslint-enable */
-
-    const validationData: CognitoUserAttribute[] = [];
-
-    return new Observable((o: any) => {
-      userPool.signUp(
-        username,
-        password,
-        userAttributes,
-        validationData,
-        (err: any, result: any) => {
-          if (err) {
-            o.error(err);
-          } else {
-            o.next(result);
-            o.complete();
-          }
-        }
-      );
-    });
+  public signUp(signUpUserData: SignUpUserData): Observable<any> {
+    return this.signUpService.signUp(this.userPool, signUpUserData);
   }
 
   public signOut() {
@@ -427,54 +386,70 @@ export class CognitoService {
   }
 
   confirmRegistration(userName: string, code: string): Observable<any> {
+    console.log(userName);
+    console.log(code);
+
     const userData = {
-      /* eslint-disable */
       Username: userName,
       Pool: this.userPool,
-      /* eslint-enable */
     };
-    console.log(userData);
-
     const currentUser = new CognitoUser(userData);
     this.user = currentUser;
-    console.log(currentUser);
 
-    return new Observable((o: any) => {
-      currentUser.confirmRegistration(code, true, (err: any, result: any) => {
-        if (err) {
-          o.error(err);
-          console.log('confirmRegistration error:');
-          console.log(err);
-        } else {
-          o.next(result);
-          o.complete();
-        }
-      });
-    });
+    return this.signUpService.confirmRegistration(currentUser, code);
+
+    // const userData = {
+    //   /* eslint-disable */
+    //   Username: userName,
+    //   Pool: this.userPool,
+    //   /* eslint-enable */
+    // };
+    // console.log(userData);
+
+    // const currentUser = new CognitoUser(userData);
+    // this.user = currentUser;
+    // console.log(currentUser);
+
+    // return new Observable((o: any) => {
+    //   currentUser.confirmRegistration(code, true, (err: any, result: any) => {
+    //     if (err) {
+    //       o.error(err);
+    //       console.log('confirmRegistration error:');
+    //       console.log(err);
+    //     } else {
+    //       o.next(result);
+    //       o.complete();
+    //     }
+    //   });
+    // });
   }
 
   private setCredentialsFromSession(session: CognitoUserSession) {
-    const token = session.getIdToken().getJwtToken();
-    const key =
-      'cognito-idp.' +
-      environment.cognito.region +
-      '.amazonaws.com/' +
-      environment.cognito.poolData.UserPoolId;
-
-    const logins: { [key: string]: string } = {};
-    logins[key] = token;
-
-    this.credentials = new AWS.CognitoIdentityCredentials(
-      {
-        /* eslint-disable */
-        IdentityPoolId: environment.cognito.identityPoolId,
-        Logins: logins,
-        /* eslint-enable */
-      },
-      {
-        region: environment.cognito.region,
-      }
-    );
+    this.credentials =
+      this.authenticateUserService.setCredentialsFromSession(session);
     this.credentials.authenticated = true;
+
+    // const token = session.getIdToken().getJwtToken();
+    // const key =
+    //   'cognito-idp.' +
+    //   environment.cognito.region +
+    //   '.amazonaws.com/' +
+    //   environment.cognito.poolData.UserPoolId;
+
+    // const logins: { [key: string]: string } = {};
+    // logins[key] = token;
+
+    // this.credentials = new AWS.CognitoIdentityCredentials(
+    //   {
+    //     /* eslint-disable */
+    //     IdentityPoolId: environment.cognito.identityPoolId,
+    //     Logins: logins,
+    //     /* eslint-enable */
+    //   },
+    //   {
+    //     region: environment.cognito.region,
+    //   }
+    // );
+    // this.credentials.authenticated = true;
   }
 }

@@ -5,11 +5,23 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterActions } from '../actions';
 import { tap, map, filter } from 'rxjs/operators';
-import { AuthenticatedActions, AuthInitialUrlActions, AuthSignInActions, AuthSignUpActions } from '@auth/store/actions';
+import {
+  AuthenticatedActions,
+  AuthInitialUrlActions,
+  AuthSignInActions,
+  AuthSignUpActions,
+} from '@auth/store/actions';
 import { isString } from 'lodash';
 
 @Injectable()
 export class RouterEffects {
+  redirectToWelcomePage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthenticatedActions.redirectToWelcomePage),
+      map(() => RouterActions.navigate({ commands: ['/welcome'] }))
+    )
+  );
+
   redirectToAppInitialization$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthenticatedActions.redirectToAppInitialization),

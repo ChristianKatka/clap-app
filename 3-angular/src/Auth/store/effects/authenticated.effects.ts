@@ -70,6 +70,15 @@ export class AuthenticatedEffects {
     )
   );
 
+  redirectToWelcomePage$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(
+      AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed,
+    ),
+    map(() => AuthenticatedActions.redirectToWelcomePage())
+  )
+);
+
   constructor(
     private actions$: Actions,
     private cognitoService: fromServices.CognitoService,

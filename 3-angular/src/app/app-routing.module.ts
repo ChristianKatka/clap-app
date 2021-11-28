@@ -2,14 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticatedGuard } from '@auth/guards';
 import { AppInitializationContainerComponent } from './app-initialization/app-initialization.container';
-import { HomeFeatureContainerComponent } from "@home/home-feature.container";
-
+import { HomeFeatureContainerComponent } from '@home/home-feature.container';
+import { WelcomeContainerComponent } from './welcome/welcome.container';
 
 const routes: Routes = [
-   {
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'home',
+  },
+  {
+    path: 'welcome',
+    canActivate: [AuthenticatedGuard],
+    component: WelcomeContainerComponent,
   },
   {
     path: 'home',
@@ -26,6 +31,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

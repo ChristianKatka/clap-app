@@ -1,5 +1,7 @@
+@import "../../styles.scss";
+
 .success-animation {
-  margin: 150px auto;
+  margin: 5rem auto;
 }
 
 .checkmark {
@@ -8,9 +10,9 @@
   border-radius: 50%;
   display: block;
   stroke-width: 2;
-  stroke: #4bb71b;
+  stroke: $clap-blue;
   stroke-miterlimit: 10;
-  box-shadow: inset 0px 0px 0px #4bb71b;
+  box-shadow: inset 0px 0px 0px $clap-blue;
   animation: fill 0.4s ease-in-out 0.4s forwards,
     scale 0.3s ease-in-out 0.9s both;
   position: relative;
@@ -23,7 +25,7 @@
   stroke-dashoffset: 166;
   stroke-width: 2;
   stroke-miterlimit: 10;
-  stroke: #4bb71b;
+  stroke: $clap-blue;
   fill: #fff;
   animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
@@ -54,6 +56,6 @@
 
 @keyframes fill {
   100% {
-    box-shadow: inset 0px 0px 0px 30px #4bb71b;
+    box-shadow: inset 0px 0px 0px 30px $clap-blue;
   }
 }

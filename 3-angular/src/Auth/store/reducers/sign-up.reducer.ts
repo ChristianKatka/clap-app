@@ -5,6 +5,7 @@ export interface SignUpState {
   username: string | undefined;
   password: string | undefined;
   email: string | undefined;
+  nickname: string | undefined;
   communicating: boolean;
   userNameExists: boolean;
   invalidParameter: boolean;
@@ -19,6 +20,7 @@ export const initialState: SignUpState = {
   username: undefined,
   password: undefined,
   email: undefined,
+  nickname: undefined,
   communicating: false,
   userNameExists: false,
   invalidParameter: false,
@@ -31,15 +33,16 @@ export const initialState: SignUpState = {
 
 const signUpReducer = createReducer(
   initialState,
-  on(AuthSignUpActions.signUp, (state, { username, password, email }) => ({
+  on(AuthSignUpActions.signUp, (state, { signUpUserData }) => ({
     ...initialState,
     communicating: true,
     userNameExists: false,
     invalidParameter: false,
     passwordRequirements: false,
-    username,
-    password,
-    email,
+    username: signUpUserData.username,
+    password: signUpUserData.password,
+    email: signUpUserData.email,
+    nickname: signUpUserData.nickname,
   })),
   on(AuthSignUpActions.signUpFailure, (state) => ({
     ...state,
@@ -66,16 +69,14 @@ const signUpReducer = createReducer(
     userNameExists: false,
     passwordRequirements: true,
   })),
-  on(
-    AuthSignUpActions.signUpSuccess,
-    (state, { username, password, email }) => ({
-      ...state,
-      communicating: false,
-      username,
-      password,
-      email,
-    })
-  ),
+  on(AuthSignUpActions.signUpSuccess, (state, { signUpUserData }) => ({
+    ...state,
+    communicating: false,
+    username: signUpUserData.username,
+    password: signUpUserData.password,
+    email: signUpUserData.email,
+    nickname: signUpUserData.nickname,
+  })),
   on(AuthSignUpActions.confirmRegistration, (state) => ({
     ...state,
     communicating: true,

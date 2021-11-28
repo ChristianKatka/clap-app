@@ -1,4 +1,13 @@
+<main fxLayoutAlign="center center">
+  <section [style.width]="'90%'">
+    <clap-app-sign-up-confirmation-form
+      (signUpConfirmationCodeSubmitted)="onSignUpConfirmationCodeSubmitted($event)"
+      (newConfirmationCodeOrderSubmitted)="onNewConfirmationCodeOrderSubmitted()"
+    ></clap-app-sign-up-confirmation-form>
+  </section>
+</main>
 
+<!-- 
 <main [style.width]="'100%'"  fxLayout="column" fxLayoutAlign="center center" >
   <section fxLayout="column" fxLayoutAlign="center center" [style.width]="'90%'">
     <app-logo [style.width.px]="300"></app-logo>
@@ -30,4 +39,4 @@
     </app-sign-up-verification-form>
   </section>
   
-</main>
+</main> -->

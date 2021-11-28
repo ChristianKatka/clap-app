@@ -23,7 +23,7 @@ import { HomeModule } from 'src/Home/home.module';
 import { AboutModule } from 'src/About/about.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ...components],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,6 +46,6 @@ import { AboutModule } from 'src/About/about.module';
     AboutModule
   ],
   providers: [],
-  bootstrap: [AppComponent, ...components],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,25 +1,14 @@
+import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
 import { createAction, props } from '@ngrx/store';
 
 export const signUp = createAction(
   '[Auth] Sign Up',
-  props<{
-    username: string;
-    password: string;
-    email: string;
-    givenName: string;
-    familyName: string;
-  }>()
+  props<{ signUpUserData: SignUpUserData }>()
 );
 
 export const signUpSuccess = createAction(
   '[Auth] Sign Up Success',
-  props<{
-    username: string;
-    password: string;
-    email: string;
-    givenName: string;
-    familyName: string;
-  }>()
+  props<{ signUpUserData: SignUpUserData }>()
 );
 
 export const signUpFailure = createAction(

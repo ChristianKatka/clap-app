@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthExtendedAppState } from '@auth/store/reducers';
 import { Store } from '@ngrx/store';
 import { AboutActions } from 'src/About/store/actions';
+import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
 
 @Component({
   templateUrl: './sign-up.container.html',
@@ -20,6 +21,14 @@ export class SignUpContainerComponent {
     this.store.dispatch(AboutActions.showTermsOfService());
   }
 
+  onSignUp(signUpUserData: SignUpUserData) {
+    this.store.dispatch(
+      AuthSignUpActions.signUp({
+        signUpUserData,
+      })
+    );
+  }
+
   // isSignUpCommunicating$: Observable<boolean> = this.store.select(
   //   AuthSignUpSelectors.getIsSignUpCommunicating
   // );
@@ -32,22 +41,4 @@ export class SignUpContainerComponent {
   // username$: Observable<string | undefined> = this.store.select(
   //   AuthSignUpSelectors.getSignUpUsername
   // );
-
-  // onSignUpDataSubmitted(userData: {
-  //   username: string;
-  //   email: string;
-  //   password: string;
-  // }) {
-  //   const { username, email, password } = userData;
-
-  //   this.store.dispatch(
-  //     AuthSignUpActions.signUp({
-  //       username,
-  //       email,
-  //       password,
-  //       givenName: 'asd',
-  //       familyName: 'asd',
-  //     })
-  //   );
-  // }
 }

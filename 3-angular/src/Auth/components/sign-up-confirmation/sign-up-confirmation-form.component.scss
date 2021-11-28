@@ -1,0 +1,47 @@
+@import "../../../styles.scss";
+
+.login-image {
+  width: 15rem;
+  object-fit: cover;
+}
+
+button {
+  color: $clap-blue;
+}
+
+form {
+  input {
+    font-size: 3rem;
+    font-family: monospace;
+  }
+}
+
+mat-divider {
+  margin: 24px 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.activate-form {
+  margin-top: 1rem;
+}
+
+p.info {
+  border: 1px solid $clap-blue;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.alert {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #efefef;
+  border-radius: 2px;
+
+  mat-icon {
+    color: #f44335;
+  }
+}

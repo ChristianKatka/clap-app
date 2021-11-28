@@ -38,7 +38,7 @@ const signInReducer = createReducer(
     userNameIsJustVerified: false,
   })),
   on(
-    AuthSignInActions.authenticateUserAfterUserVerified,
+    AuthSignInActions.authenticateUserAfterUserEmailConfirmed,
     (state, { username }) => ({
       ...initialState,
       username,

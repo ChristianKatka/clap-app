@@ -21,7 +21,6 @@ export class SignInEffects {
     this.actions$.pipe(
       ofType(
         AuthSignInActions.authenticateUser,
-        AuthSignInActions.authenticateUserAfterUserVerified
       ),
       switchMap(({ username, password }) =>
         this.cognitoService.authenticateUser(username, password).pipe(
@@ -65,6 +64,54 @@ export class SignInEffects {
       )
     )
   );
+
+  authenticateUserAfterUserEmailConfirmed$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(
+      AuthSignInActions.authenticateUserAfterUserEmailConfirmed
+    ),
+    switchMap(({ username, password }) =>
+      this.cognitoService.authenticateUser(username, password).pipe(
+        map((result: any) => {
+          if (result.challengeName === 'NEW_PASSWORD_REQUIRED') {
+            return AuthSignInActions.newPasswordRequired();
+          } else {
+            return AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed();
+          }
+        }),
+
+        catchError((error: any, caught: Observable<any>) => {
+          let action$;
+
+          if (error.code === 'UserNotConfirmedException') {
+            action$ = of(
+              AuthSignUpActions.redirectToSignUpVerification({
+                username,
+                password,
+              })
+            );
+          } else if (error.code === 'NotAuthorizedException') {
+            action$ = of(
+              AuthSignInActions.authenticateUserFailureNotAuthorized({
+                username,
+              })
+            );
+          } else if (error.code === 'UserNotFoundException') {
+            action$ = of(
+              AuthSignInActions.authenticateUserFailureNotAuthorized({
+                username,
+              })
+            );
+          } else {
+            action$ = of(AuthSignInActions.authenticateUserFailure(error));
+          }
+
+          return action$;
+        })
+      )
+    )
+  )
+);
 
   authenticateUserNewPasswordRequired$ = createEffect(() =>
     this.actions$.pipe(
