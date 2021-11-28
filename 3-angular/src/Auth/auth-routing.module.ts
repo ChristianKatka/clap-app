@@ -1,4 +1,3 @@
-import { ConfirmPasswordContainerComponent } from './components/confirm-password/confirm-password.container';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SignInContainerComponent } from './components/sign-in/sign-in.container';
@@ -29,12 +28,6 @@ export const authRoutes: Routes = [
     path: 'new-password-required',
     canActivate: [UnauthenticatedGuard],
     component: SignInNewPasswordRequiredContainerComponent,
-  },
-
-  {
-    path: 'confirm-password',
-    canActivate: [UnauthenticatedGuard],
-    component: ConfirmPasswordContainerComponent,
   },
 ];
 

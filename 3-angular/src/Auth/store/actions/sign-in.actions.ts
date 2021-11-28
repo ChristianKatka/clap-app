@@ -1,24 +1,21 @@
 import { SignInData } from '@auth/models/sign-in-data.model';
 import { createAction, props } from '@ngrx/store';
 
-export const authenticateUserAfterUserEmailConfirmed = createAction(
-  '[Auth] Authenticate User After User Email Confirmed',
-  props<{ username: string; password: string }>()
-);
-
+// CHECKED
 export const authenticateUser = createAction(
   '[Auth] Authenticate User',
   props<{ signInData: SignInData }>()
 );
 
-export const authenticateUserFailure = createAction(
-  '[Auth] Authenticate User Failure',
-  props<{ error: string }>()
+export const authenticateUserFailureNotAuthorized = createAction(
+  '[Auth] Authenticate User Failure, Not authorized (wrong username or password)'
 );
 
-export const authenticateUserFailureNotAuthorized = createAction(
-  '[Auth] Authenticate User Failure, Not authorized',
-  props<{ username: string }>()
+// --------
+
+export const authenticateUserAfterUserEmailConfirmed = createAction(
+  '[Auth] Authenticate User After User Email Confirmed',
+  props<{ username: string; password: string }>()
 );
 
 export const newPasswordRequired = createAction('[Auth] New Password Required');

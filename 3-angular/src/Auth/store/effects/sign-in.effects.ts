@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
-
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import {
   AuthenticatedActions,
   AuthSignInActions,
   AuthSignUpActions,
+  ErrorActions,
 } from '@auth/store/actions';
 import * as fromServices from '../../services/cognito.service';
-
 import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
-
 import { Store } from '@ngrx/store';
 import { AuthSignInSelectors } from '../selectors';
 import { AuthExtendedAppState } from '../reducers';
 
 @Injectable()
 export class SignInEffects {
-  authenticateUser$ = createEffect(() =>
+  signInAKAauthenticateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthSignInActions.authenticateUser),
       switchMap(({ signInData }) =>
@@ -26,15 +24,17 @@ export class SignInEffects {
           .pipe(
             map((result: any) => {
               if (result.challengeName === 'NEW_PASSWORD_REQUIRED') {
+                // CREATED USER FROM AWS CONSOLE
                 return AuthSignInActions.newPasswordRequired();
               } else {
-                return AuthenticatedActions.userAuthenticatedSuccess();
+                return AuthenticatedActions.authenticateUserSuccess();
               }
             }),
 
-            catchError((error: any, caught: Observable<any>) => {
+            catchError((error: any) => {
               let action$;
 
+              // REGISTERED FROM THE APP BUT NEVER CONFIRMED ACCOUNT WITH EMAIL CODE
               if (error.code === 'UserNotConfirmedException') {
                 action$ = of(
                   AuthSignUpActions.redirectToSignUpVerification({
@@ -42,20 +42,20 @@ export class SignInEffects {
                     password: signInData.password,
                   })
                 );
+                // WRONG PASSWORD
               } else if (error.code === 'NotAuthorizedException') {
                 action$ = of(
-                  AuthSignInActions.authenticateUserFailureNotAuthorized({
-                    username: signInData.username,
-                  })
+                  AuthSignInActions.authenticateUserFailureNotAuthorized()
                 );
+                // WRONG USERNAME AKA EMAIL
               } else if (error.code === 'UserNotFoundException') {
                 action$ = of(
-                  AuthSignInActions.authenticateUserFailureNotAuthorized({
-                    username: signInData.username,
-                  })
+                  AuthSignInActions.authenticateUserFailureNotAuthorized()
                 );
               } else {
-                action$ = of(AuthSignInActions.authenticateUserFailure(error));
+                action$ = of(
+                  AuthenticatedActions.authenticateUserFailure(error)
+                );
               }
 
               return action$;
@@ -70,42 +70,12 @@ export class SignInEffects {
       ofType(AuthSignInActions.authenticateUserAfterUserEmailConfirmed),
       switchMap(({ username, password }) =>
         this.cognitoService.authenticateUser(username, password).pipe(
-          map((result: any) => {
-            if (result.challengeName === 'NEW_PASSWORD_REQUIRED') {
-              return AuthSignInActions.newPasswordRequired();
-            } else {
-              return AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed();
-            }
-          }),
-
-          catchError((error: any, caught: Observable<any>) => {
-            let action$;
-
-            if (error.code === 'UserNotConfirmedException') {
-              action$ = of(
-                AuthSignUpActions.redirectToSignUpVerification({
-                  username,
-                  password,
-                })
-              );
-            } else if (error.code === 'NotAuthorizedException') {
-              action$ = of(
-                AuthSignInActions.authenticateUserFailureNotAuthorized({
-                  username,
-                })
-              );
-            } else if (error.code === 'UserNotFoundException') {
-              action$ = of(
-                AuthSignInActions.authenticateUserFailureNotAuthorized({
-                  username,
-                })
-              );
-            } else {
-              action$ = of(AuthSignInActions.authenticateUserFailure(error));
-            }
-
-            return action$;
-          })
+          map(() =>
+            AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed()
+          ),
+          catchError((error: any) =>
+            of(AuthenticatedActions.authenticateUserFailure(error))
+          )
         )
       )
     )
@@ -118,13 +88,13 @@ export class SignInEffects {
     )
   );
 
-  authenticateUserFailureNotAuthorized$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthSignInActions.authenticateUserFailureNotAuthorized),
-      map((action) => AuthSignInActions.redirectToSignIn(action))
-    )
-  );
-
+  // LOGIN WRONG USERNAME OR PASSWORD refressaa vaan sivun
+  // authenticateUserFailureNotAuthorized$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthSignInActions.authenticateUserFailureNotAuthorized),
+  //     map((action) => AuthSignInActions.redirectToSignIn(action))
+  //   )
+  // );
 
   // confirmNewPassword$ = createEffect(() =>
   //   this.actions$.pipe(
@@ -194,9 +164,8 @@ export class SignInEffects {
       switchMap(([newPassword, username]) => {
         if (username === undefined) {
           return of(
-            AuthSignInActions.authenticateUserFailure({
-              error:
-                'Cannot change new password if username doesnt exist.',
+            ErrorActions.signInUserNameDoesntExist({
+              error: 'Cannot change new password if username doesnt exist.',
             })
           );
         }

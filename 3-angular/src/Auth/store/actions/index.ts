@@ -3,6 +3,7 @@ import * as AuthSignInActions from './sign-in.actions';
 import * as AuthSignUpActions from './sign-up.actions';
 import * as AuthInitialUrlActions from './initial-url.actions';
 import * as CognitoUserAttributesActions from './user-attributes.actions';
+import * as ErrorActions from './error.actions';
 
 export {
   AuthenticatedActions,
@@ -10,4 +11,5 @@ export {
   AuthSignUpActions,
   AuthInitialUrlActions,
   CognitoUserAttributesActions,
+  ErrorActions,
 };

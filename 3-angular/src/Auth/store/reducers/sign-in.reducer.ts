@@ -7,8 +7,10 @@ import {
 
 export interface SignInState {
   username: string | undefined;
-  communicating: boolean;
+  loading: boolean;
   wrongUserNameOrPassword: boolean;
+
+  communicating: boolean;
   newPasswordCommunicating: boolean;
   newPasswordCodeLimitExceeded: boolean;
   newPasswordCodeMismatch: boolean;
@@ -19,8 +21,10 @@ export interface SignInState {
 
 export const initialState: SignInState = {
   username: '',
-  communicating: false,
+  loading: false,
   wrongUserNameOrPassword: false,
+
+  communicating: false,
   newPasswordCommunicating: false,
   newPasswordCodeLimitExceeded: false,
   newPasswordCodeMismatch: false,
@@ -30,13 +34,31 @@ export const initialState: SignInState = {
 
 const signInReducer = createReducer(
   initialState,
+
+  // CHECKED
   on(AuthSignInActions.authenticateUser, (state, { signInData }) => ({
     ...state,
     username: signInData.username,
-    communicating: true,
-    wrongUserNameOrPassword: false,
-    userNameIsJustVerified: false,
+    loading: true,
   })),
+  on(AuthenticatedActions.authenticateUserSuccess, (state) => ({
+    ...state,
+    loading: false,
+    wrongUserNameOrPassword: false,
+  })),
+  on(AuthSignInActions.authenticateUserFailureNotAuthorized, (state) => ({
+    ...state,
+    loading: false,
+    wrongUserNameOrPassword: true,
+  })),
+  on(AuthSignUpActions.redirectToSignUpVerification, (state, { username }) => ({
+    ...state,
+    username,
+    loading: false,
+  })),
+
+  // -----
+
   on(
     AuthSignInActions.authenticateUserAfterUserEmailConfirmed,
     (state, { username }) => ({
@@ -96,28 +118,14 @@ const signInReducer = createReducer(
       ...state,
       communicating: false,
     })
-  ),
-  on(AuthSignUpActions.redirectToSignUpVerification, (state, { username }) => ({
-    ...initialState,
-    communicating: false,
-    username,
-  })),
-  on(AuthenticatedActions.userAuthenticatedSuccess, (state) => ({
-    ...initialState,
-    communicating: false,
-  })),
-  on(AuthSignInActions.authenticateUserFailureNotAuthorized, (state) => ({
-    ...initialState,
-    communicating: false,
-    wrongUserNameOrPassword: true,
-    userNameIsJustVerified: state.userNameIsJustVerified,
-  })),
-  on(AuthSignInActions.redirectToSignIn, (state, { username }) => ({
-    ...initialState,
-    username,
-    wrongUserNameOrPassword: state.wrongUserNameOrPassword,
-    userNameIsJustVerified: state.userNameIsJustVerified,
-  }))
+  )
+
+  // on(AuthSignInActions.redirectToSignIn, (state, { username }) => ({
+  //   ...initialState,
+  //   username,
+  //   wrongUserNameOrPassword: state.wrongUserNameOrPassword,
+  //   userNameIsJustVerified: state.userNameIsJustVerified,
+  // }))
 );
 
 export const reducer = (state: SignInState | undefined, action: Action) =>

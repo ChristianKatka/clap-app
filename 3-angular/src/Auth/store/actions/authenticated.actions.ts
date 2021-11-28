@@ -1,5 +1,18 @@
 import { createAction, props } from '@ngrx/store';
 
+// CHECKED
+export const authenticateUserSuccess = createAction(
+  '[Auth] Authenticate User Success'
+);
+
+export const authenticateUserFailure = createAction(
+  '[Auth] Authenticate User Failure',
+  props<{ error: string }>()
+);
+
+
+// 
+
 export const checkOldUserSession = createAction(
   '[Auth] Check Old User Session'
 );
@@ -11,9 +24,7 @@ export const userNotRemembered = createAction('[Auth] User Not Remembered');
 export const signOut = createAction('[Auth] Sign Out');
 export const signOutSuccess = createAction('[Auth] Sign Out Success');
 
-export const userAuthenticatedSuccess = createAction(
-  '[Auth] User Authenticated Success'
-);
+
 
 export const userAuthenticatedSuccessAfterUserEmailConfirmed = createAction(
   '[Auth] User Authenticated Success After User Email Confirmed'

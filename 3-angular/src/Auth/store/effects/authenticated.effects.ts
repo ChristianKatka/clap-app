@@ -63,7 +63,7 @@ export class AuthenticatedEffects {
   redirectToAppInitialization$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
-        AuthenticatedActions.userAuthenticatedSuccess,
+        AuthenticatedActions.authenticateUserSuccess,
         AuthenticatedActions.userRemembered
       ),
       map(() => AuthenticatedActions.redirectToAppInitialization())

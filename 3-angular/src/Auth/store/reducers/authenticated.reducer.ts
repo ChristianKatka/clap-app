@@ -34,13 +34,13 @@ const authenticatedReducer = createReducer(
     ...initialState,
     authenticating: true,
   })),
-  on(AuthenticatedActions.userAuthenticatedSuccess, () => ({
+  on(AuthenticatedActions.authenticateUserSuccess, () => ({
     ...initialState,
     authenticated: true,
     authenticating: false,
   })),
   on(
-    AuthSignInActions.authenticateUserFailure ||
+    AuthenticatedActions.authenticateUserFailure ||
       AuthSignInActions.authenticateUserFailureNotAuthorized,
     () => ({
       ...initialState,
