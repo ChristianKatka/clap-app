@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SignInData } from '@auth/models/sign-in-data.model';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -7,29 +8,22 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./sign-in-form.component.scss'],
 })
 export class SignInFormComponent {
-  @Input()
-  set isSignInCommunicating(signInCommunicating: boolean) {
-    if (signInCommunicating) {
-      this.signInForm.disable();
-    } else {
-      this.signInForm.enable();
-    }
-  }
+  // @Input()
+  // set isSignInCommunicating(signInCommunicating: boolean) {
+  //   if (signInCommunicating) {
+  //     this.signInForm.disable();
+  //   } else {
+  //     this.signInForm.enable();
+  //   }
+  // }
 
-  @Input()
-  username: string | undefined | null;
-
-  @Input()
-  isWrongUserNameOrPassword = false;
-
-  @Input()
-  isUserNameJustVerified = false;
+  // @Input()
+  // isWrongUserNameOrPassword = false;
 
   @Output()
-  signInDataSubmitted: EventEmitter<any> = new EventEmitter<any>();
+  signIn = new EventEmitter<SignInData>();
 
   showPassword = false;
-
 
   signInForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -37,6 +31,6 @@ export class SignInFormComponent {
   });
 
   submit() {
-    this.signInDataSubmitted.next(this.signInForm.value);
+    this.signIn.emit(this.signInForm.value);
   }
 }

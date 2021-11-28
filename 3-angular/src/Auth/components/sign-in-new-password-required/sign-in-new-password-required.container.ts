@@ -6,24 +6,19 @@ import { AuthExtendedAppState } from '@auth/store/reducers';
 import { Store } from '@ngrx/store';
 
 @Component({
-  templateUrl: './sign-in-new-password-required.container.html',
-  styleUrls: ['./sign-in-new-password-required.container.scss'],
+  templateUrl: 'sign-in-new-password-required.container.html',
 })
 export class SignInNewPasswordRequiredContainerComponent {
-  isNewPasswordCommunicating$: Observable<boolean> = this.store.select(
-    AuthSignInSelectors.getIsNewPasswordCommunicating
-  );
-  newPasswordErrorCode$: Observable<any> = this.store.select(
-    AuthSignInSelectors.getNewPasswordErrorCode
-  );
+  // isNewPasswordCommunicating$: Observable<boolean> = this.store.select(
+  //   AuthSignInSelectors.getIsNewPasswordCommunicating
+  // );
+  // newPasswordErrorCode$: Observable<any> = this.store.select(
+  //   AuthSignInSelectors.getNewPasswordErrorCode
+  // );
 
   constructor(private store: Store<AuthExtendedAppState>) {}
 
-  onNewPasswordSubmit(password: string) {
-    console.log('UUS PASSU');
-    
-    console.log(password);
-    
-    this.store.dispatch(AuthSignInActions.changeNewPassword({ password }));
+  onNewPasswordSubmitted(newPassword: string) {
+    this.store.dispatch(AuthSignInActions.changeNewPassword({ newPassword }));
   }
 }

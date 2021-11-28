@@ -19,6 +19,7 @@ import { isObject } from 'lodash-es';
 import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
 import { SignUpService } from './sign-up.service';
 import { AuthenticateUserService } from './authenticate-user.service';
+import { ModifyUserService } from './modify-user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,8 @@ export class CognitoService {
 
   constructor(
     private signUpService: SignUpService,
-    private authenticateUserService: AuthenticateUserService
+    private authenticateUserService: AuthenticateUserService,
+    private modifyUserService: ModifyUserService
   ) {
     AWS.config.region = environment.cognito.region;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -317,37 +319,41 @@ export class CognitoService {
   }
 
   public changePassword(newPassword: string): Observable<any> {
-    let user = this.userPool.getCurrentUser();
-    const that = this;
+    let currentUser = this.userPool.getCurrentUser();
 
-    if (isNil(user)) {
-      user = this.user;
+    if (isNil(currentUser)) {
+      currentUser = this.user;
     }
 
-    return from(
-      new Promise((resolve, reject) => {
-        if (user === null) {
-          reject('Current user is null');
-        } else {
-          user.completeNewPasswordChallenge(newPassword, [], {
-            onSuccess: (session) => {
-              that.setCredentialsFromSession(session);
-              that.user = user;
-              resolve(user);
-            },
-            onFailure: (err) => {
-              reject(err);
-            },
-            mfaRequired: (challengeName, challengeParam) => {
-              const response: any = { ...user };
-              response.challengeName = challengeName;
-              response.challengeParam = challengeParam;
-              resolve(response);
-            },
-          });
-        }
-      })
-    );
+    if (!currentUser) {
+      return of({ error: 'no user' });
+    }
+    return this.modifyUserService.changePassword(currentUser, newPassword);
+
+    // return from(
+    //   new Promise((resolve, reject) => {
+    //     if (user === null) {
+    //       reject('Current user is null');
+    //     } else {
+    //       user.completeNewPasswordChallenge(newPassword, [], {
+    //         onSuccess: (session) => {
+    //           that.setCredentialsFromSession(session);
+    //           that.user = user;
+    //           resolve(user);
+    //         },
+    //         onFailure: (err) => {
+    //           reject(err);
+    //         },
+    //         mfaRequired: (challengeName, challengeParam) => {
+    //           const response: any = { ...user };
+    //           response.challengeName = challengeName;
+    //           response.challengeParam = challengeParam;
+    //           resolve(response);
+    //         },
+    //       });
+    //     }
+    //   })
+    // );
   }
 
   public updateUserAttributes(

@@ -1,13 +1,14 @@
+import { SignInData } from '@auth/models/sign-in-data.model';
 import { createAction, props } from '@ngrx/store';
-
-export const authenticateUser = createAction(
-  '[Auth] Authenticate User',
-  props<{ username: string; password: string }>()
-);
 
 export const authenticateUserAfterUserEmailConfirmed = createAction(
   '[Auth] Authenticate User After User Email Confirmed',
   props<{ username: string; password: string }>()
+);
+
+export const authenticateUser = createAction(
+  '[Auth] Authenticate User',
+  props<{ signInData: SignInData }>()
 );
 
 export const authenticateUserFailure = createAction(
@@ -24,7 +25,7 @@ export const newPasswordRequired = createAction('[Auth] New Password Required');
 
 export const changeNewPassword = createAction(
   '[Auth] Change New Password',
-  props<{ password: string }>()
+  props<{ newPassword: string }>()
 );
 
 export const requestNewPasswordCode = createAction(

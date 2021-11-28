@@ -4,6 +4,7 @@ import { AuthenticatedGuard } from '@auth/guards';
 import { AppInitializationContainerComponent } from './app-initialization/app-initialization.container';
 import { HomeFeatureContainerComponent } from '@home/home-feature.container';
 import { WelcomeContainerComponent } from './welcome/welcome.container';
+import { SignInNewPasswordRequiredContainerComponent } from '@auth/components/sign-in-new-password-required/sign-in-new-password-required.container';
 
 const routes: Routes = [
   {

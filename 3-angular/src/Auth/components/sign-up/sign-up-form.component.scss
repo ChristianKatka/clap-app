@@ -1,5 +1,5 @@
-@import '../../../styles.scss';
-
+@import "../../../styles.scss";
+@include disable-auto-zoom-on-iphone-input-fields;
 
 .sign-up-image {
   width: 15rem;
@@ -41,10 +41,6 @@ small {
 mat-error {
   margin-bottom: 10px !important;
 }
-
-
-
-
 
 // form {
 //   color: green;

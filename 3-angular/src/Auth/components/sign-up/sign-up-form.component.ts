@@ -34,7 +34,7 @@ export class SignUpFormComponent {
     Validators.pattern(onlyLettersAndNumbers),
   ]);
 
-  passwordsFormGroup = new FormGroup(
+  passwordsForm = new FormGroup(
     {
       password: new FormControl(null, [
         Validators.required,
@@ -49,7 +49,7 @@ export class SignUpFormComponent {
   signUpUserDataForm = new FormGroup({
     email: this.emailAddressFormControl,
     nickname: this.nicknameFormControl,
-    passwords: this.passwordsFormGroup,
+    passwords: this.passwordsForm,
   });
 
   submit() {

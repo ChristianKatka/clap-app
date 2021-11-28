@@ -12,18 +12,28 @@
   </mat-error>
 </section> -->
 
-<form fxLayout="column" fxLayoutAlign="center center">
+<form fxLayout="column" fxLayoutAlign="center center" [formGroup]="signInForm">
   <mat-form-field appearance="outline">
     <mat-label>Email</mat-label>
 
-    <input matInput type="email" autocomplete="email" />
+    <input
+      matInput
+      type="email"
+      autocomplete="email"
+      formControlName="username"
+    />
     <mat-icon matPrefix>mail</mat-icon>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Password</mat-label>
 
-    <input matInput id="password" [type]="showPassword ? 'text' : 'password'" />
+    <input
+      matInput
+      id="password"
+      [type]="showPassword ? 'text' : 'password'"
+      formControlName="password"
+    />
     <mat-icon matPrefix>lock</mat-icon>
     <mat-icon
       matSuffix
@@ -33,73 +43,9 @@
     >
   </mat-form-field>
 
-  <button mat-raised-button mat-button color="primary">Sign in</button>
+  <button mat-raised-button mat-button color="primary" (click)="submit()">
+    Sign in
+  </button>
 
   <span>New to Clap-App? <b routerLink="/sign-in">Register</b></span>
 </form>
-
-
-
-<!-- <app-info
-  *ngIf="this.isUserNameJustVerified"
-  fxLayout="row"
-  fxLayoutAlign="start center"
-  fxLayoutGap="8px"
->
-  <mat-icon>info</mat-icon>
-  <span>
-    Käyttäjätunnus <strong>{{ this.username }}</strong> on vahvistettu. Ole hyvä
-    ja kirjaudu palveluun.
-  </span>
-</app-info>
-
-<app-alert
-  *ngIf="!this.isUserNameJustVerified && this.isWrongUserNameOrPassword"
-  fxLayout="row"
-  fxLayoutAlign="start center"
-  fxLayoutGap="8px"
->
-  <mat-icon>error_outline</mat-icon>
-  <mat-error>
-    Syöttämäsi käyttäjätunnus tai salasana on virheellinen.
-  </mat-error>
-</app-alert>
-
-<form
-  fxLayout="column"
-  fxLayoutAlign="start"
-  fxLayoutGap="8px"
-  [formGroup]="signInForm"
->
-  <mat-form-field appearance="fill">
-    <mat-label>Käyttäjätunnus</mat-label>
-    <input
-      matInput
-      type="text"
-      formControlName="username"
-      autocomplete="username"
-    />
-    <mat-icon matPrefix>account_circle</mat-icon>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Salasana</mat-label>
-    <input
-      matInput
-      type="password"
-      formControlName="password"
-      autocomplete="password"
-    />
-    <mat-icon matPrefix>lock</mat-icon>
-  </mat-form-field>
-
-  <button
-    mat-flat-button
-    color="primary"
-    type="submit"
-    (click)="this.submit()"
-    [disabled]="this.signInForm.invalid"
-  >
-    Kirjaudu sisään
-  </button>
-</form> -->

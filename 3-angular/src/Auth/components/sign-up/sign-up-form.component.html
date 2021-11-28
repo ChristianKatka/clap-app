@@ -47,19 +47,19 @@
   </mat-form-field>
 </form>
 
-<form [formGroup]="passwordsFormGroup">
+<form [formGroup]="passwordsForm">
   <!-- PASSWORD -->
   <mat-form-field
     appearance="outline"
     hintLabel="Should be at least 8 characters long."
   >
-    <mat-error *ngIf="passwordsFormGroup.get('password')?.hasError('minlength')"
+    <mat-error *ngIf="passwordsForm.get('password')?.hasError('minlength')"
       >Password required length 8</mat-error
     >
-    <mat-error *ngIf="passwordsFormGroup.get('password')?.hasError('required')"
+    <mat-error *ngIf="passwordsForm.get('password')?.hasError('required')"
       >Password is required</mat-error
     >
-    <mat-error *ngIf="passwordsFormGroup.get('password')?.hasError('pattern')">
+    <mat-error *ngIf="passwordsForm.get('password')?.hasError('pattern')">
       White space is not allowed in the start or the end
     </mat-error>
     <mat-label>Password</mat-label>
@@ -79,7 +79,7 @@
       >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
     >
     <mat-hint align="end">
-      {{ passwordsFormGroup.get("password")?.value?.length }} / 8</mat-hint
+      {{ passwordsForm.get("password")?.value?.length }} / 8</mat-hint
     >
   </mat-form-field>
 
@@ -87,7 +87,7 @@
   <mat-form-field appearance="outline">
     <mat-error
       *ngIf="
-        passwordsFormGroup.get('passwordConfirm')?.dirty
+        passwordsForm.get('passwordConfirm')?.dirty
       "
     >
       Passwords need to be same
@@ -171,7 +171,7 @@
   </form>
 
   <form
-    [formGroup]="passwordsFormGroup"
+    [formGroup]="passwordsForm"
     fxLayout="column"
     fxLayoutAlign="center stretch"
     fxLayoutGap="8px"
@@ -187,18 +187,18 @@
       />
 
       <mat-error
-        *ngIf="passwordsFormGroup.get('password')?.hasError('minlength')"
+        *ngIf="passwordsForm.get('password')?.hasError('minlength')"
       >
         Salasanan pitää olla vähintään 8 merkkiä pitkä
       </mat-error>
 
       <mat-error
-        *ngIf="passwordsFormGroup.get('password')?.hasError('required')"
+        *ngIf="passwordsForm.get('password')?.hasError('required')"
       >
         Aseta salasana
       </mat-error>
       <mat-error
-        *ngIf="passwordsFormGroup.get('password')?.hasError('pattern')"
+        *ngIf="passwordsForm.get('password')?.hasError('pattern')"
       >
         Välilyönnit ei sallittuja salasanan alussa tai lopussa
       </mat-error>
@@ -223,8 +223,8 @@
       />
       <mat-error
         *ngIf="
-          passwordsFormGroup.get('passwordConfirm')?.dirty &&
-          passwordsFormGroup.hasError('notSame')
+          passwordsForm.get('passwordConfirm')?.dirty &&
+          passwordsForm.hasError('notSame')
         "
       >
         Salasanojen on täsmättävä

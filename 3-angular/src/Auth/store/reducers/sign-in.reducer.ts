@@ -30,9 +30,9 @@ export const initialState: SignInState = {
 
 const signInReducer = createReducer(
   initialState,
-  on(AuthSignInActions.authenticateUser, (state, { username }) => ({
+  on(AuthSignInActions.authenticateUser, (state, { signInData }) => ({
     ...state,
-    username,
+    username: signInData.username,
     communicating: true,
     wrongUserNameOrPassword: false,
     userNameIsJustVerified: false,
