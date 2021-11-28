@@ -1,23 +1,21 @@
 export const event = {
   version: "1",
   region: "eu-west-1",
-  userPoolId: "eu-west-1_4bKx6pbAi",
+  userPoolId: "eu-west-1_iS1h5qUcn",
   userName: "christiandevaaja@gmail.com",
   callerContext: {
     awsSdkVersion: "aws-sdk-unknown-unknown",
-    clientId: "2l5iv33tbqho12iodt25rf40l7",
+    clientId: "dfaskgnq12t12ajd0i12lvuo7",
   },
   triggerSource: "PostAuthentication_Authentication",
   request: {
     userAttributes: {
-      sub: "08808436-cbbb-4c74-98f2-1e8089a393a6",
-      "cognito:user_status": "CONFIRMED",
+      sub: "1b1761a0-e453-4fab-a246-3ffcb0d4a48f",
       email_verified: "true",
-      given_name: "asd",
-      family_name: "asd",
+      "cognito:user_status": "CONFIRMED",
+      nickname: "chrisboy",
       email: "christiandevaaja@gmail.com",
     },
-    newDeviceUsed: false,
   },
   response: {},
 };

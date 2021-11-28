@@ -9,7 +9,11 @@ const handler: Handler = async (
 
   if (event && event.triggerSource === "PostAuthentication_Authentication") {
     if (!event.userName) return;
-    await dynamodbCreateUser(event.userName, event.request.userAttributes.sub);
+    await dynamodbCreateUser(
+      event.request.userAttributes.sub,
+      event.request.userAttributes.email,
+      event.request.userAttributes.nickname
+    );
     console.log("Succesfully created user to dynamodb");
     context.done(undefined, event);
   }

@@ -1,10 +1,15 @@
 import { docClient } from "../../instances/aws";
 import { USERS_TABLE } from "../../constants";
 
-export const dynamodbCreateUser = (username: string, sub: string) => {
+export const dynamodbCreateUser = (
+  sub: string,
+  email: string,
+  nickname: string
+) => {
   const user = {
     id: sub,
-    email: username,
+    email,
+    nickname,
   };
 
   return docClient
