@@ -3,21 +3,23 @@
 </section>
 
 <h1>Login</h1>
-
-<!-- <section class="alert" fxLayoutAlign="start center" fxLayoutGap="8px">
-  <mat-icon>error_outline</mat-icon>
-  <mat-error>
-    Syöttämäsi sähköpostiosoite tai salasana on virheellinen.
-    <br />
-  </mat-error>
-</section> -->
+<clap-app-alert
+  *ngIf="isWrongUsernameOrPassword"
+  [text]="'Wrong email or password'"
+></clap-app-alert>
 
 <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="signInForm">
   <mat-form-field appearance="outline">
+    <mat-error *ngIf="signInForm.get('username')?.hasError('required')"
+      >Email is required</mat-error
+    >
+    <mat-error *ngIf="signInForm.get('username')?.hasError('email')">
+      Input real email address
+    </mat-error>
     <mat-label>Email</mat-label>
-
     <input
       matInput
+      maxlength="40"
       type="email"
       autocomplete="email"
       formControlName="username"
@@ -26,11 +28,13 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
+    <mat-error *ngIf="signInForm.get('password')?.hasError('required')"
+      >Password is required</mat-error
+    >
     <mat-label>Password</mat-label>
-
     <input
       matInput
-      id="password"
+      maxlength="40"
       [type]="showPassword ? 'text' : 'password'"
       formControlName="password"
     />
@@ -43,9 +47,22 @@
     >
   </mat-form-field>
 
-  <button mat-raised-button mat-button color="primary" (click)="submit()">
+  <button
+    mat-raised-button
+    mat-button
+    color="primary"
+    (click)="submit()"
+    [disabled]="this.signInForm.invalid"
+    *ngIf="!isLoading"
+  >
     Login
   </button>
 
-  <span>New to Clap-App? <b routerLink="/sign-up">Register</b></span>
+  <button *ngIf="isLoading" mat-raised-button color="primary" disabled>
+    <clap-app-loading-spinner [diameter]="40"></clap-app-loading-spinner>
+  </button>
+
+  <span
+    >Don´t have an account? <b routerLink="/sign-up">Create Account</b></span
+  >
 </form>

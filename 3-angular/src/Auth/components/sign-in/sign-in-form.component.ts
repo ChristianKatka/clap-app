@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignInData } from '@auth/models/sign-in-data.model';
 
@@ -7,27 +13,28 @@ import { SignInData } from '@auth/models/sign-in-data.model';
   templateUrl: './sign-in-form.component.html',
   styleUrls: ['./sign-in-form.component.scss'],
 })
-export class SignInFormComponent {
-  // @Input()
-  // set isSignInCommunicating(signInCommunicating: boolean) {
-  //   if (signInCommunicating) {
-  //     this.signInForm.disable();
-  //   } else {
-  //     this.signInForm.enable();
-  //   }
-  // }
-
-  // @Input()
-  // isWrongUserNameOrPassword = false;
+export class SignInFormComponent implements OnChanges {
+  @Input()
+  isLoading = false;
+  @Input()
+  isWrongUsernameOrPassword = false;
 
   @Output()
   signIn = new EventEmitter<SignInData>();
 
   showPassword = false;
 
+  ngOnChanges() {
+    if (this.isLoading) {
+      this.signInForm.disable();
+    } else {
+      this.signInForm.enable();
+    }
+  }
+
   signInForm: FormGroup = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    username: new FormControl(null, [Validators.email, Validators.required]),
+    password: new FormControl(null, Validators.required),
   });
 
   submit() {

@@ -8,6 +8,7 @@
 
 mat-form-field {
   width: 100%;
+  margin: 10px 0;
 }
 
 button {
@@ -17,7 +18,7 @@ button {
 }
 
 mat-icon {
-  color: rgb(53, 53, 53);
+  color: $clap-dark-gray;
 }
 
 b {
@@ -39,4 +40,8 @@ b {
   mat-icon {
     color: $clap-error-red;
   }
+}
+
+span {
+  color: $clap-gray;
 }

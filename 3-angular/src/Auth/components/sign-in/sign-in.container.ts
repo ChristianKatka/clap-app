@@ -1,17 +1,16 @@
 import { AuthSignInActions } from '@auth/store/actions';
-import {
-  AuthSignInSelectors,
-  AuthSignUpSelectors,
-} from '@auth/store/selectors';
+import { AuthSignInSelectors } from '@auth/store/selectors';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthExtendedAppState } from '@auth/store/reducers';
 import { Store } from '@ngrx/store';
 import { SignInData } from '@auth/models/sign-in-data.model';
+import { SignInStateService } from './sign-in-state.service';
 
 @Component({
   templateUrl: './sign-in.container.html',
   styleUrls: ['./sign-in.container.scss'],
+  providers: [SignInStateService],
 })
 export class SignInContainerComponent {
   // username$: Observable<string | undefined> = this.store.select(
@@ -27,9 +26,12 @@ export class SignInContainerComponent {
   //   AuthSignInSelectors.getIsUserNameJustVerified
   // );
 
-  constructor(private store: Store<AuthExtendedAppState>) {}
+  constructor(
+    private store: Store<AuthExtendedAppState>,
+    public signInStateService: SignInStateService
+  ) {}
 
   onSignIn(signInData: SignInData) {
-    this.store.dispatch(AuthSignInActions.authenticateUser({signInData}));
+    this.store.dispatch(AuthSignInActions.authenticateUser({ signInData }));
   }
 }

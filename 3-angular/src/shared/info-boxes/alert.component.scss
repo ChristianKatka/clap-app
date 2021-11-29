@@ -1,7 +1,10 @@
+@import "../../styles.scss";
+
 :host {
   display: block;
-  padding: 24px;
-  border-radius: 4px 4px 0 0;
-  background: rgb(248, 204, 204);
-  color: rgb(202, 202, 202);
+  padding: 15px;
+  border-radius: 4px;
+  background: #ffe7e7;
+  color: $clap-dark-gray;
+  margin-bottom: 9px;
 }

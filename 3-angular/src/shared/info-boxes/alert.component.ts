@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-alert',
-  template: ` <ng-content></ng-content> `,
-  styleUrls: ['./alert.component.scss'],
+  selector: 'clap-app-alert',
+  templateUrl: 'alert.component.html',
+  styleUrls: ['alert.component.scss'],
 })
-export class AlertComponent {}
+export class AlertComponent {
+  @Input()
+  text = '';
+}
