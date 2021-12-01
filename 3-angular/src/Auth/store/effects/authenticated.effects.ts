@@ -73,7 +73,7 @@ export class AuthenticatedEffects {
   redirectToWelcomePage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
-        AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed
+        AuthenticatedActions.authenticateUserAfterUserEmailConfirmedSuccess
       ),
       map(() => AuthenticatedActions.redirectToWelcomePage())
     )

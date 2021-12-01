@@ -10,6 +10,13 @@ export const authenticateUserFailure = createAction(
   props<{ error: string }>()
 );
 
+export const authenticateUserAfterUserEmailConfirmed = createAction(
+  '[Auth] Authenticate User After User Email Confirmed',
+  props<{ username: string; password: string }>()
+);
+export const authenticateUserAfterUserEmailConfirmedSuccess = createAction(
+  '[Auth] Authenticate User After User Email Confirmed Success'
+);
 
 // 
 
@@ -26,9 +33,7 @@ export const signOutSuccess = createAction('[Auth] Sign Out Success');
 
 
 
-export const userAuthenticatedSuccessAfterUserEmailConfirmed = createAction(
-  '[Auth] User Authenticated Success After User Email Confirmed'
-);
+
 
 export const redirectToWelcomePage = createAction(
   '[Auth] Redirect To Welcome Page'

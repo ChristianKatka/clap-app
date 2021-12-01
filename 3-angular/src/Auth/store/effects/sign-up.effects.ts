@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { AuthSignInActions, AuthSignUpActions } from '@auth/store/actions';
+import {
+  AuthenticatedActions,
+  AuthSignInActions,
+  AuthSignUpActions,
+} from '@auth/store/actions';
 import * as fromServices from '../../services/cognito.service';
-
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import {
   switchMap,
   map,
@@ -24,30 +27,20 @@ export class SignUpEffects {
       ofType(AuthSignUpActions.signUp),
       switchMap(({ signUpUserData }) =>
         this.cognitoService.signUp(signUpUserData).pipe(
-          tap((x) => console.log(x)),
           map(() =>
             AuthSignUpActions.signUpSuccess({
               signUpUserData,
             })
           ),
-
-          catchError((error: any, caught: Observable<any>) => {
+          catchError((error: any) => {
             let action$;
 
             if (error.code === 'UsernameExistsException') {
               action$ = of(
-                AuthSignUpActions.signUpFailureUsernameExists({
+                AuthSignUpActions.signUpFailureUsernameAlreadyExists({
                   username: signUpUserData.username,
                 })
               );
-            } else if (error.code === 'UserLambdaValidationException') {
-              action$ = of(AuthSignUpActions.signUpFailureTermsNotAccepted());
-            } else if (error.code === 'InvalidPasswordException') {
-              action$ = of(
-                AuthSignUpActions.signUpFailurePasswordRequirements()
-              );
-            } else if (error.code === 'InvalidParameterException') {
-              action$ = of(AuthSignUpActions.signUpFailureInvalidParameter());
             } else {
               action$ = of(AuthSignUpActions.signUpFailure(error));
             }
@@ -63,7 +56,7 @@ export class SignUpEffects {
     this.actions$.pipe(
       ofType(AuthSignUpActions.signUpSuccess),
       map(({ signUpUserData }) =>
-        AuthSignUpActions.redirectToSignUpVerification({
+        AuthSignUpActions.redirectToEmailConfirmationView({
           username: signUpUserData.username,
           password: signUpUserData.password,
         })
@@ -71,45 +64,47 @@ export class SignUpEffects {
     )
   );
 
-  confirmRegistration$ = createEffect(() =>
+  confirmRegistrationByEmailCode$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthSignUpActions.confirmRegistration),
+      ofType(AuthSignUpActions.confirmRegistrationByEmailCode),
       map((payload) => payload.code),
       withLatestFrom(
         this.store.select(AuthSignUpSelectors.getSignUpUserNameAndPassword)
       ),
-
       switchMap(([code, { username, password }]) => {
         if (username === undefined || password === undefined) {
           return of(
-            AuthSignUpActions.confirmRegistrationFailure({
+            AuthSignUpActions.confirmRegistrationByEmailCodeFailure({
               error:
                 'Cannot confirm registration if username or password is missing.',
             })
           );
         }
 
-        return this.cognitoService.confirmRegistration(username, code).pipe(
-          tap((x) => console.log(x)),
-          map(() =>
-            AuthSignUpActions.confirmRegistrationSuccess({
-              username,
-              password,
-              code,
+        return this.cognitoService
+          .confirmRegistrationByEmailCode(username, code)
+          .pipe(
+            map(() =>
+              AuthSignUpActions.confirmRegistrationByEmailCodeSuccess({
+                username,
+                password,
+                code,
+              })
+            ),
+            catchError((error: any) => {
+              if (error.code === 'CodeMismatchException') {
+                return of(
+                  AuthSignUpActions.confirmRegistrationByEmailCodeFailureCodeMismatch()
+                );
+              } else {
+                return of(
+                  AuthSignUpActions.confirmRegistrationByEmailCodeFailure(
+                    error.code
+                  )
+                );
+              }
             })
-          ),
-          catchError((error: any) => {
-            if (error.code === 'CodeMismatchException') {
-              return of(
-                AuthSignUpActions.confirmRegistrationFailureCodeMismatch()
-              );
-            } else {
-              return of(
-                AuthSignUpActions.confirmRegistrationFailure(error.code)
-              );
-            }
-          })
-        );
+          );
       })
     )
   );
@@ -118,23 +113,22 @@ export class SignUpEffects {
     this.actions$.pipe(
       ofType(AuthSignUpActions.sendNewEmailConfirmationCode),
 
-      withLatestFrom(
-        this.store.select(AuthSignUpSelectors.getSignUpUserNameAndPassword)
-      ),
+      withLatestFrom(this.store.select(AuthSignUpSelectors.getEmail)),
 
-      switchMap(([payload, { username, password }]) => {
-        if (username === undefined) {
+      switchMap(([payload, email]) => {
+        if (email === undefined) {
           return of(
             AuthSignUpActions.sendNewEmailConfirmationCodeFailure({
-              error: 'Cannot sign up if username is missing.',
+              error:
+                'Email is undefined where confirmation code should be sent.',
             })
           );
         }
 
-        return this.cognitoService.sendNewEmailConfirmationCode(username).pipe(
+        return this.cognitoService.sendNewEmailConfirmationCode(email).pipe(
           map(() =>
             AuthSignUpActions.sendNewEmailConfirmationCodeSuccess({
-              username,
+              email,
             })
           ),
 
@@ -156,11 +150,27 @@ export class SignUpEffects {
     )
   );
 
+  authenticateUserAfterUserEmailConfirmed$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthenticatedActions.authenticateUserAfterUserEmailConfirmed),
+      switchMap(({ username, password }) =>
+        this.cognitoService.authenticateUser(username, password).pipe(
+          map(() =>
+            AuthenticatedActions.authenticateUserAfterUserEmailConfirmedSuccess()
+          ),
+          catchError((error: any) =>
+            of(AuthenticatedActions.authenticateUserFailure(error))
+          )
+        )
+      )
+    )
+  );
+
   confirmRegistrationSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthSignUpActions.confirmRegistrationSuccess),
+      ofType(AuthSignUpActions.confirmRegistrationByEmailCodeSuccess),
       map(({ username, password }) =>
-        AuthSignInActions.authenticateUserAfterUserEmailConfirmed({
+        AuthenticatedActions.authenticateUserAfterUserEmailConfirmed({
           username,
           password,
         })

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   noWhiteSpaceAtStartOrEndPattern,
@@ -12,13 +12,27 @@ import { confirmPasswordsValidator } from './confirm-passwords.validator';
   templateUrl: './sign-up-form.component.html',
   styleUrls: ['./sign-up-form.component.scss'],
 })
-export class SignUpFormComponent {
+export class SignUpFormComponent implements OnChanges{
+  @Input()
+  isLoading = false;
+  @Input()
+  usernameAlreadyExists = false;
+
   @Output()
   showTermsOfService = new EventEmitter();
   @Output()
   showPrivacyPolicy = new EventEmitter();
   @Output()
   signUp: EventEmitter<any> = new EventEmitter();
+
+
+  ngOnChanges() {
+    if (this.isLoading) {
+      this.signUpUserDataForm.disable();
+    } else {
+      this.signUpUserDataForm.enable();
+    }
+  }
 
   showPassword = false;
   showPasswordConfirm = false;

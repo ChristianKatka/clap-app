@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
 @Injectable({
   providedIn: 'root',
 })
-export class SignUpVerificationGuard implements CanActivate {
+export class SignUpConfirmationGuard implements CanActivate {
   constructor(
     private store: Store<AuthExtendedAppState>,
     private cognitoService: CognitoService

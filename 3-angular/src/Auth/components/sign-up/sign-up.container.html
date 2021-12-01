@@ -1,20 +1,11 @@
-<!-- <main fxLayout="column" fxLayoutAlign="center center">
-  <h2>logo</h2>
-  <clap-app-sign-up-form
-    class="width-300-or-90-percent"
-    [isSignUpCommunicating]="isSignUpCommunicating$ | async | onlyBoolean"
-    (signUpDataSubmitted)="onSignUpDataSubmitted($event)"
-    (showTermsOfService)="onShowTermsOfService()"
-    (showPrivacyPolicy)="onShowPrivacyPolicy()"
-  ></clap-app-sign-up-form>
-</main> -->
-
 <main fxLayoutAlign="center center">
   <section [style.width]="'90%'">
     <clap-app-sign-up-form
-    (showTermsOfService)="onShowTermsOfService()"
-    (showPrivacyPolicy)="onShowPrivacyPolicy()"
-    (signUp)="onSignUp($event)"
+      [isLoading]="signUpStateService.isLoading$ | async | onlyBoolean"
+      [usernameAlreadyExists]="signUpStateService.usernameAlreadyExists$ | async | onlyBoolean"
+      (showTermsOfService)="onShowTermsOfService()"
+      (showPrivacyPolicy)="onShowPrivacyPolicy()"
+      (signUp)="onSignUp($event)"
     ></clap-app-sign-up-form>
   </section>
 </main>

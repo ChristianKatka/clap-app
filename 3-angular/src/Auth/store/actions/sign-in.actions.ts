@@ -11,46 +11,54 @@ export const authenticateUserFailureNotAuthorized = createAction(
   '[Auth] Authenticate User Failure, Not authorized (wrong username or password)'
 );
 
-// --------
-
-export const authenticateUserAfterUserEmailConfirmed = createAction(
-  '[Auth] Authenticate User After User Email Confirmed',
-  props<{ username: string; password: string }>()
+export const signInUserNameDoesntExist = createAction(
+  '[Auth] Sign In User Name Doesnt Exist)',
+  props<{ error: string }>()
 );
 
 export const newPasswordRequired = createAction('[Auth] New Password Required');
+export const redirectToNewPasswordRequired = createAction(
+  '[Auth] Redirect to New Password Required'
+);
 
 export const changeNewPassword = createAction(
   '[Auth] Change New Password',
   props<{ newPassword: string }>()
 );
 
-export const requestNewPasswordCode = createAction(
-  '[Auth] Request New Password Code',
-  props<{ username: string }>()
-);
 
-export const requestNewPasswordCodeSuccess = createAction(
-  '[Auth] Request New Password Code Success'
-);
+// --------
 
-export const requestNewPasswordCodeFailure = createAction(
-  '[Auth] Request New Password Code Failure',
-  props<{ error: string }>()
-);
 
-export const requestNewPasswordCodeFailureLimitExceeded = createAction(
-  '[Auth] Request New Password Code Failure, Limit exceeded'
-);
 
-export const requestNewPasswordCodeFailureUserNotFound = createAction(
-  '[Auth] Request New Password Code Failure, User not found'
-);
 
-export const requestNewPasswordCodeFailureInvalidParameter = createAction(
-  '[Auth] Request New Password Code Failure, Invalid parameter',
-  props<{ username: string }>()
-);
+
+// export const requestNewPasswordCode = createAction(
+//   '[Auth] Request New Password Code',
+//   props<{ username: string }>()
+// );
+
+// export const requestNewPasswordCodeSuccess = createAction(
+//   '[Auth] Request New Password Code Success'
+// );
+
+// export const requestNewPasswordCodeFailure = createAction(
+//   '[Auth] Request New Password Code Failure',
+//   props<{ error: string }>()
+// );
+
+// export const requestNewPasswordCodeFailureLimitExceeded = createAction(
+//   '[Auth] Request New Password Code Failure, Limit exceeded'
+// );
+
+// export const requestNewPasswordCodeFailureUserNotFound = createAction(
+//   '[Auth] Request New Password Code Failure, User not found'
+// );
+
+// export const requestNewPasswordCodeFailureInvalidParameter = createAction(
+//   '[Auth] Request New Password Code Failure, Invalid parameter',
+//   props<{ username: string }>()
+// );
 
 export const confirmNewPassword = createAction(
   '[Auth] Confirm New Password',
@@ -85,6 +93,4 @@ export const redirectToConfirmPassword = createAction(
   '[Auth] Redirect to Confirm Password'
 );
 
-export const redirectToNewPasswordRequired = createAction(
-  '[Auth] Redirect to New Password Required'
-);
+

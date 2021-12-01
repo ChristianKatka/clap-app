@@ -9,29 +9,27 @@ import { AuthExtendedAppState } from '@auth/store/reducers';
   templateUrl: './sign-up-confirmation.container.html',
 })
 export class SignUpConfirmationContainerComponent {
-  // isSignUpCommunicating$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getIsSignUpCommunicating
-  // );
-  // isNewVerificationCodeSent$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getIsNewVerificationCodeSent
-  // );
-  // isNewVerificationCodeLimitExceeded$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getIsNewVerificationCodeLimitExceeded
-  // );
-  // isNewPasswordCodeFailedBecauseEmailNotVerified$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getIsNewPasswordCodeFailedBecauseEmailNotVerified
-  // );
-  // signUpVerificationCodeMismatch$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getSignUpVerificationCodeMismatch
-  // );
-  // username$: Observable<string | undefined> = this.store.select(
-  //   AuthSignUpSelectors.getSignUpUserName
-  // );
+  isLoading$: Observable<boolean> = this.store.select(
+    AuthSignUpSelectors.isLoading
+  );
+  newConfirmationCodeSent$: Observable<boolean> = this.store.select(
+    AuthSignUpSelectors.isNewConfirmationCodeSent
+  );
+  // To show user which email has the new confirmation code sent
+  email$ = this.store.select(AuthSignUpSelectors.getEmail);
+  emailConfirmationCodeMismatch$: Observable<boolean> = this.store.select(
+    AuthSignUpSelectors.isEmailConfirmationCodeMismatch
+  );
+  newConfirmationCodeLimitExceeded$: Observable<boolean> = this.store.select(
+    AuthSignUpSelectors.newConfirmationCodeLimitExceeded
+  );
 
   constructor(private store: Store<AuthExtendedAppState>) {}
 
   onConfirmationCodeSubmitted(code: string) {
-    this.store.dispatch(AuthSignUpActions.confirmRegistration({ code }));
+    this.store.dispatch(
+      AuthSignUpActions.confirmRegistrationByEmailCode({ code })
+    );
   }
 
   onSendNewEmailConfirmationCode() {

@@ -1,49 +1,48 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'clap-app-sign-up-confirmation-form',
   templateUrl: 'sign-up-confirmation-form.component.html',
-  styleUrls: ['sign-up-confirmation-form.component.scss']
+  styleUrls: ['sign-up-confirmation-form.component.scss'],
 })
-export class SignUpConfirmationFormComponent {
-  // @Input()
-  // set isSignUpCommunicating(isSignUpCommunicating: boolean) {
-  //   if (isSignUpCommunicating) {
-  //     this.confirmationCodeForm.disable();
-  //     this.isCommunicating = true;
-  //   } else {
-  //     this.confirmationCodeForm.enable();
-  //     this.isCommunicating = false;
-  //   }
-  // }
-
-  // @Input()
-  // isNewVerificationCodeSent = false;
-
-  // @Input()
-  // isNewVerificationCodeLimitExceeded = false;
-
-  // @Input()
-  // isNewPasswordCodeFailedBecauseEmailNotVerified = false;
-
-  // @Input()
-  // username: string | undefined | null;
-
-  // @Input()
-  // signUpVerificationCodeMismatch = false;
+export class SignUpConfirmationFormComponent implements OnChanges {
+  @Input()
+  emailConfirmationCodeMismatch = false;
+  @Input()
+  newConfirmationCodeSent = false;
+  @Input()
+  newConfirmationCodeLimitExceeded = false;
+  @Input()
+  isLoading = false;
+  @Input()
+  email = '';
 
   @Output()
   confirmationCodeSubmitted: EventEmitter<string> = new EventEmitter();
-
   @Output()
   sendNewEmailConfirmationCode = new EventEmitter();
 
-  // isCommunicating = false;
-
   confirmationCodeForm = new FormGroup({
-    confirmationCode: new FormControl(null, [Validators.minLength(6)]),
+    confirmationCode: new FormControl('', [
+      Validators.minLength(6),
+      Validators.required,
+    ]),
   });
+
+  ngOnChanges() {
+    if (this.isLoading) {
+      this.confirmationCodeForm.disable();
+    } else {
+      this.confirmationCodeForm.enable();
+    }
+  }
 
   submit() {
     this.confirmationCodeSubmitted.emit(

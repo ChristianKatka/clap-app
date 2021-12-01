@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SignInContainerComponent } from './components/sign-in/sign-in.container';
 import { SignInNewPasswordRequiredContainerComponent } from './components/sign-in-new-password-required/sign-in-new-password-required.container'; // eslint-disable-line
 import { SignUpConfirmationContainerComponent } from './components/sign-up-confirmation/sign-up-confirmation.container';
-import { UnauthenticatedGuard, SignUpVerificationGuard } from './guards';
+import { UnauthenticatedGuard, SignUpConfirmationGuard } from './guards';
 import { SignUpContainerComponent } from './components/sign-up/sign-up.container';
 
 export const authRoutes: Routes = [
@@ -13,8 +13,8 @@ export const authRoutes: Routes = [
     component: SignUpContainerComponent,
   },
   {
-    path: 'sign-up-verification',
-    canActivate: [SignUpVerificationGuard],
+    path: 'sign-up-confirmation',
+    canActivate: [SignUpConfirmationGuard],
     component: SignUpConfirmationContainerComponent,
   },
 

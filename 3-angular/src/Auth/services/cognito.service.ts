@@ -23,6 +23,9 @@ export class CognitoService {
   private userPool: CognitoUserPool;
   private credentials: any;
 
+  // Used to store locally logged in user data
+  private cognitoUser: CognitoUser | null = null;
+
   constructor(
     private signUpService: SignUpService,
     private authenticateUserService: AuthenticateUserService,
@@ -63,8 +66,11 @@ export class CognitoService {
 
   // login
   public authenticateUser(userName: string, password: string): Observable<any> {
-    const currentUser =
+    const currentUser: CognitoUser =
       this.cognitoFunctionsService.createLocalCognitoUser(userName);
+
+    // Used to store locally logged in user data
+    this.cognitoUser = currentUser;
 
     const authenticationData: IAuthenticationDetailsData = {
       Username: userName,
@@ -94,16 +100,18 @@ export class CognitoService {
 
   // sign in new password required. (User created from AWS console)
   public changePassword(newPassword: string): Observable<any> {
-    const currentUser = this.userPool.getCurrentUser();
 
-    if (!currentUser) {
+    if (this.cognitoUser === null) {
       return of({ error: 'no user' });
     }
-    return this.modifyUserService.changePassword(currentUser, newPassword);
+    return this.modifyUserService.changePassword(this.cognitoUser, newPassword);
   }
 
   //  email confirmation code inputted
-  confirmRegistration(userName: string, code: string): Observable<any> {
+  confirmRegistrationByEmailCode(
+    userName: string,
+    code: string
+  ): Observable<any> {
     const currentUser =
       this.cognitoFunctionsService.createLocalCognitoUser(userName);
 

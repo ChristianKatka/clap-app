@@ -6,14 +6,11 @@ export interface SignUpState {
   password: string | undefined;
   email: string | undefined;
   nickname: string | undefined;
-  communicating: boolean;
-  userNameExists: boolean;
-  invalidParameter: boolean;
-  passwordRequirements: boolean;
-  newVerificationCodeSent: boolean;
-  newVerificationCodeLimitExceeded: boolean;
-  newPasswordCodeFailedBecauseEmailNotVerified: boolean;
-  verificationCodeMismatch: boolean;
+  loading: boolean;
+  usernameAlreadyExists: boolean;
+  emailConfirmationCodeMismatch: boolean;
+  newConfirmationCodeSent: boolean;
+  newConfirmationCodeLimitExceeded: boolean;
 }
 
 export const initialState: SignUpState = {
@@ -21,126 +18,78 @@ export const initialState: SignUpState = {
   password: undefined,
   email: undefined,
   nickname: undefined,
-  communicating: false,
-  userNameExists: false,
-  invalidParameter: false,
-  passwordRequirements: false,
-  newVerificationCodeSent: false,
-  newVerificationCodeLimitExceeded: false,
-  newPasswordCodeFailedBecauseEmailNotVerified: false,
-  verificationCodeMismatch: false,
+  loading: false,
+  usernameAlreadyExists: false,
+  emailConfirmationCodeMismatch: false,
+  newConfirmationCodeSent: false,
+  newConfirmationCodeLimitExceeded: false,
 };
 
 const signUpReducer = createReducer(
   initialState,
   on(AuthSignUpActions.signUp, (state, { signUpUserData }) => ({
-    ...initialState,
-    communicating: true,
-    userNameExists: false,
-    invalidParameter: false,
-    passwordRequirements: false,
+    ...state,
+    loading: true,
     username: signUpUserData.username,
     password: signUpUserData.password,
     email: signUpUserData.email,
     nickname: signUpUserData.nickname,
-  })),
-  on(AuthSignUpActions.signUpFailure, (state) => ({
-    ...state,
-    communicating: false,
-    password: undefined,
-  })),
-  on(AuthSignUpActions.signUpFailureUsernameExists, (state) => ({
-    ...state,
-    communicating: false,
-    password: undefined,
-    userNameExists: true,
-  })),
-  on(AuthSignUpActions.signUpFailureInvalidParameter, (state) => ({
-    ...state,
-    communicating: false,
-    password: undefined,
-    userNameExists: false,
-    invalidParameter: true,
-  })),
-  on(AuthSignUpActions.signUpFailurePasswordRequirements, (state) => ({
-    ...state,
-    communicating: false,
-    password: undefined,
-    userNameExists: false,
-    passwordRequirements: true,
   })),
   on(AuthSignUpActions.signUpSuccess, (state, { signUpUserData }) => ({
     ...state,
-    communicating: false,
+    loading: false,
     username: signUpUserData.username,
     password: signUpUserData.password,
     email: signUpUserData.email,
     nickname: signUpUserData.nickname,
   })),
-  on(AuthSignUpActions.confirmRegistration, (state) => ({
+  on(AuthSignUpActions.signUpFailureUsernameAlreadyExists, (state) => ({
     ...state,
-    communicating: true,
-    newVerificationCodeSent: false,
-    newVerificationCodeLimitExceeded: false,
-    newPasswordCodeFailedBecauseEmailNotVerified: false,
+    loading: false,
+    usernameAlreadyExists: true,
   })),
-  on(AuthSignUpActions.confirmRegistrationSuccess, (state) => ({
-    ...state,
-    communicating: false,
-  })),
-  on(AuthSignUpActions.confirmRegistrationFailure, (state) => ({
-    ...state,
-    communicating: false,
-  })),
-  on(AuthSignUpActions.confirmRegistrationFailureCodeMismatch, (state) => ({
-    ...state,
-    verificationCodeMismatch: true,
-    communicating: false,
-    newVerificationCodeLimitExceeded: false,
-  })),
+  on(
+    AuthSignUpActions.confirmRegistrationByEmailCodeFailureCodeMismatch,
+    (state) => ({
+      ...state,
+      loading: false,
+      emailConfirmationCodeMismatch: true,
+    })
+  ),
   on(AuthSignUpActions.sendNewEmailConfirmationCode, (state) => ({
     ...state,
-    communicating: true,
-    newVerificationCodeSent: false,
-    newVerificationCodeLimitExceeded: false,
-    verificationCodeMismatch: false,
-    newPasswordCodeFailedBecauseEmailNotVerified: false,
+    loading: true,
   })),
   on(AuthSignUpActions.sendNewEmailConfirmationCodeSuccess, (state) => ({
     ...state,
-    communicating: false,
-    newVerificationCodeSent: true,
-    verificationCodeMismatch: false,
-    newVerificationCodeLimitExceeded: false,
-  })),
-  on(AuthSignUpActions.sendNewEmailConfirmationCodeFailureLimitExceeded, (state) => ({
-    ...state,
-    communicating: false,
-    newVerificationCodeSent: false,
-    verificationCodeMismatch: false,
-    newVerificationCodeLimitExceeded: true,
+    loading: false,
+    newConfirmationCodeSent: true,
   })),
   on(
-    AuthSignUpActions.redirectToSignUpVerification,
+    AuthSignUpActions.sendNewEmailConfirmationCodeFailureLimitExceeded,
+    (state) => ({
+      ...state,
+      loading: false,
+      newConfirmationCodeLimitExceeded: true,
+    })
+  ),
+
+  on(AuthSignUpActions.confirmRegistrationByEmailCode, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(AuthSignUpActions.confirmRegistrationByEmailCodeSuccess, (state) => ({
+    ...state,
+    loading: false,
+  })),
+
+  // When user ask new confirmation code, we can show which email it was sent
+  on(
+    AuthSignUpActions.redirectToEmailConfirmationView,
     (state, { username, password }) => ({
       ...state,
       username,
       password: password ? password : state.password,
-      communicating: false,
-      newVerificationCodeSent: false,
-      newVerificationCodeLimitExceeded: false,
-    })
-  ),
-  on(AuthSignInActions.authenticateUser, (state) => ({
-    ...state,
-    userNameExists: false,
-  })),
-  on(
-    AuthSignInActions.requestNewPasswordCodeFailureInvalidParameter,
-    (state, { username }) => ({
-      ...state,
-      username,
-      newPasswordCodeFailedBecauseEmailNotVerified: true,
     })
   )
 );

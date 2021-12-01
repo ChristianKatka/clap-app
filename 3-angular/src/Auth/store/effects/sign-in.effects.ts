@@ -4,11 +4,10 @@ import {
   AuthenticatedActions,
   AuthSignInActions,
   AuthSignUpActions,
-  ErrorActions,
 } from '@auth/store/actions';
 import * as fromServices from '../../services/cognito.service';
 import { Observable, of } from 'rxjs';
-import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, catchError, withLatestFrom, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AuthSignInSelectors } from '../selectors';
 import { AuthExtendedAppState } from '../reducers';
@@ -30,14 +29,13 @@ export class SignInEffects {
                 return AuthenticatedActions.authenticateUserSuccess();
               }
             }),
-
             catchError((error: any) => {
               let action$;
 
               // REGISTERED FROM THE APP BUT NEVER CONFIRMED ACCOUNT WITH EMAIL CODE
               if (error.code === 'UserNotConfirmedException') {
                 action$ = of(
-                  AuthSignUpActions.redirectToSignUpVerification({
+                  AuthSignUpActions.redirectToEmailConfirmationView({
                     username: signInData.username,
                     password: signInData.password,
                   })
@@ -61,22 +59,6 @@ export class SignInEffects {
               return action$;
             })
           )
-      )
-    )
-  );
-
-  authenticateUserAfterUserEmailConfirmed$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthSignInActions.authenticateUserAfterUserEmailConfirmed),
-      switchMap(({ username, password }) =>
-        this.cognitoService.authenticateUser(username, password).pipe(
-          map(() =>
-            AuthenticatedActions.userAuthenticatedSuccessAfterUserEmailConfirmed()
-          ),
-          catchError((error: any) =>
-            of(AuthenticatedActions.authenticateUserFailure(error))
-          )
-        )
       )
     )
   );
@@ -164,12 +146,13 @@ export class SignInEffects {
       switchMap(([newPassword, username]) => {
         if (username === undefined) {
           return of(
-            ErrorActions.signInUserNameDoesntExist({
+            AuthSignInActions.signInUserNameDoesntExist({
               error: 'Cannot change new password if username doesnt exist.',
             })
           );
         }
         return this.cognitoService.changePassword(newPassword).pipe(
+          tap((x) => console.log(x)),
           map(() =>
             AuthSignInActions.authenticateUser({
               signInData: { username, password: newPassword },

@@ -1,18 +1,20 @@
 import { AuthSignUpActions } from '@auth/store/actions';
-import { AuthSignUpSelectors } from '@auth/store/selectors';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AuthExtendedAppState } from '@auth/store/reducers';
 import { Store } from '@ngrx/store';
 import { AboutActions } from 'src/About/store/actions';
 import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
+import { SignUpStateService } from './sign-up-state.service';
 
 @Component({
   templateUrl: './sign-up.container.html',
-  styleUrls: ['./sign-up.container.scss'],
+  providers: [SignUpStateService],
 })
 export class SignUpContainerComponent {
-  constructor(private store: Store<AuthExtendedAppState>) {}
+  constructor(
+    private store: Store<AuthExtendedAppState>,
+    public signUpStateService: SignUpStateService
+  ) {}
   onShowPrivacyPolicy() {
     this.store.dispatch(AboutActions.showPrivacyPolicy());
   }
@@ -28,17 +30,4 @@ export class SignUpContainerComponent {
       })
     );
   }
-
-  // isSignUpCommunicating$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getIsSignUpCommunicating
-  // );
-  // isInvalidParameter$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getIsInvalidParameter
-  // );
-  // usernameExists$: Observable<boolean> = this.store.select(
-  //   AuthSignUpSelectors.getSignUpUserNameExists
-  // );
-  // username$: Observable<string | undefined> = this.store.select(
-  //   AuthSignUpSelectors.getSignUpUsername
-  // );
 }

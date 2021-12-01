@@ -59,10 +59,10 @@ export class RouterEffects {
     )
   );
 
-  redirectToSignUpVerification = createEffect(() =>
+  redirectToEmailConfirmationView = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthSignUpActions.redirectToSignUpVerification),
-      map(() => RouterActions.navigate({ commands: ['/sign-up-verification'] }))
+      ofType(AuthSignUpActions.redirectToEmailConfirmationView),
+      map(() => RouterActions.navigate({ commands: ['/sign-up-confirmation'] }))
     )
   );
 

@@ -9,27 +9,12 @@ export interface SignInState {
   username: string | undefined;
   loading: boolean;
   wrongUserNameOrPassword: boolean;
-
-  communicating: boolean;
-  newPasswordCommunicating: boolean;
-  newPasswordCodeLimitExceeded: boolean;
-  newPasswordCodeMismatch: boolean;
-  newPasswordCodeUserNotFound: boolean;
-  newPasswordErrorCode?: string;
-  userNameIsJustVerified: boolean;
 }
 
 export const initialState: SignInState = {
   username: '',
   loading: false,
   wrongUserNameOrPassword: false,
-
-  communicating: false,
-  newPasswordCommunicating: false,
-  newPasswordCodeLimitExceeded: false,
-  newPasswordCodeMismatch: false,
-  newPasswordCodeUserNotFound: false,
-  userNameIsJustVerified: false,
 };
 
 const signInReducer = createReducer(
@@ -51,7 +36,7 @@ const signInReducer = createReducer(
     loading: false,
     wrongUserNameOrPassword: true,
   })),
-  on(AuthSignUpActions.redirectToSignUpVerification, (state, { username }) => ({
+  on(AuthSignUpActions.redirectToEmailConfirmationView, (state, { username }) => ({
     ...state,
     username,
     loading: false,
@@ -59,15 +44,7 @@ const signInReducer = createReducer(
 
   // -----
 
-  on(
-    AuthSignInActions.authenticateUserAfterUserEmailConfirmed,
-    (state, { username }) => ({
-      ...initialState,
-      username,
-      communicating: true,
-      userNameIsJustVerified: true,
-    })
-  ),
+
   on(AuthSignInActions.confirmNewPassword, (state) => ({
     ...state,
     communicating: true,
@@ -82,43 +59,42 @@ const signInReducer = createReducer(
     communicating: false,
     newPasswordCodeMismatch: false,
   })),
-  on(AuthSignInActions.confirmNewPasswordFailureCodeMismatch, (state) => ({
-    ...state,
-    communicating: false,
-    newPasswordCodeMismatch: true,
-  })),
-  on(AuthSignInActions.requestNewPasswordCode, (state, { username }) => ({
-    ...state,
-    username,
-    communicating: true,
-    newPasswordCodeLimitExceeded: false,
-    newPasswordCodeUserNotFound: false,
-  })),
-  on(AuthSignInActions.requestNewPasswordCodeSuccess, (state) => ({
-    ...state,
-    communicating: false,
-  })),
-  on(AuthSignInActions.requestNewPasswordCodeFailure, (state) => ({
-    ...state,
-    communicating: false,
-  })),
-  on(AuthSignInActions.requestNewPasswordCodeFailureUserNotFound, (state) => ({
-    ...state,
-    communicating: false,
-    newPasswordCodeUserNotFound: true,
-  })),
-  on(AuthSignInActions.requestNewPasswordCodeFailureLimitExceeded, (state) => ({
-    ...state,
-    communicating: false,
-    newPasswordCodeLimitExceeded: true,
-  })),
-  on(
-    AuthSignInActions.requestNewPasswordCodeFailureInvalidParameter,
-    (state) => ({
-      ...state,
-      communicating: false,
-    })
-  )
+
+
+
+  
+  // on(AuthSignInActions.requestNewPasswordCode, (state, { username }) => ({
+  //   ...state,
+  //   username,
+  //   communicating: true,
+  //   newPasswordCodeLimitExceeded: false,
+  //   newPasswordCodeUserNotFound: false,
+  // })),
+  // on(AuthSignInActions.requestNewPasswordCodeSuccess, (state) => ({
+  //   ...state,
+  //   communicating: false,
+  // })),
+  // on(AuthSignInActions.requestNewPasswordCodeFailure, (state) => ({
+  //   ...state,
+  //   communicating: false,
+  // })),
+  // on(AuthSignInActions.requestNewPasswordCodeFailureUserNotFound, (state) => ({
+  //   ...state,
+  //   communicating: false,
+  //   newPasswordCodeUserNotFound: true,
+  // })),
+  // on(AuthSignInActions.requestNewPasswordCodeFailureLimitExceeded, (state) => ({
+  //   ...state,
+  //   communicating: false,
+  //   newPasswordCodeLimitExceeded: true,
+  // })),
+  // on(
+  //   AuthSignInActions.requestNewPasswordCodeFailureInvalidParameter,
+  //   (state) => ({
+  //     ...state,
+  //     communicating: false,
+  //   })
+  // )
 
   // on(AuthSignInActions.redirectToSignIn, (state, { username }) => ({
   //   ...initialState,

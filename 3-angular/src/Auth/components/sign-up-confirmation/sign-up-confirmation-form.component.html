@@ -24,92 +24,71 @@
 >
   <mat-form-field appearance="outline">
     <mat-label>Confirmation Code</mat-label>
-    <input matInput type="tel" minlength="6" formControlName="confirmationCode"/>
+    <input
+      matInput
+      type="tel"
+      required
+      minlength="6"
+      maxlength="8"
+      formControlName="confirmationCode"
+    />
     <mat-error> Confirmation code is required </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
+  <button *ngIf="isLoading" mat-raised-button color="primary" disabled>
+    <clap-app-loading-spinner [diameter]="40"></clap-app-loading-spinner>
+  </button>
+  <button
+    *ngIf="!isLoading"
+    mat-raised-button
+    [disabled]="this.confirmationCodeForm.invalid"
+    color="primary"
+    (click)="submit()"
+  >
+    Confirm
+  </button>
 
   <!-- WRONG CODE ALERT -->
-  <!-- <section class="alert" fxLayoutAlign="start center" fxLayoutGap="8px">
+  <section
+    class="alert"
+    fxLayoutAlign="start center"
+    fxLayoutGap="8px"
+    *ngIf="emailConfirmationCodeMismatch"
+  >
     <mat-icon>error_outline</mat-icon>
     <mat-error>
       Confirmation code was incorrect or old. Please check code from your email
       or get new code by pressing button below
       <br />
     </mat-error>
-  </section> -->
+  </section>
+
+  <section
+    class="alert"
+    fxLayoutAlign="start center"
+    fxLayoutGap="8px"
+    *ngIf="newConfirmationCodeLimitExceeded"
+  >
+    <mat-icon>error_outline</mat-icon>
+    <mat-error>
+      Confirmation code for email: <strong>{{ email }}</strong> has been asked
+      too many times in short period of time. Please check your email or try
+      again later
+      <br />
+    </mat-error>
+  </section>
 
   <mat-divider></mat-divider>
-  <!-- <p class="info">
+  <p *ngIf="newConfirmationCodeSent" class="info">
     New confirmation code has been sent to email address:
-    <strong> email</strong>
-  </p> -->
-  <button mat-button (click)="newEmailConfirmationCodeOrdered()">Get New Confirmation Code</button>
+    <strong> {{ email }}</strong>
+  </p>
+
+  <button
+    *ngIf="!isLoading"
+    mat-button
+    (click)="newEmailConfirmationCodeOrdered()"
+  >
+    Get New Confirmation Code
+  </button>
 </form>
-
-<!-- <mat-error class="errorbox" *ngIf="this.signUpVerificationCodeMismatch">
-  Syöttämäsi vahvistuskoodi ei ole oikea tai se on vanhentunut. Tarkista koodi
-  sähköpostistasi tai tilaa uusi koodi alla olevalla painikkeella.
-</mat-error>
-
-<mat-error class="errorbox" *ngIf="this.isNewVerificationCodeLimitExceeded">
-  Käyttäjätunnuksen <strong>{{ this.username }}</strong> uutta aktivointikoodia
-  on pyydetty liian monta kertaa lyhyen ajan sisällä. Tarkista sähköpostisi ja
-  tarvittaessa pyydä uutta aktivointikoodia pienen hetken kuluttua.
-</mat-error>
-
-<p class="info" *ngIf="this.isNewVerificationCodeSent">
-  Uusi vahvistuskoodi on lähetetty käyttäjätunnuksen
-  <strong>{{ this.username }}</strong> sähköpostiosoitteeseen.
-</p>
-
-<p class="info" *ngIf="this.isNewPasswordCodeFailedBecauseEmailNotVerified">
-  Käyttäjätunnusta <strong>{{ this.username }}</strong> ei ole vielä vahvistettu
-  eikä uutta salasanaa voi siksi tilata. Vahvista käyttäjätunnus käyttämällä
-  saamaasi aktivointikoodia. Tarvittaessa tilaa uusi koodi käyttäjätunnuksen
-  sähköpostiosoitteeseen alla olevalla painikkeella.
-</p>
-
-<form
-  fxLayout="column"
-  fxLayoutAlign="start"
-  fxLayoutGap="8px"
-  [formGroup]="confirmationCodeForm"
->
-  <mat-form-field appearance="outline">
-    <mat-label>Aktivointikoodi</mat-label>
-
-    <input matInput type="text" formControlName="confirmationCode" />
-
-    <mat-error
-      *ngIf="confirmationCodeForm.get('confirmationCode')?.hasError('required')"
-    >
-      Aktivointikoodi on pakollinen
-    </mat-error>
-  </mat-form-field>
-
-  <div class="btn-area" fxLayout="row" fxLayoutAlign="space-between end">
-    <button
-      mat-button
-      color="primary"
-      (click)="newVerificationCode()"
-      [disabled]="this.isCommunicating || this.isNewVerificationCodeSent"
-    >
-      Pyydä uusi aktivointikoodi
-    </button>
-
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="
-        !confirmationCodeForm.value.confirmationCode ||
-        confirmationCodeForm.value.confirmationCode.length < 1 ||
-        confirmationCodeForm.invalid
-      "
-      (click)="submit()"
-    >
-      Lähetä
-    </button>
-  </div>
-</form> -->

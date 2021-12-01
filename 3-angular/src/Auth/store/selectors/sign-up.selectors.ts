@@ -1,13 +1,32 @@
 import { createSelector } from '@ngrx/store';
-
 import { getSignUpState } from '../reducers';
 
-export const getIsSignUpCommunicating = createSelector(
+export const isLoading = createSelector(
   getSignUpState,
-  (state) => state.communicating
+  (state) => state.loading
 );
 
-export const getSignUpUsername = createSelector(
+export const usernameAlreadyExists = createSelector(
+  getSignUpState,
+  (state) => state.usernameAlreadyExists
+);
+
+export const isEmailConfirmationCodeMismatch = createSelector(
+  getSignUpState,
+  (state) => state.emailConfirmationCodeMismatch
+);
+
+export const isNewConfirmationCodeSent = createSelector(
+  getSignUpState,
+  (state) => state.newConfirmationCodeSent
+);
+
+export const newConfirmationCodeLimitExceeded = createSelector(
+  getSignUpState,
+  (state) => state.newConfirmationCodeLimitExceeded
+);
+
+export const getEmail = createSelector(
   getSignUpState,
   (state) => state.username
 );
@@ -20,42 +39,3 @@ export const getSignUpUserNameAndPassword = createSelector(
   })
 );
 
-export const getSignUpUserNameExists = createSelector(
-  getSignUpState,
-  (state) => state.userNameExists
-);
-
-export const getSignUpPasswordRequirements = createSelector(
-  getSignUpState,
-  (state) => state.passwordRequirements
-);
-
-export const getSignUpVerificationCodeMismatch = createSelector(
-  getSignUpState,
-  (state) => state.verificationCodeMismatch
-);
-
-export const getIsNewVerificationCodeSent = createSelector(
-  getSignUpState,
-  (state) => state.newVerificationCodeSent
-);
-
-export const getIsNewVerificationCodeLimitExceeded = createSelector(
-  getSignUpState,
-  (state) => state.newVerificationCodeLimitExceeded
-);
-
-export const getIsNewPasswordCodeFailedBecauseEmailNotVerified = createSelector(
-  getSignUpState,
-  (state) => state.newPasswordCodeFailedBecauseEmailNotVerified
-);
-
-export const getSignUpUserName = createSelector(
-  getSignUpUserNameAndPassword,
-  ({ username, password }) => username
-);
-
-export const getIsInvalidParameter = createSelector(
-  getSignUpState,
-  (state) => state.invalidParameter
-);
