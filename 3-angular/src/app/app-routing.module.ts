@@ -18,16 +18,37 @@ const routes: Routes = [
     component: WelcomeContainerComponent,
   },
   {
-    path: 'home',
-    canActivate: [AuthenticatedGuard],
-    component: HomeFeatureContainerComponent,
-  },
-  {
     path: 'initializing',
     canActivate: [AuthenticatedGuard],
     pathMatch: 'full',
     component: AppInitializationContainerComponent,
   },
+  {
+    path: 'home',
+    canActivate: [AuthenticatedGuard],
+    component: HomeFeatureContainerComponent,
+  },
+  {
+    path: 'notification',
+    loadChildren: () =>
+      import('../Notification/notification.module').then((m) => m.NotificationModule),
+  },
+  {
+    path: 'search',
+    loadChildren: () =>
+      import('../Search/search.module').then((m) => m.SearchModule),
+  },
+  {
+    path: 'my-profile',
+    loadChildren: () =>
+      import('../MyProfile/my-profile.module').then((m) => m.MyProfileModule),
+  },
+  {
+    path: 'create-post',
+    loadChildren: () =>
+      import('../CreatePost/create-post.module').then((m) => m.CreatePostModule),
+  },
+
 ];
 
 @NgModule({

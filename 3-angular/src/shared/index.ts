@@ -9,6 +9,8 @@ import { AlertComponent } from './info-boxes/alert.component';
 import { InfoComponent } from './info-boxes/info.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { SuccessComponent } from './success/success.component';
+import { NavbarContainerComponent } from './navbar/navbar.container';
+import { NavbarComponent } from './navbar/navbar.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -18,7 +20,9 @@ export const components: any[] = [
   AlertComponent,
   InfoComponent,
   LoadingSpinnerComponent,
-  SuccessComponent
+  SuccessComponent,
+  NavbarContainerComponent,
+  NavbarComponent
 ];
 export const pipes = [BooleanPipe, IconPipe];
 export const directives = [FileSelectDirective];
