@@ -11,6 +11,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { SuccessComponent } from './success/success.component';
 import { NavbarContainerComponent } from './navbar/navbar.container';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ClapAppContainer } from './clap-app-container/clap-app-container';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -22,7 +23,8 @@ export const components: any[] = [
   LoadingSpinnerComponent,
   SuccessComponent,
   NavbarContainerComponent,
-  NavbarComponent
+  NavbarComponent,
+  ClapAppContainer
 ];
 export const pipes = [BooleanPipe, IconPipe];
 export const directives = [FileSelectDirective];
