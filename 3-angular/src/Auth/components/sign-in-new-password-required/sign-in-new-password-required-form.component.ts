@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { noWhiteSpaceAtStartOrEndPattern } from '@shared/regex/regex';
 
@@ -8,15 +8,6 @@ import { noWhiteSpaceAtStartOrEndPattern } from '@shared/regex/regex';
   styleUrls: ['./sign-in-new-password-required-form.component.scss'],
 })
 export class SignInNewPasswordRequiredFormComponent {
-  // @Input()
-  // set isNewPasswordCommunicating(newPasswordCommunicating: boolean) {
-  //   if (newPasswordCommunicating) {
-  //     this.newPasswordForm.disable();
-  //   } else {
-  //     this.newPasswordForm.enable();
-  //   }
-  // }
-
   @Output()
   newPasswordSubmitted = new EventEmitter<string>();
 

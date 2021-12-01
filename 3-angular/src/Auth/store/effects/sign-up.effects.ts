@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import {
   AuthenticatedActions,
-  AuthSignInActions,
   AuthSignUpActions,
 } from '@auth/store/actions';
 import * as fromServices from '../../services/cognito.service';
@@ -112,9 +111,7 @@ export class SignUpEffects {
   sendNewEmailConfirmationCode$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthSignUpActions.sendNewEmailConfirmationCode),
-
       withLatestFrom(this.store.select(AuthSignUpSelectors.getEmail)),
-
       switchMap(([payload, email]) => {
         if (email === undefined) {
           return of(

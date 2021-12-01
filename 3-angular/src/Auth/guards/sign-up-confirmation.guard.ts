@@ -28,16 +28,13 @@ export class SignUpConfirmationGuard implements CanActivate {
   ): Observable<boolean> {
     return this.cognitoService.isSessionValid().pipe(
       map((loggedIn) => !loggedIn),
-
       withLatestFrom(
         this.store.select(AuthSignUpSelectors.getSignUpUserNameAndPassword)
       ),
-
       map(
         ([notLoggedIn, userNameAndPassword]) =>
           notLoggedIn && isString(userNameAndPassword.username)
       ),
-
       tap((notLoggedInAndHasSignUpUserName) => {
         if (!notLoggedInAndHasSignUpUserName) {
           this.store.dispatch(AuthSignUpActions.redirectToSignUp());

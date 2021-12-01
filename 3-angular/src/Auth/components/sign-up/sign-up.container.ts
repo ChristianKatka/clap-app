@@ -15,6 +15,7 @@ export class SignUpContainerComponent {
     private store: Store<AuthExtendedAppState>,
     public signUpStateService: SignUpStateService
   ) {}
+
   onShowPrivacyPolicy() {
     this.store.dispatch(AboutActions.showPrivacyPolicy());
   }

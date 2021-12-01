@@ -73,14 +73,9 @@ const signUpReducer = createReducer(
       newConfirmationCodeLimitExceeded: true,
     })
   ),
-
   on(AuthSignUpActions.confirmRegistrationByEmailCode, (state) => ({
     ...state,
     loading: true,
-  })),
-  on(AuthSignUpActions.confirmRegistrationByEmailCodeSuccess, (state) => ({
-    ...state,
-    loading: false,
   })),
 
   // When user ask new confirmation code, we can show which email it was sent

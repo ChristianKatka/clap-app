@@ -38,4 +38,3 @@ export const getSignUpUserNameAndPassword = createSelector(
     password: state.password,
   })
 );
-

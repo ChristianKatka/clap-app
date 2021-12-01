@@ -33,7 +33,6 @@ export class SignUpConfirmationContainerComponent {
   }
 
   onSendNewEmailConfirmationCode() {
-    console.log('send new confirmation code');
     this.store.dispatch(AuthSignUpActions.sendNewEmailConfirmationCode());
   }
 }

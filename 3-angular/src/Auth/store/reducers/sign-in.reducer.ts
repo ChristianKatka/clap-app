@@ -12,7 +12,7 @@ export interface SignInState {
 }
 
 export const initialState: SignInState = {
-  username: '',
+  username: undefined,
   loading: false,
   wrongUserNameOrPassword: false,
 };
@@ -20,7 +20,6 @@ export const initialState: SignInState = {
 const signInReducer = createReducer(
   initialState,
 
-  // CHECKED
   on(AuthSignInActions.authenticateUser, (state, { signInData }) => ({
     ...state,
     username: signInData.username,
@@ -36,72 +35,14 @@ const signInReducer = createReducer(
     loading: false,
     wrongUserNameOrPassword: true,
   })),
-  on(AuthSignUpActions.redirectToEmailConfirmationView, (state, { username }) => ({
-    ...state,
-    username,
-    loading: false,
-  })),
-
-  // -----
-
-
-  on(AuthSignInActions.confirmNewPassword, (state) => ({
-    ...state,
-    communicating: true,
-    newPasswordCodeMismatch: false,
-  })),
-  on(AuthSignInActions.confirmNewPasswordSuccess, (state) => ({
-    ...state,
-    communicating: false,
-  })),
-  on(AuthSignInActions.confirmNewPasswordFailure, (state) => ({
-    ...state,
-    communicating: false,
-    newPasswordCodeMismatch: false,
-  })),
-
-
-
-  
-  // on(AuthSignInActions.requestNewPasswordCode, (state, { username }) => ({
-  //   ...state,
-  //   username,
-  //   communicating: true,
-  //   newPasswordCodeLimitExceeded: false,
-  //   newPasswordCodeUserNotFound: false,
-  // })),
-  // on(AuthSignInActions.requestNewPasswordCodeSuccess, (state) => ({
-  //   ...state,
-  //   communicating: false,
-  // })),
-  // on(AuthSignInActions.requestNewPasswordCodeFailure, (state) => ({
-  //   ...state,
-  //   communicating: false,
-  // })),
-  // on(AuthSignInActions.requestNewPasswordCodeFailureUserNotFound, (state) => ({
-  //   ...state,
-  //   communicating: false,
-  //   newPasswordCodeUserNotFound: true,
-  // })),
-  // on(AuthSignInActions.requestNewPasswordCodeFailureLimitExceeded, (state) => ({
-  //   ...state,
-  //   communicating: false,
-  //   newPasswordCodeLimitExceeded: true,
-  // })),
-  // on(
-  //   AuthSignInActions.requestNewPasswordCodeFailureInvalidParameter,
-  //   (state) => ({
-  //     ...state,
-  //     communicating: false,
-  //   })
-  // )
-
-  // on(AuthSignInActions.redirectToSignIn, (state, { username }) => ({
-  //   ...initialState,
-  //   username,
-  //   wrongUserNameOrPassword: state.wrongUserNameOrPassword,
-  //   userNameIsJustVerified: state.userNameIsJustVerified,
-  // }))
+  on(
+    AuthSignUpActions.redirectToEmailConfirmationView,
+    (state, { username }) => ({
+      ...state,
+      username,
+      loading: false,
+    })
+  )
 );
 
 export const reducer = (state: SignInState | undefined, action: Action) =>

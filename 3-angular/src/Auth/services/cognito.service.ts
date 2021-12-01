@@ -21,7 +21,6 @@ import { CognitoFunctionsService } from './cognito-functions.service';
 })
 export class CognitoService {
   private userPool: CognitoUserPool;
-  private credentials: any;
 
   // Used to store locally logged in user data
   private cognitoUser: CognitoUser | null = null;
@@ -38,11 +37,6 @@ export class CognitoService {
       IdentityPoolId: environment.cognito.identityPoolId,
     });
     this.userPool = new CognitoUserPool(environment.cognito.poolData);
-  }
-
-  //  USED TO CHECK OLD USER SESSION (store efect)
-  public getCurrentUser(): Observable<CognitoUser | null> {
-    return of(this.userPool.getCurrentUser());
   }
 
   //  USED BY ROUTING GUARDS
@@ -89,9 +83,6 @@ export class CognitoService {
   }
 
   public signOut() {
-    if (this.credentials) {
-      this.credentials.clearCachedId();
-    }
     const currentUser = this.userPool.getCurrentUser();
     if (currentUser != null) {
       currentUser.signOut();
@@ -100,7 +91,6 @@ export class CognitoService {
 
   // sign in new password required. (User created from AWS console)
   public changePassword(newPassword: string): Observable<any> {
-
     if (this.cognitoUser === null) {
       return of({ error: 'no user' });
     }
