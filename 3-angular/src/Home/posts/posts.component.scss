@@ -1,0 +1,37 @@
+main {
+  padding-top: 5rem;
+}
+
+.notifications-wrapper {
+  margin-bottom: 2rem;
+}
+
+.chat-message-wrapper {
+  margin: 1rem 0;
+}
+p {
+  margin: 0;
+}
+
+.enable-notifications {
+  font-weight: bold;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.time-stamp {
+  color: gray;
+}
+
+.chat-message {
+  color: gray;
+}
+
+.profile-picture {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}

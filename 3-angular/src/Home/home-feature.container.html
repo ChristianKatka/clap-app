@@ -1,3 +1,7 @@
-<h1>home</h1>
+<clap-app-top-bar></clap-app-top-bar>
 
-<button mat-raised-button (click)="logOut()">Logout</button>
+<main fxLayoutAlign="center center">
+  <section [style.width]="'98%'">
+    <clap-app-posts-container></clap-app-posts-container>
+  </section>
+</main>

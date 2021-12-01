@@ -12,8 +12,4 @@ export class HomeFeatureContainerComponent implements OnInit {
   constructor(private store: Store<AuthExtendedAppState>) {}
 
   ngOnInit() {}
-
-  logOut() {
-    this.store.dispatch(AuthenticatedActions.signOut());
-  }
 }
