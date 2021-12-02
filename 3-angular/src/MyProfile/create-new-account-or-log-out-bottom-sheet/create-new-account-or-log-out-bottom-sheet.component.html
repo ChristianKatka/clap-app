@@ -1,0 +1,35 @@
+<header [style.width]="'100%'">
+  <div [style.width]="'100%'" fxLayout="row" fxLayoutAlign="center center">
+    <button
+      mat-icon-button
+      aria-label="Close"
+      (click)="close()"
+      class="top-button"
+    >
+      <mat-icon class="material-icons-outlined">maximize</mat-icon>
+    </button>
+  </div>
+  <p style="font-size: 19px"><b>ChristianKatka</b></p>
+</header>
+
+<mat-divider class="divider"></mat-divider>
+
+<main>
+  <mat-nav-list>
+    <mat-list-item>
+      <mat-icon class="material-icons-outlined" matListIcon
+        >account_circle</mat-icon
+      >
+      <p matLine>Logout and create new user</p>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon class="material-icons-outlined" matListIcon>logout</mat-icon>
+      <p matLine>Logout</p>
+    </mat-list-item>
+  </mat-nav-list>
+
+  <div [style.width]="'100%'" fxLayout="row" fxLayoutAlign="center center">
+    <a (click)="close()" class="cancel-button">Cancel</a>
+  </div>
+</main>

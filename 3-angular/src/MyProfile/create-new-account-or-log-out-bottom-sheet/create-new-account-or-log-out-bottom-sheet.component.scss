@@ -1,0 +1,28 @@
+@import '../../styles.scss';
+
+::ng-deep .mat-bottom-sheet-container {
+  border-radius: 16px 16px 0px 0px;
+}
+
+.top-button {
+  margin-bottom: -16px;
+  mat-icon {
+    color: $clap-dark-gray
+  }
+}
+
+header {
+  p {
+    font-weight: bold;
+  }
+}
+
+.divider {
+  margin-top: 20px;
+}
+
+.cancel-button {
+  cursor: pointer;
+  color: $clap-blue;
+  padding-bottom: 20px;
+}

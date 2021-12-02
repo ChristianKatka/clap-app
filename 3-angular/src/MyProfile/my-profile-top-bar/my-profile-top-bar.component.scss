@@ -1,0 +1,10 @@
+a {
+  cursor: pointer;
+}
+
+mat-toolbar {
+  z-index: 5;
+  position: fixed;
+  background-color: white;
+  border-bottom: 1px solid #dddddd;
+}
