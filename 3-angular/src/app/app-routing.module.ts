@@ -31,12 +31,19 @@ const routes: Routes = [
   {
     path: 'notification',
     loadChildren: () =>
-      import('../Notification/notification.module').then((m) => m.NotificationModule),
+      import('../Notification/notification.module').then(
+        (m) => m.NotificationModule
+      ),
   },
   {
     path: 'search',
     loadChildren: () =>
       import('../Search/search.module').then((m) => m.SearchModule),
+  },
+  {
+    path: 'messages',
+    loadChildren: () =>
+      import('../Messages/message.module').then((m) => m.MessageModule),
   },
   {
     path: 'my-profile',
@@ -46,9 +53,10 @@ const routes: Routes = [
   {
     path: 'create-post',
     loadChildren: () =>
-      import('../CreatePost/create-post.module').then((m) => m.CreatePostModule),
+      import('../CreatePost/create-post.module').then(
+        (m) => m.CreatePostModule
+      ),
   },
-
 ];
 
 @NgModule({

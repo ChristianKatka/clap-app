@@ -1,0 +1,41 @@
+@import '../../styles.scss';
+
+.messages-art {
+  width: 15rem;
+  object-fit: cover;
+}
+
+
+
+.chat-message-wrapper {
+  margin: 1rem 0;
+}
+p {
+  margin: 0;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.time-stamp {
+  color: $clap-gray;
+}
+
+.chat-message {
+  color: $clap-gray;
+}
+
+.blue-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgb(15, 139, 255);
+}
+
+.profile-picture {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
