@@ -4,6 +4,7 @@ import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ContenthRoutingModule } from './notification-routing.module';
 import { components } from '.';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { components } from '.';
     MaterialModule,
     FlexLayoutModule,
     ContenthRoutingModule,
+    SharedModule
   ],
   declarations: [...components],
   exports: [...components],

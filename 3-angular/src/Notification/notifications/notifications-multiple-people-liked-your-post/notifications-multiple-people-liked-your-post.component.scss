@@ -1,0 +1,35 @@
+@import "../../../styles.scss";
+
+
+.two-profile-images-wrapper {
+  position: relative;
+  margin-right: 1rem;
+
+  .first-profile-image {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid $clap-blue;
+  }
+
+  .second-profile-image {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid $clap-blue;
+    position: absolute;
+    left: 9px;
+    top: 7px;
+  }
+}
+.date-text {
+  margin-left: 3px;
+  color: $clap-gray;
+}
+
+.posted-image {
+  height: 45px;
+  object-fit: cover;
+}

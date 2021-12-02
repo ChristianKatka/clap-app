@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotificationFeatureContainerComponent } from './notification-feature.container';
-import { NotificationContainerComponent } from './notification/notification.container';
+import { NotificationsContainerComponent } from './notifications/notifications.container';
 
 export const childRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: NotificationContainerComponent,
+    component: NotificationsContainerComponent,
   },
 ];
 

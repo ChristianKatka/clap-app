@@ -1,0 +1,24 @@
+@import "../../../styles.scss";
+
+.profile-image {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-right: 3px;
+}
+
+.date-text {
+  margin-left: 3px;
+  color: $clap-gray;
+}
+
+.posted-image {
+  height: 45px;
+  object-fit: cover;
+}
