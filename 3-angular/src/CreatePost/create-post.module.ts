@@ -4,6 +4,9 @@ import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ContenthRoutingModule } from './create-post-routing.module';
 import { components } from '.';
+import { SharedModule } from '@shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   imports: [
@@ -11,6 +14,8 @@ import { components } from '.';
     MaterialModule,
     FlexLayoutModule,
     ContenthRoutingModule,
+    SharedModule,
+    ReactiveFormsModule
   ],
   declarations: [...components],
   exports: [...components],
