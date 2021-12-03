@@ -1,8 +1,7 @@
-
 import { MyProfileFeatureContainerComponent } from './my-profile-feature.container';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyProfileTopBarComponent } from './my-profile-top-bar/my-profile-top-bar.component';
-import { CreateNewAccountOrLogOutBottomSheetComponent } from './create-new-account-or-log-out-bottom-sheet/create-new-account-or-log-out-bottom-sheet.component';
+import { CreateNewAccountOrLogOutBottomSheetContainerComponent } from './create-new-account-or-log-out-bottom-sheet/create-new-account-or-log-out-bottom-sheet.container';
 import { MyProfilePostsContainerComponent } from './my-profile-posts/my-profile-posts.container';
 import { MyProfilePostsComponent } from './my-profile-posts/my-profile-posts.component';
 import { MyProfileSavedComponent } from './my-profile-saved/my-profile-saved.component';
@@ -13,10 +12,10 @@ export const components: any[] = [
   MyProfileFeatureContainerComponent,
   MyProfileComponent,
   MyProfileTopBarComponent,
-  CreateNewAccountOrLogOutBottomSheetComponent,
+  CreateNewAccountOrLogOutBottomSheetContainerComponent,
   MyProfilePostsContainerComponent,
   MyProfilePostsComponent,
   MyProfileSavedComponent,
   MyProfileSavedContainerComponent,
-  MyProfilePostsUserWrapperComponent
+  MyProfilePostsUserWrapperComponent,
 ];

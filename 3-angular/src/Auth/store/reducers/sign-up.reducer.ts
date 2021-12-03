@@ -1,5 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { AuthSignInActions, AuthSignUpActions } from '@auth/store/actions';
+import { AuthenticatedActions, AuthSignInActions, AuthSignUpActions } from '@auth/store/actions';
 
 export interface SignUpState {
   username: string | undefined;
@@ -86,7 +86,8 @@ const signUpReducer = createReducer(
       username,
       password: password ? password : state.password,
     })
-  )
+  ),
+  on(AuthenticatedActions.signOut, (state) => initialState)
 );
 
 export const reducer = (state: SignUpState | undefined, action: Action) =>

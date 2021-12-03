@@ -18,7 +18,8 @@ const authenticatedReducer = createReducer(
   on(AuthenticatedActions.signOutSuccess, () => ({
     ...initialState,
     authenticated: false,
-  }))
+  })),
+  on(AuthenticatedActions.signOut, (state) => initialState)
 );
 
 export const reducer = (

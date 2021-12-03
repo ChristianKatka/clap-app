@@ -1,5 +1,8 @@
 <section fxLayoutAlign="center center">
-  <img src="assets/art/sign_in.png" alt="" />
+  <object
+    data="assets/art/login.svg"
+    type="image/svg+xml"
+  ></object>
 </section>
 
 <h1>Login</h1>
@@ -24,7 +27,7 @@
       autocomplete="email"
       formControlName="username"
     />
-    <mat-icon matPrefix>mail</mat-icon>
+    <mat-icon class="material-icons-outlined" matPrefix>mail</mat-icon>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -38,11 +41,11 @@
       [type]="showPassword ? 'text' : 'password'"
       formControlName="password"
     />
-    <mat-icon matPrefix>lock</mat-icon>
+    <mat-icon class="material-icons-outlined" matPrefix>lock</mat-icon>
     <mat-icon
       matSuffix
       (click)="showPassword = !showPassword"
-      class="toggleShowPasswordButton"
+      class="toggleShowPasswordButton material-icons-outlined"
       >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
     >
   </mat-form-field>

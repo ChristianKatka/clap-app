@@ -1,5 +1,5 @@
 <section fxLayoutAlign="center center">
-  <img src="assets/art/secure_login.png" alt="" />
+  <object data="assets/art/secure_login.svg" type="image/svg+xml"></object>
 </section>
 
 <h1>Register</h1>
@@ -27,7 +27,7 @@
       maxlength="40"
       formControlName="email"
     />
-    <mat-icon matPrefix>mail</mat-icon>
+    <mat-icon class="material-icons-outlined" matPrefix>mail</mat-icon>
     <mat-hint>E.g. funny.guy@gmail.com (You will login with email)</mat-hint>
   </mat-form-field>
 
@@ -47,7 +47,9 @@
       maxlength="30"
       formControlName="nickname"
     />
-    <mat-icon matPrefix>account_circle</mat-icon>
+    <mat-icon class="material-icons-outlined" matPrefix
+      >account_circle</mat-icon
+    >
     <mat-hint>E.g. FunnyGuy123</mat-hint>
   </mat-form-field>
 </form>
@@ -76,11 +78,11 @@
       maxlength="40"
       formControlName="password"
     />
-    <mat-icon matPrefix>lock</mat-icon>
+    <mat-icon class="material-icons-outlined" matPrefix>lock</mat-icon>
     <mat-icon
       matSuffix
       (click)="showPassword = !showPassword"
-      class="toggleShowPasswordButton"
+      class="toggleShowPasswordButton material-icons-outlined"
       >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
     >
     <mat-hint align="end">
@@ -101,11 +103,11 @@
       [type]="showPasswordConfirm ? 'text' : 'password'"
       formControlName="passwordConfirm"
     />
-    <mat-icon matPrefix>lock</mat-icon>
+    <mat-icon class="material-icons-outlined" matPrefix>lock</mat-icon>
     <mat-icon
       matSuffix
       (click)="showPasswordConfirm = !showPasswordConfirm"
-      class="toggleShowPasswordButton"
+      class="toggleShowPasswordButton material-icons-outlined"
       >{{ showPasswordConfirm ? "visibility" : "visibility_off" }}</mat-icon
     >
     <mat-hint>Should be same as password above</mat-hint>

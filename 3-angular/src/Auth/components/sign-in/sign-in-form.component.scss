@@ -1,10 +1,11 @@
 @import "../../../styles.scss";
 @include disable-auto-zoom-on-iphone-input-fields;
 
-img {
+object {
   width: 15rem;
-  object-fit: cover;
+  margin-top: 1rem;
 }
+
 
 mat-form-field {
   width: 100%;

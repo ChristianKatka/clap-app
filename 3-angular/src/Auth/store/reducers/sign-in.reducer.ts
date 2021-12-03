@@ -42,7 +42,8 @@ const signInReducer = createReducer(
       username,
       loading: false,
     })
-  )
+  ),
+  on(AuthenticatedActions.signOut, (state) => initialState)
 );
 
 export const reducer = (state: SignInState | undefined, action: Action) =>
