@@ -1,24 +1,40 @@
-@import '../../styles.scss';
+@import "../../styles.scss";
 
 ::ng-deep .mat-bottom-sheet-container {
   border-radius: 16px 16px 0px 0px;
 }
 
+p {
+  margin: 0;
+}
+
 .top-button {
   margin-bottom: -16px;
   mat-icon {
-    color: $clap-dark-gray
+    color: $clap-dark-gray;
   }
 }
 
-header {
-  p {
-    font-weight: bold;
-  }
+.username {
+  font-weight: bold;
+  font-size: 19px;
 }
 
 .divider {
   margin-top: 20px;
+}
+
+main {
+  margin-top: 1rem;
+}
+
+section {
+  padding: 10px 0;
+  cursor: pointer;
+  
+  p {
+    margin-left: 10px;
+  }
 }
 
 .cancel-button {

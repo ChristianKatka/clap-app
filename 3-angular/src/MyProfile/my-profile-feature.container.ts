@@ -3,4 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   templateUrl: 'my-profile-feature.container.html',
 })
-export class MyProfileFeatureContainerComponent {}
+export class MyProfileFeatureContainerComponent {
+  links = [
+    { label: 'Posts', path: ['posts'] },
+    { label: 'Saved', path: ['saved'] },
+  ];
+}

@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MyProfileFeatureContainerComponent } from './my-profile-feature.container';
-import { MyProfileContainerComponent } from './my-profile/my-profile.container';
+import { MyProfilePostsContainerComponent } from './my-profile-posts/my-profile-posts.container';
+import { MyProfileSavedContainerComponent } from './my-profile-saved/my-profile-saved.container';
 
 export const childRoutes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    component: MyProfileContainerComponent,
+    redirectTo: 'posts',
+  },
+  {
+    path: 'posts',
+    component: MyProfilePostsContainerComponent,
+  },
+  {
+    path: 'saved',
+    component: MyProfileSavedContainerComponent,
   },
 ];
 

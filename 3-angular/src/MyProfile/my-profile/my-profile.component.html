@@ -1,26 +1,25 @@
 <clap-app-container [width]="'90%'">
-  <img src="assets/images/face.jpeg" alt="" class="profile-picture" />
-  <section fxLayoutAlign="space-between start">
-    <div>
-      <div fxLayoutAlign="center center">
-        <p class="user-name">ChristianKatka</p>
-        <mat-icon class="material-icons-outlined">verified</mat-icon>
-      </div>
-      <p>@cloudguy</p>
+  <section fxLayout="column" fxLayoutAlign="center center">
+    <img src="assets/images/face.jpeg" alt="" class="profile-picture" />
+    <div fxLayoutAlign="start start">
+      <p class="user-name">ChristianKatka</p>
+      <mat-icon class="material-icons-outlined">verified</mat-icon>
     </div>
-    <!-- <button mat-raised-button>
-      Edit Profile
-    </button> -->
-  </section>
-  <section fxLayout>
-    <span class="bold-number" style="margin-right: 5px">862k</span>
-    <span class="gray-text" style="margin-right: 10px">Followers</span>
-    <span class="bold-number" style="margin-right: 5px">671k</span>
-    <span class="gray-text" style="margin-right: 10px">Following</span>
-    <span class="bold-number" style="margin-right: 5px">993k</span>
-    <span class="gray-text">Likes</span>
+    <p class="at-username">@ChristianKatka</p>
   </section>
 
+  <p style="text-align: center">
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil excepturi
+    repudiandae, ad consectetur repellat iure rerum nobis modi esse molestiae?
+  </p>
   <mat-divider></mat-divider>
-  <p>My name is christian and I am very good at programming</p>
+
+  <section fxLayoutAlign="space-between center" style="margin-bottom: 1rem">
+    <span class="bold-number" style="margin-right: 5px">862</span>
+    <span class="gray-text" style="margin-right: 10px">Likes</span>
+    <span class="bold-number" style="margin-right: 5px">671</span>
+    <span class="gray-text" style="margin-right: 10px">Comments</span>
+    <span class="bold-number" style="margin-right: 5px">993</span>
+    <span class="gray-text">Views</span>
+  </section>
 </clap-app-container>

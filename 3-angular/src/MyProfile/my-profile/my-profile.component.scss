@@ -1,17 +1,21 @@
+@import '../../styles.scss';
 
 .profile-picture {
   margin-top: 5rem;
-
-  height: 75px;
-  width: 75px;
+  height: 120px;
+  width: 120px;
   border-radius: 50%;
   object-fit: cover;
+  margin-bottom: 1rem;
 }
 
 .user-name {
   margin: 0;
   font-size: 25px;
   font-weight: bold;
+}
+.at-username {
+  margin-bottom: 13px;
 }
 
 mat-icon {
@@ -29,5 +33,5 @@ mat-divider {
 }
 
 .gray-text {
-  color: #7e7e7e;
+  color: $clap-gray;
 }

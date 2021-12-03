@@ -1,1 +1,19 @@
+<clap-app-my-profile-top-bar></clap-app-my-profile-top-bar>
+<clap-app-my-profile></clap-app-my-profile>
+
+<nav mat-tab-nav-bar>
+    <a
+      mat-tab-link
+      style="width: 100%"
+      *ngFor="let link of links"
+      [routerLink]="link.path"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [routerLinkActiveOptions]="{ exact: true }"
+      [active]="rla.isActive"
+    >
+      {{ link.label }}
+    </a>
+  </nav>
+  
 <router-outlet></router-outlet>
