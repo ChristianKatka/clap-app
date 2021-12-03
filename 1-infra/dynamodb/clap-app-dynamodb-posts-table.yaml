@@ -1,0 +1,38 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app posts
+
+Resources:
+  ClapAppPostsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+      TableName: 'clap-app-posts'
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-posts-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppPostsTableArn:
+    Description: clap-app posts Table ARN
+    Value: !GetAtt ClapAppPostsTable.Arn
+    Export:
+      Name: clap-app-posts-table-arn
+
+  ClapAppPostsTableStreamArn:
+    Description: clap-app posts table stream ARN
+    Value: !GetAtt ClapAppPostsTable.StreamArn
+    Export:
+      Name: clap-app-posts-table-stream-arn
+

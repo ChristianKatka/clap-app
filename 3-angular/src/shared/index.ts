@@ -1,17 +1,17 @@
-import { TrunctateTextComponent } from './trunctate-text/trunctate-text.component';
 import { BooleanPipe } from './pipes/boolean.pipe';
 import { IconPipe } from './pipes/icon-type.pipe';
-import { FileSelectDirective } from './file-select/file-select.directive';
-import { FileSelectComponent } from './file-select/file-select.component';
-import { ProgressBarComponent } from './progress-bar/progress-bar.component';
-import { LogoComponent } from './logo/logo.component';
-import { AlertComponent } from './info-boxes/alert.component';
-import { InfoComponent } from './info-boxes/info.component';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { SuccessComponent } from './success/success.component';
-import { NavbarContainerComponent } from './navbar/navbar.container';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ClapAppContainer } from './clap-app-container/clap-app-container';
+import { FileSelectDirective } from './components/file-select/file-select.directive';
+import { FileSelectComponent } from './components/file-select/file-select.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { LogoComponent } from './components/logo/logo.component';
+import { AlertComponent } from './components/info-boxes/alert.component';
+import { InfoComponent } from './components/info-boxes/info.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { SuccessComponent } from './components/success/success.component';
+import { NavbarContainerComponent } from './components/navbar/navbar.container';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ClapAppContainer } from './components/clap-app-container/clap-app-container';
+import { TrunctateTextComponent } from './components/trunctate-text/trunctate-text.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -24,7 +24,7 @@ export const components: any[] = [
   SuccessComponent,
   NavbarContainerComponent,
   NavbarComponent,
-  ClapAppContainer
+  ClapAppContainer,
 ];
 export const pipes = [BooleanPipe, IconPipe];
 export const directives = [FileSelectDirective];

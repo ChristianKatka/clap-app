@@ -21,6 +21,7 @@ import { AuthModule } from 'src/Auth/auth.module';
 import { components } from ".";
 import { HomeModule } from 'src/Home/home.module';
 import { AboutModule } from 'src/About/about.module';
+import { PostsStoreModule } from 'src/PostsStore/posts-store.module';
 
 @NgModule({
   declarations: [AppComponent, ...components],
@@ -43,7 +44,8 @@ import { AboutModule } from 'src/About/about.module';
     SharedModule,
     HomeModule,
     MaterialModule,
-    AboutModule
+    AboutModule,
+    PostsStoreModule
   ],
   providers: [],
   bootstrap: [AppComponent],
