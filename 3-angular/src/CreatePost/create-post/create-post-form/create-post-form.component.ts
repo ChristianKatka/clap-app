@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['create-post-form.component.scss'],
 })
 export class CreatePostFormComponent implements OnInit {
+  @Output()
+  createPost: EventEmitter<string> = new EventEmitter();
+
   createPostForm = new FormGroup({
     text: new FormControl('', Validators.required),
   });
@@ -14,4 +17,8 @@ export class CreatePostFormComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  submit() {
+    this.createPost.emit(this.createPostForm.value.text);
+  }
 }

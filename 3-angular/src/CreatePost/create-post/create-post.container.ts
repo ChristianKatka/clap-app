@@ -8,4 +8,8 @@ export class CreatePostContainerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  onCreatePost(text: string) {
+    console.log(text);
+  }
 }

@@ -1,6 +1,5 @@
-<section class="mat-elevation-z3" style="padding: 1rem; border-radius: 12px">
-  <clap-app-create-post-image-holder></clap-app-create-post-image-holder>
-
+<section class="mat-elevation-z3" style="padding: 1rem; border-radius: 6px">
+  <!-- <clap-app-create-post-image-holder></clap-app-create-post-image-holder> -->
 
   <p><b>Something funny in your mind you would like to share?</b></p>
 
@@ -15,7 +14,8 @@
         cdkTextareaAutosize
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="3"
-        cdkAutosizeMaxRows="8"
+        cdkAutosizeMaxRows="6"
+        maxlength="255"
         formControlName="text"
       ></textarea>
     </mat-form-field>
@@ -27,6 +27,7 @@
   [disabled]="this.createPostForm.invalid"
   mat-raised-button
   color="primary"
+  (click)="submit()"
 >
   CREATE POST
 </button>
