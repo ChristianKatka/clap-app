@@ -7,7 +7,7 @@ import {
   IAuthenticationDetailsData,
 } from 'amazon-cognito-identity-js';
 import { environment } from '../../environments/environment';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SignUpUserData } from '@auth/models/sign-up-user-data.model';
 import { SignUpService } from './sign-up.service';
@@ -106,5 +106,18 @@ export class CognitoService {
       this.cognitoFunctionsService.createLocalCognitoUser(userName);
 
     return this.signUpService.confirmRegistration(currentUser, code);
+  }
+
+  // USED BY AUTH HTTP
+  public getIdentityToken(): Observable<string> {
+    const currentUser = this.userPool.getCurrentUser();
+
+    if (currentUser === null) {
+      return of('Current user is null');
+    }
+    return this.userSessionService.getSession(currentUser).pipe(
+      map((session) => session.getIdToken()),
+      map((idToken) => idToken.getJwtToken())
+    );
   }
 }
