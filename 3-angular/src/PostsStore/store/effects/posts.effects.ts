@@ -12,6 +12,7 @@ import {
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PostsService } from 'src/PostsStore/services/posts.service';
+import { RouterActions } from '@app/store/actions';
 
 @Injectable()
 export class PostsEffects {
@@ -42,6 +43,19 @@ export class PostsEffects {
             return of(PostsActions.createPostFailure({ error }));
           })
         )
+      )
+    )
+  );
+
+  // ROUTING AFTER SUCCESS
+  createPostSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostsActions.createPostSuccess),
+      map(() =>
+        RouterActions.navigate({
+          commands: ['/home'],
+          extras: { replaceUrl: true },
+        })
       )
     )
   );

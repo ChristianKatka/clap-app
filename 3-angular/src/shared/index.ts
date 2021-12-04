@@ -8,10 +8,10 @@ import { AlertComponent } from './components/info-boxes/alert.component';
 import { InfoComponent } from './components/info-boxes/info.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { SuccessComponent } from './components/success/success.component';
-import { NavbarContainerComponent } from './components/navbar/navbar.container';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ClapAppContainer } from './components/clap-app-container/clap-app-container';
 import { TrunctateTextComponent } from './components/trunctate-text/trunctate-text.component';
+import { SpaceGiverUsedWithFixedElementsComponent } from './components/space-giver-used-with-navbar/space-giver-used-with-fixed-elements.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -22,9 +22,9 @@ export const components: any[] = [
   InfoComponent,
   LoadingSpinnerComponent,
   SuccessComponent,
-  NavbarContainerComponent,
   NavbarComponent,
   ClapAppContainer,
+  SpaceGiverUsedWithFixedElementsComponent
 ];
 export const pipes = [BooleanPipe, IconPipe];
 export const directives = [FileSelectDirective];

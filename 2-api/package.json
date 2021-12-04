@@ -1,10 +1,10 @@
 {
-  "name": "image-upload-api",
+  "name": "clap-app-api-lambda",
   "version": "0.0.0",
   "config": {
     "region": "eu-west-1",
-    "s3APIlambdaBucket": "images-api-lambda-bucket",
-    "myCloudFormationStackName": "image-upload-api"
+    "s3APIlambdaBucket": "clap-app-api-lambda",
+    "cloudFormationStackName": "clap-app-api-lambda"
   },
   "scripts": {
     "start": "nodemon ./server/dev.ts",
@@ -12,7 +12,7 @@
     "build": "tsc -p tsconfig.json && cp package.json build && cd build && npm install --production",
     "deleteobjectsins3": "aws s3 rm s3://$npm_package_config_s3APIlambdaBucket --recursive",
     "package": "aws cloudformation package --template-file sam/template.yaml --s3-bucket $npm_package_config_s3APIlambdaBucket --output-template dist/template-out.yaml --region $npm_package_config_region",
-    "deploy": "aws cloudformation deploy --template-file dist/template-out.yaml --stack-name $npm_package_config_myCloudFormationStackName --capabilities CAPABILITY_IAM --region $npm_package_config_region",
+    "deploy": "aws cloudformation deploy --template-file dist/template-out.yaml --stack-name $npm_package_config_cloudFormationStackName --capabilities CAPABILITY_IAM --region $npm_package_config_region",
     "package-deploy": "npm run package && npm run deploy",
     "build-package-deploy": "npm run build && npm run deleteobjectsins3 && npm run package && npm run deploy"
   },

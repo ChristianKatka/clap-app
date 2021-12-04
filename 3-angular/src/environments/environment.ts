@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://lwx2dwf5z5.execute-api.eu-west-1.amazonaws.com',
+  apiBaseUrl: 'https://lwkh44snq6.execute-api.eu-west-1.amazonaws.com',
   cognito: {
     identityPoolId: 'eu-west-1:893f2177-ade3-48f6-a353-f297729679df',
     region: 'eu-west-1',

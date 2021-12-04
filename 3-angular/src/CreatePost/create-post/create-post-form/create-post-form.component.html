@@ -23,6 +23,7 @@
 </section>
 
 <button
+  *ngIf="!loading"
   class="create-post-button"
   [disabled]="this.createPostForm.invalid"
   mat-raised-button
@@ -30,4 +31,14 @@
   (click)="submit()"
 >
   CREATE POST
+</button>
+
+<button
+  *ngIf="loading"
+  class="create-post-button"
+  mat-raised-button
+  color="primary"
+  disabled
+>
+  <clap-app-loading-spinner [diameter]="40"></clap-app-loading-spinner>
 </button>

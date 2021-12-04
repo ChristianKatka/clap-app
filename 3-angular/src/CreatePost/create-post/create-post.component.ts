@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'clap-app-create-post',
@@ -6,6 +6,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['create-post.component.scss'],
 })
 export class CreatePostComponent implements OnInit {
+  @Input()
+  loading = false;
+
   @Output()
   createPost: EventEmitter<string> = new EventEmitter();
 

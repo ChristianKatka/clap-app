@@ -6,5 +6,8 @@
   <h1>Create post</h1>
   <clap-app-create-post-add-image></clap-app-create-post-add-image>
 
-  <clap-app-create-post-form (createPost)="this.createPost.emit($event)"></clap-app-create-post-form>
+  <clap-app-create-post-form
+    [loading]="loading"
+    (createPost)="this.createPost.emit($event)"
+  ></clap-app-create-post-form>
 </clap-app-container>
