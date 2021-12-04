@@ -14,12 +14,11 @@
         fxLayoutAlign="space-between center"
       >
         <section fxLayout="row" fxLayoutGap="16px">
-          <!-- (click)="this.giveLikeToPost.emit(post.id)" -->
 
-          <mat-icon (click)="this.giveLikeToPost.emit(post.id)" class="material-icons-outlined">favorite_border</mat-icon>
-          <!-- <mat-icon *ngIf="post.iHaveLiked" class="material-icons liked">
+          <mat-icon *ngIf="!post.iLikeThisPost" (click)="this.giveLikeToPost.emit(post.id)" class="material-icons-outlined">favorite_border</mat-icon>
+          <mat-icon *ngIf="post.iLikeThisPost" class="material-icons liked">
             favorite
-          </mat-icon> -->
+          </mat-icon>
 
           <mat-icon class="material-icons-outlined"
             >chat_bubble_outline</mat-icon

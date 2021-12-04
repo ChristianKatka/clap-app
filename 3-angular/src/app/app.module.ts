@@ -22,6 +22,7 @@ import { components } from ".";
 import { HomeModule } from 'src/Home/home.module';
 import { AboutModule } from 'src/About/about.module';
 import { PostsStoreModule } from 'src/PostsStore/posts-store.module';
+import { MyProfileModule } from 'src/MyProfile/my-profile.module';
 
 @NgModule({
   declarations: [AppComponent, ...components],
@@ -45,7 +46,8 @@ import { PostsStoreModule } from 'src/PostsStore/posts-store.module';
     HomeModule,
     MaterialModule,
     AboutModule,
-    PostsStoreModule
+    PostsStoreModule,
+    MyProfileModule
   ],
   providers: [],
   bootstrap: [AppComponent],

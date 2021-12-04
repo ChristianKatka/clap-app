@@ -48,17 +48,17 @@ export const giveLikeToPostFailure = createAction(
   props<{ error: string }>()
 );
 
-// export const removeLikeFromPost = createAction(
-//   '[Posts] Remove Like From Post',
-//   props<{ likeId: PostWithoutImageDraft }>()
-// );
-// export const removeLikeFromPostSuccess = createAction(
-//   '[Posts] Remove Like From Post Success',
-//   props<{ likeId: string }>()
-// );
-// export const removeLikeFromPostFailure = createAction(
-//   '[Posts] Remove Like From Post Failure',
-//   props<{ error: string }>()
-// );
+export const removeLikeFromPost = createAction(
+  '[Posts] Remove Like From Post',
+  props<{ postId: string }>()
+);
+export const removeLikeFromPostSuccess = createAction(
+  '[Posts] Remove Like From Post Success',
+  props<{ likeId: string }>()
+);
+export const removeLikeFromPostFailure = createAction(
+  '[Posts] Remove Like From Post Failure',
+  props<{ error: string }>()
+);
 
 

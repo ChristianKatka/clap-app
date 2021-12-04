@@ -17,7 +17,7 @@ export class CreatePostContainerComponent implements OnInit {
   ngOnInit() {}
 
   onCreatePost(text: string) {
-    const postDraft: PostWithoutImageDraft = { text, postType: 'withoutImage' };
+    const postDraft: PostWithoutImageDraft = { text, postType: 'withoutImage', likes: [] };
     this.store.dispatch(PostsActions.createPostWithoutImage({ postDraft }));
   }
 }

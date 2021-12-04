@@ -33,6 +33,15 @@ const PostsReducer = createReducer(
     },
   })),
 
+  on(PostsActions.giveLikeToPost, (state, { postId }) => {
+    const entities = { ...state.entities };
+    entities[postId] = { ...entities[postId], iLikeThisPost: true };
+    return {
+      ...state,
+      entities,
+    };
+  }),
+
   on(InitActions.loadApplicationInitializeDataSuccess, (state, { posts }) => {
     const entities = posts.reduce(
       (posts: { [id: string]: any }, post: any) => ({

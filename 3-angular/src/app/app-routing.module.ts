@@ -5,6 +5,7 @@ import { AppInitializationContainerComponent } from './app-initialization/app-in
 import { HomeFeatureContainerComponent } from '@home/home-feature.container';
 import { WelcomeContainerComponent } from './welcome/welcome.container';
 import { SignInNewPasswordRequiredContainerComponent } from '@auth/components/sign-in-new-password-required/sign-in-new-password-required.container';
+import { MyProfileFeatureContainerComponent } from 'src/MyProfile/my-profile-feature.container';
 
 const routes: Routes = [
   {
@@ -47,8 +48,8 @@ const routes: Routes = [
   },
   {
     path: 'my-profile',
-    loadChildren: () =>
-      import('../MyProfile/my-profile.module').then((m) => m.MyProfileModule),
+    canActivate: [AuthenticatedGuard],
+    component: MyProfileFeatureContainerComponent,
   },
   {
     path: 'settings',

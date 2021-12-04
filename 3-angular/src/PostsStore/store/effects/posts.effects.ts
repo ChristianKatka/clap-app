@@ -44,22 +44,38 @@ export class PostsEffects {
       )
     )
   );
-  
+
   giveLikeToPost$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(PostsActions.giveLikeToPost),
-    switchMap(({ postId }) =>
-      this.postsService.giveLikeToPost(postId).pipe(
-        tap((x) => console.log(x)),
-        map((like) => PostsActions.giveLikeToPostSuccess({ like })),
-        catchError((error: string) => {
-          console.log(error);
-          return of(PostsActions.giveLikeToPostFailure({ error }));
-        })
+    this.actions$.pipe(
+      ofType(PostsActions.giveLikeToPost),
+      switchMap(({ postId }) =>
+        this.postsService.giveLikeToPost(postId).pipe(
+          tap((x) => console.log(x)),
+          map((like) => PostsActions.giveLikeToPostSuccess({ like })),
+          catchError((error: string) => {
+            console.log(error);
+            return of(PostsActions.giveLikeToPostFailure({ error }));
+          })
+        )
       )
     )
-  )
-);
+  );
+
+  removeLikeFromPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostsActions.removeLikeFromPost),
+      switchMap(({ postId }) =>
+        this.postsService.removeLikeFromPost(postId).pipe(
+          tap((x) => console.log(x)),
+          map((likeId) => PostsActions.removeLikeFromPostSuccess({ likeId })),
+          catchError((error: string) => {
+            console.log(error);
+            return of(PostsActions.removeLikeFromPostFailure({ error }));
+          })
+        )
+      )
+    )
+  );
 
   constructor(
     private actions$: Actions,

@@ -11,7 +11,7 @@ export class InitializeService {
   constructor(private authHttp: AuthHTTPService) {}
 
   // Loads all neccesery data needed to open application
-  loadApplicationInitializeData(): Observable<{ posts: any; likes: any }> {
+  loadApplicationInitializeData(): Observable<{ posts: any; myProfile: any }> {
     return this.authHttp.get(`${environment.apiBaseUrl}/initialize`);
   }
 }

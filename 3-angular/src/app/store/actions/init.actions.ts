@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { MyProfile } from '@shared/models/my-profile.model';
 
 // Load ALL
 export const loadApplicationInitializeData = createAction(
@@ -7,10 +8,10 @@ export const loadApplicationInitializeData = createAction(
 
 export const loadApplicationInitializeDataSuccess = createAction(
   '[Init] Load Application Initialize Data Success',
-  props<{ posts: any; likes: any }>()
+  props<{ posts: any; myProfile: MyProfile }>()
 );
 
 export const loadApplicationInitializeDataFailure = createAction(
-  '[Init] Load Application Initialize Data',
+  '[Init] Load Application Initialize Data Failure',
   props<{ error: string }>()
 );

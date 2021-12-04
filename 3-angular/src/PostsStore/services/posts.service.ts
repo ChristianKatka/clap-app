@@ -23,4 +23,10 @@ export class PostsService {
       {}
     );
   }
+
+  removeLikeFromPost(likeId: string): Observable<any> {
+    return this.authHttp.delete(
+      `${environment.apiBaseUrl}/posts/like/${likeId}`
+    );
+  }
 }

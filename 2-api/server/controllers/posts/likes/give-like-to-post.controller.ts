@@ -4,11 +4,13 @@ import { dynamodbCreatePostLike } from '../../../services/dynamodb/posts/dynamod
 
 export const giveLikeToPost = async (ctx: Context, next: Next) => {
   const postId = ctx.params.postId;
+  const userId = ctx.state.jwtPayload.sub;
   const nickname = ctx.state.jwtPayload.nickname;
 
   const like = {
     id: uuidv4(),
     postId,
+    userId,
     nickname,
     createdAt: Date.now(),
   };
