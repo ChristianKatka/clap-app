@@ -33,24 +33,19 @@ const PostsReducer = createReducer(
     },
   })),
 
-  on(
-    InitActions.loadApplicationInitializeDataSuccess,
-    (state, { posts, likes }) => {
-      console.log(likes);
-
-      const entities = posts.reduce(
-        (posts: { [id: string]: any }, post: any) => ({
-          ...posts,
-          [post.id]: post,
-        }),
-        {}
-      );
-      return {
-        ...state,
-        entities,
-      };
-    }
-  ),
+  on(InitActions.loadApplicationInitializeDataSuccess, (state, { posts }) => {
+    const entities = posts.reduce(
+      (posts: { [id: string]: any }, post: any) => ({
+        ...posts,
+        [post.id]: post,
+      }),
+      {}
+    );
+    return {
+      ...state,
+      entities,
+    };
+  }),
 
   on(AuthenticatedActions.signOut, (state) => initialState)
 );

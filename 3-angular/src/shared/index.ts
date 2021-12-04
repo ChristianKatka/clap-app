@@ -12,6 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ClapAppContainer } from './components/clap-app-container/clap-app-container';
 import { TrunctateTextComponent } from './components/trunctate-text/trunctate-text.component';
 import { SpaceGiverUsedWithFixedElementsComponent } from './components/space-giver-used-with-navbar/space-giver-used-with-fixed-elements.component';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -26,5 +27,5 @@ export const components: any[] = [
   ClapAppContainer,
   SpaceGiverUsedWithFixedElementsComponent
 ];
-export const pipes = [BooleanPipe, IconPipe];
+export const pipes = [BooleanPipe, IconPipe, TimeAgoPipe];
 export const directives = [FileSelectDirective];
