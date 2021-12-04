@@ -3,9 +3,9 @@ import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
 import { logRequestAndResponse } from './middlewares/request-response-logger.middleware';
-import { imageRouter } from './routers/image.router';
 import { decodeCognitoToken } from './middlewares/cognito-token.middleware';
 import { postsRouter } from './routers/posts.router';
+import { initializeRouter } from './routers/initialize.router';
 
 const app = new Koa();
 
@@ -19,7 +19,7 @@ app.use(decodeCognitoToken);
 //     ctx.body = 'Welcome to the server side';
 //   });
 
-app.use(imageRouter.routes()).use(imageRouter.allowedMethods());
+app.use(initializeRouter.routes()).use(initializeRouter.allowedMethods());
 app.use(postsRouter.routes()).use(postsRouter.allowedMethods());
 
 export { app };

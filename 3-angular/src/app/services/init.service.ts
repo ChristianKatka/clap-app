@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AuthHTTPService } from './auth-http.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class InitializingService {
-  constructor(private router: Router) {}
+export class InitializeService {
+  constructor(private authHttp: AuthHTTPService) {}
 
   // Loads all neccesery data needed to open application
-  loadApplicationInitializingData(): Observable<{data: any}> {
-    return of({data: ''});
+  loadApplicationInitializeData(): Observable<{ posts: any; likes: any }> {
+    return this.authHttp.get(`${environment.apiBaseUrl}/initialize`);
   }
 }

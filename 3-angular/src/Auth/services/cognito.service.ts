@@ -39,6 +39,11 @@ export class CognitoService {
     this.userPool = new CognitoUserPool(environment.cognito.poolData);
   }
 
+  // USED TO CHECK OLD USER SESSION
+  public getCurrentUser(): Observable<CognitoUser | null> {
+    return of(this.userPool.getCurrentUser());
+  }
+
   //  USED BY ROUTING GUARDS
   public isSessionValid(): Observable<boolean> {
     const currentUser = this.userPool.getCurrentUser();

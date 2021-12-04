@@ -1,16 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 
 // Load ALL
-export const loadApplicationInitializingData = createAction(
-  '[Init] Load Application Initializing Data'
+export const loadApplicationInitializeData = createAction(
+  '[Init] Load Application Initialize Data'
 );
 
-export const loadApplicationInitializingDataSuccess = createAction(
-  '[Init] Load Application Initializing Data Success',
-  props<{ data: any }>()
+export const loadApplicationInitializeDataSuccess = createAction(
+  '[Init] Load Application Initialize Data Success',
+  props<{ posts: any; likes: any }>()
 );
 
-export const loadApplicationInitializingDataFailure = createAction(
-  '[Init] Load Application Initializing Data',
+export const loadApplicationInitializeDataFailure = createAction(
+  '[Init] Load Application Initialize Data',
   props<{ error: string }>()
 );

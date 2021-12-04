@@ -1,5 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 
+export const checkOldUserSession = createAction(
+  '[Auth] Check Old User Session'
+);
+export const userRemembered = createAction(
+  '[Auth] User Remembered',
+  props<{ username: string }>()
+);
+export const userNotRemembered = createAction('[Auth] User Not Remembered');
+
 export const authenticateUserSuccess = createAction(
   '[Auth] Authenticate User Success'
 );
