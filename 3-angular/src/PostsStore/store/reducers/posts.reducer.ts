@@ -7,25 +7,51 @@ import { PostsActions } from '../actions';
 
 export interface PostsState {
   entities: { [id: string]: PostWithoutImage };
-  likes: { [postId: string]: PostLike };
+  postsLikes: { [id: string]: PostLike };
   sortBy: 'latest';
   loading: boolean;
 }
 
 export const initialState: PostsState = {
   entities: {},
-  likes: {},
+  postsLikes: {},
   sortBy: 'latest',
   loading: false,
 };
 
 const PostsReducer = createReducer(
   initialState,
+  on(
+    InitActions.loadApplicationInitializeDataSuccess,
+    (state, { posts, postsLikes }) => {
+      const entities = posts.reduce(
+        (posts: { [id: string]: any }, post: any) => ({
+          ...posts,
+          [post.id]: post,
+        }),
+        {}
+      );
+
+      const myPostsLikes = postsLikes.reduce(
+        (likes: { [id: string]: any }, like: any) => ({
+          ...likes,
+          [like.id]: like,
+        }),
+        {}
+      );
+
+      return {
+        ...state,
+        postsLikes: myPostsLikes,
+        entities,
+      };
+    }
+  ),
+
   on(PostsActions.createPostWithoutImage, (state) => ({
     ...state,
     loading: true,
   })),
-
   on(PostsActions.createPostWithoutImageSuccess, (state, { post }) => ({
     ...state,
     loading: false,
@@ -37,54 +63,35 @@ const PostsReducer = createReducer(
     },
   })),
 
-  on(PostsActions.giveLikeToPost, (state, { postId }) => {
-    const entities = { ...state.entities };
-    entities[postId] = { ...entities[postId], iLikeThisPost: true };
-    return {
-      ...state,
-      entities,
-      loading: true,
-    };
-  }),
-  on(PostsActions.giveLikeToPostSuccess, (state, { postId, like }) => {
-    const entities = { ...state.entities };
-    entities[postId].likes.push(like);
-    return {
-      ...state,
-      entities,
-      loading: false,
-    };
-  }),
+  on(PostsActions.giveLikeToPost, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(PostsActions.giveLikeToPostSuccess, (state, { like }) => ({
+    ...state,
+    loading: false,
+    postsLikes: {
+      ...state.postsLikes,
+      [like.id]: {
+        ...like,
+      },
+    },
+  })),
 
-  on(PostsActions.removeLikeFromPost, (state, { postId }) => {
-    const entities = { ...state.entities };
-    entities[postId] = { ...entities[postId], iLikeThisPost: false };
-    return {
-      ...state,
-      entities,
-      loading: true,
+  on(PostsActions.removeLikeFromPost, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(PostsActions.removeLikeFromPostSuccess, (state, { likeId }) => {
+    const postsLikes = {
+      ...state.postsLikes,
     };
-  }),
-  on(PostsActions.removeLikeFromPostSuccess, (state) => {
-    const entities = { ...state.entities };
+    delete postsLikes[likeId];
 
     return {
       ...state,
       loading: false,
-    };
-  }),
-
-  on(InitActions.loadApplicationInitializeDataSuccess, (state, { posts }) => {
-    const entities = posts.reduce(
-      (posts: { [id: string]: any }, post: any) => ({
-        ...posts,
-        [post.id]: post,
-      }),
-      {}
-    );
-    return {
-      ...state,
-      entities,
+      postsLikes,
     };
   }),
 

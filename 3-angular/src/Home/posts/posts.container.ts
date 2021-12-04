@@ -26,7 +26,7 @@ export class PostsContainerComponent implements OnInit {
     this.store.dispatch(PostsActions.giveLikeToPost({ postId }));
   }
 
-  onRemoveLikeFromPost(postId: string) {
-    this.store.dispatch(PostsActions.removeLikeFromPost({ postId }));
+  onRemoveLikeFromPost(likeId: string) {
+    this.store.dispatch(PostsActions.removeLikeFromPost({ likeId }));
   }
 }

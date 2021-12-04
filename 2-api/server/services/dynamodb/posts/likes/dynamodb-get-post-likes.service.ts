@@ -1,5 +1,5 @@
-import { POSTS_LIKES_TABLE, POST_ID_INDEX } from '../../../constants';
-import { docClient } from '../../../instances/aws';
+import { POSTS_LIKES_TABLE, POST_ID_INDEX } from '../../../../constants';
+import { docClient } from '../../../../instances/aws';
 
 export const dynamodbGetPostLikes = async (postId: string) => {
   return await docClient

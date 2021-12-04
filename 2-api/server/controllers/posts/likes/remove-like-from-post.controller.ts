@@ -7,7 +7,7 @@ export const removeLikeFromPost = async (ctx: Context, next: Next) => {
   await dynamodbRemovePostLike(likeId);
 
   ctx.response.status = 200;
-  ctx.response.body = {};
+  ctx.response.body = { likeId };
 
   await next();
 };

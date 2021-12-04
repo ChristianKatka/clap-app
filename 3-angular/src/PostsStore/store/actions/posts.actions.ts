@@ -41,7 +41,7 @@ export const giveLikeToPost = createAction(
 );
 export const giveLikeToPostSuccess = createAction(
   '[Posts] Give Like To Post Success',
-  props<{ postId: string; like: PostLike }>()
+  props<{ like: PostLike }>()
 );
 export const giveLikeToPostFailure = createAction(
   '[Posts] Give Like To Post Failure',
@@ -50,10 +50,11 @@ export const giveLikeToPostFailure = createAction(
 
 export const removeLikeFromPost = createAction(
   '[Posts] Remove Like From Post',
-  props<{ postId: string }>()
+  props<{ likeId: string }>()
 );
 export const removeLikeFromPostSuccess = createAction(
-  '[Posts] Remove Like From Post Success'
+  '[Posts] Remove Like From Post Success',
+  props<{ likeId: string }>()
 );
 export const removeLikeFromPostFailure = createAction(
   '[Posts] Remove Like From Post Failure',

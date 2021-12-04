@@ -51,7 +51,6 @@ export class PostsEffects {
       ofType(PostsActions.giveLikeToPost),
       switchMap(({ postId }) =>
         this.postsService.giveLikeToPost(postId).pipe(
-          tap((x) => console.log(x)),
           map((like) => PostsActions.giveLikeToPostSuccess({ like })),
           catchError((error: string) => {
             console.log(error);
@@ -61,27 +60,20 @@ export class PostsEffects {
       )
     )
   );
-
   removeLikeFromPost$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(PostsActions.removeLikeFromPost),
-      withLatestFrom(this.store.select(MyProfileSelectors.getMyUserId)),
-      switchMap(([{postId}, userId]) => {
-        if (userId === undefined) {
-          return of(
-            PostsActions.removeLikeFromPostFailure({ error: 'no user ID' })
-          );
-        }
-
-        return this.postsService.removeLikeFromPost(postId, userId).pipe(
-          map(() => PostsActions.removeLikeFromPostSuccess()),
-          catchError((error: any) =>
-            of(PostsActions.removeLikeFromPostFailure({ error }))
-          )
-        );
-      })
+  this.actions$.pipe(
+    ofType(PostsActions.removeLikeFromPost),
+    switchMap(({ likeId }) =>
+      this.postsService.removeLikeFromPost(likeId).pipe(
+        map(({likeId}) => PostsActions.removeLikeFromPostSuccess({ likeId })),
+        catchError((error: string) => {
+          console.log(error);
+          return of(PostsActions.removeLikeFromPostFailure({ error }));
+        })
+      )
     )
-  );
+  )
+);
 
   constructor(
     private actions$: Actions,

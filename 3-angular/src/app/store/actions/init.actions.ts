@@ -8,7 +8,7 @@ export const loadApplicationInitializeData = createAction(
 
 export const loadApplicationInitializeDataSuccess = createAction(
   '[Init] Load Application Initialize Data Success',
-  props<{ posts: any; myProfile: MyProfile }>()
+  props<{ posts: any; postsLikes: any; myProfile: any }>()
 );
 
 export const loadApplicationInitializeDataFailure = createAction(

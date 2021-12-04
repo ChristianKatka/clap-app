@@ -36,7 +36,7 @@
             >
             <mat-icon
               *ngIf="post.iLikeThisPost"
-              (click)="this.removeLikeFromPost.emit(post.id)"
+              (click)="this.removeLikeFromPost.emit(post.iLikeThisPost)"
               class="material-icons liked"
             >
               favorite
@@ -51,7 +51,7 @@
         <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
       </div>
       <p class="likes-text" [style.margin-top]="'5px'">
-        {{ post.likes.length }} likes
+        {{ post.postLikes.length }} likes
       </p>
       <p><b>ChristianKatka</b> {{ post.text }}</p>
       <p class="view-all-comments-text">View all 5 comments</p>
