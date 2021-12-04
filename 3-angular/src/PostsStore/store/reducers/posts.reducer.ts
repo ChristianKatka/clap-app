@@ -1,22 +1,28 @@
+import { InitActions } from '@app/store/actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
 
 export interface PostsState {
   entities: { [id: string]: any };
+  sortBy: 'latest';
   loading: boolean;
 }
 
 export const initialState: PostsState = {
   entities: {},
+  sortBy: 'latest',
   loading: false,
 };
 
 const PostsReducer = createReducer(
   initialState,
-  on(PostsActions.createPost, (state) => ({ ...state, loading: true })),
+  on(PostsActions.createPostWithoutImage, (state) => ({
+    ...state,
+    loading: true,
+  })),
 
-  on(PostsActions.createPostSuccess, (state, { post }) => ({
+  on(PostsActions.createPostWithoutImageSuccess, (state, { post }) => ({
     ...state,
     loading: false,
     entities: {
@@ -27,19 +33,24 @@ const PostsReducer = createReducer(
     },
   })),
 
-  on(PostsActions.getAllPostsSuccess, (state, { posts }) => {
-    const entities = posts.reduce(
-      (posts: { [id: string]: any }, post: any) => ({
-        ...posts,
-        [post.id]: post,
-      }),
-      {}
-    );
-    return {
-      ...state,
-      entities,
-    };
-  }),
+  on(
+    InitActions.loadApplicationInitializeDataSuccess,
+    (state, { posts, likes }) => {
+      console.log(likes);
+
+      const entities = posts.reduce(
+        (posts: { [id: string]: any }, post: any) => ({
+          ...posts,
+          [post.id]: post,
+        }),
+        {}
+      );
+      return {
+        ...state,
+        entities,
+      };
+    }
+  ),
 
   on(AuthenticatedActions.signOut, (state) => initialState)
 );

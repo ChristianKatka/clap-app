@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { PostWithoutImage } from '@shared/models/post-without-image.model';
+import { Observable } from 'rxjs';
+import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
+import { PostsSelectors } from 'src/PostsStore/store/selectors';
 
 @Component({
   selector: 'clap-app-posts-container',
@@ -6,7 +11,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['posts.container.scss'],
 })
 export class PostsContainerComponent implements OnInit {
-  constructor() {}
+  postsWithoutImage$: Observable<PostWithoutImage[]> = this.store.select(
+    PostsSelectors.getPostsWithoutImage
+  );
+
+  constructor(private store: Store<PostsExtendedAppState>) {}
 
   ngOnInit() {}
 }

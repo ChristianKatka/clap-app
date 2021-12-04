@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { PostWithoutImageDraft } from '@shared/models/post-without-image.model';
 import { PostsActions } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import { PostsSelectors } from 'src/PostsStore/store/selectors';
@@ -16,7 +17,7 @@ export class CreatePostContainerComponent implements OnInit {
   ngOnInit() {}
 
   onCreatePost(text: string) {
-    const postDraft = { text };
-    this.store.dispatch(PostsActions.createPost({ postDraft }));
+    const postDraft: PostWithoutImageDraft = { text, postType: 'withoutImage' };
+    this.store.dispatch(PostsActions.createPostWithoutImage({ postDraft }));
   }
 }

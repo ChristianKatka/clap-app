@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'clap-app-posts-user-wrapper',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['posts-user-wrapper.scss'],
 })
 export class PostsUserWrapperComponent implements OnInit {
+  @Input()
+  nickname = '';
+  
   constructor() {}
 
   ngOnInit() {}

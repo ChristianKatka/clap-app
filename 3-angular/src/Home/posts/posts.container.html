@@ -1,1 +1,5 @@
-<clap-app-posts></clap-app-posts>
+<main *ngIf="postsWithoutImage$ | async as postsWithoutImage">
+  <clap-app-posts [postsWithoutImage]="postsWithoutImage"></clap-app-posts>
+</main>
+
+

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { PostWithoutImage } from '@shared/models/post-without-image.model';
 
 @Component({
   selector: 'clap-app-posts',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
+  @Input()
+  postsWithoutImage: PostWithoutImage[] | [] = [];
+
   constructor() {}
 
   ngOnInit() {}

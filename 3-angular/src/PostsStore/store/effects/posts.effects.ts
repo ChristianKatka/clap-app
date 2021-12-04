@@ -16,31 +16,16 @@ import { RouterActions } from '@app/store/actions';
 
 @Injectable()
 export class PostsEffects {
-  getAllPosts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(PostsActions.getAllPosts),
-      switchMap(() =>
-        this.postsService.getAllPosts().pipe(
-          map((posts) => PostsActions.getAllPostsSuccess({ posts })),
-          catchError((error: string) => {
-            console.log(error);
-            return of(PostsActions.getAllPostsFailure({ error }));
-          })
-        )
-      )
-    )
-  );
-
   createPost$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostsActions.createPost),
+      ofType(PostsActions.createPostWithoutImage),
       switchMap(({ postDraft }) =>
         this.postsService.createPost(postDraft).pipe(
           tap((x) => console.log(x)),
-          map((post) => PostsActions.createPostSuccess({ post })),
+          map((post) => PostsActions.createPostWithoutImageSuccess({ post })),
           catchError((error: string) => {
             console.log(error);
-            return of(PostsActions.createPostFailure({ error }));
+            return of(PostsActions.createPostWithoutImageFailure({ error }));
           })
         )
       )
@@ -50,7 +35,7 @@ export class PostsEffects {
   // ROUTING AFTER SUCCESS
   createPostSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostsActions.createPostSuccess),
+      ofType(PostsActions.createPostWithoutImageSuccess),
       map(() =>
         RouterActions.navigate({
           commands: ['/home'],
