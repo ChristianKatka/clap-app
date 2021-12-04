@@ -44,6 +44,22 @@ export class PostsEffects {
       )
     )
   );
+  
+  giveLikeToPost$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(PostsActions.giveLikeToPost),
+    switchMap(({ postId }) =>
+      this.postsService.giveLikeToPost(postId).pipe(
+        tap((x) => console.log(x)),
+        map((like) => PostsActions.giveLikeToPostSuccess({ like })),
+        catchError((error: string) => {
+          console.log(error);
+          return of(PostsActions.giveLikeToPostFailure({ error }));
+        })
+      )
+    )
+  )
+);
 
   constructor(
     private actions$: Actions,

@@ -50,7 +50,7 @@ export class TimeAgoPipe implements PipeTransform {
     if (difference >= 259200) {
       return 'over 2 days ago';
     } else {
-      return 'something went wrong with date';
+      return 'long time ago';
     }
   }
 }

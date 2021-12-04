@@ -1,3 +1,5 @@
+import { PostLike } from './post-like.model';
+
 export interface PostWithoutImageDraft {
   text: string;
   postType: 'withoutImage';
@@ -9,4 +11,5 @@ export interface PostWithoutImage {
   nickname: string;
   createdAt: number;
   postType: 'withoutImage';
+  likes: PostLike[];
 }

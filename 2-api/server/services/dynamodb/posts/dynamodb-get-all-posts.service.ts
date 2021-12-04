@@ -1,5 +1,5 @@
-import { POSTS_TABLE } from '../../constants';
-import { docClient } from '../../instances/aws';
+import { POSTS_TABLE } from '../../../constants';
+import { docClient } from '../../../instances/aws';
 
 export const dynamodbGetAllPosts = async () => {
   return await docClient

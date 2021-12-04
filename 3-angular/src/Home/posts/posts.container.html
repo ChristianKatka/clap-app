@@ -1,5 +1,5 @@
 <main *ngIf="postsWithoutImage$ | async as postsWithoutImage">
-  <clap-app-posts [postsWithoutImage]="postsWithoutImage"></clap-app-posts>
+  <clap-app-posts [postsWithoutImage]="postsWithoutImage"   (giveLikeToPost)="onGiveLikeToPost($event)"></clap-app-posts>
 </main>
 
 

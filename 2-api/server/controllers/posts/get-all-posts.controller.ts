@@ -1,5 +1,5 @@
 import { Context, Next } from 'koa';
-import { dynamodbGetAllPosts } from '../../services/dynamodb/dynamodb-get-all-posts.service';
+import { dynamodbGetAllPosts } from '../../services/dynamodb/posts/dynamodb-get-all-posts.service';
 
 export const getAllPosts = async (ctx: Context, next: Next) => {
   const posts = await dynamodbGetAllPosts();

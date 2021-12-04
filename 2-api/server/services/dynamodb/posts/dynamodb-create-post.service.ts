@@ -1,5 +1,5 @@
-import { POSTS_TABLE } from "../../constants";
-import { docClient } from "../../instances/aws";
+import { POSTS_TABLE } from "../../../constants";
+import { docClient } from "../../../instances/aws";
 
 export const dynamodbCreatePost = (post: any) =>
   docClient

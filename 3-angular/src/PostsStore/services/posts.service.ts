@@ -14,8 +14,13 @@ export class PostsService {
   createPost(
     post: PostWithImageDraft | PostWithoutImageDraft
   ): Observable<any> {
-    console.log(post);
-
     return this.authHttp.post(`${environment.apiBaseUrl}/posts`, post);
+  }
+
+  giveLikeToPost(postId: string): Observable<any> {
+    return this.authHttp.post(
+      `${environment.apiBaseUrl}/posts/like/${postId}`,
+      {}
+    );
   }
 }

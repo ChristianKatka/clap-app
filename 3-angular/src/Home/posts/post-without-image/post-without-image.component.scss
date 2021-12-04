@@ -17,6 +17,14 @@ p {
 
 .function-buttons-wrapper {
   margin-top: 0.2rem;
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  .liked {
+    color: #ED4956
+  }
 }
 
 mat-icon {

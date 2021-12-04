@@ -33,3 +33,32 @@ export const createPostWithoutImageFailure = createAction(
   '[Posts] Create Post Without Image Failure',
   props<{ error: string }>()
 );
+
+
+export const giveLikeToPost = createAction(
+  '[Posts] Give Like To Post',
+  props<{ postId: string }>()
+);
+export const giveLikeToPostSuccess = createAction(
+  '[Posts] Give Like To Post Success',
+  props<{ like: any }>()
+);
+export const giveLikeToPostFailure = createAction(
+  '[Posts] Give Like To Post Failure',
+  props<{ error: string }>()
+);
+
+// export const removeLikeFromPost = createAction(
+//   '[Posts] Remove Like From Post',
+//   props<{ likeId: PostWithoutImageDraft }>()
+// );
+// export const removeLikeFromPostSuccess = createAction(
+//   '[Posts] Remove Like From Post Success',
+//   props<{ likeId: string }>()
+// );
+// export const removeLikeFromPostFailure = createAction(
+//   '[Posts] Remove Like From Post Failure',
+//   props<{ error: string }>()
+// );
+
+

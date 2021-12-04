@@ -13,8 +13,14 @@
         class="function-buttons-wrapper"
         fxLayoutAlign="space-between center"
       >
-        <section fxLayout="row" fxLayoutGap="13px">
-          <mat-icon class="material-icons-outlined">favorite_border</mat-icon>
+        <section fxLayout="row" fxLayoutGap="16px">
+          <!-- (click)="this.giveLikeToPost.emit(post.id)" -->
+
+          <mat-icon (click)="this.giveLikeToPost.emit(post.id)" class="material-icons-outlined">favorite_border</mat-icon>
+          <!-- <mat-icon *ngIf="post.iHaveLiked" class="material-icons liked">
+            favorite
+          </mat-icon> -->
+
           <mat-icon class="material-icons-outlined"
             >chat_bubble_outline</mat-icon
           >
@@ -22,7 +28,7 @@
         </section>
         <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
       </div>
-      <p class="likes-text" [style.margin-top]="'5px'">252 likes</p>
+      <p class="likes-text" [style.margin-top]="'5px'">{{post.likes.length}} likes</p>
       <p><b>ChristianKatka</b> {{ post.text }}</p>
       <p class="view-all-comments-text">View all 5 comments</p>
 
