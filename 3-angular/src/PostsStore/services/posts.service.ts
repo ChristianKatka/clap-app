@@ -1,15 +1,19 @@
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthHTTPService } from '@app/services/auth-http.service';
 import { PostWithImageDraft } from '@shared/models/post-with-image.model';
 import { PostWithoutImageDraft } from '@shared/models/post-without-image.model';
+import { LikeHelperService } from './like-helper.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  constructor(private authHttp: AuthHTTPService) {}
+  constructor(
+    private likeHelperService: LikeHelperService,
+    private authHttp: AuthHTTPService
+  ) {}
 
   createPost(
     post: PostWithImageDraft | PostWithoutImageDraft
@@ -24,7 +28,13 @@ export class PostsService {
     );
   }
 
-  removeLikeFromPost(likeId: string): Observable<any> {
+  removeLikeFromPost(postId: string, userId: string): Observable<any> {
+    console.log(postId);
+    console.log(userId);
+
+    const likeId = this.likeHelperService.getMyPostLike(postId, userId);
+    console.log(likeId);
+    
     return this.authHttp.delete(
       `${environment.apiBaseUrl}/posts/like/${likeId}`
     );

@@ -1,16 +1,20 @@
 import { InitActions } from '@app/store/actions';
 import { createReducer, on, Action } from '@ngrx/store';
+import { PostLike } from '@shared/models/post-like.model';
+import { PostWithoutImage } from '@shared/models/post-without-image.model';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
 
 export interface PostsState {
-  entities: { [id: string]: any };
+  entities: { [id: string]: PostWithoutImage };
+  likes: { [postId: string]: PostLike };
   sortBy: 'latest';
   loading: boolean;
 }
 
 export const initialState: PostsState = {
   entities: {},
+  likes: {},
   sortBy: 'latest',
   loading: false,
 };
@@ -39,6 +43,34 @@ const PostsReducer = createReducer(
     return {
       ...state,
       entities,
+      loading: true,
+    };
+  }),
+  on(PostsActions.giveLikeToPostSuccess, (state, { postId, like }) => {
+    const entities = { ...state.entities };
+    entities[postId].likes.push(like);
+    return {
+      ...state,
+      entities,
+      loading: false,
+    };
+  }),
+
+  on(PostsActions.removeLikeFromPost, (state, { postId }) => {
+    const entities = { ...state.entities };
+    entities[postId] = { ...entities[postId], iLikeThisPost: false };
+    return {
+      ...state,
+      entities,
+      loading: true,
+    };
+  }),
+  on(PostsActions.removeLikeFromPostSuccess, (state) => {
+    const entities = { ...state.entities };
+
+    return {
+      ...state,
+      loading: false,
     };
   }),
 

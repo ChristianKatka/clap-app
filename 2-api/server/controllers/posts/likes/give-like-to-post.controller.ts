@@ -1,6 +1,6 @@
 import { Context, Next } from 'koa';
 import { v4 as uuidv4 } from 'uuid';
-import { dynamodbCreatePostLike } from '../../../services/dynamodb/posts/dynamodb-create-post-like.service';
+import { dynamodbCreatePostLike } from '../../../services/dynamodb/posts/likes/dynamodb-create-post-like.service';
 
 export const giveLikeToPost = async (ctx: Context, next: Next) => {
   const postId = ctx.params.postId;

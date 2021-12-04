@@ -16,11 +16,17 @@ export class PostsContainerComponent implements OnInit {
     PostsSelectors.getPostsWithoutImage
   );
 
+  loading$: Observable<boolean> = this.store.select(PostsSelectors.isLoading);
+
   constructor(private store: Store<PostsExtendedAppState>) {}
 
   ngOnInit() {}
 
   onGiveLikeToPost(postId: string) {
     this.store.dispatch(PostsActions.giveLikeToPost({ postId }));
+  }
+
+  onRemoveLikeFromPost(postId: string) {
+    this.store.dispatch(PostsActions.removeLikeFromPost({ postId }));
   }
 }

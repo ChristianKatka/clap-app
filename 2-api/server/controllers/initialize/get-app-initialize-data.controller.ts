@@ -4,11 +4,9 @@ import { dynamodbGetPostLikes } from '../../services/dynamodb/posts/dynamodb-get
 import { dynamodbGetUserById } from '../../services/dynamodb/users/dynamodb-get-user-by-id.service';
 
 export const getAppInitializeData = async (ctx: Context, next: Next) => {
-  // const userId = ctx.state.jwtPayload.sub;
-  const userId = '0668311c-3c1d-4cf8-b12d-ef4ebba91d37';
+  const userId = ctx.state.jwtPayload.sub;
 
   const myProfile = await dynamodbGetUserById(userId);
-
   const posts = await dynamodbGetAllPosts();
 
   if (!posts) return;

@@ -9,10 +9,13 @@ import { PostWithoutImage } from '@shared/models/post-without-image.model';
 export class PostsComponent implements OnInit {
   @Input()
   postsWithoutImage: PostWithoutImage[] | [] = [];
+  @Input()
+  loading = false;
 
   @Output()
   giveLikeToPost: EventEmitter<string> = new EventEmitter();
-
+  @Output()
+  removeLikeFromPost: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 

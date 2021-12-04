@@ -3,6 +3,9 @@ import { sortByCreatedDate } from '@shared/helpers/sort-by-created-at-time';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
 import { getPostsState } from '../reducers';
 
+export const getPostById = (postId: string) =>
+  createSelector(getPostsState, (state) => state.entities[postId]);
+
 export const getPosts = createSelector(getPostsState, (state) =>
   Object.values(state.entities)
 );

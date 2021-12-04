@@ -13,6 +13,7 @@ import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PostsService } from 'src/PostsStore/services/posts.service';
 import { RouterActions } from '@app/store/actions';
+import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 
 @Injectable()
 export class PostsEffects {
@@ -64,16 +65,21 @@ export class PostsEffects {
   removeLikeFromPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostsActions.removeLikeFromPost),
-      switchMap(({ postId }) =>
-        this.postsService.removeLikeFromPost(postId).pipe(
-          tap((x) => console.log(x)),
-          map((likeId) => PostsActions.removeLikeFromPostSuccess({ likeId })),
-          catchError((error: string) => {
-            console.log(error);
-            return of(PostsActions.removeLikeFromPostFailure({ error }));
-          })
-        )
-      )
+      withLatestFrom(this.store.select(MyProfileSelectors.getMyUserId)),
+      switchMap(([{postId}, userId]) => {
+        if (userId === undefined) {
+          return of(
+            PostsActions.removeLikeFromPostFailure({ error: 'no user ID' })
+          );
+        }
+
+        return this.postsService.removeLikeFromPost(postId, userId).pipe(
+          map(() => PostsActions.removeLikeFromPostSuccess()),
+          catchError((error: any) =>
+            of(PostsActions.removeLikeFromPostFailure({ error }))
+          )
+        );
+      })
     )
   );
 

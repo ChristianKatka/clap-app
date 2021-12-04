@@ -14,11 +14,34 @@
         fxLayoutAlign="space-between center"
       >
         <section fxLayout="row" fxLayoutGap="16px">
+          <!-- LOADING -->
+          <div *ngIf="loading" fxLayout="row">
+            <mat-icon
+              *ngIf="!post.iLikeThisPost"
+              class="material-icons-outlined"
+              >favorite_border</mat-icon
+            >
+            <mat-icon *ngIf="post.iLikeThisPost" class="material-icons liked">
+              favorite
+            </mat-icon>
+          </div>
 
-          <mat-icon *ngIf="!post.iLikeThisPost" (click)="this.giveLikeToPost.emit(post.id)" class="material-icons-outlined">favorite_border</mat-icon>
-          <mat-icon *ngIf="post.iLikeThisPost" class="material-icons liked">
-            favorite
-          </mat-icon>
+          <!-- NOT LOADING -->
+          <div *ngIf="!loading" fxLayout="row">
+            <mat-icon
+              *ngIf="!post.iLikeThisPost"
+              (click)="this.giveLikeToPost.emit(post.id)"
+              class="material-icons-outlined"
+              >favorite_border</mat-icon
+            >
+            <mat-icon
+              *ngIf="post.iLikeThisPost"
+              (click)="this.removeLikeFromPost.emit(post.id)"
+              class="material-icons liked"
+            >
+              favorite
+            </mat-icon>
+          </div>
 
           <mat-icon class="material-icons-outlined"
             >chat_bubble_outline</mat-icon
@@ -27,7 +50,9 @@
         </section>
         <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
       </div>
-      <p class="likes-text" [style.margin-top]="'5px'">{{post.likes.length}} likes</p>
+      <p class="likes-text" [style.margin-top]="'5px'">
+        {{ post.likes.length }} likes
+      </p>
       <p><b>ChristianKatka</b> {{ post.text }}</p>
       <p class="view-all-comments-text">View all 5 comments</p>
 

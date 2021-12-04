@@ -1,6 +1,8 @@
 <!-- <clap-app-post-with-image-container></clap-app-post-with-image-container> -->
 
 <clap-app-post-without-image
+  [loading]="loading"
   [postsWithoutImage]="postsWithoutImage"
   (giveLikeToPost)="this.giveLikeToPost.emit($event)"
+  (removeLikeFromPost)="this.removeLikeFromPost.emit($event)"
 ></clap-app-post-without-image>
