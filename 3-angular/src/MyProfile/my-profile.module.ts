@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ContenthRoutingModule } from './my-profile-routing.module';
+import { RouterModule } from '@angular/router';
 import { components } from '.';
 import { SharedModule } from '@shared/shared.module';
 import { effects } from './store/effects';
@@ -15,7 +15,7 @@ import { StoreModule } from '@ngrx/store';
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    ContenthRoutingModule,
+    RouterModule,
     SharedModule,
     StoreModule.forFeature(featureKey, reducers),
     EffectsModule.forFeature(effects),

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ContenthRoutingModule } from './message-routing.module';
+import { MessageRoutingModule } from './message-routing.module';
 import { components } from '.';
 import { SharedModule } from '@shared/shared.module';
 
@@ -11,7 +11,7 @@ import { SharedModule } from '@shared/shared.module';
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    ContenthRoutingModule,
+    MessageRoutingModule,
     SharedModule
   ],
   declarations: [...components],

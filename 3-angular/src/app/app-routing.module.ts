@@ -4,8 +4,25 @@ import { AuthenticatedGuard } from '@auth/guards';
 import { AppInitializationContainerComponent } from './app-initialization/app-initialization.container';
 import { HomeFeatureContainerComponent } from '@home/home-feature.container';
 import { WelcomeContainerComponent } from './welcome/welcome.container';
-import { SignInNewPasswordRequiredContainerComponent } from '@auth/components/sign-in-new-password-required/sign-in-new-password-required.container';
 import { MyProfileFeatureContainerComponent } from 'src/MyProfile/my-profile-feature.container';
+import { MyProfilePostsContainerComponent } from 'src/MyProfile/my-profile-posts/my-profile-posts.container';
+import { MyProfileSavedContainerComponent } from 'src/MyProfile/my-profile-saved/my-profile-saved.container';
+
+export const myProfileChildren: Routes = [
+  {
+    path: '',
+    redirectTo: 'posts',
+    pathMatch: 'full',
+  },
+  {
+    path: 'posts',
+    component: MyProfilePostsContainerComponent,
+  },
+  {
+    path: 'saved',
+    component: MyProfileSavedContainerComponent,
+  },
+];
 
 const routes: Routes = [
   {
@@ -31,6 +48,7 @@ const routes: Routes = [
   },
   {
     path: 'notification',
+    canActivate: [AuthenticatedGuard],
     loadChildren: () =>
       import('../Notification/notification.module').then(
         (m) => m.NotificationModule
@@ -38,11 +56,13 @@ const routes: Routes = [
   },
   {
     path: 'search',
+    canActivate: [AuthenticatedGuard],
     loadChildren: () =>
       import('../Search/search.module').then((m) => m.SearchModule),
   },
   {
     path: 'messages',
+    canActivate: [AuthenticatedGuard],
     loadChildren: () =>
       import('../Messages/message.module').then((m) => m.MessageModule),
   },
@@ -50,14 +70,17 @@ const routes: Routes = [
     path: 'my-profile',
     canActivate: [AuthenticatedGuard],
     component: MyProfileFeatureContainerComponent,
+    children: myProfileChildren,
   },
   {
     path: 'settings',
+    canActivate: [AuthenticatedGuard],
     loadChildren: () =>
       import('../Settings/settings.module').then((m) => m.SettingsModule),
   },
   {
     path: 'create-post',
+    canActivate: [AuthenticatedGuard],
     loadChildren: () =>
       import('../CreatePost/create-post.module').then(
         (m) => m.CreatePostModule

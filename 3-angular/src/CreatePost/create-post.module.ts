@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ContenthRoutingModule } from './create-post-routing.module';
+import { CreatePostRoutingModule } from './create-post-routing.module';
 import { components } from '.';
 import { SharedModule } from '@shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    ContenthRoutingModule,
+    CreatePostRoutingModule,
     SharedModule,
     ReactiveFormsModule
   ],

@@ -17,7 +17,13 @@ export class PostWithoutImageComponent implements OnInit {
   @Output()
   removeLikeFromPost: EventEmitter<string> = new EventEmitter();
 
+  like = false;
+
   constructor() {}
 
   ngOnInit() {}
+
+  toggle() {
+    this.like = !this.like;
+  }
 }

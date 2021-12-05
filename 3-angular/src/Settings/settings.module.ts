@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ContenthRoutingModule } from './settings-routing.module';
+import { SettingsRoutingModule } from './settings-routing.module';
 import { components } from '.';
 import { SharedModule } from '@shared/shared.module';
 
@@ -11,8 +11,8 @@ import { SharedModule } from '@shared/shared.module';
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    ContenthRoutingModule,
-    SharedModule
+    SettingsRoutingModule,
+    SharedModule,
   ],
   declarations: [...components],
   exports: [...components],
