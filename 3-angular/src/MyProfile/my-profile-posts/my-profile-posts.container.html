@@ -1,1 +1,8 @@
-<clap-app-my-profile-posts></clap-app-my-profile-posts>
+<main *ngIf="myPosts$ | async as myPosts">
+  <clap-app-my-profile-posts
+    [loading]="loading$ | async | onlyBoolean"
+    [myPosts]="myPosts"
+    (giveLikeToPost)="onGiveLikeToPost($event)"
+    (removeLikeFromPost)="onRemoveLikeFromPost($event)"
+  ></clap-app-my-profile-posts>
+</main>

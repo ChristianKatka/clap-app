@@ -4,15 +4,27 @@ p {
   margin: 0;
 }
 
-.posted-image {
-  margin-top: 0.5rem;
+.posted-text-wrapper {
   width: 100%;
   height: 300px;
-  object-fit: cover;
+  background: linear-gradient(163deg, #ffffff 0%, #aab7ff 100%);
+
+  .posted-text {
+    text-align: center;
+    padding: 1rem;
+  }
 }
 
 .function-buttons-wrapper {
   margin-top: 0.2rem;
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  .liked {
+    color: #ED4956
+  }
 }
 
 mat-icon {

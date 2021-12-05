@@ -7,6 +7,10 @@ import { getPostsState } from '../reducers';
 import { getMyProfileState } from '../../../MyProfile/store/reducers';
 
 export const getSortBy = createSelector(getPostsState, (state) => state.sortBy);
+export const isLoading = createSelector(
+  getPostsState,
+  (state) => state.loading
+);
 
 export const getPostsWithoutImage = createSelector(
   getPostsState,
@@ -43,31 +47,8 @@ export const getPostsWithoutImage = createSelector(
   }
 );
 
-export const isLoading2 = createSelector(
-  getPostsState,
-  getMyProfileState,
-  (state, state2) => state.loading
-);
 
-export const isLoading = createSelector(
-  getPostsState,
-  (state) => state.loading
-);
 
-// export const getPostsWithoutImage = createSelector(
-//   getPosts,
-//   getSortBy,
-//   (posts, sortBy) => {
-//     const postsWithoutImage: PostWithoutImage[] = posts.filter(
-//       (post: PostWithoutImage) => post.postType === 'withoutImage'
-//     );
+// getMyOwnPosts
 
-//     if (sortBy === 'latest') {
-//       const sortedPosts: PostWithoutImage[] =
-//         sortByCreatedDate(postsWithoutImage);
-//       return sortedPosts;
-//     } else {
-//       return postsWithoutImage;
-//     }
-//   }
-// );
+// getMySavedPosts
