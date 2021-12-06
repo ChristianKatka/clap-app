@@ -1,0 +1,18 @@
+@import "../../styles.scss";
+
+.edit-profile-text {
+  font-weight: bold;
+}
+
+.done-text {
+  font-weight: bold;
+  color: $clap-blue;
+}
+
+.profile-picture {
+  margin-top: 2rem;
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+}

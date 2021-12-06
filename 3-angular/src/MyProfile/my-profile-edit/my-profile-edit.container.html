@@ -1,0 +1,11 @@
+
+
+<main *ngIf="myProfileData$ | async as myProfileData">
+  <clap-app-my-profile-edit
+    [myProfileData]="myProfileData"
+    [loading]="loading$ | async | onlyBoolean"
+    (addBio)="onAddBio($event)"
+    (closeBottomSheet)="onCloseBottomSheet()"
+  ></clap-app-my-profile-edit>
+</main>
+

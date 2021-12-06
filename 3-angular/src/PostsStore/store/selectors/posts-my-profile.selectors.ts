@@ -21,8 +21,6 @@ export const getMyOwnPosts = createSelector(
       (post: PostWithoutImage) => post.userId === userId
     );
 
-    console.log(myPosts);
-
     return sortByCreatedDate(myPosts);
   }
 );

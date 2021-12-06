@@ -7,6 +7,9 @@ import { MyProfilePostsComponent } from './my-profile-posts/my-profile-posts.com
 import { MyProfileSavedComponent } from './my-profile-saved/my-profile-saved.component';
 import { MyProfileSavedContainerComponent } from './my-profile-saved/my-profile-saved.container';
 import { MyProfilePostsUserWrapperComponent } from './my-profile-posts/my-profile-posts-user-wrapper/my-profile-posts-user-wrapper.component';
+import { MyProfileEditComponent } from './my-profile-edit/my-profile-edit.component';
+import { MyProfileEditContainerComponent } from './my-profile-edit/my-profile-edit.container';
+import { MyProfileEditFormComponent } from './my-profile-edit/my-profile-edit-form.component';
 
 export const components: any[] = [
   MyProfileFeatureContainerComponent,
@@ -18,4 +21,8 @@ export const components: any[] = [
   MyProfileSavedComponent,
   MyProfileSavedContainerComponent,
   MyProfilePostsUserWrapperComponent,
+  MyProfileEditComponent,
+  MyProfileEditContainerComponent,
+  MyProfileEditComponent,
+  MyProfileEditFormComponent
 ];

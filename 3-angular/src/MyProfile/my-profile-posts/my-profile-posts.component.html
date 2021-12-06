@@ -1,7 +1,7 @@
+
 <main fxLayout="column" fxLayoutGap="20px">
   <section *ngFor="let post of myPosts">
-    <clap-app-my-profile-posts-user-wrapper>
-      [nickname]="post.nickname"
+    <clap-app-my-profile-posts-user-wrapper [nickname]="post.nickname">
     </clap-app-my-profile-posts-user-wrapper>
 
     <div class="posted-text-wrapper" fxLayoutAlign="center center">

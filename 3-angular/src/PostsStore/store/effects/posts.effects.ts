@@ -22,7 +22,6 @@ export class PostsEffects {
       ofType(PostsActions.createPostWithoutImage),
       switchMap(({ postDraft }) =>
         this.postsService.createPost(postDraft).pipe(
-          tap((x) => console.log(x)),
           map((post) => PostsActions.createPostWithoutImageSuccess({ post })),
           catchError((error: string) => {
             console.log(error);

@@ -1,17 +1,29 @@
-<clap-app-container [width]="'90%'">
-  <section fxLayout="column" fxLayoutAlign="center center">
+<clap-app-container *ngIf="myProfileData" [width]="'90%'">
+  <section
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="user-name-and-image-wrapper"
+  >
     <img src="assets/images/face.jpeg" alt="" class="profile-picture" />
+
+    <button
+      (click)="this.openEditProfileBottomSheet.emit()"
+      class="mat-elevation-z3 edit-button"
+      mat-icon-button
+    >
+      <mat-icon class="material-icons-outlined">edit</mat-icon>
+    </button>
+
     <div fxLayoutAlign="start start">
-      <p class="user-name">ChristianKatka</p>
-      <mat-icon class="material-icons-outlined">verified</mat-icon>
+      <p class="user-name">{{ myProfileData.nickname }}</p>
+      <mat-icon class="material-icons-outlined verified-icon"
+        >verified</mat-icon
+      >
     </div>
-    <p class="at-username">@ChristianKatka</p>
+    <p class="at-username">@{{ myProfileData.nickname }}</p>
   </section>
 
-  <p style="text-align: center">
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil excepturi
-    repudiandae, ad consectetur repellat iure rerum nobis modi esse molestiae?
-  </p>
+  <p style="text-align: center">{{ myProfileData.bio }}</p>
   <mat-divider></mat-divider>
 
   <section fxLayoutAlign="space-between center" style="margin-bottom: 1rem">

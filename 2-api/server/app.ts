@@ -6,6 +6,7 @@ import { logRequestAndResponse } from './middlewares/request-response-logger.mid
 import { decodeCognitoToken } from './middlewares/cognito-token.middleware';
 import { postsRouter } from './routers/posts.router';
 import { initializeRouter } from './routers/initialize.router';
+import { userRouter } from './routers/user.router';
 
 const app = new Koa();
 
@@ -21,5 +22,6 @@ app.use(decodeCognitoToken);
 
 app.use(initializeRouter.routes()).use(initializeRouter.allowedMethods());
 app.use(postsRouter.routes()).use(postsRouter.allowedMethods());
+app.use(userRouter.routes()).use(userRouter.allowedMethods());
 
 export { app };

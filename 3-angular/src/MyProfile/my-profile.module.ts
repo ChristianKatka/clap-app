@@ -9,6 +9,7 @@ import { effects } from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { featureKey, reducers } from './store/reducers';
 import { StoreModule } from '@ngrx/store';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { StoreModule } from '@ngrx/store';
     FlexLayoutModule,
     RouterModule,
     SharedModule,
+    ReactiveFormsModule,
     StoreModule.forFeature(featureKey, reducers),
     EffectsModule.forFeature(effects),
   ],

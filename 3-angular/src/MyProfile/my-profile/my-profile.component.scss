@@ -1,4 +1,8 @@
-@import '../../styles.scss';
+@import "../../styles.scss";
+
+.user-name-and-image-wrapper {
+  position: relative;
+}
 
 .profile-picture {
   margin-top: 5rem;
@@ -7,6 +11,13 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
+}
+
+.edit-button {
+  position: absolute;
+  right: 86px;
+  bottom: 77px;
+  background-color: white;
 }
 
 .user-name {
@@ -18,7 +29,7 @@
   margin-bottom: 13px;
 }
 
-mat-icon {
+.verified-icon {
   color: #248ce7;
   transform: scale(0.9);
 }

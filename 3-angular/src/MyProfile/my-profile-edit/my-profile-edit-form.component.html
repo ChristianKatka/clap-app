@@ -1,0 +1,41 @@
+<form
+  fxLayout="column"
+  fxLayoutAlign="center stretch"
+  [formGroup]="editProfileForm"
+>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput type="text" formControlName="email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nicname</mat-label>
+    <input matInput type="text" formControlName="nickname" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Bio</mat-label>
+    <textarea
+      matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="5"
+      cdkAutosizeMaxRows="5"
+      formControlName="bio"
+    ></textarea>
+  </mat-form-field>
+
+  <button
+    *ngIf="!loading"
+    mat-flat-button
+    color="primary"
+    type="submit"
+    [disabled]="this.editProfileForm.invalid"
+    (click)="submit()"
+  >
+    Save
+  </button>
+  <button *ngIf="loading" mat-raised-button color="primary" disabled>
+    <clap-app-loading-spinner [diameter]="40"></clap-app-loading-spinner>
+  </button>
+</form>
