@@ -1,6 +1,7 @@
 import { Context, Next } from 'koa';
 import { v4 as uuidv4 } from 'uuid';
-import { CLOUDFRONT_URL } from '../constants';
+import { CLOUDFRONT_URL } from '../../../constants';
+
 import { dynamodbStoreUploadedImageInformation } from '../services/dynamodb/dynamodb-store-uploaded-image-information.service';
 
 export const storeUploadedImageInformation = async (

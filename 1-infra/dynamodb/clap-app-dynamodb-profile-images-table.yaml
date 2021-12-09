@@ -1,0 +1,47 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app profile images
+
+Resources:
+  ClapAppProfileImagesTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+        - AttributeName: 'userId'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+      GlobalSecondaryIndexes:
+        - IndexName: "userId-gsi"
+          KeySchema:
+            - AttributeName: "userId"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+      TableName: 'clap-app-profile-images'
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-profile-images-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppProfileImagesTableArn:
+    Description: clap-app profile images Table ARN
+    Value: !GetAtt ClapAppProfileImagesTable.Arn
+    Export:
+      Name: clap-app-profile-images-table-arn
+
+  ClapAppProfileImagesTableStreamArn:
+    Description: clap-app profile images table stream ARN
+    Value: !GetAtt ClapAppProfileImagesTable.StreamArn
+    Export:
+      Name: clap-app-profile-images-table-stream-arn
+

@@ -1,6 +1,7 @@
 import { Context, Next } from 'koa';
-import { S3_IMAGES_BUCKET } from '../constants';
-import { s3GetImageSignedUploadUrl } from '../services/s3/s3-get-image-signed-upload-url.service';
+import { v4 as uuidv4 } from 'uuid';
+import { S3_IMAGES_BUCKET } from '../../../constants';
+import { s3GetImageSignedUploadUrl } from '../../../services/s3/s3-get-image-signed-upload-url.service';
 
 export const getSignedUrlForUploadingImage = async (
   ctx: Context,
@@ -8,8 +9,9 @@ export const getSignedUrlForUploadingImage = async (
 ) => {
   // image/jpeg  avatar.jpg
   const { name, mimeType } = ctx.request.body;
+  const id =  uuidv4();
   // voi luoda kansion vaikka henkilö id/name
-  const s3Key = `${name}`;
+  const s3Key = `profile-images/${id}-${name}`;
 
   const uploadUrl = s3GetImageSignedUploadUrl(
     s3Key,

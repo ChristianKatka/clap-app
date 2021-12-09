@@ -1,5 +1,5 @@
 import { Context, Next } from 'koa';
-import { dynamodbDeleteImage } from '../services/dynamodb/dynamodb-delete-image.service';
+import { dynamodbDeleteImage } from '../../../services/dynamodb/users/profile-image/dynamodb-delete-profile-image.service';
 
 export const deleteImage = async (ctx: Context, next: Next) => {
   const { imageId } = ctx.params;
