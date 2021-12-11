@@ -4,6 +4,8 @@ import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
+import { createObjectIndexList } from '@shared/utils/create-object-index-list';
+import { deleteFromObjectIndexList } from '@shared/utils/delete-from-object-index-list';
 
 export interface PostsState {
   entities: { [id: string]: PostWithoutImage };
@@ -23,7 +25,7 @@ const PostsReducer = createReducer(
   initialState,
 
   on(PostsActions.giveLikeToPost, (state, { postLikeDraft }) => {
-    const postLikeDraftVariable: { [id: string]: PostLikeDraft } = {
+    const postsLikes: { [id: string]: PostLikeDraft } = {
       ...state.postsLikes,
       [postLikeDraft.id]: {
         id: postLikeDraft.id,
@@ -34,7 +36,7 @@ const PostsReducer = createReducer(
 
     return {
       ...state,
-      postsLikes: postLikeDraftVariable,
+      postsLikes,
     };
   }),
   on(PostsActions.giveLikeToPostSuccess, (state, { like }) => {
@@ -50,10 +52,7 @@ const PostsReducer = createReducer(
   }),
 
   on(PostsActions.removeLikeFromPost, (state, { like }) => {
-    const postsLikes = {
-      ...state.postsLikes,
-    };
-    delete postsLikes[like.id];
+    const postsLikes = deleteFromObjectIndexList(state.postsLikes, like.id);
 
     return {
       ...state,
@@ -61,10 +60,7 @@ const PostsReducer = createReducer(
     };
   }),
   on(PostsActions.removeLikeFromPostSuccess, (state, { likeId }) => {
-    const postsLikes = {
-      ...state.postsLikes,
-    };
-    delete postsLikes[likeId];
+    const postsLikes = deleteFromObjectIndexList(state.postsLikes, likeId);
 
     return {
       ...state,
@@ -75,21 +71,8 @@ const PostsReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { posts, postsLikes }) => {
-      const entities = posts.reduce(
-        (posts: { [id: string]: any }, post: any) => ({
-          ...posts,
-          [post.id]: post,
-        }),
-        {}
-      );
-
-      const myPostsLikes = postsLikes.reduce(
-        (likes: { [id: string]: any }, like: any) => ({
-          ...likes,
-          [like.id]: like,
-        }),
-        {}
-      );
+      const entities = createObjectIndexList(posts);
+      const myPostsLikes = createObjectIndexList(postsLikes);
 
       return {
         ...state,

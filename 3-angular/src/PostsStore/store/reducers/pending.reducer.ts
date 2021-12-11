@@ -3,8 +3,8 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
-import { createObjectIndexList } from '../utils/create-object-index-list';
-import { deleteFromObjectIndexList } from '../utils/delete-from-object-index-list';
+import { createObjectIndexList } from '@shared/utils/create-object-index-list';
+import { deleteFromObjectIndexList } from '@shared/utils/delete-from-object-index-list';
 
 export interface PendingState {
   DBtruthOfPostLikes: { [id: string]: PostLike };
@@ -26,11 +26,9 @@ const PendingReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { postsLikes }) => {
-      const DBtruthOfPostLikes = createObjectIndexList(postsLikes);
-
       return {
         ...state,
-        DBtruthOfPostLikes,
+        DBtruthOfPostLikes: createObjectIndexList(postsLikes),
       };
     }
   ),
@@ -74,10 +72,10 @@ const PendingReducer = createReducer(
     };
 
     // Delete pending post like if already found on pending post like
-    const pendingPostLikes = {
-      ...state.pendingPostLikes,
-    };
-    delete pendingPostLikes[like.id];
+    const pendingPostLikes = deleteFromObjectIndexList(
+      state.pendingPostLikes,
+      like.id
+    );
 
     return {
       ...state,
@@ -87,15 +85,15 @@ const PendingReducer = createReducer(
     };
   }),
   on(PostsActions.removeLikeFromPostSuccess, (state, { likeId }) => {
-    const likesThatIhaveAlreadyGiven = {
-      ...state.likesThatIhaveAlreadyGiven,
-    };
-    delete likesThatIhaveAlreadyGiven[likeId];
+    const likesThatIhaveAlreadyGiven = deleteFromObjectIndexList(
+      state.likesThatIhaveAlreadyGiven,
+      likeId
+    );
 
-    const pendingRemovePostLikes = {
-      ...state.pendingRemovePostLikes,
-    };
-    delete pendingRemovePostLikes[likeId];
+    const pendingRemovePostLikes = deleteFromObjectIndexList(
+      state.pendingRemovePostLikes,
+      likeId
+    );
 
     return {
       ...state,
