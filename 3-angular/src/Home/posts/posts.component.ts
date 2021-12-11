@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
 
 @Component({
@@ -13,9 +14,9 @@ export class PostsComponent implements OnInit {
   loading = false;
 
   @Output()
-  giveLikeToPost: EventEmitter<string> = new EventEmitter();
+  giveLikeToPost: EventEmitter<PostWithoutImage> = new EventEmitter();
   @Output()
-  removeLikeFromPost: EventEmitter<string> = new EventEmitter();
+  removeLikeFromPost: EventEmitter<PostLike| PostLikeDraft> = new EventEmitter();
 
   constructor() {}
 

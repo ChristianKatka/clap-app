@@ -8,7 +8,7 @@ const postsRouter = new Router({ prefix: '/posts' });
 
 postsRouter.get('/', getAllPosts);
 postsRouter.post('/', createPost);
-postsRouter.post('/like/:postId', giveLikeToPost);
+postsRouter.post('/like/:postId/:likeId', giveLikeToPost);
 postsRouter.delete('/like/:likeId', removeLikeFromPost);
 
 export { postsRouter };

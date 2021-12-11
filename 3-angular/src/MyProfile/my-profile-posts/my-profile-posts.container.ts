@@ -25,10 +25,12 @@ export class MyProfilePostsContainerComponent implements OnInit {
   ngOnInit() {}
 
   onGiveLikeToPost(postId: string) {
-    this.store.dispatch(PostsActions.giveLikeToPost({ postId }));
+    console.log('FIX');
+    
+    // this.store.dispatch(PostsActions.giveLikeToPost({ postId }));
   }
 
   onRemoveLikeFromPost(likeId: string) {
-    this.store.dispatch(PostsActions.removeLikeFromPost({ likeId }));
+    // this.store.dispatch(PostsActions.removeLikeFromPost({ likeId }));
   }
 }

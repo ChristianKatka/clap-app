@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { PostLike } from '@shared/models/post-like.model';
+import { PostLike, PostLikeDraft, PostLikeDraftWithoutId } from '@shared/models/post-like.model';
 import {
   PostWithImage,
   PostWithImageDraft,
@@ -35,9 +35,14 @@ export const createPostWithoutImageFailure = createAction(
   props<{ error: string }>()
 );
 
+export const giveLikeToPostWithoutId = createAction(
+  '[Posts] Give Like To Post Without Id',
+  props<{ postId: string}>()
+);
+
 export const giveLikeToPost = createAction(
   '[Posts] Give Like To Post',
-  props<{ postId: string }>()
+  props<{ postLikeDraft: PostLikeDraft }>()
 );
 export const giveLikeToPostSuccess = createAction(
   '[Posts] Give Like To Post Success',
@@ -50,7 +55,7 @@ export const giveLikeToPostFailure = createAction(
 
 export const removeLikeFromPost = createAction(
   '[Posts] Remove Like From Post',
-  props<{ likeId: string }>()
+  props<{ like: PostLike | PostLikeDraft }>()
 );
 export const removeLikeFromPostSuccess = createAction(
   '[Posts] Remove Like From Post Success',

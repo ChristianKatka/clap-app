@@ -30,13 +30,13 @@
           <div *ngIf="!loading" fxLayout="row">
             <mat-icon
               *ngIf="!post.iLikeThisPost"
-              (click)="this.giveLikeToPost.emit(post.id)"
+              (click)="this.giveLikeToPost.emit(post)"
               class="material-icons-outlined"
               >favorite_border</mat-icon
             >
             <mat-icon
               *ngIf="post.iLikeThisPost"
-              (click)="this.removeLikeFromPost.emit(post.iLikeThisPost)"
+              (click)="onRemoveLikeFromPost(post.iLikeThisPost, post.postLikes)"
               class="material-icons liked"
             >
               favorite

@@ -1,10 +1,10 @@
 import { Context, Next } from 'koa';
 import { v4 as uuidv4 } from 'uuid';
 import { CLOUDFRONT_URL } from '../../../constants';
+import { dynamodbStoreUploadedProfileImageInformation } from '../../../services/dynamodb/users/profile-image/dynamodb-store-uploaded-profile-image-information.service';
 
-import { dynamodbStoreUploadedImageInformation } from '../services/dynamodb/dynamodb-store-uploaded-image-information.service';
 
-export const storeUploadedImageInformation = async (
+export const storeUploadedProfileImageInformation = async (
   ctx: Context,
   next: Next
 ) => {
@@ -19,7 +19,7 @@ export const storeUploadedImageInformation = async (
     imageUrl: `${CLOUDFRONT_URL}${name}`
   };
 
-  await dynamodbStoreUploadedImageInformation(imageInfo);
+  await dynamodbStoreUploadedProfileImageInformation(imageInfo);
 
   ctx.response.status = 200;
   ctx.response.body = imageInfo;

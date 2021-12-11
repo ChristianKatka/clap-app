@@ -125,4 +125,5 @@ export class CognitoService {
       map((idToken) => idToken.getJwtToken())
     );
   }
+
 }

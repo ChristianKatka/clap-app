@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
 
 @Component({
@@ -13,17 +14,22 @@ export class PostWithoutImageComponent implements OnInit {
   loading = false;
 
   @Output()
-  giveLikeToPost: EventEmitter<string> = new EventEmitter();
+  giveLikeToPost: EventEmitter<PostWithoutImage> = new EventEmitter();
   @Output()
-  removeLikeFromPost: EventEmitter<string> = new EventEmitter();
-
-  like = false;
+  removeLikeFromPost: EventEmitter<PostLike | PostLikeDraft> =
+    new EventEmitter();
 
   constructor() {}
 
   ngOnInit() {}
 
-  toggle() {
-    this.like = !this.like;
+  onRemoveLikeFromPost(
+    likeId: string,
+    postLikes: PostLike[] | PostLikeDraft[]
+  ) {
+    const postLike: PostLike | PostLikeDraft = postLikes.filter(
+      (postLike) => postLike.id === likeId
+    )[0];
+    this.removeLikeFromPost.emit(postLike);
   }
 }

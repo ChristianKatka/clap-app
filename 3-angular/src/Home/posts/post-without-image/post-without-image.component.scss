@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@use "../../../styles.scss" as s;
 
 p {
   margin: 0;
@@ -36,7 +36,7 @@ mat-icon {
 }
 
 .view-all-comments-text {
-  color: $clap-gray;
+  color: s.$clap-gray;
 }
 
 .add-comment-wrapper {
@@ -49,11 +49,11 @@ mat-icon {
     object-fit: cover;
   }
   .add-comment-text {
-    color: $clap-gray;
+    color: s.$clap-gray;
   }
 }
 
 .date-text {
   margin-top: 0.1rem;
-  color: $clap-gray;
+  color: s.$clap-gray;
 }
