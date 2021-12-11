@@ -1,15 +1,20 @@
+import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
+import { createObjectIndexList } from '../utils/create-object-index-list';
+import { deleteFromObjectIndexList } from '../utils/delete-from-object-index-list';
 
 export interface PendingState {
+  DBtruthOfPostLikes: { [id: string]: PostLike };
   pendingPostLikes: { [id: string]: PostLikeDraft };
   pendingRemovePostLikes: { [id: string]: PostLike | PostLikeDraft };
   likesThatIhaveAlreadyGiven: { [id: string]: PostLike | PostLikeDraft };
 }
 
 export const initialState: PendingState = {
+  DBtruthOfPostLikes: {},
   pendingPostLikes: {},
   pendingRemovePostLikes: {},
   likesThatIhaveAlreadyGiven: {},
@@ -18,11 +23,19 @@ export const initialState: PendingState = {
 const PendingReducer = createReducer(
   initialState,
 
-  on(PostsActions.giveLikeToPost, (state, { postLikeDraft }) => {
-    const likesThatIhaveAlreadyGiven = {
-      ...state.likesThatIhaveAlreadyGiven,
-    };
+  on(
+    InitActions.loadApplicationInitializeDataSuccess,
+    (state, { postsLikes }) => {
+      const DBtruthOfPostLikes = createObjectIndexList(postsLikes);
 
+      return {
+        ...state,
+        DBtruthOfPostLikes,
+      };
+    }
+  ),
+
+  on(PostsActions.giveLikeToPost, (state, { postLikeDraft }) => {
     const pendingPostLikes: { [id: string]: PostLikeDraft } = {
       ...state.pendingPostLikes,
       [postLikeDraft.id]: {
@@ -32,20 +45,17 @@ const PendingReducer = createReducer(
       },
     };
 
-    // example: i accidentally removed like from post i didnt mean to, and give like back fast enough no api call is made
-    if (likesThatIhaveAlreadyGiven[postLikeDraft.id]) {
-      delete pendingPostLikes[postLikeDraft.id];
-    }
     return {
       ...state,
       pendingPostLikes,
     };
   }),
   on(PostsActions.giveLikeToPostSuccess, (state, { like }) => {
-    const pendingPostLikes = {
-      ...state.pendingPostLikes,
-    };
-    delete pendingPostLikes[like.id];
+    const pendingPostLikes = deleteFromObjectIndexList(
+      state.pendingPostLikes,
+      like.id
+    );
+
     return {
       ...state,
       pendingPostLikes,
@@ -68,11 +78,6 @@ const PendingReducer = createReducer(
       ...state.pendingPostLikes,
     };
     delete pendingPostLikes[like.id];
-
-    // example: i give accidentally like to post i didnt mean to, and i remove that like fast enough no api call is made
-    if (likesThatIhaveAlreadyGiven[like.id]) {
-      delete pendingRemovePostLikes[like.id];
-    }
 
     return {
       ...state,
