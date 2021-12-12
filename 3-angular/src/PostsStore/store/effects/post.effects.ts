@@ -17,7 +17,11 @@ export class PostEffects {
           map((post) => PostsActions.createPostWithoutImageSuccess({ post })),
           catchError((error: string) => {
             console.log(error);
-            return of(PostsActions.createPostWithoutImageFailure({ error }));
+            return of(
+              PostsActions.createPostWithoutImageFailure({
+                error: 'error creating post without image',
+              })
+            );
           })
         )
       )

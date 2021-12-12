@@ -15,13 +15,16 @@ export class MyProfileEffects {
       ofType(MyProfileActions.updateUserBio),
       switchMap(({ bio }) =>
         this.myProfileService.updateUserBio(bio).pipe(
-          tap((x) => console.log(x)),
           map((myProfile) =>
             MyProfileActions.updateUserBioSuccess({ myProfile })
           ),
           catchError((error: string) => {
             console.log(error);
-            return of(MyProfileActions.updateUserBioFailure({ error }));
+            return of(
+              MyProfileActions.updateUserBioFailure({
+                error: 'error updating bio',
+              })
+            );
           })
         )
       )

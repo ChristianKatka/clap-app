@@ -18,7 +18,6 @@ export class PostsContainerComponent implements OnInit {
     PostsSelectors.getPostsWithoutImage
   );
   loading$: Observable<boolean> = this.store.select(PostsSelectors.isLoading);
-  userId$ = this.store.select(MyProfileSelectors.getMyUserId);
 
   constructor(private store: Store<PostsExtendedAppState>) {}
 

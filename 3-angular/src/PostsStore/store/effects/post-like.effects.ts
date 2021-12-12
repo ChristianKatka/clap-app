@@ -51,8 +51,6 @@ export class PostLikeEffects {
       ofType(PostLikeActions.giveLikeToPost),
       delay(environment.pendingDelayTime),
       switchMap(({ postLikeDraft }) => {
-        console.log(postLikeDraft);
-
         return of(
           PendingPostLikeActions.resolvePendingPostLike({ postLikeDraft })
         );

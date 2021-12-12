@@ -18,11 +18,6 @@ export class PostsService {
   }
 
   giveLikeToPost(postId: string, likeId: string): Observable<any> {
-    console.log('services');
-
-    console.log(postId);
-    console.log(likeId);
-
     return this.authHttp.post(
       `${environment.apiBaseUrl}/posts/like/${postId}/${likeId}`,
       {}
