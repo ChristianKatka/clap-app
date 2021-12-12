@@ -1,13 +1,16 @@
-<section fxLayoutAlign="space-between start">
+<section fxLayoutAlign="space-between start" *ngIf="myProfileData">
   <p (click)="this.closeBottomSheet.emit()" class="cancel-button">Cancel</p>
   <p class="edit-profile-text">Edit Profile</p>
   <p (click)="this.closeBottomSheet.emit()" class="done-text">Done</p>
 </section>
 
 <section fxLayout="column" fxLayoutAlign="center center">
-  <img src="assets/images/face.jpeg" alt="" class="profile-picture" />
-  <p class="change-profile-photo-button">Change profile photo</p>
+  <img src="{{ myProfileData.profileImageUrl }}" alt="" class="profile-picture" />
+  <div *ngIf="uploading">
+    <clap-app-loading-spinner [diameter]="40"></clap-app-loading-spinner>
 
+  </div>
+  <clap-app-profile-image-select (fileSelected)="this.profileImageSelected.emit($event)"></clap-app-profile-image-select>
 </section>
 
 <clap-app-my-profile-edit-form [myProfileData]="myProfileData" [loading]="loading" (addBio)="this.addBio.emit($event)"></clap-app-my-profile-edit-form>

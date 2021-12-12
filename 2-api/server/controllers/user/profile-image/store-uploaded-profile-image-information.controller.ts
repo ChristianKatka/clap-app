@@ -8,12 +8,13 @@ export const storeUploadedProfileImageInformation = async (
   next: Next
 ) => {
   // image/jpeg
-  const { name, mimeType, s3Key } = ctx.request.body;
+  const { name, mimeType, s3Key, userId } = ctx.request.body;
 
   const imageInfo = {
     id: s3Key,
     name,
     s3Key,
+    userId,
     mimeType,
     imageUrl: `${CLOUDFRONT_URL}${s3Key}`
   };

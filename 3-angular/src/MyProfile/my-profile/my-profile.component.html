@@ -4,7 +4,11 @@
     fxLayoutAlign="center center"
     class="user-name-and-image-wrapper"
   >
-    <img src="assets/images/face.jpeg" alt="" class="profile-picture" />
+    <img
+      src="{{ myProfileData.profileImageUrl }}"
+      alt=""
+      class="profile-picture"
+    />
 
     <button
       (click)="this.openEditProfileBottomSheet.emit()"

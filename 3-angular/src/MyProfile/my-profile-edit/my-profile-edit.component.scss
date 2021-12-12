@@ -14,12 +14,6 @@
   color: $clap-blue;
 }
 
-.change-profile-photo-button {
-  cursor: pointer;
-  font-weight: bold;
-  color: $clap-blue;
-}
-
 .profile-picture {
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -27,4 +21,8 @@
   width: 140px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+clap-app-profile-image-select {
+  margin-bottom: 1rem;
 }

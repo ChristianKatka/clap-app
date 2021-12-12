@@ -12,4 +12,5 @@ export class MyProfileComponent {
 
   @Output()
   openEditProfileBottomSheet = new EventEmitter();
+
 }

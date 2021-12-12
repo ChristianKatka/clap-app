@@ -1,7 +1,7 @@
 import { BooleanPipe } from './pipes/boolean.pipe';
 import { IconPipe } from './pipes/icon-type.pipe';
 import { FileSelectDirective } from './components/file-select/file-select.directive';
-import { FileSelectComponent } from './components/file-select/file-select.component';
+import { ProfileImageSelectComponent } from './components/file-select/profile-image-select.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { AlertComponent } from './components/info-boxes/alert.component';
@@ -16,7 +16,7 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
 
 export const components: any[] = [
   TrunctateTextComponent,
-  FileSelectComponent,
+  ProfileImageSelectComponent,
   ProgressBarComponent,
   LogoComponent,
   AlertComponent,
@@ -25,7 +25,7 @@ export const components: any[] = [
   SuccessComponent,
   NavbarComponent,
   ClapAppContainer,
-  SpaceGiverUsedWithFixedElementsComponent
+  SpaceGiverUsedWithFixedElementsComponent,
 ];
 export const pipes = [BooleanPipe, IconPipe, TimeAgoPipe];
 export const directives = [FileSelectDirective];

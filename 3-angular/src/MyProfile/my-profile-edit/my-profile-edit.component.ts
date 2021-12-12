@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MyProfile } from '@shared/models/my-profile.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'clap-app-my-profile-edit',
@@ -8,14 +7,19 @@ import { MyProfile } from '@shared/models/my-profile.model';
 })
 export class MyProfileEditComponent {
   @Input()
-  myProfileData: MyProfile | undefined;
+  myProfileData: any;
 
   @Input()
   loading = false;
+  @Input()
+  uploading = false;
 
   @Output()
   closeBottomSheet = new EventEmitter();
 
   @Output()
   addBio: EventEmitter<string> = new EventEmitter();
+
+  @Output()
+  profileImageSelected: EventEmitter<File> = new EventEmitter();
 }

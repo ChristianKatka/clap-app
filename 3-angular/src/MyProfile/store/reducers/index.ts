@@ -4,24 +4,37 @@ import {
   createSelector,
 } from '@ngrx/store';
 import * as fromMyProfile from './my-profile.reducer';
+import * as fromProfileImage from './profile-image.reducer';
 import { AppState } from '../../../app/store/reducers';
 
-
-export const featureKey = 'myProfile';
-export interface MyProfileFeatureState {
+export const featureKey = 'profile';
+export interface ProfileFeatureState {
   myProfile: fromMyProfile.MyProfileState;
+  profileImage: fromProfileImage.ProfileImageState;
 }
 
-export interface MyProfileExtendedAppState extends AppState {
-  myProfile: MyProfileFeatureState;
+export interface ProfileExtendedAppState extends AppState {
+  profile: ProfileFeatureState;
 }
 
-export const reducers: ActionReducerMap<MyProfileFeatureState> = {
+export const reducers: ActionReducerMap<ProfileFeatureState> = {
   myProfile: fromMyProfile.reducer,
+  profileImage: fromProfileImage.reducer,
 };
 
-const getMyProfileFeatureState =
-  createFeatureSelector<MyProfileFeatureState>(featureKey);
+const getProfileFeatureState =
+  createFeatureSelector<ProfileFeatureState>(featureKey);
 
-export const getMyProfile = createFeatureSelector<fromMyProfile.MyProfileState>('myProfile');
-export const getMyProfileState = createSelector(getMyProfileFeatureState, getMyProfile);
+const getMyProfile =
+  createFeatureSelector<fromMyProfile.MyProfileState>('myProfile');
+export const getMyProfileState = createSelector(
+  getProfileFeatureState,
+  getMyProfile
+);
+
+const getProfileImage =
+  createFeatureSelector<fromProfileImage.ProfileImageState>('profileImage');
+export const getProfileImageState = createSelector(
+  getProfileFeatureState,
+  getProfileImage
+);

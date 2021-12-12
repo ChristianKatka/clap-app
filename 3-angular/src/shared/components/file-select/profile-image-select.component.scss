@@ -1,0 +1,17 @@
+@use "../../../styles.scss" as styles;
+
+input[type="file"] {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.change-profile-photo-button {
+  margin: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: styles.$clap-blue;
+}

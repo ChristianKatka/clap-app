@@ -12,9 +12,9 @@ export class InitEffects {
       ofType(InitActions.loadApplicationInitializeData),
       switchMap(() =>
         this.initializeService.loadApplicationInitializeData().pipe(
-          map(({ posts, postsLikes, myProfile }) =>
+          map(({ posts, postsLikes, myProfile, myProfileImage }) =>
             InitActions.loadApplicationInitializeDataSuccess({
-              posts, postsLikes, myProfile
+              posts, postsLikes, myProfile, myProfileImage
             })
           ),
           catchError((error: HttpErrorResponse) =>

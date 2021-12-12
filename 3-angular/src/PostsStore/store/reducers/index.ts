@@ -28,17 +28,17 @@ export const reducers: ActionReducerMap<PostsFeatureState> = {
 const getPostsFeatureState =
   createFeatureSelector<PostsFeatureState>(featureKey);
 
-export const getPosts = createFeatureSelector<fromPosts.PostsState>('posts');
+const getPosts = createFeatureSelector<fromPosts.PostsState>('posts');
 export const getPostsState = createSelector(getPostsFeatureState, getPosts);
 
-export const getPostsLikes =
+const getPostsLikes =
   createFeatureSelector<fromPostsLikes.PostsLikesState>('postsLikes');
 export const getPostsLikesState = createSelector(
   getPostsFeatureState,
   getPostsLikes
 );
 
-export const getPending =
+const getPending =
   createFeatureSelector<fromPendingPostLikes.PendingPostLikesState>(
     'pendingPostLikes'
   );

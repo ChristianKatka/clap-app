@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { getMyProfileState } from '../reducers';
+import { getMyProfileState, getProfileImageState } from '../reducers';
 
 export const isLoading = createSelector(
   getMyProfileState,
@@ -8,7 +8,17 @@ export const isLoading = createSelector(
 
 export const getMyProfile = createSelector(
   getMyProfileState,
-  (state) => state.myProfile
+  getProfileImageState,
+  (profileState, imageState) => {
+    if (!profileState.myProfile) return undefined;
+    if (!imageState.myProfileImage) return undefined;
+    if (!imageState.myProfileImage.imageUrl) return undefined;
+
+    return {
+      ...profileState.myProfile,
+      profileImageUrl: imageState.myProfileImage.imageUrl,
+    };
+  }
 );
 
 export const getMyUserId = createSelector(

@@ -1,11 +1,10 @@
-
-
-<main *ngIf="myProfileData$ | async as myProfileData">
+<main>
   <clap-app-my-profile-edit
-    [myProfileData]="myProfileData"
+    [myProfileData]="myProfileData$ | async"
     [loading]="loading$ | async | onlyBoolean"
+    [uploading]="uploading$ | async | onlyBoolean"
+    (profileImageSelected)="onProfileImageSelected($event)"
     (addBio)="onAddBio($event)"
     (closeBottomSheet)="onCloseBottomSheet()"
   ></clap-app-my-profile-edit>
 </main>
-

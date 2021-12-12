@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MyProfileBottomSheetService } from './services/my-profile-bottom-sheet.service';
-import { MyProfileExtendedAppState } from './store/reducers';
+import { ProfileExtendedAppState } from './store/reducers';
 import { MyProfileSelectors } from './store/selectors';
 
 @Component({
@@ -17,7 +17,7 @@ export class MyProfileFeatureContainerComponent {
 
   constructor(
     private myProfileBottomSheetService: MyProfileBottomSheetService,
-    private store: Store<MyProfileExtendedAppState>
+    private store: Store<ProfileExtendedAppState>
   ) {}
 
   ngOnInit() {}
