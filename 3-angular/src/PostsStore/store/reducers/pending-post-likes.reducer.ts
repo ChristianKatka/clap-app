@@ -6,32 +6,21 @@ import { PostsActions } from '../actions';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { deleteFromObjectIndexList } from '@shared/utils/delete-from-object-index-list';
 
-export interface PendingState {
-  DBtruthOfPostLikes: { [id: string]: PostLike };
+export interface PendingPostLikesState {
   pendingPostLikes: { [id: string]: PostLikeDraft };
   pendingRemovePostLikes: { [id: string]: PostLike | PostLikeDraft };
+  // USED to check if there is a need to create new id for like (used in posts-like.effect)
   likesThatIhaveAlreadyGiven: { [id: string]: PostLike | PostLikeDraft };
 }
 
-export const initialState: PendingState = {
-  DBtruthOfPostLikes: {},
+export const initialState: PendingPostLikesState = {
   pendingPostLikes: {},
   pendingRemovePostLikes: {},
   likesThatIhaveAlreadyGiven: {},
 };
 
-const PendingReducer = createReducer(
+const PendingPostLikesReducer = createReducer(
   initialState,
-
-  on(
-    InitActions.loadApplicationInitializeDataSuccess,
-    (state, { postsLikes }) => {
-      return {
-        ...state,
-        DBtruthOfPostLikes: createObjectIndexList(postsLikes),
-      };
-    }
-  ),
 
   on(PostsActions.giveLikeToPost, (state, { postLikeDraft }) => {
     const pendingPostLikes: { [id: string]: PostLikeDraft } = {
@@ -43,9 +32,16 @@ const PendingReducer = createReducer(
       },
     };
 
+    // there shouldnt be pending like and unlike at the same time to the same post
+    const pendingRemovePostLikes = deleteFromObjectIndexList(
+      state.pendingRemovePostLikes,
+      postLikeDraft.id
+    );
+
     return {
       ...state,
       pendingPostLikes,
+      pendingRemovePostLikes,
     };
   }),
   on(PostsActions.giveLikeToPostSuccess, (state, { like }) => {
@@ -61,6 +57,7 @@ const PendingReducer = createReducer(
   }),
 
   on(PostsActions.removeLikeFromPost, (state, { like }) => {
+    // save that i have previosly liked this post
     const likesThatIhaveAlreadyGiven = {
       ...state.likesThatIhaveAlreadyGiven,
       [like.id]: like,
@@ -71,7 +68,7 @@ const PendingReducer = createReducer(
       [like.id]: like,
     };
 
-    // Delete pending post like if already found on pending post like
+    // there shouldnt be pending like and unlike at the same time to the same post
     const pendingPostLikes = deleteFromObjectIndexList(
       state.pendingPostLikes,
       like.id
@@ -80,8 +77,8 @@ const PendingReducer = createReducer(
     return {
       ...state,
       pendingRemovePostLikes,
-      likesThatIhaveAlreadyGiven,
       pendingPostLikes,
+      likesThatIhaveAlreadyGiven,
     };
   }),
   on(PostsActions.removeLikeFromPostSuccess, (state, { likeId }) => {
@@ -105,5 +102,7 @@ const PendingReducer = createReducer(
   on(AuthenticatedActions.signOut, (state) => initialState)
 );
 
-export const reducer = (state: PendingState | undefined, action: Action) =>
-  PendingReducer(state, action);
+export const reducer = (
+  state: PendingPostLikesState | undefined,
+  action: Action
+) => PendingPostLikesReducer(state, action);

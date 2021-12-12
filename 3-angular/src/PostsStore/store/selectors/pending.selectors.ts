@@ -1,14 +1,15 @@
 import { createSelector } from '@ngrx/store';
-import { getPendingState } from '../reducers';
+import { getPendingPostLikesState } from '../reducers';
 
 export const getPendingPostLikes = createSelector(
-  getPendingState,
+  getPendingPostLikesState,
   (state) => state.pendingPostLikes
 );
 export const getPendingRemovePostLikes = createSelector(
-  getPendingState,
+  getPendingPostLikesState,
   (state) => state.pendingRemovePostLikes
 );
-export const getLikesThatIhaveAlreadyGiven = createSelector(getPendingState, (state) =>
-  Object.values(state.likesThatIhaveAlreadyGiven)
+export const getLikesThatIhaveAlreadyGiven = createSelector(
+  getPendingPostLikesState,
+  (state) => Object.values(state.likesThatIhaveAlreadyGiven)
 );

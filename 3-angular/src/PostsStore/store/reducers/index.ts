@@ -1,14 +1,16 @@
 import {
-  ActionReducerMap, createFeatureSelector, createSelector
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
 } from '@ngrx/store';
 import { AppState } from '../../../app/store/reducers';
-import * as fromPending from './pending.reducer';
+import * as fromPendingPostLikes from './pending-post-likes.reducer';
 import * as fromPosts from './posts.reducer';
 
 export const featureKey = 'post';
 export interface PostsFeatureState {
   posts: fromPosts.PostsState;
-  pending: fromPending.PendingState;
+  pendingPostLikes: fromPendingPostLikes.PendingPostLikesState;
 }
 
 export interface PostsExtendedAppState extends AppState {
@@ -17,7 +19,7 @@ export interface PostsExtendedAppState extends AppState {
 
 export const reducers: ActionReducerMap<PostsFeatureState> = {
   posts: fromPosts.reducer,
-  pending: fromPending.reducer,
+  pendingPostLikes: fromPendingPostLikes.reducer,
 };
 
 const getPostsFeatureState =
@@ -27,5 +29,10 @@ export const getPosts = createFeatureSelector<fromPosts.PostsState>('posts');
 export const getPostsState = createSelector(getPostsFeatureState, getPosts);
 
 export const getPending =
-  createFeatureSelector<fromPending.PendingState>('pending');
-export const getPendingState = createSelector(getPostsFeatureState, getPending);
+  createFeatureSelector<fromPendingPostLikes.PendingPostLikesState>(
+    'pendingPostLikes'
+  );
+export const getPendingPostLikesState = createSelector(
+  getPostsFeatureState,
+  getPending
+);
