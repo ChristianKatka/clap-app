@@ -1,5 +1,4 @@
 import { Context, Next } from 'koa';
-import { v4 as uuidv4 } from 'uuid';
 import { CLOUDFRONT_URL } from '../../../constants';
 import { dynamodbStoreUploadedProfileImageInformation } from '../../../services/dynamodb/users/profile-image/dynamodb-store-uploaded-profile-image-information.service';
 
@@ -8,15 +7,15 @@ export const storeUploadedProfileImageInformation = async (
   ctx: Context,
   next: Next
 ) => {
-  // image/jpeg  avatar.jpg
-  const { name, mimeType } = ctx.request.body;
+  // image/jpeg
+  const { name, mimeType, s3Key } = ctx.request.body;
 
   const imageInfo = {
-    id: uuidv4(),
+    id: s3Key,
     name,
-    s3Key: name,
+    s3Key,
     mimeType,
-    imageUrl: `${CLOUDFRONT_URL}${name}`
+    imageUrl: `${CLOUDFRONT_URL}${s3Key}`
   };
 
   await dynamodbStoreUploadedProfileImageInformation(imageInfo);
