@@ -1,3 +1,4 @@
 import * as PostsActions from './posts.actions';
-import * as PendingActions from './pending.actions'
-export { PostsActions, PendingActions };
+import * as PendingPostLikeActions from './pending-post-like.actions';
+import * as PostLikeActions from './post-like.actions';
+export { PostsActions, PendingPostLikeActions, PostLikeActions };

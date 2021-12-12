@@ -8,8 +8,8 @@ import { PostsService } from 'src/PostsStore/services/posts.service';
 import { PostsActions } from '../actions';
 
 @Injectable()
-export class PostsEffects {
-  createPost$ = createEffect(() =>
+export class PostEffects {
+  createPostWithoutImage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostsActions.createPostWithoutImage),
       switchMap(({ postDraft }) =>
@@ -24,8 +24,7 @@ export class PostsEffects {
     )
   );
 
-  // ROUTING AFTER SUCCESS
-  createPostSuccess$ = createEffect(() =>
+  createPostWithoutImageSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostsActions.createPostWithoutImageSuccess),
       map(() =>

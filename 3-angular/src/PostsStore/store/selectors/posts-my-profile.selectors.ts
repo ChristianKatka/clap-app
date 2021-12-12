@@ -1,11 +1,10 @@
 import { createSelector } from '@ngrx/store';
 //  I COULD USE LOADSH INSTEAD
 import { sortByCreatedDate } from '@shared/helpers/sort-by-created-at-time';
-import { PostLike } from '@shared/models/post-like.model';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
-import { getPostsState } from '../reducers';
-import { getMyProfileState } from '../../../MyProfile/store/reducers';
 import { of } from 'rxjs';
+import { getMyProfileState } from '../../../MyProfile/store/reducers';
+import { getPostsState } from '../reducers';
 
 export const getSortBy = createSelector(getPostsState, (state) => state.sortBy);
 

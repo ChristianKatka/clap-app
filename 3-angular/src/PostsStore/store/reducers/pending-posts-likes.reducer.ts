@@ -1,10 +1,8 @@
-import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
-import { AuthenticatedActions } from '../../../Auth/store/actions';
-import { PostsActions } from '../actions';
-import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { deleteFromObjectIndexList } from '@shared/utils/delete-from-object-index-list';
+import { AuthenticatedActions } from '../../../Auth/store/actions';
+import { PostLikeActions } from '../actions';
 
 export interface PendingPostLikesState {
   pendingPostLikes: { [id: string]: PostLikeDraft };
@@ -22,7 +20,7 @@ export const initialState: PendingPostLikesState = {
 const PendingPostLikesReducer = createReducer(
   initialState,
 
-  on(PostsActions.giveLikeToPost, (state, { postLikeDraft }) => {
+  on(PostLikeActions.giveLikeToPost, (state, { postLikeDraft }) => {
     const pendingPostLikes: { [id: string]: PostLikeDraft } = {
       ...state.pendingPostLikes,
       [postLikeDraft.id]: {
@@ -44,7 +42,7 @@ const PendingPostLikesReducer = createReducer(
       pendingRemovePostLikes,
     };
   }),
-  on(PostsActions.giveLikeToPostSuccess, (state, { like }) => {
+  on(PostLikeActions.giveLikeToPostSuccess, (state, { like }) => {
     const pendingPostLikes = deleteFromObjectIndexList(
       state.pendingPostLikes,
       like.id
@@ -56,7 +54,7 @@ const PendingPostLikesReducer = createReducer(
     };
   }),
 
-  on(PostsActions.removeLikeFromPost, (state, { like }) => {
+  on(PostLikeActions.removeLikeFromPost, (state, { like }) => {
     // save that i have previosly liked this post
     const likesThatIhaveAlreadyGiven = {
       ...state.likesThatIhaveAlreadyGiven,
@@ -81,7 +79,7 @@ const PendingPostLikesReducer = createReducer(
       likesThatIhaveAlreadyGiven,
     };
   }),
-  on(PostsActions.removeLikeFromPostSuccess, (state, { likeId }) => {
+  on(PostLikeActions.removeLikeFromPostSuccess, (state, { likeId }) => {
     const likesThatIhaveAlreadyGiven = deleteFromObjectIndexList(
       state.likesThatIhaveAlreadyGiven,
       likeId

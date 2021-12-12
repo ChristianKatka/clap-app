@@ -1,5 +1,5 @@
-import { PostsEffects } from './posts.effects';
-import { PendingEffects } from './pending.effects';
-import { PostLikeEffects } from './post-like.effect';
+import { PostEffects } from './post.effects';
+import { PendingPostLikeEffects } from './pending-post-like.effects';
+import { PostLikeEffects } from './post-like.effects';
 
-export const effects: any[] = [PostsEffects, PendingEffects, PostLikeEffects];
+export const effects: any[] = [PostEffects, PendingPostLikeEffects, PostLikeEffects];

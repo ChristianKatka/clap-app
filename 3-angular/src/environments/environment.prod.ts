@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  pendingDelayTime: 3000,
   apiBaseUrl: 'https://lwkh44snq6.execute-api.eu-west-1.amazonaws.com',
   cognito: {
     identityPoolId: 'eu-west-1:893f2177-ade3-48f6-a353-f297729679df',

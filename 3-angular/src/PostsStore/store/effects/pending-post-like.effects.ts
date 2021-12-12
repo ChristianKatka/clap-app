@@ -4,36 +4,36 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { PostsService } from 'src/PostsStore/services/posts.service';
-import { PendingActions, PostsActions } from '../actions';
+import { PendingPostLikeActions, PostLikeActions } from '../actions';
 import { PendingSelectors } from '../selectors';
 
 @Injectable()
-export class PendingEffects {
+export class PendingPostLikeEffects {
   resolvePendingPostLike$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PendingActions.resolvePendingPostLike),
+      ofType(PendingPostLikeActions.resolvePendingPostLike),
       withLatestFrom(this.store.select(PendingSelectors.getPendingPostLikes)),
       switchMap(([{ postLikeDraft }, pendingPostLike]) => {
         if (pendingPostLike[postLikeDraft.id]) {
           return this.postsService
             .giveLikeToPost(postLikeDraft.postId, postLikeDraft.id)
             .pipe(
-              map((like) => PostsActions.giveLikeToPostSuccess({ like })),
+              map((like) => PostLikeActions.giveLikeToPostSuccess({ like })),
               catchError((error: string) => {
                 console.log(error);
-                return of(PostsActions.giveLikeToPostFailure({ error }));
+                return of(PostLikeActions.giveLikeToPostFailure({ error }));
               })
             );
         } else {
-          return of(PendingActions.nothingToResolve());
+          return of(PendingPostLikeActions.nothingToResolve());
         }
       })
     )
   );
 
-  resolveRemoveLikeFromPost$ = createEffect(() =>
+  resolvePendingRemoveLikeFromPost$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PendingActions.resolveRemoveLikeFromPost),
+      ofType(PendingPostLikeActions.resolvePendingRemoveLikeFromPost),
       withLatestFrom(
         this.store.select(PendingSelectors.getPendingRemovePostLikes)
       ),
@@ -41,15 +41,15 @@ export class PendingEffects {
         if (pendingRemovePostLike[likeId]) {
           return this.postsService.removeLikeFromPost(likeId).pipe(
             map(({ likeId }) =>
-              PostsActions.removeLikeFromPostSuccess({ likeId })
+              PostLikeActions.removeLikeFromPostSuccess({ likeId })
             ),
             catchError((error: string) => {
               console.log(error);
-              return of(PostsActions.removeLikeFromPostFailure({ error }));
+              return of(PostLikeActions.removeLikeFromPostFailure({ error }));
             })
           );
         } else {
-          return of(PendingActions.nothingToResolve());
+          return of(PendingPostLikeActions.nothingToResolve());
         }
       })
     )

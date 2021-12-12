@@ -6,7 +6,7 @@ export const resolvePendingPostLike = createAction(
   props<{ postLikeDraft: PostLikeDraft }>()
 );
 
-export const resolveRemoveLikeFromPost = createAction(
+export const resolvePendingRemoveLikeFromPost = createAction(
   '[Pending] Resolve Remove Like From Post',
   props<{ likeId: string }>()
 );
