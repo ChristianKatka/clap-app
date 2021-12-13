@@ -5,12 +5,28 @@
 </section>
 
 <section fxLayout="column" fxLayoutAlign="center center">
-  <img src="{{ myProfileData.profileImageUrl }}" alt="" class="profile-picture" />
-  <div *ngIf="uploading">
-    <clap-app-loading-spinner [diameter]="40"></clap-app-loading-spinner>
+  <img
+    *ngIf="!uploading"
+    src="{{ myProfileData.profileImageUrl }}"
+    alt=""
+    class="profile-picture"
+  />
 
-  </div>
-  <clap-app-profile-image-select (fileSelected)="this.profileImageSelected.emit($event)"></clap-app-profile-image-select>
+  <img
+    *ngIf="uploading"
+    src="{{ myProfileData.profileImageUrl }}"
+    alt=""
+    class="uploading-picture"
+  />
+  <clap-app-loading-dots *ngIf="uploading"></clap-app-loading-dots>
+
+  <clap-app-profile-image-select
+    (fileSelected)="this.profileImageSelected.emit($event)"
+  ></clap-app-profile-image-select>
 </section>
 
-<clap-app-my-profile-edit-form [myProfileData]="myProfileData" [loading]="loading" (addBio)="this.addBio.emit($event)"></clap-app-my-profile-edit-form>
+<clap-app-my-profile-edit-form
+  [myProfileData]="myProfileData"
+  [loading]="loading"
+  (addBio)="this.addBio.emit($event)"
+></clap-app-my-profile-edit-form>

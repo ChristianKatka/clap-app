@@ -1,16 +1,24 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MyProfile } from '@shared/models/my-profile.model';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output
+} from '@angular/core';
 
 @Component({
   selector: 'clap-app-my-profile',
   templateUrl: 'my-profile.component.html',
   styleUrls: ['my-profile.component.scss'],
 })
-export class MyProfileComponent {
+export class MyProfileComponent implements OnChanges {
   @Input()
-  myProfileData: MyProfile | null | undefined;
+  myProfileData: any
 
   @Output()
   openEditProfileBottomSheet = new EventEmitter();
 
+  ngOnChanges() {
+    console.log(this.myProfileData);
+  }
 }

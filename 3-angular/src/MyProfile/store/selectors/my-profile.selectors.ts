@@ -10,9 +10,11 @@ export const getMyProfile = createSelector(
   getMyProfileState,
   getProfileImageState,
   (profileState, imageState) => {
-    if (!profileState.myProfile) return undefined;
-    if (!imageState.myProfileImage) return undefined;
-    if (!imageState.myProfileImage.imageUrl) return undefined;
+    if (!imageState.myProfileImage)
+      return {
+        ...profileState.myProfile,
+        profileImageUrl: 'assets/images/default_profile_image.png',
+      };
 
     return {
       ...profileState.myProfile,

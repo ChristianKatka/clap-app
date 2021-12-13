@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@use "../../styles.scss" as styles;
 
 .cancel-button {
   cursor: pointer;
@@ -11,7 +11,7 @@
 .done-text {
   cursor: pointer;
   font-weight: bold;
-  color: $clap-blue;
+  color: styles.$clap-blue;
 }
 
 .profile-picture {
@@ -23,6 +23,22 @@
   object-fit: cover;
 }
 
+.uploading-picture {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
 clap-app-profile-image-select {
   margin-bottom: 1rem;
+}
+
+clap-app-loading-dots {
+  position: absolute;
+  top: 37px;
+  transform: scale(0.9);
 }
