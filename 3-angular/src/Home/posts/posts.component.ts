@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
 
@@ -7,9 +7,11 @@ import { PostWithoutImage } from '@shared/models/post-without-image.model';
   templateUrl: 'posts.component.html',
   styleUrls: ['posts.component.scss'],
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnChanges {
   @Input()
   postsWithoutImage: PostWithoutImage[] | [] = [];
+  @Input()
+  myProfileImage: string | null = null;
   @Input()
   loading = false;
 
@@ -21,4 +23,9 @@ export class PostsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+      console.log(this.myProfileImage);
+      
+  }
 }

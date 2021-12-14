@@ -23,7 +23,7 @@ p {
   }
 
   .liked {
-    color: #ED4956
+    color: #ed4956;
   }
 }
 
@@ -37,20 +37,6 @@ mat-icon {
 
 .view-all-comments-text {
   color: s.$clap-gray;
-}
-
-.add-comment-wrapper {
-  margin-top: 0.1rem;
-
-  .profile-image {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .add-comment-text {
-    color: s.$clap-gray;
-  }
 }
 
 .date-text {

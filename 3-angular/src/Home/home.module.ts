@@ -5,6 +5,7 @@ import { MaterialModule } from '../material.module';
 import { components } from '.';
 import { SharedModule } from 'src/shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // import { StoreModule } from '@ngrx/store';
 // import { reducers } from './store/reducers';
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router';
     MaterialModule,
     FlexLayoutModule,
     SharedModule,
+    ReactiveFormsModule,
   ],
   declarations: [...components],
   entryComponents: [],

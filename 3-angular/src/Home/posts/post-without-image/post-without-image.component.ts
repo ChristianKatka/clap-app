@@ -11,6 +11,8 @@ export class PostWithoutImageComponent implements OnInit {
   @Input()
   postsWithoutImage: PostWithoutImage[] | [] = [];
   @Input()
+  myProfileImage: string | null = null;
+  @Input()
   loading = false;
 
   @Output()

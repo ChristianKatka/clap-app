@@ -55,30 +55,9 @@
         {{ post.postLikes.length }} likes
       </p>
       <p><b>ChristianKatka</b> {{ post.text }}</p>
-      <p class="view-all-comments-text">View all 5 comments</p>
 
-      <div fxLayoutAlign="space-between center">
-        <p><b>ElonMusk69</b> Because you are poor</p>
-        <mat-icon style="transform: scale(0.5)" class="material-icons-outlined"
-          >favorite_border</mat-icon
-        >
-      </div>
-
-      <div class="add-comment-wrapper" fxLayoutAlign="space-between center">
-        <section
-          fxLayout="row"
-          fxLayoutAlign="center center"
-          fxLayoutGap="10px"
-        >
-          <img
-            src="assets/images/elon_musk.png"
-            alt="profile-image"
-            class="profile-image"
-          />
-          <p class="add-comment-text">Add a comment...</p>
-        </section>
-        <p>👏</p>
-      </div>
+      <clap-app-post-comments></clap-app-post-comments>
+      <clap-app-post-add-comment [myProfileImage]="myProfileImage"></clap-app-post-add-comment>
 
       <p class="date-text">{{ post.createdAt | timeAgo }}</p>
     </clap-app-container>

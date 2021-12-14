@@ -23,6 +23,11 @@ export const getMyProfile = createSelector(
   }
 );
 
+export const getMyProfileImage = createSelector(
+  getMyProfile,
+  (myProfile) => myProfile.profileImageUrl
+);
+
 export const getMyUserId = createSelector(
   getMyProfileState,
   (state) => state.myProfile?.id

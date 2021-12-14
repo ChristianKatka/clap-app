@@ -14,6 +14,7 @@ import { TrunctateTextComponent } from './components/trunctate-text/trunctate-te
 import { SpaceGiverUsedWithFixedElementsComponent } from './components/space-giver-used-with-navbar/space-giver-used-with-fixed-elements.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { LoadingDotsComponent } from './components/loading-dots/loading-dots.component';
+import { AutofocusDirective } from './directives/auto-focus.directive';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -27,7 +28,8 @@ export const components: any[] = [
   NavbarComponent,
   ClapAppContainer,
   SpaceGiverUsedWithFixedElementsComponent,
-  LoadingDotsComponent
+  LoadingDotsComponent,
+  AutofocusDirective
 ];
 export const pipes = [BooleanPipe, IconPipe, TimeAgoPipe];
-export const directives = [FileSelectDirective];
+export const directives = [FileSelectDirective, AutofocusDirective];

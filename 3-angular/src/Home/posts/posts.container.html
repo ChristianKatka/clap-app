@@ -2,6 +2,7 @@
   <clap-app-posts
     [loading]="loading$ | async | onlyBoolean"
     [postsWithoutImage]="postsWithoutImage"
+    [myProfileImage]="myProfileImage$ | async"
     (giveLikeToPost)="onGiveLikeToPost($event)"
     (removeLikeFromPost)="onRemoveLikeFromPost($event)"
   ></clap-app-posts>

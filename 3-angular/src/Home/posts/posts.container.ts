@@ -19,6 +19,8 @@ export class PostsContainerComponent implements OnInit {
   );
   loading$: Observable<boolean> = this.store.select(PostsSelectors.isLoading);
 
+  myProfileImage$: Observable<string> = this.store.select(MyProfileSelectors.getMyProfileImage);
+
   constructor(private store: Store<PostsExtendedAppState>) {}
 
   ngOnInit() {}
