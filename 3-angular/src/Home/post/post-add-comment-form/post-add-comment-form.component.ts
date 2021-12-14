@@ -1,5 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component, EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'clap-app-post-add-comment-form',
@@ -13,8 +18,12 @@ export class PostAddCommentFormComponent implements OnInit {
   @Input()
   isAddCommentClicked = false;
 
+  @Output()
+  createCommentToPost: EventEmitter<string> = new EventEmitter();
+
+  commentFormControl = new FormControl('');
   commentForm = new FormGroup({
-    comment: new FormControl(''),
+    comment: this.commentFormControl,
   });
 
   constructor() {}
@@ -22,6 +31,12 @@ export class PostAddCommentFormComponent implements OnInit {
   ngOnInit() {}
 
   submit() {
-    console.log(this.commentForm.value);
+    const comment = this.commentForm.value.comment.trim();
+    if (comment.length > 0) {
+      console.log(comment);
+
+      this.createCommentToPost.emit(comment);
+    }
+    this.commentForm.reset();
   }
 }

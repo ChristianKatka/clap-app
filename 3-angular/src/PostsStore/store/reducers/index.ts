@@ -6,6 +6,7 @@ import {
 import { AppState } from '../../../app/store/reducers';
 import * as fromPendingPostLikes from './pending-posts-likes.reducer';
 import * as fromPostsLikes from './posts-likes.reducer';
+import * as fromPostsComments from './posts-comments.reducer';
 import * as fromPosts from './posts.reducer';
 import * as fromPostsUi from './posts-ui.reducer';
 
@@ -14,6 +15,7 @@ export interface PostsFeatureState {
   posts: fromPosts.PostsState;
   postsUi: fromPostsUi.PostsUiState;
   postsLikes: fromPostsLikes.PostsLikesState;
+  postsComments: fromPostsComments.PostsCommentsState;
   pendingPostLikes: fromPendingPostLikes.PendingPostLikesState;
 }
 
@@ -25,6 +27,7 @@ export const reducers: ActionReducerMap<PostsFeatureState> = {
   posts: fromPosts.reducer,
   postsUi: fromPostsUi.reducer,
   postsLikes: fromPostsLikes.reducer,
+  postsComments: fromPostsComments.reducer,
   pendingPostLikes: fromPendingPostLikes.reducer,
 };
 
@@ -42,6 +45,13 @@ const getPostsLikes =
 export const getPostsLikesState = createSelector(
   getPostsFeatureState,
   getPostsLikes
+);
+
+const getPostsComments =
+  createFeatureSelector<fromPostsComments.PostsCommentsState>('postsComments');
+export const getPostsCommentsState = createSelector(
+  getPostsFeatureState,
+  getPostsComments
 );
 
 const getPending =

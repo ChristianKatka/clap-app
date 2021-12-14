@@ -47,7 +47,7 @@
       </p>
       <p><b>ChristianKatka</b> {{ post.text }}</p>
 
-      <clap-app-post-comments-minified></clap-app-post-comments-minified>
+      <clap-app-post-comments-minified [comments]="comments"></clap-app-post-comments-minified>
       <clap-app-post-add-comment
         [postId]="post.id"
         [myProfileImage]="myProfileImage"

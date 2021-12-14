@@ -8,7 +8,8 @@ export const S3_UPLOAD_SIGNED_URL_EXPIRES = 900;
 export const POSTS_TABLE = 'clap-app-posts';
 export const POSTS_LIKES_TABLE = 'clap-app-posts-likes';
 export const USERS_TABLE = 'clap-app-users';
-export const PROFILE_IMAGES = 'clap-app-profile-images';
+export const PROFILE_IMAGES_TABLE = 'clap-app-profile-images';
+export const POSTS_COMMENTS_TABLE = 'clap-app-posts-comments';
 
 // INDEX
 export const POST_ID_INDEX = 'postId-gsi';

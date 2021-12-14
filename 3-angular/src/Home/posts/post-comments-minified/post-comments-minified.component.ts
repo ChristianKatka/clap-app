@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'clap-app-post-comments-minified',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['post-comments-minified.component.scss'],
 })
 export class PostCommentsMinifiedComponent implements OnInit {
+  @Input()
+  comments: any;
   constructor() {}
 
   ngOnInit() {}

@@ -1,4 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  PostComment,
+  PostCommentDraft,
+} from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
 
@@ -14,9 +18,13 @@ export class PostComponent {
   myProfileImage: string | null = null;
 
   @Input()
+  comments: any;
+
+  @Input()
   isAddCommentClicked = false;
 
-  
+  @Output()
+  createCommentToPost: EventEmitter<string> = new EventEmitter();
 
   @Output()
   giveLikeToPost: EventEmitter<PostWithoutImage> = new EventEmitter();

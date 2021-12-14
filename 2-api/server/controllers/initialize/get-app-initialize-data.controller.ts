@@ -2,6 +2,7 @@ import { Context, Next } from 'koa';
 import { dynamodbGetAllPostsLikes } from '../../services/dynamodb/posts/likes/dynamodb-get-all-posts-likes.service';
 import { dynamodbGetUserById } from '../../services/dynamodb/users/dynamodb-get-user-by-id.service';
 import { dynamodbGetUsersProfileImageById } from '../../services/dynamodb/users/profile-image/dynamodb-get-user-by-id.service';
+import { getAllPostsCommentsUtil } from '../../utils/get-all-posts-comments.util';
 import { getAllPostsUtil } from '../../utils/get-all-posts.util';
 
 export const getAppInitializeData = async (ctx: Context, next: Next) => {
@@ -9,6 +10,7 @@ export const getAppInitializeData = async (ctx: Context, next: Next) => {
   // const userId = '0668311c-3c1d-4cf8-b12d-ef4ebba91d37';
 
   const posts = await getAllPostsUtil();
+  const postsComments = await getAllPostsCommentsUtil();
   const postsLikes = await dynamodbGetAllPostsLikes();
   const myProfile = await dynamodbGetUserById(userId);
   const myProfileImage = await dynamodbGetUsersProfileImageById(userId);
@@ -16,6 +18,7 @@ export const getAppInitializeData = async (ctx: Context, next: Next) => {
   ctx.response.status = 200;
   ctx.response.body = {
     posts,
+    postsComments,
     postsLikes,
     myProfile,
     myProfileImage,

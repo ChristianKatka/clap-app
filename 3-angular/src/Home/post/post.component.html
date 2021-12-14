@@ -38,14 +38,12 @@
 
   <p class="date-text">{{ post.createdAt | timeAgo }}</p>
 
-  <clap-app-post-comments></clap-app-post-comments>
-  <clap-app-post-comments></clap-app-post-comments>
-  <clap-app-post-comments></clap-app-post-comments>
-  <clap-app-post-comments></clap-app-post-comments>
+  <clap-app-post-comments [comments]="comments"></clap-app-post-comments>
 
   <clap-app-space-giver-used-with-fixed-elements></clap-app-space-giver-used-with-fixed-elements>
   <clap-app-post-add-comment-form
     [myProfileImage]="myProfileImage"
     [isAddCommentClicked]="isAddCommentClicked"
+    (createCommentToPost)="this.createCommentToPost.emit($event)"
   ></clap-app-post-add-comment-form>
 </clap-app-container>

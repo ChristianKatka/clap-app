@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 import { PostLikeActions, PostsUiActions } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
-import { PostsSelectors } from 'src/PostsStore/store/selectors';
+import { PostsCommentsSelectors, PostsSelectors } from 'src/PostsStore/store/selectors';
 
 @Component({
   selector: 'clap-app-posts-container',
@@ -21,6 +21,9 @@ export class PostsContainerComponent implements OnInit {
   myProfileImage$: Observable<string> = this.store.select(
     MyProfileSelectors.getMyProfileImage
   );
+
+  comments$ = this.store.select(PostsCommentsSelectors.getPostsComments);
+
 
   constructor(private store: Store<PostsExtendedAppState>) {}
 

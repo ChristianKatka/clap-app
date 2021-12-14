@@ -1,0 +1,47 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app posts-comments
+
+Resources:
+  ClapAppPostsCommentsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+        - AttributeName: 'postId'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+      GlobalSecondaryIndexes:
+        - IndexName: "postId-gsi"
+          KeySchema:
+            - AttributeName: "postId"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+      TableName: 'clap-app-posts-comments'
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-posts-comments-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppPostsCommentsTableArn:
+    Description: clap-app posts-comments Table ARN
+    Value: !GetAtt ClapAppPostsCommentsTable.Arn
+    Export:
+      Name: clap-app-posts-comments-table-arn
+
+  ClapAppPostsCommentsTableStreamArn:
+    Description: clap-app posts-comments table stream ARN
+    Value: !GetAtt ClapAppPostsCommentsTable.StreamArn
+    Export:
+      Name: clap-app-posts-comments-table-stream-arn
+

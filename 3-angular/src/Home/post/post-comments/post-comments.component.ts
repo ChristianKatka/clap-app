@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'clap-app-post-comments',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['post-comments.component.scss'],
 })
 export class PostCommentsComponent implements OnInit {
+  @Input()
+  comments: any;
+
   constructor() {}
 
   ngOnInit() {}
