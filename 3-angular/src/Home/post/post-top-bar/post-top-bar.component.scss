@@ -1,0 +1,23 @@
+a {
+  cursor: pointer;
+}
+
+mat-toolbar {
+  z-index: 5;
+  position: fixed;
+  background-color: white;
+  border-bottom: 1px solid #dddddd;
+  padding: 0 !important;
+}
+
+p {
+  margin: 0;
+}
+.go-back-button {
+  cursor: pointer;
+
+  .back-button-text {
+    font-size: 17px;
+    margin-left: 2px;
+  }
+}

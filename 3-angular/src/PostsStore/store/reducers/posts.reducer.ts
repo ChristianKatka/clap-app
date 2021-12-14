@@ -9,12 +9,16 @@ export interface PostsState {
   entities: { [id: string]: PostWithoutImage };
   sortBy: 'latest';
   loading: boolean;
+  selectedPostId: string | undefined;
+  clickedAddComment: boolean;
 }
 
 export const initialState: PostsState = {
   entities: {},
   sortBy: 'latest',
   loading: false,
+  selectedPostId: undefined,
+  clickedAddComment: false,
 };
 
 const PostsReducer = createReducer(
@@ -49,6 +53,19 @@ const PostsReducer = createReducer(
     },
   })),
 
+  on(PostsActions.clickedAddComment, (state) => ({
+    ...state,
+    sclickedAddComment: true,
+  })),
+  on(PostsActions.selectPost, (state, { postId }) => ({
+    ...state,
+    selectedPostId: postId,
+  })),
+  on(PostsActions.clearPostSelection, (state) => ({
+    ...state,
+    selectedPostId: undefined,
+    clickedAddComment: false,
+  })),
   on(AuthenticatedActions.signOut, (state) => initialState)
 );
 

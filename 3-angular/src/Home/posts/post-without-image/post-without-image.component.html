@@ -5,7 +5,11 @@
       [creatorsProfileImage]="post.creatorsProfileImage"
     ></clap-app-posts-user-wrapper>
 
-    <div class="posted-text-wrapper" fxLayoutAlign="center center">
+    <div
+      [routerLink]="['/home', post.id]"
+      class="posted-text-wrapper"
+      fxLayoutAlign="center center"
+    >
       <h1 class="posted-text">{{ post.text }}</h1>
     </div>
 
@@ -15,20 +19,7 @@
         fxLayoutAlign="space-between center"
       >
         <section fxLayout="row" fxLayoutGap="16px">
-          <!-- LOADING -->
-          <div *ngIf="loading" fxLayout="row">
-            <mat-icon
-              *ngIf="!post.iLikeThisPost"
-              class="material-icons-outlined"
-              >favorite_border</mat-icon
-            >
-            <mat-icon *ngIf="post.iLikeThisPost" class="material-icons liked">
-              favorite
-            </mat-icon>
-          </div>
-
-          <!-- NOT LOADING -->
-          <div *ngIf="!loading" fxLayout="row">
+          <div fxLayout="row">
             <mat-icon
               *ngIf="!post.iLikeThisPost"
               (click)="this.giveLikeToPost.emit(post)"
@@ -56,8 +47,12 @@
       </p>
       <p><b>ChristianKatka</b> {{ post.text }}</p>
 
-      <clap-app-post-comments></clap-app-post-comments>
-      <clap-app-post-add-comment [myProfileImage]="myProfileImage"></clap-app-post-add-comment>
+      <clap-app-post-comments-minified></clap-app-post-comments-minified>
+      <clap-app-post-add-comment
+        [postId]="post.id"
+        [myProfileImage]="myProfileImage"
+        (clickedAddComment)="this.clickedAddComment.emit()"
+      ></clap-app-post-add-comment>
 
       <p class="date-text">{{ post.createdAt | timeAgo }}</p>
     </clap-app-container>

@@ -1,5 +1,16 @@
 @use "../../../styles.scss" as s;
 
+
+.add-comment-wrapper {
+  width: 93%;
+  z-index: 5;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  border-top: 1px solid #dddddd;
+  padding: 0.5rem 0;
+}
+
 form {
   @include s.disable-auto-zoom-on-iphone-input-fields;
   width: 100%;

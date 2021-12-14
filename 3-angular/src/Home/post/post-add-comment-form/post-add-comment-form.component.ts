@@ -10,6 +10,9 @@ export class PostAddCommentFormComponent implements OnInit {
   @Input()
   myProfileImage: string | null = null;
 
+  @Input()
+  isAddCommentClicked = false;
+
   commentForm = new FormGroup({
     comment: new FormControl(''),
   });

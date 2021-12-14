@@ -7,6 +7,7 @@ import { WelcomeContainerComponent } from './welcome/welcome.container';
 import { MyProfileFeatureContainerComponent } from 'src/MyProfile/my-profile-feature.container';
 import { MyProfilePostsContainerComponent } from 'src/MyProfile/my-profile-posts/my-profile-posts.container';
 import { MyProfileSavedContainerComponent } from 'src/MyProfile/my-profile-saved/my-profile-saved.container';
+import { PostContainerComponent } from '@home/post/post.container';
 
 export const myProfileChildren: Routes = [
   {
@@ -45,6 +46,11 @@ const routes: Routes = [
     path: 'home',
     canActivate: [AuthenticatedGuard],
     component: HomeFeatureContainerComponent,
+  },
+  {
+    path: 'home/:postId',
+    canActivate: [AuthenticatedGuard],
+    component: PostContainerComponent,
   },
   {
     path: 'notification',

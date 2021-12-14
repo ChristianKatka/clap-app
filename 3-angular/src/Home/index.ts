@@ -6,9 +6,13 @@ import { HomeTopBarComponent } from './home-top-bar/home-top-bar.component';
 import { PostWithImageComponent } from './posts/post-with-image/post-with-image.component';
 import { PostWithImageContainerComponent } from './posts/post-with-image/post-with-image.container';
 import { PostWithoutImageComponent } from './posts/post-without-image/post-without-image.component';
-import { PostCommentsComponent } from './posts/post-comments/post-comments.component';
+import { PostCommentsMinifiedComponent } from './posts/post-comments-minified/post-comments-minified.component';
 import { PostAddCommentComponent } from './posts/post-add-comment/post-add-comment.component';
-import { PostAddCommentFormComponent } from './posts/post-add-comment/post-add-comment-form.component';
+import { PostContainerComponent } from './post/post.container';
+import { PostTopBarComponent } from './post/post-top-bar/post-top-bar.component';
+import { PostComponent } from './post/post.component';
+import { PostAddCommentFormComponent } from './post/post-add-comment-form/post-add-comment-form.component';
+import { PostCommentsComponent } from './post/post-comments/post-comments.component';
 
 export const components: any[] = [
   HomeFeatureContainerComponent,
@@ -19,7 +23,11 @@ export const components: any[] = [
   PostWithImageComponent,
   PostWithImageContainerComponent,
   PostWithoutImageComponent,
-  PostCommentsComponent,
+  PostCommentsMinifiedComponent,
   PostAddCommentComponent,
-  PostAddCommentFormComponent
+  PostAddCommentFormComponent,
+  PostContainerComponent,
+  PostTopBarComponent,
+  PostComponent,
+  PostCommentsComponent
 ];

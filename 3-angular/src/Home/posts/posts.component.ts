@@ -12,8 +12,8 @@ export class PostsComponent implements OnInit, OnChanges {
   postsWithoutImage: PostWithoutImage[] | [] = [];
   @Input()
   myProfileImage: string | null = null;
-  @Input()
-  loading = false;
+  @Output()
+  clickedAddComment = new EventEmitter();
 
   @Output()
   giveLikeToPost: EventEmitter<PostWithoutImage> = new EventEmitter();

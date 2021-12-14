@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import {
   PostWithImage,
-  PostWithImageDraft
+  PostWithImageDraft,
 } from '@shared/models/post-with-image.model';
 import {
   PostWithoutImage,
-  PostWithoutImageDraft
+  PostWithoutImageDraft,
 } from '@shared/models/post-without-image.model';
 
 export const createPostWithImage = createAction(
@@ -33,3 +33,10 @@ export const createPostWithoutImageFailure = createAction(
   '[Posts] Create Post Without Image Failure',
   props<{ error: string }>()
 );
+
+export const clickedAddComment = createAction('[Posts] Clicked Add Comment');
+export const selectPost = createAction(
+  '[Posts] Select Post',
+  props<{ postId: string }>()
+);
+export const clearPostSelection = createAction('[Posts] Clear Post Selection');

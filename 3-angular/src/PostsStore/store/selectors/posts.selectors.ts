@@ -50,3 +50,11 @@ export const getPostsWithoutImage = createSelector(
     }
   }
 );
+
+export const getSelectedPost = createSelector(
+  getPostsState,
+  getPostsWithoutImage,
+  (state, posts) => {
+    return posts.filter((post: PostWithoutImage) => post.id === state.selectedPostId)[0]
+  }
+);
