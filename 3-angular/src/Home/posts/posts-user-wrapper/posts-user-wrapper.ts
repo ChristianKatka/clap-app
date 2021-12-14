@@ -8,6 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PostsUserWrapperComponent implements OnInit {
   @Input()
   nickname = '';
+
+  @Input()
+  creatorsProfileImage = '';
   
   constructor() {}
 

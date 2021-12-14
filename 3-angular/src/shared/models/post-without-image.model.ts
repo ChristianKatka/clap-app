@@ -10,6 +10,7 @@ export interface PostWithoutImageDraft {
 export interface PostWithoutImage {
   id: string;
   userId: string;
+  creatorsProfileImage: string;
   text: string;
   nickname: string;
   createdAt: number;

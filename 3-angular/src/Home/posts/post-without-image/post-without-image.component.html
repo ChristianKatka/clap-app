@@ -2,6 +2,7 @@
   <section *ngFor="let post of postsWithoutImage">
     <clap-app-posts-user-wrapper
       [nickname]="post.nickname"
+      [creatorsProfileImage]="post.creatorsProfileImage"
     ></clap-app-posts-user-wrapper>
 
     <div class="posted-text-wrapper" fxLayoutAlign="center center">
