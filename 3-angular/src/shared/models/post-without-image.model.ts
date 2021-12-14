@@ -1,3 +1,4 @@
+import { PostComment, PostCommentDraft } from './post-comment.model';
 import { PostLike, PostLikeDraft } from './post-like.model';
 
 export interface PostWithoutImageDraft {
@@ -17,4 +18,5 @@ export interface PostWithoutImage {
   postType: 'withoutImage';
   iLikeThisPost: string | undefined;
   postLikes: PostLike[] | PostLikeDraft[] | [];
+  comments: PostComment[] | PostCommentDraft[] | [];
 }

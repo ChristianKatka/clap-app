@@ -3,7 +3,6 @@
 <clap-app-post-without-image
   [postsWithoutImage]="postsWithoutImage"
   [myProfileImage]="myProfileImage"
-  [comments]="comments"
   (giveLikeToPost)="this.giveLikeToPost.emit($event)"
   (removeLikeFromPost)="this.removeLikeFromPost.emit($event)"
   (clickedAddComment)="this.clickedAddComment.emit()"

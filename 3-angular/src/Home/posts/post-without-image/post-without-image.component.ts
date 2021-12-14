@@ -12,9 +12,6 @@ export class PostWithoutImageComponent implements OnInit {
   postsWithoutImage: PostWithoutImage[] | [] = [];
   @Input()
   myProfileImage: string | null = null;
-  @Input()
-  comments: any;
-
 
   @Output()
   clickedAddComment = new EventEmitter();

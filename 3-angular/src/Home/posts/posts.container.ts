@@ -22,8 +22,6 @@ export class PostsContainerComponent implements OnInit {
     MyProfileSelectors.getMyProfileImage
   );
 
-  comments$ = this.store.select(PostsCommentsSelectors.getPostsComments);
-
 
   constructor(private store: Store<PostsExtendedAppState>) {}
 

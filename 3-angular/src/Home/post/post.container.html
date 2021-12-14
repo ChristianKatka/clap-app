@@ -4,7 +4,6 @@
 <clap-app-post
   [post]="selectedPost$ | async"
   [myProfileImage]="myProfileImage$ | async"
-  [comments]="comments$ | async"
   [isAddCommentClicked]="isAddCommentClicked$ | async | onlyBoolean"
   (createCommentToPost)="onCreateCommentToPost($event)"
   (giveLikeToPost)="onGiveLikeToPost($event)"

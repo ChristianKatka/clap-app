@@ -29,7 +29,6 @@ export class PostContainerComponent implements OnInit, OnDestroy {
   isAddCommentClicked$: Observable<boolean> = this.store.select(
     PostsUiSelectors.isAddCommentClicked
   );
-  comments$ = this.store.select(PostsCommentsSelectors.getPostsComments);
 
   postId: string | undefined;
 

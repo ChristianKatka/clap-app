@@ -18,9 +18,6 @@ export class PostComponent {
   myProfileImage: string | null = null;
 
   @Input()
-  comments: any;
-
-  @Input()
   isAddCommentClicked = false;
 
   @Output()

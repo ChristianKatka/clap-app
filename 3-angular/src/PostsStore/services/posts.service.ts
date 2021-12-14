@@ -37,6 +37,7 @@ export class PostsService {
       {
         text: postCommentDraft.text,
         likersProfileImage: postCommentDraft.likersProfileImage,
+        nickname: postCommentDraft.nickname,
       }
     );
   }

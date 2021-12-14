@@ -3,6 +3,7 @@ export interface PostCommentDraft {
   postId: string;
   text: string;
   likersProfileImage: string;
+  nickname: string;
 }
 
 export interface PostComment {
@@ -10,7 +11,7 @@ export interface PostComment {
   postId: string;
   text: string;
   likersProfileImage: string;
-  userId: string;
   nickname: string;
+  userId: string;
   createdAt: number;
 }

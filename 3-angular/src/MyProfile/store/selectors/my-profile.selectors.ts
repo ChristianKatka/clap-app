@@ -32,3 +32,7 @@ export const getMyUserId = createSelector(
   getMyProfileState,
   (state) => state.myProfile?.id
 );
+export const getMyNickname = createSelector(
+  getMyProfileState,
+  (state) => state.myProfile?.nickname
+);
