@@ -10,7 +10,6 @@ export interface PostsState {
   sortBy: 'latest';
   loading: boolean;
   selectedPostId: string | undefined;
-  clickedAddComment: boolean;
 }
 
 export const initialState: PostsState = {
@@ -18,7 +17,6 @@ export const initialState: PostsState = {
   sortBy: 'latest',
   loading: false,
   selectedPostId: undefined,
-  clickedAddComment: false,
 };
 
 const PostsReducer = createReducer(
@@ -53,10 +51,6 @@ const PostsReducer = createReducer(
     },
   })),
 
-  on(PostsActions.clickedAddComment, (state) => ({
-    ...state,
-    sclickedAddComment: true,
-  })),
   on(PostsActions.selectPost, (state, { postId }) => ({
     ...state,
     selectedPostId: postId,

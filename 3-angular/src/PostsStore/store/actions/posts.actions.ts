@@ -34,7 +34,6 @@ export const createPostWithoutImageFailure = createAction(
   props<{ error: string }>()
 );
 
-export const clickedAddComment = createAction('[Posts] Clicked Add Comment');
 export const selectPost = createAction(
   '[Posts] Select Post',
   props<{ postId: string }>()

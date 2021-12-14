@@ -32,11 +32,7 @@ const PostsLikesReducer = createReducer(
   on(PostLikeActions.giveLikeToPost, (state, { postLikeDraft }) => {
     const postsLikes: { [id: string]: PostLikeDraft } = {
       ...state.postsLikes,
-      [postLikeDraft.id]: {
-        id: postLikeDraft.id,
-        postId: postLikeDraft.postId,
-        userId: postLikeDraft.userId,
-      },
+      [postLikeDraft.id]: postLikeDraft,
     };
 
     return {

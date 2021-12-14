@@ -11,7 +11,7 @@ import { PendingSelectors } from '../selectors';
 
 @Injectable()
 export class PostLikeEffects {
-  createLikeDraft = createEffect(() =>
+  giveLikeToPostWithoutId = createEffect(() =>
     this.actions$.pipe(
       ofType(PostLikeActions.giveLikeToPostWithoutId),
       withLatestFrom(

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RouterActions } from '@app/store/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { PostsService } from 'src/PostsStore/services/posts.service';
@@ -40,9 +39,5 @@ export class PostEffects {
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private postsService: PostsService,
-    private store: Store
-  ) {}
+  constructor(private actions$: Actions, private postsService: PostsService) {}
 }
