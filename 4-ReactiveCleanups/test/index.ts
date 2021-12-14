@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 config();
 import { Context } from 'aws-lambda';
-import { handler } from '../src/image-deleted-lambda';
+import { handler } from '../src/profile-image-deleted-lambda';
 import { event } from './event';
 
 const context = {

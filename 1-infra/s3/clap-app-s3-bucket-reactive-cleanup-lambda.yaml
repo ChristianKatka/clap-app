@@ -6,7 +6,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
-      BucketName: clap-app-reactive-cleanup-lamda
+      BucketName: clap-app-reactive-cleanup-lambda
       PublicAccessBlockConfiguration:
         BlockPublicAcls : true
         BlockPublicPolicy : true

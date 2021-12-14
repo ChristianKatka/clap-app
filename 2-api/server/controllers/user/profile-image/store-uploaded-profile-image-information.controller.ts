@@ -16,7 +16,8 @@ export const storeUploadedProfileImageInformation = async (
     s3Key,
     userId,
     mimeType,
-    imageUrl: `${CLOUDFRONT_URL}${s3Key}`
+    imageUrl: `${CLOUDFRONT_URL}${s3Key}`,
+    createdAt: Date.now(),
   };
 
   await dynamodbStoreUploadedProfileImageInformation(imageInfo);
