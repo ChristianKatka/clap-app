@@ -25,11 +25,11 @@ const handler: DynamoDBStreamHandler = (
     )
     .subscribe({
       error: (error) => {
-        console.log('Error when processing deletion of image');
+        console.log('Error when processing deletion of image s3');
         console.log(error);
       },
       complete: () =>
-        context.done(undefined, `Successfully deleted old profile image`),
+        context.done(undefined, `Successfully deleted old profile image s3`),
     });
 };
 

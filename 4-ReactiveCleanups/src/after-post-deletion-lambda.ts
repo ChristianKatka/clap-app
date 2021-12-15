@@ -29,7 +29,7 @@ const handler: DynamoDBStreamHandler = (
     )
     .subscribe({
       error: (error) => {
-        console.log('Error when processing deletion of image db');
+        console.log('Error when processing after post deletion lambda');
         console.log(error);
       },
       complete: () =>
