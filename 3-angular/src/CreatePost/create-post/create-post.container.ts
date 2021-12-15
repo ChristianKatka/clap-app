@@ -16,13 +16,30 @@ export class CreatePostContainerComponent implements OnInit {
 
   ngOnInit() {}
 
-  onCreatePost(text: string) {
-    const postDraft: PostWithoutImageDraft = {
-      text,
-      postType: 'withoutImage',
-      iLikeThisPost: undefined,
-      postLikes: [],
-    };
-    this.store.dispatch(PostsActions.createPostWithoutImage({ postDraft }));
+  onCreatePostWithImage(post: { image: File; text: string }) {
+    console.log('onCreatePostWithImage');
+
+    console.log(post);
+
+    // const postDraft: PostWithoutImageDraft = {
+    //   text,
+    //   postType: 'withoutImage',
+    //   iLikeThisPost: undefined,
+    //   postLikes: [],
+    // };
+    // this.store.dispatch(PostsActions.createPostWithoutImage({ postDraft }));
+  }
+
+  onCreatePostWithoutImage(text: string) {
+    console.log('onCreatePostWithoutImage');
+
+    console.log(text);
+    // const postDraft: PostWithoutImageDraft = {
+    //   text,
+    //   postType: 'withoutImage',
+    //   iLikeThisPost: undefined,
+    //   postLikes: [],
+    // };
+    // this.store.dispatch(PostsActions.createPostWithoutImage({ postDraft }));
   }
 }

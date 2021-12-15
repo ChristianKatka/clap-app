@@ -7,12 +7,17 @@
     <mat-icon class="material-icons-outlined">photo_camera</mat-icon>
     <p>Take image</p>
   </div>
-  <div
+
+  <clap-app-post-image-file-select
+    (fileSelected)="this.postImageSelected.emit($event)"
+  ></clap-app-post-image-file-select>
+
+  <!-- <div
     fxLayout="column"
     fxLayoutAlign="center center"
     class="upload-image-wrapper mat-elevation-z2"
   >
     <mat-icon class="material-icons-outlined">add_photo_alternate</mat-icon>
     <p>Upload image</p>
-  </div>
+  </div> -->
 </section>

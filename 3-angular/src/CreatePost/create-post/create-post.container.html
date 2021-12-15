@@ -1,1 +1,5 @@
-<clap-app-create-post [loading]="loading$ | async | onlyBoolean" (createPost)="onCreatePost($event)"></clap-app-create-post>
+<clap-app-create-post
+  [loading]="loading$ | async | onlyBoolean"
+  (createPostWithoutImage)="onCreatePostWithoutImage($event)"
+  (createPostWithImage)="onCreatePostWithImage($event)"
+></clap-app-create-post>

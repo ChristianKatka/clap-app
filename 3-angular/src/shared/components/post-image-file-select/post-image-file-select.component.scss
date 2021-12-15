@@ -1,0 +1,28 @@
+@use "../../../styles.scss" as styles;
+
+input[type="file"] {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.upload-image-wrapper {
+  border-radius: 6px;
+  height: 6rem;
+  width: 10rem;
+}
+
+mat-icon {
+  color: styles.$clap-dark-gray;
+
+  transform: scale(1.5);
+}
+
+p {
+  color: styles.$clap-dark-gray;
+  margin: 0;
+  padding-top: 5px;
+}

@@ -1,7 +1,6 @@
 import { BooleanPipe } from './pipes/boolean.pipe';
 import { IconPipe } from './pipes/icon-type.pipe';
-import { FileSelectDirective } from './components/file-select/file-select.directive';
-import { ProfileImageSelectComponent } from './components/file-select/profile-image-select.component';
+import { FileSelectDirective } from './directives/file-select.directive';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { AlertComponent } from './components/info-boxes/alert.component';
@@ -15,10 +14,12 @@ import { SpaceGiverUsedWithFixedElementsComponent } from './components/space-giv
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { LoadingDotsComponent } from './components/loading-dots/loading-dots.component';
 import { AutofocusDirective } from './directives/auto-focus.directive';
+import { ProfileImageFileSelectComponent } from './components/profile-image-file-select/profile-image-file-select.component';
+import { PostImageFileSelectComponent } from './components/post-image-file-select/post-image-file-select.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
-  ProfileImageSelectComponent,
+  ProfileImageFileSelectComponent,
   ProgressBarComponent,
   LogoComponent,
   AlertComponent,
@@ -29,7 +30,8 @@ export const components: any[] = [
   ClapAppContainer,
   SpaceGiverUsedWithFixedElementsComponent,
   LoadingDotsComponent,
-  AutofocusDirective
+  AutofocusDirective,
+  PostImageFileSelectComponent,
 ];
 export const pipes = [BooleanPipe, IconPipe, TimeAgoPipe];
 export const directives = [FileSelectDirective, AutofocusDirective];

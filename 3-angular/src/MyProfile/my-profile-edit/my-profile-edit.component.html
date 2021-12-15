@@ -19,10 +19,9 @@
     class="uploading-picture"
   />
   <clap-app-loading-dots *ngIf="uploading"></clap-app-loading-dots>
-
-  <clap-app-profile-image-select
+  <clap-app-profile-image-file-select
     (fileSelected)="this.profileImageSelected.emit($event)"
-  ></clap-app-profile-image-select>
+  ></clap-app-profile-image-file-select>
 </section>
 
 <clap-app-my-profile-edit-form

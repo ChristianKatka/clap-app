@@ -1,1 +1,1 @@
-<img class="image-on-hold" src="assets/images/photo1.jpg" alt="" />
+<img *ngIf="postImageSelected" class="image-on-hold" [src]="this.getTrustedImageUrl()" alt="" />

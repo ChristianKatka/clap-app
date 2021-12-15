@@ -1,11 +1,11 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'clap-app-profile-image-select',
-  templateUrl: './profile-image-select.component.html',
-  styleUrls: ['./profile-image-select.component.scss'],
+  selector: 'clap-app-post-image-file-select',
+  templateUrl: 'post-image-file-select.component.html',
+  styleUrls: ['post-image-file-select.component.scss'],
 })
-export class ProfileImageSelectComponent {
+export class PostImageFileSelectComponent {
   @Output()
   fileSelected: EventEmitter<File> = new EventEmitter();
 
