@@ -1,6 +1,6 @@
 import { Context, Next } from 'koa';
 import { v4 as uuidv4 } from 'uuid';
-import { S3_PROFILE_IMAGES_BUCKET } from '../../../constants';
+import { S3_IMAGES_BUCKET } from '../../../constants';
 import { s3GetImageSignedUploadUrl } from '../../../services/s3/s3-get-image-signed-upload-url.service';
 
 export const getSignedUrlForUploadingProfileImage = async (
@@ -15,7 +15,7 @@ export const getSignedUrlForUploadingProfileImage = async (
   const uploadUrl = s3GetImageSignedUploadUrl(
     s3Key,
     mimeType,
-    S3_PROFILE_IMAGES_BUCKET
+    S3_IMAGES_BUCKET
   );
 
   ctx.response.status = 200;

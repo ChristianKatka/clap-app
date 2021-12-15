@@ -104,4 +104,4 @@ Resources:
             Method: ANY
       Environment:
         Variables:
-          CF_IMAGES_URL: "d10652efg91yd7.cloudfront.net/"
+          CF_IMAGES_URL: "d3odj2av0r4n6x.cloudfront.net/"

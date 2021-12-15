@@ -79,7 +79,7 @@ Resources:
   API:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://clap-app-api-lambda/04a373187aff53a4af596f124438c34c
+      CodeUri: s3://clap-app-api-lambda/99f30a78ffcac345b32d9da7e19fb2fa
       Handler: index.handler
       MemorySize: 256
       Role:
@@ -99,4 +99,4 @@ Resources:
             Method: ANY
       Environment:
         Variables:
-          CF_IMAGES_URL: d10652efg91yd7.cloudfront.net/
+          CF_IMAGES_URL: d3odj2av0r4n6x.cloudfront.net/

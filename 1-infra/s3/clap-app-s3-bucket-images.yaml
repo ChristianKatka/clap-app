@@ -1,0 +1,80 @@
+
+Description: S3 Bucket for clap-app images. Used with cloudfront distribution
+
+Resources:
+  ClapAppS3BucketImages:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: clap-app-images
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            ExposedHeaders:
+              # encrypt an object at the time of upload
+              - x-amz-server-side-encryption
+              - x-amz-request-id
+              - x-amz-id-2
+              - ETag
+            MaxAge: "300"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+      Tags:
+        - Key: name
+          Value: S3 Bucket for clap-app images.
+
+  CloudFrontOAIs3BucketImages:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: Origin Access Identity for distribution of s3 bucket for clap-app images
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DependsOn: ClapAppS3BucketImages
+    Properties:
+      Bucket: !Ref ClapAppS3BucketImages
+      PolicyDocument:
+        Statement:
+            Effect: Allow
+            Action:
+              - 's3:GetObject'
+            Resource:
+                - !Sub "arn:aws:s3:::${ClapAppS3BucketImages}/*"
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOAIs3BucketImages.S3CanonicalUserId
+
+Outputs:
+  ClapAppS3BucketImagesDomainName:
+    Description: clap-app images s3 Bucket Domain Name
+    Value: !GetAtt ClapAppS3BucketImages.DomainName
+    Export:
+      Name: clap-app-images-s3-bucket-domain-name
+
+  # for cleanup lambda access
+  ClapAppS3BucketImagesS3BucketARN:
+    Description: clap-app-rofile images S3 bucket ARN
+    Value: !GetAtt ClapAppS3BucketImages.Arn
+    Export:
+      Name: clap-app-images-s3-bucket-arn
+
+  CloudFrontOAIs3BucketImages:
+    Description: CloudFrontOAIs3BucketImages
+    Value: !Ref CloudFrontOAIs3BucketImages
+    Export:
+      Name: clap-app-images-s3-bucket-cloudfront-oai
+
+
+
