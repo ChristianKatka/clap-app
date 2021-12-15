@@ -1,46 +1,46 @@
 export const event = {
     "Records": [
         {
-            "eventID": "450ec9ec1ab04e8c106054d6e78c0759",
-            "eventName": "INSERT",
+            "eventID": "928537105c3d99d06a1c6ad614a35985",
+            "eventName": "REMOVE",
             "eventVersion": "1.1",
             "eventSource": "aws:dynamodb",
             "awsRegion": "eu-west-1",
             "dynamodb": {
-                "ApproximateCreationDateTime": 1639511266,
+                "ApproximateCreationDateTime": 1639583332,
                 "Keys": {
                     "id": {
-                        "S": "profile-images/9d3ae1d6-66cd-4a1f-a01e-161b756083b1-profile4.jpg"
+                        "S": "24195259-5a59-4578-814f-6a45795053b1"
                     }
                 },
-                "NewImage": {
+                "OldImage": {
                     "createdAt": {
-                        "N": "1639511266161"
+                        "N": "1639583297758"
                     },
-                    "s3Key": {
-                        "S": "profile-images/9d3ae1d6-66cd-4a1f-a01e-161b756083b1-profile4.jpg"
+                    "postType": {
+                        "S": "withoutImage"
                     },
-                    "imageUrl": {
-                        "S": "https://d10652efg91yd7.cloudfront.net/profile-images/9d3ae1d6-66cd-4a1f-a01e-161b756083b1-profile4.jpg"
-                    },
-                    "name": {
-                        "S": "profile4.jpg"
+                    "nickname": {
+                        "S": "ChristianKatka"
                     },
                     "id": {
-                        "S": "profile-images/9d3ae1d6-66cd-4a1f-a01e-161b756083b1-profile4.jpg"
+                        "S": "24195259-5a59-4578-814f-6a45795053b1"
                     },
-                    "mimeType": {
-                        "S": "image/jpeg"
+                    "text": {
+                        "S": "POISTETTU!"
                     },
                     "userId": {
                         "S": "0668311c-3c1d-4cf8-b12d-ef4ebba91d37"
+                    },
+                    "postLikes": {
+                        "L": []
                     }
                 },
-                "SequenceNumber": "25216600000000076581433972",
-                "SizeBytes": 404,
+                "SequenceNumber": "55742200000000030116866622",
+                "SizeBytes": 203,
                 "StreamViewType": "NEW_AND_OLD_IMAGES"
             },
-            "eventSourceARN": "arn:aws:dynamodb:eu-west-1:177244120069:table/clap-app-profile-images/stream/2021-12-09T09:47:09.066"
+            "eventSourceARN": "arn:aws:dynamodb:eu-west-1:177244120069:table/clap-app-posts/stream/2021-12-03T20:13:17.090"
         }
     ]
 }

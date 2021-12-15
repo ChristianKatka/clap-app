@@ -4,7 +4,7 @@
   "config": {
     "region": "eu-west-1",
     "s3ReactiveCleanUpLambdaBucket": "clap-app-reactive-cleanup-lambda",
-    "myCloudFormationStackName": "reactive-cleanups-lambda"
+    "myCloudFormationStackName": "clap-app-reactive-cleanups-lambda"
   },
   "scripts": {
     "start": "ts-node test/index.ts",
