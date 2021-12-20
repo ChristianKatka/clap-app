@@ -1,6 +1,12 @@
 export interface PostWithImageDraft {
-  text: string;
-  postType: 'withImage'
+  id: string
+  image: File,
+  imageName: string,
+  mimeType: string,
+  text: string
+  postType: 'withImage',
+  iLikeThisPost: undefined,
+  postLikes: [],
 }
 
 export interface PostWithImage {
