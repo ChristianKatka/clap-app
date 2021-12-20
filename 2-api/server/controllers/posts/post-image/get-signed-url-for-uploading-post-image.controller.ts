@@ -8,9 +8,9 @@ export const getSignedUrlForUploadingPostImage = async (
   next: Next
 ) => {
   // image/jpeg  avatar.jpg
-  const { name, mimeType } = ctx.request.body;
+  const { imageName, mimeType } = ctx.request.body;
   const id = uuidv4();
-  const s3Key = `post-images/${id}-${name}`;
+  const s3Key = `post-images/${id}-${imageName}`;
 
   const uploadUrl = s3GetImageSignedUploadUrl(
     s3Key,
@@ -20,7 +20,7 @@ export const getSignedUrlForUploadingPostImage = async (
 
   ctx.response.status = 200;
   ctx.response.body = {
-    name,
+    imageName,
     uploadUrl,
     s3Key,
     mimeType,

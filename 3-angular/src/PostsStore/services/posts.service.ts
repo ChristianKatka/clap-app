@@ -4,7 +4,10 @@ import { Observable, of } from 'rxjs';
 import { AuthHTTPService } from '@app/services/auth-http.service';
 import { PostWithImageDraft } from '@shared/models/post-with-image.model';
 import { PostWithoutImageDraft } from '@shared/models/post-without-image.model';
-import { PostComment, PostCommentDraft } from '@shared/models/post-comment.model';
+import {
+  PostComment,
+  PostCommentDraft,
+} from '@shared/models/post-comment.model';
 import { PostLike } from '@shared/models/post-like.model';
 
 @Injectable({
@@ -32,7 +35,9 @@ export class PostsService {
     );
   }
 
-  createCommentToPost(postCommentDraft: PostCommentDraft): Observable<PostComment> {
+  createCommentToPost(
+    postCommentDraft: PostCommentDraft
+  ): Observable<PostComment> {
     return this.authHttp.post(
       `${environment.apiBaseUrl}/posts/comment/${postCommentDraft.postId}/${postCommentDraft.id}`,
       {
@@ -40,6 +45,21 @@ export class PostsService {
         likersProfileImage: postCommentDraft.likersProfileImage,
         nickname: postCommentDraft.nickname,
       }
+    );
+  }
+
+  getSignedUrlForUploadingPostImage(
+    imageName: string,
+    mimeType: string
+  ): Observable<{
+    imageName: string;
+    uploadUrl: string;
+    s3Key: string;
+    mimeType: string;
+  }> {
+    return this.authHttp.post(
+      `${environment.apiBaseUrl}/posts/get-signed-url-for-uploading-post-image`,
+      { imageName, mimeType }
     );
   }
 }

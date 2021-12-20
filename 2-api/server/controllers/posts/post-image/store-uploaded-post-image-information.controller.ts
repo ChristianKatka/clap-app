@@ -2,19 +2,19 @@ import { Context, Next } from 'koa';
 import { CLOUDFRONT_URL } from '../../../constants';
 import { dynamodbStoreUploadedPostImageInformation } from '../../../services/dynamodb/posts/dynamodb-store-uploaded-post-image-information.service';
 
-
 export const storeUploadedPostImageInformation = async (
   ctx: Context,
   next: Next
 ) => {
+
   // image/jpeg
-  const { name, mimeType, s3Key, userId } = ctx.request.body;
+  const { imageName, mimeType, s3Key, postId } = ctx.request.body;
 
   const imageInfo = {
     id: s3Key,
-    name,
+    postId,
+    imageName,
     s3Key,
-    userId,
     mimeType,
     imageUrl: `${CLOUDFRONT_URL}${s3Key}`,
     createdAt: Date.now(),

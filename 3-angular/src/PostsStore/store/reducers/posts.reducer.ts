@@ -1,5 +1,6 @@
 import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
+import { PostWithImage } from '@shared/models/post-with-image.model';
 import { PostWithoutImage } from '@shared/models/post-without-image.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
@@ -7,16 +8,20 @@ import { PostsActions } from '../actions';
 
 export interface PostsState {
   entities: { [id: string]: PostWithoutImage };
+  postsWithImage: { [id: string]: PostWithImage };
   sortBy: 'latest';
   loading: boolean;
   selectedPostId: string | undefined;
+  imageUploadProgressAmount: number | undefined;
 }
 
 export const initialState: PostsState = {
   entities: {},
+  postsWithImage: {},
   sortBy: 'latest',
   loading: false,
   selectedPostId: undefined,
+  imageUploadProgressAmount: undefined,
 };
 
 const PostsReducer = createReducer(
@@ -60,6 +65,25 @@ const PostsReducer = createReducer(
     selectedPostId: undefined,
     clickedAddComment: false,
   })),
+
+  // POSTS WITH IMAGE
+  on(PostsActions.setupCreatingPostWithImage, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(PostsActions.setupCreatingPostWithImage, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(
+    PostsActions.setPostImageUploadProgressAmount,
+    (state, { imageUploadProgressAmount }) => ({
+      ...state,
+      loading: true,
+      imageUploadProgressAmount,
+    })
+  ),
+
   on(AuthenticatedActions.signOut, (state) => initialState)
 );
 

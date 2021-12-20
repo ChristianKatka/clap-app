@@ -39,3 +39,44 @@ export const selectPost = createAction(
   props<{ postId: string }>()
 );
 export const clearPostSelection = createAction('[Posts] Clear Post Selection');
+
+// POST WITH IMAGE
+export const setupCreatingPostWithImage = createAction(
+  '[Posts] Setup Creating Post With Image'
+);
+export const setPostImageUploadProgressAmount = createAction(
+  '[Posts] Set Post Image Upload Progress Amount',
+  props<{ imageUploadProgressAmount: number }>()
+);
+
+export const storeUploadedPostImageInformationToDB = createAction(
+  '[Posts] store Uploaded Post Image Information To DB',
+  props<{
+    postImageDataDraft: {
+      imageName: string;
+      mimeType: string;
+      s3Key: string;
+      postId: string;
+    };
+  }>()
+);
+export const storeUploadedPostImageInformationToDBSuccess = createAction(
+  '[Posts] store Uploaded Post Image Information To DB Success',
+  props<{
+    postImageData: {
+      id: string;
+      postId: string;
+      imageName: string;
+      s3Key: string;
+      mimeType: string;
+      imageUrl: string;
+      createdAt: string;
+    };
+  }>()
+);
+export const storeUploadedPostImageInformationToDBFailure = createAction(
+  '[Posts] store Uploaded Post Image Information To DB Failure',
+  props<{
+    error: string;
+  }>()
+);
