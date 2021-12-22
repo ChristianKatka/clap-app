@@ -38,12 +38,10 @@ export const getPosts = createSelector(
         postLikes.filter(
           (postLike: PostLike | PostLikeDraft) => postLike.userId === userId
         )[0];
-      const comments = sortByCreatedDate(
-        postsComments.filter(
-          (comment: PostCommentDraft | PostComment) =>
-            comment.postId === post.id
-        )
+      const comments = postsComments.filter(
+        (comment: PostCommentDraft | PostComment) => comment.postId === post.id
       );
+
       if (iLikeThisPost) {
         return {
           ...post,

@@ -45,7 +45,7 @@
       <p class="likes-text">
         {{ post.postLikes.length }} likes
       </p>
-      <p><b>ChristianKatka</b> {{ post.text }}</p>
+      <p><b>{{ post.nickname }}</b> {{ post.text }}</p>
 
       <clap-app-post-comments-minified [comments]="post.comments"></clap-app-post-comments-minified>
       <clap-app-post-add-comment

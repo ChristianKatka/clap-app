@@ -1,9 +1,4 @@
-import {
-  Component, EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -33,8 +28,6 @@ export class PostAddCommentFormComponent implements OnInit {
   submit() {
     const comment = this.commentForm.value.comment.trim();
     if (comment.length > 0) {
-      console.log(comment);
-
       this.createCommentToPost.emit(comment);
     }
     this.commentForm.reset();
