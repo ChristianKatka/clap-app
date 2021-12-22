@@ -2,6 +2,7 @@ import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { PostApiResponse } from '@shared/models/post.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
+import { ProfileImageActions } from 'src/MyProfile/store/actions';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
 
@@ -60,6 +61,29 @@ const PostsReducer = createReducer(
     selectedPostId: undefined,
     clickedAddComment: false,
   })),
+  on(
+    ProfileImageActions.storeUploadedProfileImageInformationToDBSuccess,
+    (state, { image }) => {
+      const myPosts = Object.values(state.postsApiResponse).filter(
+        (post: PostApiResponse) => post.userId === image.userId
+      );
+
+      const myPostsWithProfileImageChanged = myPosts.map(
+        (post: PostApiResponse) => ({
+          ...post,
+          creatorsProfileImage: image.imageUrl,
+        })
+      );
+
+      return {
+        ...state,
+        postsApiResponse: {
+          ...state.postsApiResponse,
+          ...createObjectIndexList(myPostsWithProfileImageChanged),
+        },
+      };
+    }
+  ),
 
   // POSTS WITH IMAGE
   on(PostsActions.setupCreatingPostWithImage, (state) => ({
