@@ -8,17 +8,17 @@ import { PostsActions } from '../actions';
 
 @Injectable()
 export class PostEffects {
-  createPostWithoutImage$ = createEffect(() =>
+  createPost$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostsActions.createPostWithoutImage),
-      switchMap(({ postDraft }) =>
-        this.postsService.createPost(postDraft).pipe(
-          map((post) => PostsActions.createPostWithoutImageSuccess({ post })),
+      ofType(PostsActions.createPost),
+      switchMap(({ postDraftToDb }) =>
+        this.postsService.createPost(postDraftToDb).pipe(
+          map((PostApiResponse) => PostsActions.createPostSuccess({ PostApiResponse })),
           catchError((error: string) => {
             console.log(error);
             return of(
-              PostsActions.createPostWithoutImageFailure({
-                error: 'error creating post without image',
+              PostsActions.createPostFailure({
+                error: 'error creating post',
               })
             );
           })
@@ -27,9 +27,9 @@ export class PostEffects {
     )
   );
 
-  createPostWithoutImageSuccess$ = createEffect(() =>
+  createPostSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostsActions.createPostWithoutImageSuccess),
+      ofType(PostsActions.createPostSuccess),
       map(() =>
         RouterActions.navigate({
           commands: ['/home'],

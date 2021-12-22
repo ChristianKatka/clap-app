@@ -9,7 +9,7 @@ export const getAppInitializeData = async (ctx: Context, next: Next) => {
   const userId = ctx.state.jwtPayload.sub;
   // const userId = '0668311c-3c1d-4cf8-b12d-ef4ebba91d37';
 
-  const posts = await getAllPostsUtil();
+  const PostApiResponse = await getAllPostsUtil();
   const postsComments = await getAllPostsCommentsUtil();
   const postsLikes = await dynamodbGetAllPostsLikes();
   const myProfile = await dynamodbGetUserById(userId);
@@ -17,7 +17,7 @@ export const getAppInitializeData = async (ctx: Context, next: Next) => {
 
   ctx.response.status = 200;
   ctx.response.body = {
-    posts,
+    PostApiResponse,
     postsComments,
     postsLikes,
     myProfile,

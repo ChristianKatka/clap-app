@@ -69,7 +69,7 @@ const PostsLikesReducer = createReducer(
     };
   }),
 
-  on(AuthenticatedActions.signOut, (state) => initialState)
+  on(AuthenticatedActions.signOut, () => initialState)
 );
 
 export const reducer = (state: PostsLikesState | undefined, action: Action) =>

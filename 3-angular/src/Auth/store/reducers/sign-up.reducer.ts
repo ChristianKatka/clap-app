@@ -87,7 +87,7 @@ const signUpReducer = createReducer(
       password: password ? password : state.password,
     })
   ),
-  on(AuthenticatedActions.signOut, (state) => initialState)
+  on(AuthenticatedActions.signOut, () => initialState)
 );
 
 export const reducer = (state: SignUpState | undefined, action: Action) =>

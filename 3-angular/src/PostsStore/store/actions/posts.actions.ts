@@ -1,36 +1,29 @@
 import { createAction, props } from '@ngrx/store';
-import {
-  PostWithImage,
-  PostWithImageDraft,
-} from '@shared/models/post-with-image.model';
-import {
-  PostWithoutImage,
-  PostWithoutImageDraft,
-} from '@shared/models/post-without-image.model';
+import { PostDraft, PostApiResponse } from '@shared/models/post.model';
 
-export const createPostWithImage = createAction(
-  '[Posts] Create Post With Image',
-  props<{ postDraft: PostWithImageDraft }>()
-);
-export const createPostWithImageSuccess = createAction(
-  '[Posts] Create Post With Image Success',
-  props<{ post: PostWithImage }>()
-);
-export const createPostWithImageFailure = createAction(
-  '[Posts] Create Post With Image Failure',
-  props<{ error: string }>()
-);
+// export const createPostWithImage = createAction(
+//   '[Posts] Create Post With Image',
+//   props<{ postDraft: PostWithImageDraft }>()
+// );
+// export const createPostWithImageSuccess = createAction(
+//   '[Posts] Create Post With Image Success',
+//   props<{ post: PostWithImage }>()
+// );
+// export const createPostWithImageFailure = createAction(
+//   '[Posts] Create Post With Image Failure',
+//   props<{ error: string }>()
+// );
 
-export const createPostWithoutImage = createAction(
-  '[Posts] Create Post Without Image',
-  props<{ postDraft: PostWithoutImageDraft }>()
+export const createPost = createAction(
+  '[Posts] Create Post',
+  props<{ postDraftToDb: PostDraft }>()
 );
-export const createPostWithoutImageSuccess = createAction(
-  '[Posts] Create Post Without Image Success',
-  props<{ post: PostWithoutImage }>()
+export const createPostSuccess = createAction(
+  '[Posts] Create Post Success',
+  props<{ PostApiResponse: PostApiResponse }>()
 );
-export const createPostWithoutImageFailure = createAction(
-  '[Posts] Create Post Without Image Failure',
+export const createPostFailure = createAction(
+  '[Posts] Create Post Failure',
   props<{ error: string }>()
 );
 

@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  PostComment,
-  PostCommentDraft,
-} from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
-import { PostWithoutImage } from '@shared/models/post-without-image.model';
+import { Post } from '@shared/models/post.model';
 
 @Component({
   selector: 'clap-app-post',
@@ -24,7 +20,7 @@ export class PostComponent {
   createCommentToPost: EventEmitter<string> = new EventEmitter();
 
   @Output()
-  giveLikeToPost: EventEmitter<PostWithoutImage> = new EventEmitter();
+  giveLikeToPost: EventEmitter<Post> = new EventEmitter();
   @Output()
   removeLikeFromPost: EventEmitter<PostLike | PostLikeDraft> =
     new EventEmitter();

@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
-import { PostWithoutImage } from '@shared/models/post-without-image.model';
+import { Post } from '@shared/models/post.model';
+
 import { Observable } from 'rxjs';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 import {
@@ -12,7 +13,6 @@ import {
 } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import {
-  PostsCommentsSelectors,
   PostsSelectors,
   PostsUiSelectors,
 } from 'src/PostsStore/store/selectors';
@@ -22,7 +22,9 @@ import {
   styleUrls: ['post.container.scss'],
 })
 export class PostContainerComponent implements OnInit, OnDestroy {
-  selectedPost$ = this.store.select(PostsSelectors.getSelectedPost);
+  selectedPost$: Observable<Post> = this.store.select(
+    PostsSelectors.getSelectedPost
+  );
   myProfileImage$: Observable<string> = this.store.select(
     MyProfileSelectors.getMyProfileImage
   );
@@ -57,7 +59,7 @@ export class PostContainerComponent implements OnInit, OnDestroy {
     );
   }
 
-  onGiveLikeToPost(post: PostWithoutImage) {
+  onGiveLikeToPost(post: Post) {
     this.store.dispatch(
       PostLikeActions.giveLikeToPostWithoutId({ postId: post.id })
     );

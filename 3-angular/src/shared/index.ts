@@ -15,7 +15,7 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { LoadingDotsComponent } from './components/loading-dots/loading-dots.component';
 import { AutofocusDirective } from './directives/auto-focus.directive';
 import { ProfileImageFileSelectComponent } from './components/profile-image-file-select/profile-image-file-select.component';
-import { PostImageFileSelectComponent } from './components/post-image-file-select/post-image-file-select.component';
+import { PostMediaSelectComponent } from './components/post-media-select/post-media-select.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -31,7 +31,7 @@ export const components: any[] = [
   SpaceGiverUsedWithFixedElementsComponent,
   LoadingDotsComponent,
   AutofocusDirective,
-  PostImageFileSelectComponent,
+  PostMediaSelectComponent,
 ];
 export const pipes = [BooleanPipe, IconPipe, TimeAgoPipe];
 export const directives = [FileSelectDirective, AutofocusDirective];

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PostWithImageDraft } from '@shared/models/post-with-image.model';
-import { PostWithoutImageDraft } from '@shared/models/post-without-image.model';
+import { PostWithMediaDraftToDb } from '@shared/models/post-with-media.model';
+import { PostDraft } from '@shared/models/post.model';
 import { CreatePostWithImageControllerService } from 'src/PostsStore/services/create-post-with-image-controller.service';
 import { PostsActions } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
@@ -22,31 +22,23 @@ export class CreatePostContainerComponent implements OnInit {
 
   ngOnInit() {}
 
-  onCreatePostWithImage(post: { image: File; text: string }) {
-    console.log('onCreatePostWithImage');
-    const postDraft: PostWithImageDraft = {
+  onCreatePostWithMedia(post: { media: File; text: string }) {
+    console.log('onCreatePostWithMedia');
+    const ostWithMediaDraftToDb: PostWithMediaDraftToDb = {
       id: uuid(),
-      image: post.image,
-      imageName: post.image.name,
-      mimeType: post.image.type,
       text: post.text,
-      postType: 'withImage',
-      iLikeThisPost: undefined,
-      postLikes: [],
+      mimeType: post.media.type,
     };
-    this.createPostWithImageControllerService.createPostWithImage(postDraft)
+    // this.createPostWithImageControllerService.createPostWithImage(postDraft)
   }
 
-  onCreatePostWithoutImage(text: string) {
-    console.log('onCreatePostWithoutImage');
+  onCreatePost(text: string) {
+    console.log('onCreatePost');
 
     console.log(text);
-    // const postDraft: PostWithoutImageDraft = {
-    //   text,
-    //   postType: 'withoutImage',
-    //   iLikeThisPost: undefined,
-    //   postLikes: [],
-    // };
-    // this.store.dispatch(PostsActions.createPostWithoutImage({ postDraft }));
+    const postDraftToDb: PostDraft = {
+      text,
+    };
+    this.store.dispatch(PostsActions.createPost({ postDraftToDb }));
   }
 }

@@ -43,7 +43,7 @@ const signInReducer = createReducer(
       loading: false,
     })
   ),
-  on(AuthenticatedActions.signOut, (state) => initialState)
+  on(AuthenticatedActions.signOut, () => initialState)
 );
 
 export const reducer = (state: SignInState | undefined, action: Action) =>

@@ -4,14 +4,14 @@
 
 <clap-app-container [width]="'90%'">
   <h1>Create post</h1>
-  <clap-app-create-post-add-image
-    *ngIf="!imageSelected"
-    (postImageSelected)="holdPostImage($event)"
-  ></clap-app-create-post-add-image>
-  <clap-app-create-post-image-holder
-    *ngIf="imageSelected"
-    [postImageSelected]="imageSelected"
-  ></clap-app-create-post-image-holder>
+  <clap-app-create-post-add-media
+    *ngIf="!mediaSelected"
+    (postMediaSelected)="holdPostMedia($event)"
+  ></clap-app-create-post-add-media>
+  <clap-app-create-post-media-holder
+    *ngIf="mediaSelected"
+    [postMediaSelected]="mediaSelected"
+  ></clap-app-create-post-media-holder>
   <clap-app-create-post-form
     [loading]="loading"
     (createPost)="onCreatePost($event)"

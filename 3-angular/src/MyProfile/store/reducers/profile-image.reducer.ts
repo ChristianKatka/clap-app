@@ -59,7 +59,7 @@ const ProfileImageReducer = createReducer(
     })
   ),
 
-  on(AuthenticatedActions.signOut, (state) => initialState)
+  on(AuthenticatedActions.signOut, () => initialState)
 );
 
 export const reducer = (state: ProfileImageState | undefined, action: Action) =>

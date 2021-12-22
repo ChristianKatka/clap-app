@@ -14,16 +14,17 @@ export const createPost = async (ctx: Context, next: Next) => {
     createdAt: Date.now(),
     ...ctx.request.body,
   };
-  let postWithImage = post;
+  let PostApiResponse = post;
 
+  //  WONT WRITE profile image to posts table because it can change
   const creatorsProfileImage = await dynamodbGetUsersProfileImageById(userId);
   if (creatorsProfileImage) {
-    postWithImage = {
+    PostApiResponse = {
       ...post,
       creatorsProfileImage: (creatorsProfileImage as any).imageUrl,
     };
   } else {
-    postWithImage = {
+    PostApiResponse = {
       ...post,
       creatorsProfileImage: 'assets/images/default_profile_image.png',
     };
@@ -32,7 +33,7 @@ export const createPost = async (ctx: Context, next: Next) => {
   await dynamodbCreatePost(post);
 
   ctx.response.status = 200;
-  ctx.response.body = postWithImage;
+  ctx.response.body = PostApiResponse;
 
   await next();
 };

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PostWithoutImage } from '@shared/models/post-without-image.model';
+import { Post } from '@shared/models/post.model';
+
 import { Observable } from 'rxjs';
-import { PostsActions } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import {
   PostsMySelectors,
@@ -14,7 +14,7 @@ import {
   styleUrls: ['my-profile-posts.container.scss'],
 })
 export class MyProfilePostsContainerComponent implements OnInit {
-  myPosts$: Observable<PostWithoutImage[]> = this.store.select(
+  myPosts$: Observable<Post[]> = this.store.select(
     PostsMySelectors.getMyOwnPosts
   );
 
@@ -26,7 +26,7 @@ export class MyProfilePostsContainerComponent implements OnInit {
 
   onGiveLikeToPost(postId: string) {
     console.log('FIX');
-    
+
     // this.store.dispatch(PostsActions.giveLikeToPost({ postId }));
   }
 

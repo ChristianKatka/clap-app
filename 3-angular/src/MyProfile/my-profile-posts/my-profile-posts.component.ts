@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PostWithoutImage } from '@shared/models/post-without-image.model';
+import { Post } from '@shared/models/post.model';
 
 @Component({
   selector: 'clap-app-my-profile-posts',
@@ -8,7 +8,7 @@ import { PostWithoutImage } from '@shared/models/post-without-image.model';
 })
 export class MyProfilePostsComponent implements OnInit {
   @Input()
-  myPosts: PostWithoutImage[] | [] = [];
+  myPosts: Post[] | [] = [];
   @Input()
   loading = false;
 

@@ -21,7 +21,7 @@ const PostsUiReducer = createReducer(
     ...state,
     clickedAddComment: false,
   })),
-  on(AuthenticatedActions.signOut, (state) => initialState)
+  on(AuthenticatedActions.signOut, () => initialState)
 );
 
 export const reducer = (state: PostsUiState | undefined, action: Action) =>

@@ -1,14 +1,13 @@
 import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
-import { PostWithImage } from '@shared/models/post-with-image.model';
-import { PostWithoutImage } from '@shared/models/post-without-image.model';
+import { PostApiResponse } from '@shared/models/post.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
 
 export interface PostsState {
-  entities: { [id: string]: PostWithoutImage };
-  postsWithImage: { [id: string]: PostWithImage };
+  postsApiResponse: { [id: string]: PostApiResponse };
+  postsWithImage: { [id: string]: any };
   sortBy: 'latest';
   loading: boolean;
   selectedPostId: string | undefined;
@@ -16,7 +15,7 @@ export interface PostsState {
 }
 
 export const initialState: PostsState = {
-  entities: {},
+  postsApiResponse: {},
   postsWithImage: {},
   sortBy: 'latest',
   loading: false,
@@ -29,29 +28,25 @@ const PostsReducer = createReducer(
 
   on(
     InitActions.loadApplicationInitializeDataSuccess,
-    (state, { posts, postsLikes }) => {
-      const entities = createObjectIndexList(posts);
-      const myPostsLikes = createObjectIndexList(postsLikes);
-
+    (state, { PostApiResponse }) => {
       return {
         ...state,
-        postsLikes: myPostsLikes,
-        entities,
+        postsApiResponse: createObjectIndexList(PostApiResponse),
       };
     }
   ),
 
-  on(PostsActions.createPostWithoutImage, (state) => ({
+  on(PostsActions.createPost, (state) => ({
     ...state,
     loading: true,
   })),
-  on(PostsActions.createPostWithoutImageSuccess, (state, { post }) => ({
+  on(PostsActions.createPostSuccess, (state, { PostApiResponse }) => ({
     ...state,
     loading: false,
-    entities: {
-      ...state.entities,
-      [post.id]: {
-        ...post,
+    postsApiResponse: {
+      ...state.postsApiResponse,
+      [PostApiResponse.id]: {
+        ...PostApiResponse,
       },
     },
   })),
@@ -84,7 +79,7 @@ const PostsReducer = createReducer(
     })
   ),
 
-  on(AuthenticatedActions.signOut, (state) => initialState)
+  on(AuthenticatedActions.signOut, () => initialState)
 );
 
 export const reducer = (state: PostsState | undefined, action: Action) =>

@@ -2,13 +2,12 @@ import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AuthHTTPService } from '@app/services/auth-http.service';
-import { PostWithImageDraft } from '@shared/models/post-with-image.model';
-import { PostWithoutImageDraft } from '@shared/models/post-without-image.model';
 import {
   PostComment,
   PostCommentDraft,
 } from '@shared/models/post-comment.model';
 import { PostLike } from '@shared/models/post-like.model';
+import { PostDraft, PostApiResponse } from '@shared/models/post.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +15,8 @@ import { PostLike } from '@shared/models/post-like.model';
 export class PostsService {
   constructor(private authHttp: AuthHTTPService) {}
 
-  createPost(
-    post: PostWithImageDraft | PostWithoutImageDraft
-  ): Observable<any> {
-    return this.authHttp.post(`${environment.apiBaseUrl}/posts`, post);
+  createPost(postDraftToDb: PostDraft): Observable<PostApiResponse> {
+    return this.authHttp.post(`${environment.apiBaseUrl}/posts`, postDraftToDb);
   }
 
   giveLikeToPost(postId: string, likeId: string): Observable<PostLike> {

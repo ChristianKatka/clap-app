@@ -6,15 +6,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['create-post.component.scss'],
 })
 export class CreatePostComponent implements OnInit {
-  imageSelected: File | undefined;
+  mediaSelected: File | undefined;
   @Input()
   loading = false;
 
   @Output()
-  createPostWithoutImage: EventEmitter<string> = new EventEmitter();
+  createPost: EventEmitter<string> = new EventEmitter();
 
   @Output()
-  createPostWithImage: EventEmitter<{ image: File; text: string }> =
+  createPostWithMedia: EventEmitter<{ media: File; text: string }> =
     new EventEmitter();
 
   @Output()
@@ -24,16 +24,16 @@ export class CreatePostComponent implements OnInit {
 
   ngOnInit() {}
 
-  holdPostImage(image: File) {
-    this.imageSelected = image;
+  holdPostMedia(media: File) {
+    this.mediaSelected = media;
   }
 
   onCreatePost(text: string) {
-    if (this.imageSelected) {
-      const postWithImage = { image: this.imageSelected, text };
-      this.createPostWithImage.emit(postWithImage);
+    if (this.mediaSelected) {
+      const postWithMedia = { media: this.mediaSelected, text };
+      this.createPostWithMedia.emit(postWithMedia);
     } else {
-      this.createPostWithoutImage.emit(text);
+      this.createPost.emit(text);
     }
   }
 }

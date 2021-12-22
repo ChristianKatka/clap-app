@@ -37,7 +37,7 @@ const PostsReducer = createReducer(
     };
   }),
 
-  on(AuthenticatedActions.signOut, (state) => initialState)
+  on(AuthenticatedActions.signOut, () => initialState)
 );
 
 export const reducer = (state: MyProfileState | undefined, action: Action) =>

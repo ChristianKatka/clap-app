@@ -7,7 +7,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['create-post-form.component.scss'],
 })
 export class CreatePostFormComponent implements OnInit {
-
   @Input()
   loading = false;
 
