@@ -15,7 +15,9 @@ import { PostsSelectors } from 'src/PostsStore/store/selectors';
   styleUrls: ['posts.container.scss'],
 })
 export class PostsContainerComponent implements OnInit {
-  posts$: Observable<Post[] | PostWithMedia[]> = this.store.select(PostsSelectors.getPosts);
+  posts$: Observable<(Post | PostWithMedia)[]> = this.store.select(
+    PostsSelectors.getPosts
+  );
 
   myProfileImage$: Observable<string> = this.store.select(
     MyProfileSelectors.getMyProfileImage

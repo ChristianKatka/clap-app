@@ -1,9 +1,70 @@
-<!-- <clap-app-post-with-image-container></clap-app-post-with-image-container> -->
+<main fxLayout="column" fxLayoutGap="20px">
+  <section *ngFor="let post of posts">
+    <clap-app-posts-user-wrapper
+      [nickname]="post.nickname"
+      [creatorsProfileImage]="post.creatorsProfileImage"
+    ></clap-app-posts-user-wrapper>
 
-<clap-app-post-without-image
-  [posts]="posts"
-  [myProfileImage]="myProfileImage"
-  (giveLikeToPost)="this.giveLikeToPost.emit($event)"
-  (removeLikeFromPost)="this.removeLikeFromPost.emit($event)"
-  (clickedAddComment)="this.clickedAddComment.emit()"
-></clap-app-post-without-image>
+    <img
+      *ngIf="this.isMediaPost(post)"
+      class="posted-image"
+      src="{{ post.mediaUrl }}"
+      alt=""
+    />
+
+    <div
+      *ngIf="!this.isMediaPost(post)"
+      [routerLink]="['/home', post.id]"
+      class="posted-text-wrapper"
+      fxLayoutAlign="center center"
+    >
+      <h1 class="posted-text">{{ post.text }}</h1>
+    </div>
+
+    <clap-app-container [width]="'94%'">
+      <div
+        class="function-buttons-wrapper"
+        fxLayoutAlign="space-between center"
+      >
+        <section fxLayout="row" fxLayoutGap="16px">
+          <div fxLayout="row">
+            <mat-icon
+              *ngIf="!post.iLikeThisPost"
+              (click)="this.giveLikeToPost.emit(post)"
+              class="material-icons-outlined"
+              >favorite_border</mat-icon
+            >
+            <mat-icon
+              *ngIf="post.iLikeThisPost"
+              (click)="onRemoveLikeFromPost(post.iLikeThisPost, post.postLikes)"
+              class="material-icons liked"
+            >
+              favorite
+            </mat-icon>
+          </div>
+
+          <mat-icon class="material-icons-outlined"
+            >chat_bubble_outline</mat-icon
+          >
+          <mat-icon class="material-icons-outlined">share</mat-icon>
+        </section>
+        <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
+      </div>
+      <p class="likes-text">{{ post.postLikes.length }} likes</p>
+      <p>
+        <b>{{ post.nickname }}</b> {{ post.text }}
+      </p>
+
+      <clap-app-post-comments-minified
+        [comments]="post.comments"
+      ></clap-app-post-comments-minified>
+      <clap-app-post-add-comment
+        [postId]="post.id"
+        [myProfileImage]="myProfileImage"
+        (clickedAddComment)="this.clickedAddComment.emit()"
+      ></clap-app-post-add-comment>
+
+      <p class="date-text">{{ post.createdAt | timeAgo }}</p>
+    </clap-app-container>
+  </section>
+</main>

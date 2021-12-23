@@ -18,7 +18,7 @@ import { Post } from '@shared/models/post.model';
 })
 export class PostsComponent implements OnInit, OnChanges {
   @Input()
-  posts: Post[] | PostWithMedia[] | [] = [];
+  posts: (Post | PostWithMedia)[] = [];
   @Input()
   myProfileImage: string | null = null;
 
@@ -35,5 +35,19 @@ export class PostsComponent implements OnInit, OnChanges {
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.posts);
+  }
+
+  onRemoveLikeFromPost(
+    likeId: string,
+    postLikes: PostLike[] | PostLikeDraft[]
+  ) {
+    const postLike: PostLike | PostLikeDraft = postLikes.filter(
+      (postLike) => postLike.id === likeId
+    )[0];
+    this.removeLikeFromPost.emit(postLike);
+  }
+
+  isMediaPost(post: Post | PostWithMedia): post is PostWithMedia {
+    return (<PostWithMedia>post).mediaUrl !== undefined;
   }
 }

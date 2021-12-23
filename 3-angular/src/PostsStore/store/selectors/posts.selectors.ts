@@ -28,13 +28,13 @@ export const getPosts = createSelector(
   getSortBy,
   getPostsComments,
   (postsState, postsLikesState, profileState, sortBy, postsComments) => {
-    const postEntities: PostApiResponse[] | PostWithMediaApiRes[] =
+    const postEntities: (PostApiResponse | PostWithMediaApiRes)[] =
       Object.values(postsState.entities);
     const postsLikes = Object.values(postsLikesState.postsLikes);
     const userId = profileState.myProfile?.id;
     if (!userId) return [];
 
-    const posts: Post[] | PostWithMedia[] | [] = postEntities.map(
+    const posts: (Post | PostWithMedia)[] | [] = postEntities.map(
       (post: PostApiResponse | PostWithMediaApiRes) => {
         const postLikes = postsLikes.filter(
           (postLike: PostLike | PostLikeDraft) => post.id === postLike.postId
@@ -63,7 +63,7 @@ export const getPosts = createSelector(
     );
 
     if (sortBy === 'latest') {
-      const sortedPosts: Post[] = sortByCreatedDate(posts);
+      const sortedPosts: (Post | PostWithMedia)[] = sortByCreatedDate(posts);
       return sortedPosts;
     } else {
       return posts;
