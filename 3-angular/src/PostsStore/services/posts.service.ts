@@ -1,14 +1,14 @@
-import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { AuthHTTPService } from '@app/services/auth-http.service';
 import {
   PostComment,
-  PostCommentDraft,
+  PostCommentDraft
 } from '@shared/models/post-comment.model';
 import { PostLike } from '@shared/models/post-like.model';
-import { PostDraft, PostApiResponse } from '@shared/models/post.model';
 import { PostWithMediaApiRes, PostWithMediaImageUploaded } from '@shared/models/post-with-media.model';
+import { PostApiResponse, PostDraft } from '@shared/models/post.model';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

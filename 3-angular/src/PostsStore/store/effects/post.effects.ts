@@ -34,7 +34,6 @@ export class PostEffects {
       ofType(PostsActions.createPostWithMedia),
       switchMap(({ postWithMediaDraft }) =>
         this.postsService.createPostWithMedia(postWithMediaDraft).pipe(
-          tap((x) => console.log(x)),
           map((PostApiResponse) =>
             PostsActions.createPostSuccess({ PostApiResponse })
           ),
@@ -53,9 +52,7 @@ export class PostEffects {
 
   createPostSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        PostsActions.createPostSuccess,
-      ),
+      ofType(PostsActions.createPostSuccess),
       map(() =>
         RouterActions.navigate({
           commands: ['/home'],
