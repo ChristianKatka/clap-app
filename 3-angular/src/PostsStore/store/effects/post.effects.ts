@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RouterActions } from '@app/store/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { PostsService } from 'src/PostsStore/services/posts.service';
 import { PostsActions } from '../actions';
 
@@ -13,7 +13,31 @@ export class PostEffects {
       ofType(PostsActions.createPost),
       switchMap(({ postDraftToDb }) =>
         this.postsService.createPost(postDraftToDb).pipe(
-          map((PostApiResponse) => PostsActions.createPostSuccess({ PostApiResponse })),
+          map((PostApiResponse) =>
+            PostsActions.createPostSuccess({ PostApiResponse })
+          ),
+          catchError((error: string) => {
+            console.log(error);
+            return of(
+              PostsActions.createPostFailure({
+                error: 'error creating post',
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  createPostWithMedia$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostsActions.createPostWithMedia),
+      switchMap(({ postWithMediaDraft }) =>
+        this.postsService.createPostWithMedia(postWithMediaDraft).pipe(
+          tap((x) => console.log(x)),
+          map((PostApiResponse) =>
+            PostsActions.createPostSuccess({ PostApiResponse })
+          ),
           catchError((error: string) => {
             console.log(error);
             return of(
@@ -29,7 +53,9 @@ export class PostEffects {
 
   createPostSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostsActions.createPostSuccess),
+      ofType(
+        PostsActions.createPostSuccess,
+      ),
       map(() =>
         RouterActions.navigate({
           commands: ['/home'],

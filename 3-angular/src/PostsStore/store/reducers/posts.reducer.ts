@@ -1,5 +1,6 @@
 import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
+import { PostWithMediaApiRes } from '@shared/models/post-with-media.model';
 import { PostApiResponse } from '@shared/models/post.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { ProfileImageActions } from 'src/MyProfile/store/actions';
@@ -7,8 +8,7 @@ import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostsActions } from '../actions';
 
 export interface PostsState {
-  postsApiResponse: { [id: string]: PostApiResponse };
-  postsWithImage: { [id: string]: any };
+  entities: { [id: string]: PostApiResponse | PostWithMediaApiRes };
   sortBy: 'latest';
   loading: boolean;
   selectedPostId: string | undefined;
@@ -16,8 +16,7 @@ export interface PostsState {
 }
 
 export const initialState: PostsState = {
-  postsApiResponse: {},
-  postsWithImage: {},
+  entities: {},
   sortBy: 'latest',
   loading: false,
   selectedPostId: undefined,
@@ -29,10 +28,12 @@ const PostsReducer = createReducer(
 
   on(
     InitActions.loadApplicationInitializeDataSuccess,
-    (state, { PostApiResponse }) => {
+    (state, { PostsApiResponse }) => {
+      console.log(PostsApiResponse);
+
       return {
         ...state,
-        postsApiResponse: createObjectIndexList(PostApiResponse),
+        entities: createObjectIndexList(PostsApiResponse),
       };
     }
   ),
@@ -44,8 +45,8 @@ const PostsReducer = createReducer(
   on(PostsActions.createPostSuccess, (state, { PostApiResponse }) => ({
     ...state,
     loading: false,
-    postsApiResponse: {
-      ...state.postsApiResponse,
+    entities: {
+      ...state.entities,
       [PostApiResponse.id]: {
         ...PostApiResponse,
       },
@@ -64,12 +65,13 @@ const PostsReducer = createReducer(
   on(
     ProfileImageActions.storeUploadedProfileImageInformationToDBSuccess,
     (state, { image }) => {
-      const myPosts = Object.values(state.postsApiResponse).filter(
-        (post: PostApiResponse) => post.userId === image.userId
+      const myPosts = Object.values(state.entities).filter(
+        (post: PostApiResponse | PostWithMediaApiRes) =>
+          post.userId === image.userId
       );
 
       const myPostsWithProfileImageChanged = myPosts.map(
-        (post: PostApiResponse) => ({
+        (post: PostApiResponse | PostWithMediaApiRes) => ({
           ...post,
           creatorsProfileImage: image.imageUrl,
         })
@@ -77,8 +79,8 @@ const PostsReducer = createReducer(
 
       return {
         ...state,
-        postsApiResponse: {
-          ...state.postsApiResponse,
+        entities: {
+          ...state.entities,
           ...createObjectIndexList(myPostsWithProfileImageChanged),
         },
       };
@@ -90,10 +92,7 @@ const PostsReducer = createReducer(
     ...state,
     loading: true,
   })),
-  on(PostsActions.setupCreatingPostWithImage, (state) => ({
-    ...state,
-    loading: true,
-  })),
+
   on(
     PostsActions.setPostImageUploadProgressAmount,
     (state, { imageUploadProgressAmount }) => ({
@@ -102,6 +101,16 @@ const PostsReducer = createReducer(
       imageUploadProgressAmount,
     })
   ),
+  // on(PostsActions.createPostWithMediaSuccess, (state, { postWithMedia }) => ({
+  //   ...state,
+  //   loading: false,
+  //   postsWithImage: {
+  //     ...state.postsWithImage,
+  //     [postWithMedia.id]: {
+  //       ...postWithMedia,
+  //     },
+  //   },
+  // })),
 
   on(AuthenticatedActions.signOut, () => initialState)
 );

@@ -6,6 +6,10 @@ import {
   PostCommentDraft,
 } from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
+import {
+  PostWithMedia,
+  PostWithMediaApiRes,
+} from '@shared/models/post-with-media.model';
 import { Post, PostApiResponse } from '@shared/models/post.model';
 import { getMyProfileState } from '../../../MyProfile/store/reducers';
 import { getPostsLikesState, getPostsState } from '../reducers';
@@ -24,35 +28,39 @@ export const getPosts = createSelector(
   getSortBy,
   getPostsComments,
   (postsState, postsLikesState, profileState, sortBy, postsComments) => {
-    const postsApiResponse = Object.values(postsState.postsApiResponse);
+    const postEntities: PostApiResponse[] | PostWithMediaApiRes[] =
+      Object.values(postsState.entities);
     const postsLikes = Object.values(postsLikesState.postsLikes);
     const userId = profileState.myProfile?.id;
     if (!userId) return [];
 
-    const posts: Post[] | [] = postsApiResponse.map((post: PostApiResponse) => {
-      const postLikes = postsLikes.filter(
-        (postLike: PostLike | PostLikeDraft) => post.id === postLike.postId
-      );
+    const posts: Post[] | PostWithMedia[] | [] = postEntities.map(
+      (post: PostApiResponse | PostWithMediaApiRes) => {
+        const postLikes = postsLikes.filter(
+          (postLike: PostLike | PostLikeDraft) => post.id === postLike.postId
+        );
 
-      const iLikeThisPost: PostLikeDraft | PostLike | undefined =
-        postLikes.filter(
-          (postLike: PostLike | PostLikeDraft) => postLike.userId === userId
-        )[0];
-      const comments = postsComments.filter(
-        (comment: PostCommentDraft | PostComment) => comment.postId === post.id
-      );
+        const iLikeThisPost: PostLikeDraft | PostLike | undefined =
+          postLikes.filter(
+            (postLike: PostLike | PostLikeDraft) => postLike.userId === userId
+          )[0];
+        const comments = postsComments.filter(
+          (comment: PostCommentDraft | PostComment) =>
+            comment.postId === post.id
+        );
 
-      if (iLikeThisPost) {
-        return {
-          ...post,
-          postLikes,
-          comments,
-          iLikeThisPost: iLikeThisPost.id,
-        };
-      } else {
-        return { ...post, postLikes, comments, iLikeThisPost: undefined };
+        if (iLikeThisPost) {
+          return {
+            ...post,
+            postLikes,
+            comments,
+            iLikeThisPost: iLikeThisPost.id,
+          };
+        } else {
+          return { ...post, postLikes, comments, iLikeThisPost: undefined };
+        }
       }
-    });
+    );
 
     if (sortBy === 'latest') {
       const sortedPosts: Post[] = sortByCreatedDate(posts);
@@ -67,6 +75,8 @@ export const getSelectedPost = createSelector(
   getPostsState,
   getPosts,
   (state, posts) => {
-    return posts.filter((post: Post) => post.id === state.selectedPostId)[0];
+    return posts.filter(
+      (post: Post | PostWithMedia) => post.id === state.selectedPostId
+    )[0];
   }
 );

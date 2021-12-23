@@ -13,9 +13,9 @@ export class InitEffects {
       switchMap(() =>
         this.initializeService.loadApplicationInitializeData().pipe(
           map(
-            ({ PostApiResponse, postsLikes, myProfile, myProfileImage, postsComments }) =>
+            ({ PostsApiResponse, postsLikes, myProfile, myProfileImage, postsComments }) =>
               InitActions.loadApplicationInitializeDataSuccess({
-                PostApiResponse,
+                PostsApiResponse,
                 postsLikes,
                 myProfile,
                 myProfileImage,

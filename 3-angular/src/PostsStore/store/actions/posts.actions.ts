@@ -1,18 +1,9 @@
 import { createAction, props } from '@ngrx/store';
+import {
+  PostWithMediaApiRes,
+  PostWithMediaImageUploaded,
+} from '@shared/models/post-with-media.model';
 import { PostDraft, PostApiResponse } from '@shared/models/post.model';
-
-// export const createPostWithImage = createAction(
-//   '[Posts] Create Post With Image',
-//   props<{ postDraft: PostWithImageDraft }>()
-// );
-// export const createPostWithImageSuccess = createAction(
-//   '[Posts] Create Post With Image Success',
-//   props<{ post: PostWithImage }>()
-// );
-// export const createPostWithImageFailure = createAction(
-//   '[Posts] Create Post With Image Failure',
-//   props<{ error: string }>()
-// );
 
 export const createPost = createAction(
   '[Posts] Create Post',
@@ -20,7 +11,7 @@ export const createPost = createAction(
 );
 export const createPostSuccess = createAction(
   '[Posts] Create Post Success',
-  props<{ PostApiResponse: PostApiResponse }>()
+  props<{ PostApiResponse: PostApiResponse | PostWithMediaApiRes }>()
 );
 export const createPostFailure = createAction(
   '[Posts] Create Post Failure',
@@ -42,34 +33,39 @@ export const setPostImageUploadProgressAmount = createAction(
   props<{ imageUploadProgressAmount: number }>()
 );
 
-export const storeUploadedPostImageInformationToDB = createAction(
-  '[Posts] store Uploaded Post Image Information To DB',
-  props<{
-    postImageDataDraft: {
-      imageName: string;
-      mimeType: string;
-      s3Key: string;
-      postId: string;
-    };
-  }>()
+export const createPostWithMedia = createAction(
+  '[Posts] Create Post With Media',
+  props<{ postWithMediaDraft: PostWithMediaImageUploaded }>()
 );
-export const storeUploadedPostImageInformationToDBSuccess = createAction(
-  '[Posts] store Uploaded Post Image Information To DB Success',
-  props<{
-    postImageData: {
-      id: string;
-      postId: string;
-      imageName: string;
-      s3Key: string;
-      mimeType: string;
-      imageUrl: string;
-      createdAt: string;
-    };
-  }>()
-);
-export const storeUploadedPostImageInformationToDBFailure = createAction(
-  '[Posts] store Uploaded Post Image Information To DB Failure',
-  props<{
-    error: string;
-  }>()
-);
+
+// export const storeUploadedPostImageInformationToDB = createAction(
+//   '[Posts] store Uploaded Post Image Information To DB',
+//   props<{
+//     postImageDataDraft: {
+//       imageName: string;
+//       mimeType: string;
+//       s3Key: string;
+//       postId: string;
+//     };
+//   }>()
+// );
+// export const storeUploadedPostImageInformationToDBSuccess = createAction(
+//   '[Posts] store Uploaded Post Image Information To DB Success',
+//   props<{
+//     postImageData: {
+//       id: string;
+//       postId: string;
+//       imageName: string;
+//       s3Key: string;
+//       mimeType: string;
+//       imageUrl: string;
+//       createdAt: string;
+//     };
+//   }>()
+// );
+// export const storeUploadedPostImageInformationToDBFailure = createAction(
+//   '[Posts] store Uploaded Post Image Information To DB Failure',
+//   props<{
+//     error: string;
+//   }>()
+// );

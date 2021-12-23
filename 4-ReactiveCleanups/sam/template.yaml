@@ -77,7 +77,7 @@ Resources:
             Action:
               - s3:ListBucket
             Resource:
-              - Fn::ImportValue: clap-app-images-s3-bucket-arn
+              - Fn::ImportValue: clap-app-medias-s3-bucket-arn
           - Effect: Allow
             Action:
               - s3:DeleteObject
@@ -85,7 +85,7 @@ Resources:
             Resource:
               - !Join
                 - ''
-                - - Fn::ImportValue: clap-app-images-s3-bucket-arn
+                - - Fn::ImportValue: clap-app-medias-s3-bucket-arn
                   - /*
       Roles:
         - !Ref LambdaExecutionRole

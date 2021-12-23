@@ -24,12 +24,12 @@ export class CreatePostContainerComponent implements OnInit {
 
   onCreatePostWithMedia(post: { media: File; text: string }) {
     console.log('onCreatePostWithMedia');
-    const ostWithMediaDraftToDb: PostWithMediaDraftToDb = {
+    const postWithMediaDraftToDb: PostWithMediaDraftToDb = {
       id: uuid(),
       text: post.text,
       mimeType: post.media.type,
     };
-    // this.createPostWithImageControllerService.createPostWithImage(postDraft)
+    this.createPostWithImageControllerService.createPostWithImage(postWithMediaDraftToDb, post.media)
   }
 
   onCreatePost(text: string) {

@@ -7,6 +7,10 @@ import {
 import { Injectable } from '@angular/core';
 import { AuthHTTPService } from '@app/services/auth-http.service';
 import { Store } from '@ngrx/store';
+import {
+  PostWithMediaDraftToDb,
+  PostWithMediaImageUploaded,
+} from '@shared/models/post-with-media.model';
 import { map, mergeMap, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PostsActions } from '../store/actions';
@@ -25,7 +29,10 @@ export class CreatePostWithImageControllerService {
     private postsService: PostsService
   ) {}
 
-  public createPostWithImage(postWithImageDraft: any) {
+  public createPostWithImage(
+    postWithImageDraft: PostWithMediaDraftToDb,
+    media: File
+  ) {
     console.log(postWithImageDraft);
 
     // 1. get signed url
@@ -35,14 +42,11 @@ export class CreatePostWithImageControllerService {
     this.store.dispatch(PostsActions.setupCreatingPostWithImage());
 
     const subscription: any = this.postsService
-      .getSignedUrlForUploadingPostImage(
-        postWithImageDraft.imageName,
-        postWithImageDraft.mimeType
-      )
+      .getSignedUrlForUploadingPostImage(media.name, media.type)
       .pipe(
         tap(({ s3Key }) => (this.s3Key = s3Key)),
         mergeMap(({ imageName, uploadUrl, s3Key, mimeType }) =>
-          this.uploadFile(uploadUrl, postWithImageDraft.image).pipe(
+          this.uploadFile(uploadUrl, media).pipe(
             map((httpEvent: HttpEvent<any>) => ({
               httpEvent,
             }))
@@ -72,15 +76,17 @@ export class CreatePostWithImageControllerService {
               break;
             case HttpEventType.Response:
               if (!this.s3Key) return;
-              const postImageDataDraft = {
-                imageName: postWithImageDraft.imageName,
+
+              const postWithMediaDraft: PostWithMediaImageUploaded = {
+                id: postWithImageDraft.id,
+                text: postWithImageDraft.text,
                 mimeType: postWithImageDraft.mimeType,
                 s3Key: this.s3Key,
-                postId: postWithImageDraft.id,
               };
+
               this.store.dispatch(
-                PostsActions.storeUploadedPostImageInformationToDB({
-                  postImageDataDraft,
+                PostsActions.createPostWithMedia({
+                  postWithMediaDraft,
                 })
               );
           }

@@ -1,7 +1,5 @@
-import { PostApiResponse } from './post.model';
-
 export interface InitializeData {
-  PostApiResponse: PostApiResponse[];
+  PostsApiResponse: any;
   postsLikes: any;
   myProfile: any;
   myProfileImage: any;

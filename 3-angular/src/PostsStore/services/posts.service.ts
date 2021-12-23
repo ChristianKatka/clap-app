@@ -8,12 +8,17 @@ import {
 } from '@shared/models/post-comment.model';
 import { PostLike } from '@shared/models/post-like.model';
 import { PostDraft, PostApiResponse } from '@shared/models/post.model';
+import { PostWithMediaApiRes, PostWithMediaImageUploaded } from '@shared/models/post-with-media.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
   constructor(private authHttp: AuthHTTPService) {}
+
+  createPostWithMedia(postWithMediaDraft: PostWithMediaImageUploaded): Observable<PostWithMediaApiRes> {
+    return this.authHttp.post(`${environment.apiBaseUrl}/posts/with-media`, postWithMediaDraft);
+  }
 
   createPost(postDraftToDb: PostDraft): Observable<PostApiResponse> {
     return this.authHttp.post(`${environment.apiBaseUrl}/posts`, postDraftToDb);

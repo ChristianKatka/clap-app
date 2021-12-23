@@ -9,9 +9,9 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 TARGET_ACCOUNT_ID="177244120069"
 REGION="eu-west-1"
 
-TEMPLATE_FILE="./cloudfront/clap-app-cloudfront-images.yaml"
+TEMPLATE_FILE="./dynamodb/clap-app-dynamodb-posts-medias-table.yaml"
 # cloudformation stack name. näkyy graafisest liittymästä
-STACK_NAME="clap-app-cloudfront-images"
+STACK_NAME="clap-app-dynamodb-posts-medias-table"
 
 if [ "$TARGET_ACCOUNT_ID" != "$ACCOUNT_ID" ]; then
     echo "Incorrect account"
@@ -23,7 +23,7 @@ fi
 aws cloudformation deploy \
   --stack-name "$STACK_NAME"  \
   --template-file "${TEMPLATE_FILE}" \
-  --region "$REGION"
+  --region "$REGION" \
 
 
 

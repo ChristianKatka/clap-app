@@ -1,10 +1,10 @@
 
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: DynamoDB table for clap-app posts-images
+Description: DynamoDB table for clap-app posts-medias
 
 Resources:
-  ClapAppPostsImagesTable:
+  ClapAppPostsMediasTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:
       AttributeDefinitions:
@@ -23,25 +23,25 @@ Resources:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
-      TableName: 'clap-app-posts-images'
+      TableName: 'clap-app-posts-medias'
       StreamSpecification:
         StreamViewType: 'NEW_AND_OLD_IMAGES'
       Tags:
         - Key: Name
-          Value: 'clap-app-posts-images-table'
+          Value: 'clap-app-posts-medias-table'
         - Key: Application
           Value: 'clap-app'
 
 Outputs:
-  ClapAppPostsImagesTableArn:
-    Description: clap-app posts-images Table ARN
-    Value: !GetAtt ClapAppPostsImagesTable.Arn
+  ClapAppPostsMediasTableArn:
+    Description: clap-app posts-medias Table ARN
+    Value: !GetAtt ClapAppPostsMediasTable.Arn
     Export:
-      Name: clap-app-posts-images-table-arn
+      Name: clap-app-posts-medias-table-arn
 
-  ClapAppPostsImagesTableStreamArn:
-    Description: clap-app posts-images table stream ARN
-    Value: !GetAtt ClapAppPostsImagesTable.StreamArn
+  ClapAppPostsMediasTableStreamArn:
+    Description: clap-app posts-medias table stream ARN
+    Value: !GetAtt ClapAppPostsMediasTable.StreamArn
     Export:
-      Name: clap-app-posts-images-table-stream-arn
+      Name: clap-app-posts-medias-table-stream-arn
 

@@ -1,5 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
+import { PostWithMedia } from '@shared/models/post-with-media.model';
 import { Post } from '@shared/models/post.model';
 
 @Component({
@@ -7,9 +16,9 @@ import { Post } from '@shared/models/post.model';
   templateUrl: 'posts.component.html',
   styleUrls: ['posts.component.scss'],
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnChanges {
   @Input()
-  posts: Post[] | [] = [];
+  posts: Post[] | PostWithMedia[] | [] = [];
   @Input()
   myProfileImage: string | null = null;
 
@@ -24,4 +33,7 @@ export class PostsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.posts);
+  }
 }

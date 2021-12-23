@@ -1,12 +1,12 @@
 
-Description: S3 Bucket for clap-app images. Used with cloudfront distribution
+Description: S3 Bucket for clap-app medias. Used with cloudfront distribution
 
 Resources:
-  ClapAppS3BucketImages:
+  ClapAppS3BucketMedias:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
-      BucketName: clap-app-images
+      BucketName: clap-app-medias
       PublicAccessBlockConfiguration:
         BlockPublicAcls : true
         BlockPublicPolicy : true
@@ -33,48 +33,48 @@ Resources:
               - "*"
       Tags:
         - Key: name
-          Value: S3 Bucket for clap-app images.
+          Value: S3 Bucket for clap-app medias.
 
-  CloudFrontOAIs3BucketImages:
+  CloudFrontOAIs3BucketMedias:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: Origin Access Identity for distribution of s3 bucket for clap-app images
+        Comment: Origin Access Identity for distribution of s3 bucket for clap-app medias
 
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
-    DependsOn: ClapAppS3BucketImages
+    DependsOn: ClapAppS3BucketMedias
     Properties:
-      Bucket: !Ref ClapAppS3BucketImages
+      Bucket: !Ref ClapAppS3BucketMedias
       PolicyDocument:
         Statement:
             Effect: Allow
             Action:
               - 's3:GetObject'
             Resource:
-                - !Sub "arn:aws:s3:::${ClapAppS3BucketImages}/*"
+                - !Sub "arn:aws:s3:::${ClapAppS3BucketMedias}/*"
             Principal:
-              CanonicalUser: !GetAtt CloudFrontOAIs3BucketImages.S3CanonicalUserId
+              CanonicalUser: !GetAtt CloudFrontOAIs3BucketMedias.S3CanonicalUserId
 
 Outputs:
-  ClapAppS3BucketImagesDomainName:
-    Description: clap-app images s3 Bucket Domain Name
-    Value: !GetAtt ClapAppS3BucketImages.DomainName
+  ClapAppS3BucketMediasDomainName:
+    Description: clap-app medias s3 Bucket Domain Name
+    Value: !GetAtt ClapAppS3BucketMedias.DomainName
     Export:
-      Name: clap-app-images-s3-bucket-domain-name
+      Name: clap-app-medias-s3-bucket-domain-name
 
   # for cleanup lambda access
-  ClapAppS3BucketImagesS3BucketARN:
-    Description: clap-app-rofile images S3 bucket ARN
-    Value: !GetAtt ClapAppS3BucketImages.Arn
+  ClapAppS3BucketMediasS3BucketARN:
+    Description: clap-app-rofile medias S3 bucket ARN
+    Value: !GetAtt ClapAppS3BucketMedias.Arn
     Export:
-      Name: clap-app-images-s3-bucket-arn
+      Name: clap-app-medias-s3-bucket-arn
 
-  CloudFrontOAIs3BucketImages:
-    Description: CloudFrontOAIs3BucketImages
-    Value: !Ref CloudFrontOAIs3BucketImages
+  CloudFrontOAIs3BucketMedias:
+    Description: CloudFrontOAIs3BucketMedias
+    Value: !Ref CloudFrontOAIs3BucketMedias
     Export:
-      Name: clap-app-images-s3-bucket-cloudfront-oai
+      Name: clap-app-medias-s3-bucket-cloudfront-oai
 
 
 

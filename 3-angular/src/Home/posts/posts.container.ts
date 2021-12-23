@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
+import { PostWithMedia } from '@shared/models/post-with-media.model';
 import { Post } from '@shared/models/post.model';
 import { Observable } from 'rxjs';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
@@ -14,7 +15,7 @@ import { PostsSelectors } from 'src/PostsStore/store/selectors';
   styleUrls: ['posts.container.scss'],
 })
 export class PostsContainerComponent implements OnInit {
-  posts$: Observable<Post[]> = this.store.select(PostsSelectors.getPosts);
+  posts$: Observable<Post[] | PostWithMedia[]> = this.store.select(PostsSelectors.getPosts);
 
   myProfileImage$: Observable<string> = this.store.select(
     MyProfileSelectors.getMyProfileImage

@@ -9,9 +9,9 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 TARGET_ACCOUNT_ID="177244120069"
 REGION="eu-west-1"
 
-TEMPLATE_FILE="./s3/clap-app-s3-bucket-images.yaml"
+TEMPLATE_FILE="./cloudfront/clap-app-cloudfront-medias.yaml"
 # cloudformation stack name. näkyy graafisest liittymästä
-STACK_NAME="clap-app-s3-bucket-images"
+STACK_NAME="clap-app-cloudfront-medias"
 
 if [ "$TARGET_ACCOUNT_ID" != "$ACCOUNT_ID" ]; then
     echo "Incorrect account"

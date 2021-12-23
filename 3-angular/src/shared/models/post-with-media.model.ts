@@ -7,11 +7,18 @@ export interface PostWithMediaDraftToDb {
   mimeType: string;
 }
 
-export interface PostWithMediaFromDb {
+export interface PostWithMediaImageUploaded {
   id: string;
   text: string;
-  s3Key: string
-  mimeType: string
+  mimeType: string;
+  s3Key: string;
+}
+
+export interface PostWithMediaApiRes {
+  id: string;
+  text: string;
+  s3Key: string;
+  mimeType: string;
   mediaUrl: string;
   userId: string;
   creatorsProfileImage: string;
@@ -22,8 +29,8 @@ export interface PostWithMediaFromDb {
 export interface PostWithMedia {
   id: string;
   text: string;
-  s3Key: string
-  mimeType: string
+  s3Key: string;
+  mimeType: string;
   mediaUrl: string;
   userId: string;
   creatorsProfileImage: string;

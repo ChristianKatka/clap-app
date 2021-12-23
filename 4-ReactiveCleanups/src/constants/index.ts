@@ -6,4 +6,4 @@ export const DYNAMODB_POSTS_LIKES = 'clap-app-posts-likes'
 export const POST_ID_INDEX = 'postId-gsi'
 
 // S3
-export const S3_IMAGES_BUCKET = `clap-app-images`;
+export const S3_MEDIAS_BUCKET = `clap-app-medias`;
