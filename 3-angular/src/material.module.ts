@@ -22,6 +22,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -48,6 +50,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatNativeDateModule,
     MatButtonToggleModule,
     MatBadgeModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatBottomSheetModule,
@@ -73,6 +77,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatNativeDateModule,
     MatButtonToggleModule,
     MatBadgeModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
 })
 export class MaterialModule {}

@@ -1,23 +1,16 @@
-<section fxLayoutAlign="space-between center" fxLayoutGap="20px">
+<section fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
   <div
     fxLayout="column"
     fxLayoutAlign="center center"
-    class="media-wrapper mat-elevation-z2"
+    fxLayoutGap="10px"
+    class="media-wrapper"
   >
     <mat-icon class="material-icons-outlined">photo_camera</mat-icon>
-    <p>Take image or video</p>
+    <p>Capture media</p>
   </div>
 
   <clap-app-post-media-select
     (mediaSelected)="this.postMediaSelected.emit($event)"
   ></clap-app-post-media-select>
 
-  <!-- <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    class="upload-image-wrapper mat-elevation-z2"
-  >
-    <mat-icon class="material-icons-outlined">add_photo_alternate</mat-icon>
-    <p>Upload image</p>
-  </div> -->
 </section>
