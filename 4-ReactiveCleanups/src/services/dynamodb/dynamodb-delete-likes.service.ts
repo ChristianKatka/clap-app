@@ -15,5 +15,5 @@ export const dynamodbDeleteLikes = (likes: any) => {
     );
     return Promise.all(deletedLikesPromises);
   }
-  return of('No Likes to delete');
+  return Promise.resolve('No Likes to delete');
 };

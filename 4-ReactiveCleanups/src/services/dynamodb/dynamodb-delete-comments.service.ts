@@ -15,5 +15,5 @@ export const dynamodbDeleteComments = (comments: any) => {
     );
     return Promise.all(deletedCommentsPromises);
   }
-  return of('No comments to delete');
+  return Promise.resolve('No comments to delete');
 };

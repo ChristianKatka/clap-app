@@ -10,6 +10,6 @@ export const s3DeleteObject = (s3ObjectKey: string) => {
   if (s3ObjectKey) {
     return from(s3Client.deleteObject(params).promise());
   } else {
-    return of('');
+    return Promise.resolve('');
   }
 };

@@ -14,5 +14,5 @@ export const dynamodbDeleteOldProfileImagesIfAny = (items: any) => {
       })
       .promise();
   }
-  return of('nothing to delete');
+  return Promise.resolve('nothing to delete');
 };

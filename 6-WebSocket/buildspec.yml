@@ -1,0 +1,27 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14.x
+    commands:
+      - cd 4-WebSockets
+      - npm install
+      - npm install typescript -g
+  pre_build:
+    commands:
+      - rm -rf build && rm -rf dist && mkdir build && mkdir dist
+  build:
+    commands:
+      - echo Build started `date`
+      - tsc -p tsconfig.json && cp package.json build && cd build && npm install --production && cd ..
+      - aws cloudformation package --template-file sam/template.yaml --s3-bucket $ARTIFACT_S3_BUCKET --output-template dist/template-out.yaml --region eu-west-1
+      - echo Build completed `date`
+
+cache:
+  paths:
+    - "4-WebSockets/node_modules/**/*"
+
+artifacts:
+  files:
+    - "4-WebSockets/dist/*"
+  discard-paths: no

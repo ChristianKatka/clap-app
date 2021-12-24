@@ -1,0 +1,40 @@
+{
+  "name": "clap-app-websocket",
+  "version": "0.0.0",
+  "config": {
+    "region": "eu-west-1",
+    "s3WebSocketLambdaBucket": "clap-app-web-socket-lambda",
+    "myCloudFormationStackName": "clap-app-web-socket-lambda"
+  },
+  "scripts": {
+    "start": "ts-node test/index.ts",
+    "prebuild": "rm -rf build && rm -rf dist && mkdir build && mkdir dist",
+    "build": "tsc -p tsconfig.json && cp package.json build && cd build && npm install --production",
+    "deleteobjectsins3": "aws s3 rm s3://$npm_package_config_s3WebSocketLambdaBucket --recursive",
+    "package": "aws cloudformation package --template-file sam/template.yaml --s3-bucket $npm_package_config_s3WebSocketLambdaBucket --output-template dist/template-out.yaml --region $npm_package_config_region",
+    "deploy": "aws cloudformation deploy --template-file dist/template-out.yaml --stack-name $npm_package_config_myCloudFormationStackName --capabilities CAPABILITY_IAM --region $npm_package_config_region",
+    "package-deploy": "npm run package && npm run deploy",
+    "build-package-deploy": "npm run build && npm run deleteobjectsins3 && npm run package && npm run deploy"
+  },
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "rxjs": "~6.6.3",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.64",
+    "@types/dotenv": "^8.2.0",
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^14.14.10",
+    "@types/websocket": "^1.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "aws-sdk": "^2.799.0",
+    "dotenv": "^9.0.0",
+    "eslint": "^7.14.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.2",
+    "websocket": "^1.0.34"
+  }
+}

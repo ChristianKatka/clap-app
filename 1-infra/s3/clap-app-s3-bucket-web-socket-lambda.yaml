@@ -1,0 +1,39 @@
+
+Description: S3 Bucket for web socket lambda
+
+Resources:
+  ClapAppWebSocketLambda:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: clap-app-web-socket-lambda
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            MaxAge: "300"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+      Tags:
+        - Key: name
+          Value: S3 Bucket for clap-app web socket lambda
+
+
+Outputs:
+  ClapAppWebSocketLambdaDomainName:
+    Description: S3 Bucket for clap-app web socket lambda Domain Name
+    Value: !GetAtt ClapAppWebSocketLambda.DomainName
+    Export:
+      Name: clap-app-web-socket-lambda-domain-name
+
