@@ -3,7 +3,6 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Websockets API powered by API Gateway and Lambda
 
-
 Resources:
   WebSocketApi:
     Type: AWS::ApiGatewayV2::Api
@@ -35,12 +34,11 @@ Resources:
                   - dynamodb:*
                 Resource:
                   - "*"
-                  # EI AUTTANUT SAAMAAN SOCKET viestin lähetystä toimimaan!
               - Effect: Allow
                 Action:
-                  - "apigateway:*"
+                  - "execute-api:ManageConnections"
                 Resource:
-                  - "*"
+                  - !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*"
               - Effect: Allow
                 Action:
                   - logs:CreateLogGroup
@@ -59,18 +57,14 @@ Resources:
       Runtime: nodejs14.x
       Environment:
         Variables:
-          ENDPOINT: "wss://itirxpmjbe.execute-api.eu-west-1.amazonaws.com/production"
-            # !Join [
-            #   "",
-            #   [
-            #     !Ref WebSocketApi,
-            #     ".execute-api.",
-            #     !Ref "AWS::Region",
-            #     ".amazonaws.com",
-            #   ],
-            # ]
-
-
+          ENDPOINT:
+            Fn::Join:
+              - ""
+              - - Ref: WebSocketApi
+                - .execute-api.
+                - Ref: AWS::Region
+                - .amazonaws.com/
+                - production
 
   LambdaPermission:
     Type: AWS::Lambda::Permission
@@ -139,7 +133,6 @@ Resources:
         - - "integrations"
           - !Ref SocketFunctionIntegration
 
-
   Deployment:
     Type: AWS::ApiGatewayV2::Deployment
     DependsOn:
@@ -151,7 +144,6 @@ Resources:
     Properties:
       ApiId: !Ref WebSocketApi
       Description: "clap-app socket api gateway Deployment"
-
 
   Stage:
     Type: AWS::ApiGatewayV2::Stage
@@ -172,19 +164,3 @@ Outputs:
   SocketFunctionArn:
     Description: "Socket function ARN"
     Value: !GetAtt SocketFunction.Arn
-
-
-
-  # WebSocketURI:
-  #   Description: "The WSS Protocol URI to connect to"
-  #   Value:
-  #     !Join [
-  #       "",
-  #       [
-  #         "wss://",
-  #         !Ref WebSocketApi,
-  #         ".execute-api.",
-  #         !Ref "AWS::Region",
-  #         ".amazonaws.com",
-  #       ],
-  #     ]

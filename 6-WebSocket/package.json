@@ -4,7 +4,7 @@
   "config": {
     "region": "eu-west-1",
     "s3WebSocketLambdaBucket": "clap-app-web-socket-lambda",
-    "myCloudFormationStackName": "clap-app-web-socket-lambda"
+    "myCloudFormationStackName": "clap-app-web-socket-api-powered-by-lambda"
   },
   "scripts": {
     "start": "ts-node test/index.ts",
@@ -30,7 +30,7 @@
     "@types/websocket": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
-    "aws-sdk": "^2.799.0",
+    "aws-sdk": "^2.1048.0",
     "dotenv": "^9.0.0",
     "eslint": "^7.14.0",
     "ts-node": "^9.0.0",

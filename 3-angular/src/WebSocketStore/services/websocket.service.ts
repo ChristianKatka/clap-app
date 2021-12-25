@@ -56,7 +56,7 @@ export class WebSocketService {
     this.socket$ = webSocket(environment.webSocket.endPoint);
 
     this.socketSubscription = this.socket$.subscribe({
-      next: (msg) => console.log('message received: ' + JSON.stringify(msg, null, 4)),
+      next: (msg) => this.onMessage(msg),
       error: (e) => console.error(e),
       complete: () => console.info('complete'),
     });
@@ -73,14 +73,13 @@ export class WebSocketService {
 
   public sendNotification() {
     console.log('viesti lähettty');
-    this.socket$.next({
-      action: 'sendNotification',
-      data: 'new comment',
-    });
+    this.socket$.next({ action: "sendNotification" });
   }
 
   private onMessage(message: any) {
-    console.log('On message: ' + message);
+    console.log('On message:');
+    console.log(message);
+
     // this.store.dispatch(WebSocketActions.receivedMessage({ message }));
   }
 

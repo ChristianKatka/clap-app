@@ -43,16 +43,30 @@ const handler: Handler = async (event: APIGatewayProxyEvent) => {
 
     switch (routeKey) {
       case "$connect":
+        // TÄNNE MIELUMMIN KUN 4-api create session
+        // await dynamodb.put({
+        //   TableName: connectionTable,
+        //   Item: {
+        //     connectionId,
+        //     // Expire the connection an hour later. This is optional, but recommended.
+        //     // You will have to decide how often to time out and/or refresh the ttl.
+        //     ttl: parseInt((Date.now() / 1000) + 3600)
+        //   }
+        // }).promise();
         return cString("$connect");
 
       case "$disconnect":
+        // await dynamodb.delete({
+        //   TableName: connectionTable,
+        //   Key: { connectionId }
+        // }).promise();
         return cString("$disconnect");
 
       case "$default":
         return cString("$default");
 
       case "sendNotification":
-        return await webSocketSendMessage(
+         await webSocketSendMessage(
           connectionId,
           "sendNotification"
         ).catch((err) => {
@@ -65,7 +79,7 @@ const handler: Handler = async (event: APIGatewayProxyEvent) => {
           console.error(err);
         });
 
-      // return cString("sendNotification");
+      return cString("sendNotification");
 
       default:
         return cString("switch case default");

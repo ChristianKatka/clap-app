@@ -1,5 +1,4 @@
-import { ApiGatewayManagementApi } from 'aws-sdk';
-import { ENDPOINT } from "../constants";
+import { ApiGatewayManagementApi } from "aws-sdk";
 import { apiGatewayManagementApi } from "../instances/aws";
 
 export const webSocketSendMessage = async (
@@ -8,11 +7,8 @@ export const webSocketSendMessage = async (
 ) => {
   const params: ApiGatewayManagementApi.Types.PostToConnectionRequest = {
     ConnectionId: connectionId,
-    Data: message,
+    Data: JSON.stringify(message),
   };
-
-  console.log("TÄSSÄ ENDPOINT MIHIN TARGETETAAN");
-  console.log(ENDPOINT);
 
   return apiGatewayManagementApi.postToConnection(params).promise();
 };

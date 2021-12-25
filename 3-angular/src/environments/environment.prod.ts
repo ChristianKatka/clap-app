@@ -20,6 +20,6 @@ export const environment = {
     },
   },
   webSocket: {
-    endPoint: 'wss://itirxpmjbe.execute-api.eu-west-1.amazonaws.com/production',
+    endPoint: 'wss://x6d2uh4ak3.execute-api.eu-west-1.amazonaws.com/production',
   },
 };
