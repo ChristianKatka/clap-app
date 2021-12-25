@@ -1,0 +1,38 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app notifications
+
+Resources:
+  ClapAppNotificationsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+      TableName: 'clap-app-notifications'
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-notifications-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppNotificationsTableArn:
+    Description: clap-app notifications Table ARN
+    Value: !GetAtt ClapAppNotificationsTable.Arn
+    Export:
+      Name: clap-app-notifications-table-arn
+
+  ClapAppNotificationsTableStreamArn:
+    Description: clap-app notifications table stream ARN
+    Value: !GetAtt ClapAppNotificationsTable.StreamArn
+    Export:
+      Name: clap-app-notifications-table-stream-arn
+

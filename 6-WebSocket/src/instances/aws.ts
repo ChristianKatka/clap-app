@@ -1,11 +1,11 @@
 import * as AWS from "aws-sdk";
-import { DOMAIN_NAME } from "../constants";
+import { ENDPOINT } from "../constants";
+
+AWS.config.update({ region: "eu-west-1" });
 
 export const docClient = new AWS.DynamoDB.DocumentClient();
 
 export const apiGatewayManagementApi = new AWS.ApiGatewayManagementApi({
   apiVersion: "2018-11-29",
-  endpoint: DOMAIN_NAME,
+  endpoint: ENDPOINT,
 });
-
-export const snsClient = new AWS.SNS();

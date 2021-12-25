@@ -29,8 +29,6 @@ const PostsReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { PostsApiResponse }) => {
-      console.log(PostsApiResponse);
-
       return {
         ...state,
         entities: createObjectIndexList(PostsApiResponse),

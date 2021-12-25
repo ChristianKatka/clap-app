@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithMedia } from '@shared/models/post-with-media.model';
 import { Post } from '@shared/models/post.model';
@@ -16,7 +8,7 @@ import { Post } from '@shared/models/post.model';
   templateUrl: 'posts.component.html',
   styleUrls: ['posts.component.scss'],
 })
-export class PostsComponent implements OnInit, OnChanges {
+export class PostsComponent implements OnInit {
   @Input()
   posts: (Post | PostWithMedia)[] = [];
   @Input()
@@ -33,9 +25,6 @@ export class PostsComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit() {}
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.posts);
-  }
 
   onRemoveLikeFromPost(
     likeId: string,

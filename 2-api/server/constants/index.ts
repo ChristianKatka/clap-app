@@ -11,6 +11,8 @@ export const POSTS_MEDIAS_TABLE = 'clap-app-posts-medias';
 export const USERS_TABLE = 'clap-app-users';
 export const PROFILE_IMAGES_TABLE = 'clap-app-profile-images';
 export const POSTS_COMMENTS_TABLE = 'clap-app-posts-comments';
+export const WEBSOCKET_CONNECTIONS_TABLE = 'clap-app-websocket-connections';
+export const NOTIFICATIONS_TABLE = 'clap-app-notifications';
 
 // INDEX
 export const POST_ID_INDEX = 'postId-gsi';

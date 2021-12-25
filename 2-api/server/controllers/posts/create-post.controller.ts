@@ -1,5 +1,6 @@
 import { Context, Next } from 'koa';
 import { v4 as uuidv4 } from 'uuid';
+import { dynamodbCreateNotification } from '../../services/dynamodb/notifications/dynamodb-create-notification.service';
 import { dynamodbCreatePost } from '../../services/dynamodb/posts/dynamodb-create-post.service';
 import { dynamodbGetUsersProfileImageById } from '../../services/dynamodb/users/profile-image/dynamodb-get-user-by-id.service';
 
@@ -31,6 +32,10 @@ export const createPost = async (ctx: Context, next: Next) => {
   }
 
   await dynamodbCreatePost(post);
+  await dynamodbCreateNotification({
+    id: uuidv4(),
+    notificationType: 'new post created',
+  });
 
   ctx.response.status = 200;
   ctx.response.body = PostApiResponse;

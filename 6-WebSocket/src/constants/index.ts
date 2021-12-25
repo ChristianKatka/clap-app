@@ -1,10 +1,5 @@
-const DOMAIN_NAME = process.env.DOMAIN_NAME;
+export const ENDPOINT = process.env.ENDPOINT;
+export const APPLICATION_NAME = process.env.APPLICATION_NAME;
 
-const WEBSOCKET_CONNECTIONS_TABLE = `websocket-connections`;
-const WEBSOCKET_CONNECTIONS_INDEX_CONNECTION = `websocket-connections-index-connection`;
-
-export {
-  DOMAIN_NAME,
-  WEBSOCKET_CONNECTIONS_TABLE,
-  WEBSOCKET_CONNECTIONS_INDEX_CONNECTION,
-};
+export const WEBSOCKET_CONNECTIONS_TABLE = `${APPLICATION_NAME}-websocket-connections`;
+export const WEBSOCKET_CONNECTIONS_INDEX_CONNECTION = `${APPLICATION_NAME}-websocket-connections-index-connection`;

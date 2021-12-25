@@ -1,0 +1,50 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app websocket-connections
+
+Resources:
+  ClapAppWebsocketConnectionsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'userId'
+          AttributeType: 'S'
+        - AttributeName: 'sessionKey'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'userId'
+          KeyType: 'HASH'
+        - AttributeName: 'sessionKey'
+          KeyType: 'RANGE'
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: 'websocket-connections-index-sessionKey'
+          KeySchema:
+            - AttributeName: 'sessionKey'
+              KeyType: 'HASH'
+          Projection:
+            ProjectionType: 'ALL'
+      TableName: 'clap-app-websocket-connections'
+      TimeToLiveSpecification:
+        AttributeName: 'expires'
+        Enabled: True
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-websocket-connections-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppWebsocketConnectionsTableArn:
+    Description: clap-app websocket-connections Table ARN
+    Value: !GetAtt ClapAppWebsocketConnectionsTable.Arn
+    Export:
+      Name: clap-app-websocket-connections-table-arn
+
+  ClapAppWebsocketConnectionsTableStreamArn:
+    Description: clap-app websocket-connections table stream ARN
+    Value: !GetAtt ClapAppWebsocketConnectionsTable.StreamArn
+    Export:
+      Name: clap-app-websocket-connections-table-stream-arn

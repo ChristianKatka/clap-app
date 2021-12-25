@@ -3,6 +3,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Websockets API powered by API Gateway and Lambda
 
+
 Resources:
   WebSocketApi:
     Type: AWS::ApiGatewayV2::Api
@@ -34,80 +35,61 @@ Resources:
                   - dynamodb:*
                 Resource:
                   - "*"
+                  # EI AUTTANUT SAAMAAN SOCKET viestin lähetystä toimimaan!
               - Effect: Allow
                 Action:
-                  - "execute-api:ManageConnections"
+                  - "apigateway:*"
                 Resource:
                   - "*"
-              # - Effect: Allow
-              #   Action:
-              #     - sns:Publish
-              #   Resource:
-              #     - !Sub "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:${ApplicationName}-${EnvironmentName}-send-message-to-connected"
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
 
-  OnConnectFunction:
+  SocketFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: "clap-app-websockets-on-connect"
       CodeUri: ../build
-      Handler: onconnect.handler
+      Handler: socket-lambda.handler
       MemorySize: 256
       Role: !GetAtt LambdaExecutionRole.Arn
       Runtime: nodejs14.x
       Environment:
         Variables:
-          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+          ENDPOINT: "wss://itirxpmjbe.execute-api.eu-west-1.amazonaws.com/production"
+            # !Join [
+            #   "",
+            #   [
+            #     !Ref WebSocketApi,
+            #     ".execute-api.",
+            #     !Ref "AWS::Region",
+            #     ".amazonaws.com",
+            #   ],
+            # ]
 
-  OnDisconnectFunction:
-    Type: AWS::Serverless::Function
+
+
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - WebSocketApi
+      - SocketFunction
     Properties:
-      FunctionName: "clap-app-websockets-on-disconnect"
-      CodeUri: ../build/
-      Handler: ondisconnect.handler
-      MemorySize: 256
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: nodejs14.x
-      Environment:
-        Variables:
-          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref SocketFunction
+      Principal: apigateway.amazonaws.com
 
-  SendMessageFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: "clap-app-websockets-send-message"
-      CodeUri: ../build/
-      Handler: onsendmessage.handler
-      MemorySize: 256
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: nodejs14.x
-      Environment:
-        Variables:
-          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
-          # --------------
-          # --------------
-          # --------------
-          # --------------
-          DOMAIN_NAME:
-            !Join [
-              "",
-              [
-                !Ref WebSocketApi,
-                ".execute-api.",
-                !Ref "AWS::Region",
-                ".amazonaws.com",
-              ],
-            ]
-          # STAGE_NAME:
-          #   !FindInMap [Environment, !Ref "EnvironmentName", "StageName"]
-
-  ConnectInteg:
+  SocketFunctionIntegration:
     Type: AWS::ApiGatewayV2::Integration
     Properties:
       ApiId: !Ref WebSocketApi
-      Description: Connect Integration
+      Description: Connect Integration to socket lambda
       IntegrationType: AWS_PROXY
       IntegrationUri:
-        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OnConnectFunction.Arn}/invocations
+        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SocketFunction.Arn}/invocations
 
   ConnectRoute:
     Type: AWS::ApiGatewayV2::Route
@@ -119,26 +101,7 @@ Resources:
       Target: !Join
         - "/"
         - - "integrations"
-          - !Ref ConnectInteg
-
-  OnConnectPermission:
-    Type: AWS::Lambda::Permission
-    DependsOn:
-      - WebSocketApi
-      - OnConnectFunction
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref OnConnectFunction
-      Principal: apigateway.amazonaws.com
-
-  DisconnectInteg:
-    Type: AWS::ApiGatewayV2::Integration
-    Properties:
-      ApiId: !Ref WebSocketApi
-      Description: Disconnect Integration
-      IntegrationType: AWS_PROXY
-      IntegrationUri:
-        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OnDisconnectFunction.Arn}/invocations
+          - !Ref SocketFunctionIntegration
 
   DisconnectRoute:
     Type: AWS::ApiGatewayV2::Route
@@ -150,76 +113,78 @@ Resources:
       Target: !Join
         - "/"
         - - "integrations"
-          - !Ref DisconnectInteg
+          - !Ref SocketFunctionIntegration
 
-  OnDisconnectPermission:
-    Type: AWS::Lambda::Permission
-    DependsOn:
-      - WebSocketApi
-      - OnDisconnectFunction
+  DefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
     Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref OnDisconnectFunction
-      Principal: apigateway.amazonaws.com
+      ApiId: !Ref WebSocketApi
+      RouteKey: $default
+      AuthorizationType: NONE
+      OperationName: DefaultRoute
+      Target: !Join
+        - "/"
+        - - "integrations"
+          - !Ref SocketFunctionIntegration
 
-  # DefaultRoute:
-  #   Type: AWS::ApiGatewayV2::Route
-  #   Properties:
-  #     ApiId: !Ref WebSocketApi
-  #     RouteKey: $default
-  #     AuthorizationType: NONE
-  #     OperationName: DefaultRoute
-  #     Target: !Join
-  #       - "/"
-  #       - - "integrations"
-  #         - !Ref DefaultInteg
+  SendNotificationRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: sendNotification
+      AuthorizationType: NONE
+      OperationName: SendNotificationRoute
+      Target: !Join
+        - "/"
+        - - "integrations"
+          - !Ref SocketFunctionIntegration
 
-  # DefaultInteg:
-  #   Type: AWS::ApiGatewayV2::Integration
-  #   Properties:
-  #     ApiId: !Ref WebSocketApi
-  #     Description: Default Integration
-  #     IntegrationType: AWS_PROXY
-  #     IntegrationUri:
-  #       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ClientPingFunction.Arn}/invocations
 
   Deployment:
     Type: AWS::ApiGatewayV2::Deployment
     DependsOn:
       - ConnectRoute
       - DisconnectRoute
-      # - ClientPingRoute
-      # - ClientPingFunction
+      - DefaultRoute
+      - SendNotificationRoute
+      - SocketFunction
     Properties:
       ApiId: !Ref WebSocketApi
-      Description: "clap-app Deployment"
+      Description: "clap-app socket api gateway Deployment"
 
 
+  Stage:
+    Type: AWS::ApiGatewayV2::Stage
+    DependsOn: [Deployment]
+    Properties:
+      StageName: production
+      Description: "production stage"
+      DeploymentId: !Ref Deployment
+      ApiId: !Ref WebSocketApi
+      DefaultRouteSettings:
+        DetailedMetricsEnabled: false
+        LoggingLevel: OFF
+        DataTraceEnabled: false
+        ThrottlingBurstLimit: 10
+        ThrottlingRateLimit: 10
 
 Outputs:
-  OnConnectFunctionArn:
-    Description: "OnConnect function ARN"
-    Value: !GetAtt OnConnectFunction.Arn
+  SocketFunctionArn:
+    Description: "Socket function ARN"
+    Value: !GetAtt SocketFunction.Arn
 
-  OnDisconnectFunctionArn:
-    Description: "OnDisconnect function ARN"
-    Value: !GetAtt OnDisconnectFunction.Arn
 
-  SendMessageFunctionArn:
-    Description: "SendMessage function ARN"
-    Value: !GetAtt SendMessageFunction.Arn
 
-  WebSocketURI:
-    Description: "The WSS Protocol URI to connect to"
-    Value:
-      !Join [
-        "",
-        [
-          "wss://",
-          !Ref WebSocketApi,
-          ".execute-api.",
-          !Ref "AWS::Region",
-          ".amazonaws.com/",
-           "Default",
-        ],
-      ]
+  # WebSocketURI:
+  #   Description: "The WSS Protocol URI to connect to"
+  #   Value:
+  #     !Join [
+  #       "",
+  #       [
+  #         "wss://",
+  #         !Ref WebSocketApi,
+  #         ".execute-api.",
+  #         !Ref "AWS::Region",
+  #         ".amazonaws.com",
+  #       ],
+  #     ]

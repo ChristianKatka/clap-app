@@ -13,6 +13,7 @@ import { HomeModule } from 'src/Home/home.module';
 import { MyProfileModule } from 'src/MyProfile/my-profile.module';
 import { PostsStoreModule } from 'src/PostsStore/posts-store.module';
 import { SharedModule } from 'src/shared/shared.module';
+import { WebSocketStoreModule } from 'src/WebSocketStore/websocket-store.module';
 import { components } from '.';
 import { environment } from '../environments/environment';
 import { MaterialModule } from '../material.module';
@@ -45,6 +46,7 @@ import { RouterStateSerializer } from './store/router-state.serializer';
     AboutModule,
     PostsStoreModule,
     MyProfileModule,
+    WebSocketStoreModule
   ],
   providers: [],
   bootstrap: [AppComponent],

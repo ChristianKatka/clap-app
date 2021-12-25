@@ -23,6 +23,9 @@ export const environment = {
       secure: true,
     },
   },
+  webSocket: {
+    endPoint: 'wss://itirxpmjbe.execute-api.eu-west-1.amazonaws.com/production',
+  },
 };
 
 /*

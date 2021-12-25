@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticatedActions } from '@auth/store/actions';
 import { AuthExtendedAppState } from '@auth/store/reducers';
 import { Store } from '@ngrx/store';
+import { WebSocketService } from 'src/WebSocketStore/services/websocket.service';
 
 @Component({
   selector: 'clap-app-home',
@@ -9,7 +10,11 @@ import { Store } from '@ngrx/store';
   styleUrls: ['home-feature.container.scss'],
 })
 export class HomeFeatureContainerComponent implements OnInit {
-  constructor(private store: Store<AuthExtendedAppState>) {}
+  constructor(private webSocketService: WebSocketService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    setTimeout(() => {
+      this.webSocketService.sendNotification();
+    }, 3000);
+  }
 }

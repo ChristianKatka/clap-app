@@ -4,7 +4,6 @@ import { docClient } from "../../instances/aws";
 export const dynamodbUpdateSessionConnection = (
   userId: string,
   sessionKey: string,
-  connectionId: string
 ): Promise<any> => {
   const params = {
     TableName: WEBSOCKET_CONNECTIONS_TABLE,
@@ -12,15 +11,11 @@ export const dynamodbUpdateSessionConnection = (
       userId: userId,
       sessionKey: sessionKey,
     },
-    UpdateExpression: "set #connectionId = :connectionId",
-    ConditionExpression: "#sessionKey = :sessionKey",
     ExpressionAttributeNames: {
-      "#connectionId": "connectionId",
       "#sessionKey": "sessionKey",
     },
     ExpressionAttributeValues: {
-      ":connectionId": connectionId,
-      ":sessionKey": sessionKey,
+      ":sessionKey": 'Muutettu',
     },
   };
   return docClient.update(params).promise();
