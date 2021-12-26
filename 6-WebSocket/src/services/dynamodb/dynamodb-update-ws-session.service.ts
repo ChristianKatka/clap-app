@@ -1,21 +1,21 @@
 import { WEBSOCKET_CONNECTIONS_TABLE } from "../../constants";
 import { docClient } from "../../instances/aws";
 
-export const dynamodbUpdateSessionConnection = (
-  userId: string,
-  sessionKey: string,
+export const dynamodbUpdateWsSessionService = (
+  connectionId: string
 ): Promise<any> => {
+  // Expire the connection an hour later.
+  const ttl = Date.now() / 1000 + 3600;
+
   const params = {
     TableName: WEBSOCKET_CONNECTIONS_TABLE,
     Key: {
-      userId: userId,
-      sessionKey: sessionKey,
+      connectionId,
     },
-    ExpressionAttributeNames: {
-      "#sessionKey": "sessionKey",
-    },
+    UpdateExpression: "SET connectionId = :connectionId, ttl = :ttl",
     ExpressionAttributeValues: {
-      ":sessionKey": 'Muutettu',
+      ":connectionId": connectionId,
+      ":ttl": ttl,
     },
   };
   return docClient.update(params).promise();

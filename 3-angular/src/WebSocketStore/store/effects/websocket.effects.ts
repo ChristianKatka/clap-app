@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { InitActions } from '@app/store/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { isString } from 'lodash-es';
-import { of } from 'rxjs';
-import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { of, withLatestFrom } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { WebSocketService } from '../../services/websocket.service';
 import { WebSocketActions } from '../actions';
@@ -14,10 +16,39 @@ export class WebSocketEffects {
   initWebSocketSession$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
-        AuthenticatedActions.authenticateUserSuccess,
-        AuthenticatedActions.userRemembered
+        InitActions.loadApplicationInitializeDataSuccess
       ),
-      map(() => WebSocketActions.createNewWebSocketSession())
+      map(() => WebSocketActions.createWebsocketSession())
+    )
+  );
+
+  createWebsocketSession$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WebSocketActions.createWebsocketSession),
+      withLatestFrom(this.store.select(MyProfileSelectors.getMyUserId)),
+      switchMap(([payload, userId]) => {
+        if (!userId)
+          return of(
+            WebSocketActions.createWebsocketSessionFailure({
+              error: 'no user id',
+            })
+          );
+
+        return this.webSocketService.createWebsocketSession(userId).pipe(
+          map((res: string) =>
+            WebSocketActions.createWebsocketSessionSuccess({
+              res,
+            })
+          ),
+          catchError((error) =>
+            of(
+              WebSocketActions.createWebsocketSessionFailure({
+                error: 'error creating websocket session',
+              })
+            )
+          )
+        );
+      })
     )
   );
 
@@ -27,68 +58,6 @@ export class WebSocketEffects {
       map(() => WebSocketActions.disconnectWebSocketConnection())
     )
   );
-
-  createNewWebSocketSession$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(WebSocketActions.createNewWebSocketSession),
-      switchMap(() =>
-        this.webSocketService.createNewSession().pipe(
-          tap((x) => console.log(x)),
-          map(({ userId, sessionKey }) =>
-            WebSocketActions.createNewWebSocketSessionSuccess({
-              userId,
-              sessionKey,
-            })
-          ),
-          catchError((error) =>
-            of(WebSocketActions.createNewWebSocketSessionFailure(error))
-          )
-        )
-      )
-    )
-  );
-
-  createNewWebSocketSessionSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(WebSocketActions.createNewWebSocketSessionSuccess),
-      filter(
-        ({ userId, sessionKey }) => isString(userId) && isString(sessionKey)
-      ),
-      map(({ userId, sessionKey }) =>
-        WebSocketActions.takeWebSocketConnection({ userId, sessionKey })
-      )
-    )
-  );
-
-  takeWebSocketConnection$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(WebSocketActions.takeWebSocketConnection),
-      switchMap(({ userId, sessionKey }) =>
-        this.webSocketService.takeWebSocketConnection(userId, sessionKey).pipe(
-          map((response: string) =>
-            WebSocketActions.takeWebSocketConnectionSuccess({
-              payload: response,
-            })
-          ),
-          catchError((error) =>
-            of(WebSocketActions.takeWebSocketConnectionFailure(error))
-          )
-        )
-      )
-    )
-  );
-
-  pongMessageReceived$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(WebSocketActions.receivedMessage),
-      map((action) => action.message),
-      filter((message) => message.ping && message.ping === 'pong'),
-      tap(() => console.log('Received Pong message, send Ping')),
-      map(() => WebSocketActions.sendPing())
-    )
-  );
-
-
   disconnectWebSocketConnectionAtSignout$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -102,6 +71,7 @@ export class WebSocketEffects {
 
   constructor(
     private actions$: Actions,
+    private store: Store,
     private webSocketService: WebSocketService
   ) {}
 }

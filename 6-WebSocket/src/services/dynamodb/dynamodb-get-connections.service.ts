@@ -1,7 +1,7 @@
 import { WEBSOCKET_CONNECTIONS_TABLE } from "../../constants";
 import { docClient } from "../../instances/aws";
 
-export const dynamodbGetConnections = () => {
+export const dynamodbGetConnectionsService = () => {
   const params = {
     TableName: WEBSOCKET_CONNECTIONS_TABLE,
   };

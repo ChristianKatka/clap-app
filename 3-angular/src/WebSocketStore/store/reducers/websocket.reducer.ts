@@ -13,10 +13,10 @@ export const initialState: WebSocketState = {
 const webSocketReducer = createReducer(
   initialState,
 
-  on(WebSocketActions.createNewWebSocketSessionSuccess, (state, payload) => ({
-    ...state,
-    sessionKey: payload.sessionKey,
-  })),
+  // on(WebSocketActions.createNewWebSocketSessionSuccess, (state, payload) => ({
+  //   ...state,
+  //   sessionKey: payload.sessionKey,
+  // })),
   on(AuthenticatedActions.signOut, () => initialState)
 );
 

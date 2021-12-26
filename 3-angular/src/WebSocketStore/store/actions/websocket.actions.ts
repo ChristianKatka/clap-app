@@ -1,33 +1,33 @@
 import { createAction, props } from '@ngrx/store';
 
-export const createNewWebSocketSession = createAction(
-  '[Web Socket] Create New Web Socket Session'
+export const createWebsocketSession = createAction(
+  '[WebSocket] Create Websocket Session'
 );
 
-export const createNewWebSocketSessionSuccess = createAction(
-  '[Web Socket] Create New Web Socket Session Success',
-  props<{ userId: string; sessionKey: string }>()
+export const createWebsocketSessionSuccess = createAction(
+  '[WebSocket] Create Websocket Session Success',
+  props<{ res: any }>()
 );
 
-export const createNewWebSocketSessionFailure = createAction(
-  '[Web Socket] Create New Web Socket Session Failure',
-  props<{ payload: any }>()
+export const createWebsocketSessionFailure = createAction(
+  '[WebSocket] Create Websocket Session Failure',
+  props<{ error: string }>()
 );
 
-export const takeWebSocketConnection = createAction(
-  '[Web Socket] Take Web Socket Connection',
-  props<{ userId: string; sessionKey: string }>()
-);
+// export const takeWebSocketConnection = createAction(
+//   '[Web Socket] Take Web Socket Connection',
+//   props<{ userId: string; sessionKey: string }>()
+// );
 
-export const takeWebSocketConnectionSuccess = createAction(
-  '[Web Socket] Take Web Socket Connection Success',
-  props<{ payload: string }>()
-);
+// export const takeWebSocketConnectionSuccess = createAction(
+//   '[Web Socket] Take Web Socket Connection Success',
+//   props<{ payload: string }>()
+// );
 
-export const takeWebSocketConnectionFailure = createAction(
-  '[Web Socket] Take Web Socket Connection Failure',
-  props<{ payload: any }>()
-);
+// export const takeWebSocketConnectionFailure = createAction(
+//   '[Web Socket] Take Web Socket Connection Failure',
+//   props<{ payload: any }>()
+// );
 
 export const disconnectWebSocketConnection = createAction(
   '[Web Socket] Disconnect Web Socket Connection'
