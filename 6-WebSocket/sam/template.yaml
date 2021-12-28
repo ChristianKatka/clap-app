@@ -141,25 +141,12 @@ Resources:
         - - "integrations"
           - !Ref SocketFunctionIntegration
 
-  SendNotificationRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref WebSocketApi
-      RouteKey: sendNotification
-      AuthorizationType: NONE
-      OperationName: SendNotificationRoute
-      Target: !Join
-        - "/"
-        - - "integrations"
-          - !Ref SocketFunctionIntegration
-
   Deployment:
     Type: AWS::ApiGatewayV2::Deployment
     DependsOn:
       - ConnectRoute
       - DisconnectRoute
       - DefaultRoute
-      - SendNotificationRoute
       - SocketFunction
     Properties:
       ApiId: !Ref WebSocketApi

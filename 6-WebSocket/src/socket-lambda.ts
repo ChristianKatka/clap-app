@@ -26,10 +26,6 @@ const handler: Handler = async (event: APIGatewayProxyEvent) => {
       await dynamodbDeleteWsSessionService(connectionId);
       return lambdaAcceptableReturnTypeUtil("$disconnect");
 
-    case "sendNotification":
-      await webSocketSendMessage(connectionId, "sendNotification");
-      return lambdaAcceptableReturnTypeUtil("sendNotification");
-
     case "$default":
       return lambdaAcceptableReturnTypeUtil("$default");
     default:

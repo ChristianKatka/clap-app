@@ -49,8 +49,4 @@ export class WebSocketService {
     console.log(message);
   }
 
-  public sendNotification() {
-    console.log('viesti lähettty');
-    this.socket$.next({ action: 'sendNotification' });
-  }
 }
