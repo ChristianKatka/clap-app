@@ -50,7 +50,7 @@ export class WebSocketService {
   }
 
   public sendNotification() {
-    // console.log('viesti lähettty');
-    // this.socket$.next({ action: WsActionEnum.SendNotification });
+    console.log('viesti lähettty');
+    this.socket$.next({ action: 'sendNotification' });
   }
 }

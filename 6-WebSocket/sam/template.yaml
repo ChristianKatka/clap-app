@@ -46,6 +46,26 @@ Resources:
                   - logs:PutLogEvents
                 Resource: arn:aws:logs:*:*:*
 
+  AllowDynamoDBStreamSource:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - LambdaExecutionRole
+    Properties:
+      PolicyName: 'AllowDynamoDBStreamSource'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:GetRecords
+              - dynamodb:GetShardIterator
+              - dynamodb:DescribeStream
+              - dynamodb:ListStreams
+            Resource:
+              - Fn::ImportValue: clap-app-posts-comments-table-stream-arn
+      Roles:
+        - !Ref LambdaExecutionRole
+
   SocketFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -159,6 +179,36 @@ Resources:
         DataTraceEnabled: false
         ThrottlingBurstLimit: 10
         ThrottlingRateLimit: 10
+
+
+  SocketSendNewCommentLambdaLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../build
+      Handler: socket-send-new-comment-lambda.handler
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: nodejs14.x
+      Environment:
+        Variables:
+          ENDPOINT:
+            Fn::Join:
+              - ""
+              - - Ref: WebSocketApi
+                - .execute-api.
+                - Ref: AWS::Region
+                - .amazonaws.com/
+                - production
+
+  SocketSendNewCommentLambdaStreamEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    DependsOn:
+      - AllowDynamoDBStreamSource
+    Properties:
+      EventSourceArn:
+        Fn::ImportValue: clap-app-posts-comments-table-stream-arn
+      FunctionName: !GetAtt SocketSendNewCommentLambdaLambda.Arn
+      StartingPosition: 'TRIM_HORIZON'
 
 Outputs:
   SocketFunctionArn:

@@ -56,8 +56,8 @@ export class PostComponent implements OnChanges, AfterViewChecked {
   }
 
   scrollBottomOfPage() {
-    console.log(this.ref.nativeElement.scrollTop);
-    console.log(this.ref.nativeElement.scrollHeight);
+    // console.log(this.ref.nativeElement.scrollTop);
+    // console.log(this.ref.nativeElement.scrollHeight);
 
     try {
       this.ref.nativeElement.scrollTop = this.ref.nativeElement.scrollHeight;

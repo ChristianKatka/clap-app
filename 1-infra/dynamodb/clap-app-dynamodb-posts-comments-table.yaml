@@ -42,6 +42,6 @@ Outputs:
   ClapAppPostsCommentsTableStreamArn:
     Description: clap-app posts-comments table stream ARN
     Value: !GetAtt ClapAppPostsCommentsTable.StreamArn
-    Export:
+    Export: 
       Name: clap-app-posts-comments-table-stream-arn
 
