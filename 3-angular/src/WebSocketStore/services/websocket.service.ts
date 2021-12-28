@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AuthHTTPService } from '@app/services/auth-http.service';
-import { AppState } from '@app/store/reducers';
 import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { PostCommentActions } from 'src/PostsStore/store/actions';
+import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -13,10 +13,7 @@ export class WebSocketService {
   private socket$!: WebSocketSubject<any>;
   private socketSubscription!: Subscription;
 
-  constructor(
-    private authHttp: AuthHTTPService,
-    private store: Store<AppState>
-  ) {}
+  constructor(private store: Store<PostsExtendedAppState>) {}
 
   public createWebsocketSession(userId: string): Observable<string> {
     const url = `${environment.webSocket.endPoint}?userId=${userId}`;
@@ -24,7 +21,7 @@ export class WebSocketService {
     this.socket$ = webSocket(url);
 
     this.socketSubscription = this.socket$.subscribe({
-      next: (msg) => this.onMessage(msg),
+      next: (event) => this.onNewSocketEvent(event),
       error: (e) => console.error(JSON.stringify(e, null, 4)),
       complete: () => console.info('complete'),
     });
@@ -32,11 +29,7 @@ export class WebSocketService {
   }
 
   public disconnectWebSocketConnection(): Observable<string> {
-    console.log('disconnectWebSocketConnection');
-
     if (this.socket$) {
-      console.log(this.socket$);
-
       this.socket$.complete();
     }
 
@@ -44,9 +37,13 @@ export class WebSocketService {
     return of('Disconnected');
   }
 
-  private onMessage(message: any) {
-    console.log('On message:');
-    console.log(message);
+  private onNewSocketEvent(event: any) {
+    if (event.newComment) {
+      this.store.dispatch(
+        PostCommentActions.newPostCommentHappenedViaSocket({
+          postComment: event.newComment,
+        })
+      );
+    }
   }
-
 }

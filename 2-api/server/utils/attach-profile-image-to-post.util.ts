@@ -1,4 +1,4 @@
-import { dynamodbGetUsersProfileImageById } from '../services/dynamodb/users/profile-image/dynamodb-get-user-by-id.service';
+import { dynamodbGetUsersProfileImageById } from '../services/dynamodb/users/profile-image/dynamodb-get-users-profile-image-by-id.service';
 
 export const attachProfileImageToPost = async (post: any) => {
   const creatorsProfileImage = await dynamodbGetUsersProfileImageById(

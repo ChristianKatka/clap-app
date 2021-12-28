@@ -44,7 +44,7 @@ export class PostsService {
       `${environment.apiBaseUrl}/posts/comment/${postCommentDraft.postId}/${postCommentDraft.id}`,
       {
         text: postCommentDraft.text,
-        likersProfileImage: postCommentDraft.likersProfileImage,
+        commentersProfileImage: postCommentDraft.commentersProfileImage,
         nickname: postCommentDraft.nickname,
       }
     );

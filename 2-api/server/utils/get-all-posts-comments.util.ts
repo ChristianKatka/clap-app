@@ -1,19 +1,19 @@
 import { dynamodbGetAllPostsComments } from '../services/dynamodb/posts/comments/dynamodb-get-all-posts-comments.service';
-import { dynamodbGetUsersProfileImageById } from '../services/dynamodb/users/profile-image/dynamodb-get-user-by-id.service';
+import { dynamodbGetUsersProfileImageById } from '../services/dynamodb/users/profile-image/dynamodb-get-users-profile-image-by-id.service';
 
 const fetchProfileImageToCommentCreator = async (comment: any) => {
-  const likersProfileImage = await dynamodbGetUsersProfileImageById(
+  const commentersProfileImage = await dynamodbGetUsersProfileImageById(
     comment.userId
   );
-  if (likersProfileImage) {
+  if (commentersProfileImage) {
     return {
       ...comment,
-      likersProfileImage: (likersProfileImage as any).imageUrl,
+      commentersProfileImage: (commentersProfileImage as any).imageUrl,
     };
   } else {
     return {
       ...comment,
-      likersProfileImage: 'assets/images/default_profile_image.png',
+      commentersProfileImage: 'assets/images/default_profile_image.png',
     };
   }
 };

@@ -27,7 +27,7 @@ export class PostCommentEffects {
           PostCommentActions.createCommentToPost({
             postCommentDraft: {
               id: uuid(),
-              likersProfileImage: profileImageUrl,
+              commentersProfileImage: profileImageUrl,
               nickname,
               postId,
               text,

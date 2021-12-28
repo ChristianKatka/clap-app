@@ -1,7 +1,7 @@
 import { Context, Next } from 'koa';
 import { dynamodbGetAllPostsLikes } from '../../services/dynamodb/posts/likes/dynamodb-get-all-posts-likes.service';
 import { dynamodbGetUserById } from '../../services/dynamodb/users/dynamodb-get-user-by-id.service';
-import { dynamodbGetUsersProfileImageById } from '../../services/dynamodb/users/profile-image/dynamodb-get-user-by-id.service';
+import { dynamodbGetUsersProfileImageById } from '../../services/dynamodb/users/profile-image/dynamodb-get-users-profile-image-by-id.service';
 import { getAllPostsCommentsUtil } from '../../utils/get-all-posts-comments.util';
 import { getAllPostsUtil } from '../../utils/get-all-posts.util';
 

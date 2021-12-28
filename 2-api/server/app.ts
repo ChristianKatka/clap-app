@@ -7,7 +7,6 @@ import { logRequestAndResponse } from './middlewares/request-response-logger.mid
 import { initializeRouter } from './routers/initialize.router';
 import { postsRouter } from './routers/posts.router';
 import { userRouter } from './routers/user.router';
-import { websocketRouter } from './routers/websocket.router';
 
 const app = new Koa();
 
@@ -24,6 +23,5 @@ app.use(decodeCognitoToken);
 app.use(initializeRouter.routes()).use(initializeRouter.allowedMethods());
 app.use(postsRouter.routes()).use(postsRouter.allowedMethods());
 app.use(userRouter.routes()).use(userRouter.allowedMethods());
-app.use(websocketRouter.routes()).use(websocketRouter.allowedMethods());
 
 export { app };

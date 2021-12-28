@@ -2,7 +2,7 @@ import { Context, Next } from 'koa';
 import { v4 as uuidv4 } from 'uuid';
 import { dynamodbCreateNotification } from '../../services/dynamodb/notifications/dynamodb-create-notification.service';
 import { dynamodbCreatePost } from '../../services/dynamodb/posts/dynamodb-create-post.service';
-import { dynamodbGetUsersProfileImageById } from '../../services/dynamodb/users/profile-image/dynamodb-get-user-by-id.service';
+import { dynamodbGetUsersProfileImageById } from '../../services/dynamodb/users/profile-image/dynamodb-get-users-profile-image-by-id.service';
 
 export const createPost = async (ctx: Context, next: Next) => {
   const userId = ctx.state.jwtPayload.sub;

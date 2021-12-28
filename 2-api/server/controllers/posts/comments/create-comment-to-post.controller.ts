@@ -7,7 +7,7 @@ export const createCommentToPost = async (ctx: Context, next: Next) => {
   const userId = ctx.state.jwtPayload.sub;
 
   const text = ctx.request.body.text;
-  const likersProfileImage = ctx.request.body.likersProfileImage;
+  const commentersProfileImage = ctx.request.body.commentersProfileImage;
   const nickname = ctx.request.body.nickname;
 
   const comment = {
@@ -22,7 +22,7 @@ export const createCommentToPost = async (ctx: Context, next: Next) => {
   await dynamodbCreatePostComment(comment);
 
   ctx.response.status = 200;
-  ctx.response.body = { ...comment, likersProfileImage };
+  ctx.response.body = { ...comment, commentersProfileImage };
 
   await next();
 };

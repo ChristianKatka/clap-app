@@ -2,7 +2,7 @@ import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import {
   PostComment,
-  PostCommentDraft
+  PostCommentDraft,
 } from '@shared/models/post-comment.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
@@ -44,6 +44,20 @@ const PostsCommentsReducer = createReducer(
   }),
   on(
     PostCommentActions.createCommentToPostSuccess,
+    (state, { postComment }) => {
+      return {
+        ...state,
+        postsComments: {
+          ...state.postsComments,
+          [postComment.id]: {
+            ...postComment,
+          },
+        },
+      };
+    }
+  ),
+  on(
+    PostCommentActions.newPostCommentHappenedViaSocket,
     (state, { postComment }) => {
       return {
         ...state,

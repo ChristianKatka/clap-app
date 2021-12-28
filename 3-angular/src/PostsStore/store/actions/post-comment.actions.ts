@@ -6,7 +6,7 @@ import {
 
 export const createCommentToPostWithoutId = createAction(
   '[Post Comment] Create Comment To Post Without Id',
-  props<{ postId: string, text: string }>()
+  props<{ postId: string; text: string }>()
 );
 
 export const createCommentToPost = createAction(
@@ -20,4 +20,9 @@ export const createCommentToPostSuccess = createAction(
 export const createCommentToPostFailure = createAction(
   '[Post Comment] Create Comment To Post Failure',
   props<{ error: string }>()
+);
+
+export const newPostCommentHappenedViaSocket = createAction(
+  '[Post Comment] New Post Comment Happened Via Socket',
+  props<{ postComment: PostComment }>()
 );

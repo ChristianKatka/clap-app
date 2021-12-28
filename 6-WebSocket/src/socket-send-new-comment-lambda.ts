@@ -1,6 +1,7 @@
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from "aws-lambda";
 import { convertDynamoDBRecord } from "./helpers";
 import { dynamodbGetActiveWsConnectionsService } from "./services/dynamodb/dynamodb-get-active-ws-connections.service";
+import { attachProfileImageToCommentUtil } from "./utils/attach-profile-image-to-comment.util";
 import { sendCommentToAllActiveClientsUtil } from "./utils/send-comment-to-all-active-clients.util";
 
 const validateEvent = (event: DynamoDBStreamEvent) => {
@@ -21,8 +22,12 @@ const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
   if (!comment) return;
 
   const mainProcess = async () => {
+    const commentWithCommentersImage = await attachProfileImageToCommentUtil(comment);
     const connectedClients = await dynamodbGetActiveWsConnectionsService();
-    await sendCommentToAllActiveClientsUtil(connectedClients, comment);
+    await sendCommentToAllActiveClientsUtil(
+      connectedClients,
+      commentWithCommentersImage
+    );
 
     return Promise.resolve("Lambda processed successfully");
   };
