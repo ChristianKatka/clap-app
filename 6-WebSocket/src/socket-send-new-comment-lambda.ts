@@ -1,41 +1,38 @@
-import {
-  Context,
-  DynamoDBStreamEvent,
-  DynamoDBStreamHandler,
-} from "aws-lambda";
-
-import { forkJoin, from } from "rxjs";
-import { concatMap, filter, map, mergeMap, tap } from "rxjs/operators";
+import { DynamoDBStreamEvent, DynamoDBStreamHandler } from "aws-lambda";
 import { convertDynamoDBRecord } from "./helpers";
 import { dynamodbGetActiveWsConnectionsService } from "./services/dynamodb/dynamodb-get-active-ws-connections.service";
-import { webSocketSendMessage } from "./services/websocket-send-message.service";
 import { sendCommentToAllActiveClientsUtil } from "./utils/send-comment-to-all-active-clients.util";
 
-const handler: DynamoDBStreamHandler = (
-  event: DynamoDBStreamEvent,
-  context: Context
-) => {
+const validateEvent = (event: DynamoDBStreamEvent) => {
+  const insertEvent = event.Records.filter(
+    (record: any) => record.eventName === "INSERT"
+  )[0];
+  if (!insertEvent) return undefined;
+  if (!insertEvent.dynamodb) return undefined;
+
+  const comment = convertDynamoDBRecord(insertEvent.dynamodb.NewImage);
+  return comment;
+};
+
+const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
   console.log("Received event:", JSON.stringify(event, null, 4));
 
-  let comment = {};
+  const comment = validateEvent(event);
+  if (!comment) return;
 
-  from(event.Records)
-    .pipe(
-      filter((record: any) => record.eventName === "INSERT"),
-      map((record: any) => convertDynamoDBRecord(record.dynamodb.NewImage)),
-      tap((newComment: any) => (comment = newComment)),
-      concatMap(() => dynamodbGetActiveWsConnectionsService()),
-      concatMap((connectedClients: any[]) =>
-        sendCommentToAllActiveClientsUtil(connectedClients, comment)
-      )
-    )
-    .subscribe({
-      error: (error) => {
-        console.log("Error when sending new comment via socket");
-        console.log(error);
-      },
-      complete: () =>
-        context.done(undefined, `Successfully sent new comment via socket`),
+  const mainProcess = async () => {
+    const connectedClients = await dynamodbGetActiveWsConnectionsService();
+    await sendCommentToAllActiveClientsUtil(connectedClients, comment);
+
+    return Promise.resolve("Lambda processed successfully");
+  };
+
+  mainProcess()
+    .then(() => {
+      console.log("Successfully sent new comment via socket");
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
 

@@ -7,7 +7,9 @@ export const sendCommentToAllActiveClientsUtil = async (
 ): Promise<any> => {
   const sendCommentToAllActiveClientsPromises = connectedClients.map(
     async (client: any) =>
-      await webSocketSendMessage(client.connectionId, comment).catch((err) => {
+      await webSocketSendMessage(client.connectionId, {
+        newComment: comment,
+      }).catch((err) => {
         if (err.code === "GoneException") {
           return dynamodbDeleteWsSessionService(client.connectionId).catch(
             (err) => {

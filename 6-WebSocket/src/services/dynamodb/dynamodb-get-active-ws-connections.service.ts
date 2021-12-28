@@ -8,5 +8,5 @@ export const dynamodbGetActiveWsConnectionsService = () => {
   return docClient
     .scan(params)
     .promise()
-    .then((res) => res.Items);
+    .then((res) => (res.Items ? res.Items : []));
 };
