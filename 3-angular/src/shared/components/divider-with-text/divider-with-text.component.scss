@@ -1,0 +1,17 @@
+@use "../../../styles.scss" as s;
+
+.divider-with-text-wrapper {
+  width: 100%;
+  padding: 20px 0;
+  .divider {
+    position: relative;
+    border-bottom: 1px solid s.$clap-blue;
+    width: 100%;
+    span {
+      color: s.$clap-blue;
+      background-color: white;
+      position: absolute;
+      padding: 0 10px;
+    }
+  }
+}

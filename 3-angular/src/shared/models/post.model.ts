@@ -24,4 +24,5 @@ export interface Post {
   iLikeThisPost: string | undefined;
   postLikes: PostLike[] | PostLikeDraft[] | [];
   comments: PostComment[] | PostCommentDraft[] | [];
+  newComments: PostComment[] | [];
 }

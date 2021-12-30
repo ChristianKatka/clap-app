@@ -13,7 +13,10 @@ import {
 import { Post, PostApiResponse } from '@shared/models/post.model';
 import { getMyProfileState } from '../../../MyProfile/store/reducers';
 import { getPostsLikesState, getPostsState } from '../reducers';
-import { getPostsComments } from './posts-comments.selectors';
+import {
+  getNewPostCommentsViaSocket,
+  getPostsComments,
+} from './posts-comments.selectors';
 
 export const getSortBy = createSelector(getPostsState, (state) => state.sortBy);
 export const isLoading = createSelector(
@@ -27,7 +30,15 @@ export const getPosts = createSelector(
   getMyProfileState,
   getSortBy,
   getPostsComments,
-  (postsState, postsLikesState, profileState, sortBy, postsComments) => {
+  getNewPostCommentsViaSocket,
+  (
+    postsState,
+    postsLikesState,
+    profileState,
+    sortBy,
+    postsComments,
+    newCommentsViaSocket
+  ) => {
     const postEntities: (PostApiResponse | PostWithMediaApiRes)[] =
       Object.values(postsState.entities);
     const postsLikes = Object.values(postsLikesState.postsLikes);
@@ -48,16 +59,27 @@ export const getPosts = createSelector(
           (comment: PostCommentDraft | PostComment) =>
             comment.postId === post.id
         );
+        const newComments = newCommentsViaSocket.filter(
+          (comment: PostCommentDraft | PostComment) =>
+            comment.postId === post.id
+        );
 
         if (iLikeThisPost) {
           return {
             ...post,
             postLikes,
             comments,
+            newComments,
             iLikeThisPost: iLikeThisPost.id,
           };
         } else {
-          return { ...post, postLikes, comments, iLikeThisPost: undefined };
+          return {
+            ...post,
+            postLikes,
+            comments,
+            newComments,
+            iLikeThisPost: undefined,
+          };
         }
       }
     );

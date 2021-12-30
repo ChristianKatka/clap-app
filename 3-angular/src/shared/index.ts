@@ -16,6 +16,7 @@ import { LoadingDotsComponent } from './components/loading-dots/loading-dots.com
 import { AutofocusDirective } from './directives/auto-focus.directive';
 import { ProfileImageFileSelectComponent } from './components/profile-image-file-select/profile-image-file-select.component';
 import { PostMediaSelectComponent } from './components/post-media-select/post-media-select.component';
+import { DividerWithTextComponent } from './components/divider-with-text/divider-with-text.component';
 
 export const components: any[] = [
   TrunctateTextComponent,
@@ -32,6 +33,7 @@ export const components: any[] = [
   LoadingDotsComponent,
   AutofocusDirective,
   PostMediaSelectComponent,
+  DividerWithTextComponent
 ];
 export const pipes = [BooleanPipe, IconPipe, TimeAgoPipe];
 export const directives = [FileSelectDirective, AutofocusDirective];

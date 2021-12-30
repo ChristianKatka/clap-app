@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { PostComment } from '@shared/models/post-comment.model';
 
 @Component({
   selector: 'clap-app-post-comments',
@@ -9,6 +10,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 export class PostCommentsComponent {
   @Input()
   comments: any;
+
+  @Input()
+  newComments: PostComment[] = [];
 
   constructor() {}
 }

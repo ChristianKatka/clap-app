@@ -10,10 +10,12 @@ import { PostCommentActions } from '../actions';
 
 export interface PostsCommentsState {
   postsComments: { [id: string]: PostComment | PostCommentDraft };
+  newPostCommentViaSocket: { [id: string]: PostComment };
 }
 
 export const initialState: PostsCommentsState = {
   postsComments: {},
+  newPostCommentViaSocket: {}
 };
 
 const PostsCommentsReducer = createReducer(
@@ -32,13 +34,17 @@ const PostsCommentsReducer = createReducer(
   ),
 
   on(PostCommentActions.createCommentToPost, (state, { postCommentDraft }) => {
+
+    // When i respond to new comment remove new comments and move them to regular comments
     const postsComments: { [id: string]: PostCommentDraft } = {
       ...state.postsComments,
+      ...state.newPostCommentViaSocket,
       [postCommentDraft.id]: postCommentDraft,
     };
 
     return {
       ...state,
+      newPostCommentViaSocket: {},
       postsComments,
     };
   }),
@@ -61,8 +67,8 @@ const PostsCommentsReducer = createReducer(
     (state, { postComment }) => {
       return {
         ...state,
-        postsComments: {
-          ...state.postsComments,
+        newPostCommentViaSocket: {
+          ...state.newPostCommentViaSocket,
           [postComment.id]: {
             ...postComment,
           },

@@ -5,7 +5,12 @@ export const sendCommentToAllActiveClientsUtil = async (
   connectedClients: any[],
   comment: any
 ): Promise<any> => {
-  const sendCommentToAllActiveClientsPromises = connectedClients.map(
+  // Dont send socket message to person who created the comment
+  const connectedClientsExceptMe = connectedClients.filter(
+    (client) => client.userId !== comment.userId
+  );
+
+  const sendCommentToAllActiveClientsPromises = connectedClientsExceptMe.map(
     async (client: any) =>
       await webSocketSendMessage(client.connectionId, {
         newComment: comment,
