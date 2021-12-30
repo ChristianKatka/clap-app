@@ -24,7 +24,7 @@ Resources:
             ProjectionType: 'ALL'
       TableName: 'clap-app-websocket-connections'
       TimeToLiveSpecification:
-        AttributeName: 'ttl'
+        AttributeName: 'expiration'
         Enabled: True
       StreamSpecification:
         StreamViewType: 'NEW_AND_OLD_IMAGES'
