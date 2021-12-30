@@ -4,7 +4,6 @@ import { docClient } from "../../instances/aws";
 export const dynamodbGetWsSessionByUserIdService = async (userId: string) => {
   const params = {
     TableName: WEBSOCKET_CONNECTIONS_TABLE,
-    IndexName: USER_ID_INDEX,
     KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": userId,

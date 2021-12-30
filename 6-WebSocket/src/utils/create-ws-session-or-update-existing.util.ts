@@ -11,7 +11,7 @@ export const createWsSessionOrUpdateExistingUtil = async (
   );
 
   if (sessionAlreadyExists)
-    return await dynamodbUpdateWsSessionService(connectionId);
+    return await dynamodbUpdateWsSessionService(userId, connectionId);
 
   return await dynamodbCreateWsSessionService(userId, connectionId);
 };

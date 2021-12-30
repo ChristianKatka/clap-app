@@ -8,10 +8,10 @@ export const dynamodbCreateWsSessionService = (
   const params = {
     TableName: WEBSOCKET_CONNECTIONS_TABLE,
     Item: {
-      connectionId,
       userId,
+      connectionId,
       // Expire the connection an hour later.
-      ttl: Date.now() / 1000 + 3600,
+      expiration: Date.now() / 1000 + 3600,
     },
   };
   return docClient.put(params).promise();

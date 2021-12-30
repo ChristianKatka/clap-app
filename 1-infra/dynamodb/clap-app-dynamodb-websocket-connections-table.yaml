@@ -7,18 +7,18 @@ Resources:
     Type: 'AWS::DynamoDB::Table'
     Properties:
       AttributeDefinitions:
-        - AttributeName: 'connectionId'
-          AttributeType: 'S'
         - AttributeName: 'userId'
           AttributeType: 'S'
-      KeySchema:
         - AttributeName: 'connectionId'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'userId'
           KeyType: 'HASH'
       BillingMode: PAY_PER_REQUEST
       GlobalSecondaryIndexes:
-        - IndexName: 'userId-gsi'
+        - IndexName: 'connectionId-gsi'
           KeySchema:
-            - AttributeName: 'userId'
+            - AttributeName: 'connectionId'
               KeyType: 'HASH'
           Projection:
             ProjectionType: 'ALL'
