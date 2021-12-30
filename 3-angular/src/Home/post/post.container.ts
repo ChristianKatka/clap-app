@@ -1,12 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import {
+  CommentLike,
+  CommentLikeDraft,
+} from '@shared/models/comment-like.model';
+import { PostComment } from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { Post } from '@shared/models/post.model';
-
 import { Observable } from 'rxjs';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 import {
+  CommentLikeActions,
   PostCommentActions,
   PostLikeActions,
   PostsActions,
@@ -67,5 +72,17 @@ export class PostContainerComponent implements OnInit, OnDestroy {
 
   onRemoveLikeFromPost(like: PostLike | PostLikeDraft) {
     this.store.dispatch(PostLikeActions.removeLikeFromPost({ like }));
+  }
+
+  onGiveLikeToComment(comment: PostComment) {
+    console.log('TODO CHECK ability to give like to post comment draft');
+
+    this.store.dispatch(
+      CommentLikeActions.giveLikeToCommentWithoutId({ commentId: comment.id })
+    );
+  }
+
+  onRemoveLikeFromComment(like: CommentLike | CommentLikeDraft) {
+    this.store.dispatch(CommentLikeActions.removeLikeFromComment({ like }));
   }
 }

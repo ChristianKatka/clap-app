@@ -3,6 +3,10 @@ import { createSelector } from '@ngrx/store';
 import { sortByCreatedAtDateAscending } from '@shared/helpers/sort-by-created-at-date-ascending';
 import { sortByCreatedAtDateDescending } from '@shared/helpers/sort-by-created-at-date-descending';
 import {
+  CommentLike,
+  CommentLikeDraft,
+} from '@shared/models/comment-like.model';
+import {
   PostComment,
   PostCommentDraft,
 } from '@shared/models/post-comment.model';
@@ -13,7 +17,11 @@ import {
 } from '@shared/models/post-with-media.model';
 import { Post, PostApiResponse } from '@shared/models/post.model';
 import { getMyProfileState } from '../../../MyProfile/store/reducers';
-import { getPostsLikesState, getPostsState } from '../reducers';
+import {
+  getCommentLikesState,
+  getPostsLikesState,
+  getPostsState,
+} from '../reducers';
 import {
   getNewPostCommentsViaSocket,
   getPostsComments,
@@ -25,6 +33,10 @@ export const isLoading = createSelector(
   (state) => state.loading
 );
 
+const getCommentLikes = createSelector(getCommentLikesState, (state) =>
+  Object.values(state.commentsLikes)
+);
+
 export const getPosts = createSelector(
   getPostsState,
   getPostsLikesState,
@@ -32,13 +44,15 @@ export const getPosts = createSelector(
   getSortBy,
   getPostsComments,
   getNewPostCommentsViaSocket,
+  getCommentLikes,
   (
     postsState,
     postsLikesState,
     profileState,
     sortBy,
     postsComments,
-    newCommentsViaSocket
+    newCommentsViaSocket,
+    commentLikes
   ) => {
     const postEntities: (PostApiResponse | PostWithMediaApiRes)[] =
       Object.values(postsState.entities);
@@ -65,6 +79,20 @@ export const getPosts = createSelector(
             comment.postId === post.id
         );
 
+        // TODO KATO MITEN SAAT TYKKÄYS TIEDON KOMMENTIN SISÄÄN
+        const commentsWithIlikeThisInfoInside = comments.map((comment: any) => {
+          const iLikeThisComment: CommentLikeDraft | CommentLike | undefined =
+            commentLikes.filter(
+              (commentLike: CommentLike | CommentLikeDraft) =>
+                commentLike.userId === comment.userId
+            )[0];
+          if (iLikeThisComment) {
+            return { ...comment, iLikeThisComment: iLikeThisComment.id };
+          } else {
+            return { ...comment, iLikeThisComment: undefined };
+          }
+        });
+
         if (iLikeThisPost) {
           return {
             ...post,
@@ -88,7 +116,8 @@ export const getPosts = createSelector(
     if (sortBy === 'latest') {
       console.log('sort by latest');
 
-      const sortedPosts: (Post | PostWithMedia)[] = sortByCreatedAtDateAscending(posts);
+      const sortedPosts: (Post | PostWithMedia)[] =
+        sortByCreatedAtDateAscending(posts);
       return sortedPosts;
     } else {
       return posts;

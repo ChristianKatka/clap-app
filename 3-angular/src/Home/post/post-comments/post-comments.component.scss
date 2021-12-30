@@ -18,11 +18,18 @@
   transform: scale(0.7);
 }
 
-.comment-info {
+.liked {
+  color: #ed4956;
+}
+
+
+.comment-info-wrapper {
   color: s.$clap-gray;
   margin-top: 3px;
-}
-.comment-likes-amount {
-  margin-left: 10px;
+
+  .comment-likes-amount {
+    margin-left: 10px;
+    font-weight: bold;
+  }
 }
 

@@ -14,16 +14,34 @@
       <span style="line-height: 17px"
         ><b>{{ comment.nickname }}</b> {{ comment.text }}
       </span>
-      <p class="comment-info">
-        {{ comment.createdAt | timeAgo
-        }}<b class="comment-likes-amount">200 likes</b>
-      </p>
+
+      <div class="comment-info-wrapper">
+        <span *ngIf="this.isCommentDraft(comment)">just now</span>
+        <span *ngIf="!this.isCommentDraft(comment)">{{
+          comment.createdAt | timeAgo
+        }}</span>
+        <span class="comment-likes-amount">100 likes</span>
+      </div>
     </div>
   </section>
 
-  <mat-icon class="comment-like material-icons-outlined"
+  <!-- <mat-icon (click)="giveLikeToComment(comment)" class="comment-like material-icons-outlined"
     >favorite_border</mat-icon
-  >
+  > -->
+  <div fxLayout="row">
+    <mat-icon
+      (click)="giveLikeToComment(comment)"
+      class="material-icons-outlined comment-like"
+      >favorite_border</mat-icon
+    >
+    <!-- <mat-icon
+      *ngIf="post.iLikeThisPost"
+      (click)="onRemoveLikeFromPost(post.iLikeThisPost, post.postLikes)"
+      class="material-icons-outlined comment-like liked"
+    >
+      favorite
+    </mat-icon> -->
+  </div>
 </div>
 
 <!-- New comments via socket -->
@@ -52,6 +70,7 @@
         </p>
       </div>
     </section>
+    <p>{{ isCommentDraft(comment) }}</p>
 
     <mat-icon class="comment-like material-icons-outlined"
       >favorite_border</mat-icon
@@ -59,5 +78,6 @@
   </div>
 </section>
 
-
-<clap-app-new-comments-below *ngIf="newComments.length"></clap-app-new-comments-below>
+<clap-app-new-comments-below
+  *ngIf="newComments.length"
+></clap-app-new-comments-below>

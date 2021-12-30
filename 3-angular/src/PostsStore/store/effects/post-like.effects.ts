@@ -15,7 +15,7 @@ export class PostLikeEffects {
     this.actions$.pipe(
       ofType(PostLikeActions.giveLikeToPostWithoutId),
       withLatestFrom(
-        this.store.select(PendingSelectors.getLikesThatIhaveAlreadyGiven)
+        this.store.select(PendingSelectors.getPostLikesThatIhaveAlreadyGiven)
       ),
       withLatestFrom(this.store.select(MyProfileSelectors.getMyUserId)),
       switchMap(([[{ postId }, alreadyGivenLikes], userId]) => {

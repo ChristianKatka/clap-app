@@ -12,7 +12,9 @@ export const USERS_TABLE = 'clap-app-users';
 export const PROFILE_IMAGES_TABLE = 'clap-app-profile-images';
 export const POSTS_COMMENTS_TABLE = 'clap-app-posts-comments';
 export const NOTIFICATIONS_TABLE = 'clap-app-notifications';
+export const COMMENTS_LIKES_TABLE = 'clap-app-comments-likes';
 
 // INDEX
 export const POST_ID_INDEX = 'postId-gsi';
 export const USER_ID_INDEX = 'userId-gsi';
+export const COMMENT_ID_INDEX = 'commentId-gsi';

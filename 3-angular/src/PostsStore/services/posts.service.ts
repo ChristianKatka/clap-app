@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHTTPService } from '@app/services/auth-http.service';
+import { CommentLike } from '@shared/models/comment-like.model';
 import {
   PostComment,
   PostCommentDraft
@@ -47,6 +48,19 @@ export class PostsService {
         commentersProfileImage: postCommentDraft.commentersProfileImage,
         nickname: postCommentDraft.nickname,
       }
+    );
+  }
+
+  giveLikeToComment(commentId: string, likeId: string): Observable<CommentLike> {
+    return this.authHttp.post(
+      `${environment.apiBaseUrl}/posts/comment/like/${commentId}/${likeId}`,
+      {}
+    );
+  }
+
+  removeLikeFromComment(likeId: string): Observable<{ likeId: string }> {
+    return this.authHttp.delete(
+      `${environment.apiBaseUrl}/posts/comment/like/${likeId}`
     );
   }
 

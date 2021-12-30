@@ -1,9 +1,9 @@
-import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { Injectable } from '@angular/core';
-import { InitActions, RouterActions } from '../actions';
-import { InitializeService } from '@app/services/init.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, of, switchMap, map } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { InitializeService } from '@app/services/init.service';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, of, switchMap } from 'rxjs';
+import { InitActions, RouterActions } from '../actions';
 
 @Injectable()
 export class InitEffects {
@@ -13,13 +13,21 @@ export class InitEffects {
       switchMap(() =>
         this.initializeService.loadApplicationInitializeData().pipe(
           map(
-            ({ PostsApiResponse, postsLikes, myProfile, myProfileImage, postsComments }) =>
+            ({
+              PostsApiResponse,
+              postsLikes,
+              myProfile,
+              myProfileImage,
+              postsComments,
+              commentsLikes,
+            }) =>
               InitActions.loadApplicationInitializeDataSuccess({
                 PostsApiResponse,
                 postsLikes,
                 myProfile,
                 myProfileImage,
                 postsComments,
+                commentsLikes,
               })
           ),
           catchError((error: HttpErrorResponse) =>

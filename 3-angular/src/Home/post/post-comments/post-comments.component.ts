@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { PostComment } from '@shared/models/post-comment.model';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  PostComment,
+  PostCommentDraft,
+} from '@shared/models/post-comment.model';
 
 @Component({
   selector: 'clap-app-post-comments',
@@ -7,12 +16,30 @@ import { PostComment } from '@shared/models/post-comment.model';
   styleUrls: ['post-comments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostCommentsComponent {
+export class PostCommentsComponent implements OnChanges {
+  // @Input()
+  // comments: (PostCommentDraft | PostComment)[] = [];
   @Input()
   comments: any;
-
   @Input()
   newComments: PostComment[] = [];
 
   constructor() {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.comments);
+  }
+
+  giveLikeToComment(comment: any) {
+    console.log(comment);
+  }
+
+  // isMediaPost(post: Post | PostWithMedia): post is PostWithMedia {
+  //   return (<PostWithMedia>post).mediaUrl !== undefined;
+  // }
+  isCommentDraft(
+    comment: PostComment | PostCommentDraft
+  ): comment is PostComment {
+    return (<PostComment>comment).createdAt === undefined;
+  }
 }

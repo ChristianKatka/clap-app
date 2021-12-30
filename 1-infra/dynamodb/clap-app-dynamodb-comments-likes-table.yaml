@@ -1,0 +1,47 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app comments-likes
+
+Resources:
+  ClapAppCommentsLikesTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+        - AttributeName: 'commentId'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+      GlobalSecondaryIndexes:
+        - IndexName: "commentId-gsi"
+          KeySchema:
+            - AttributeName: "commentId"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+      TableName: 'clap-app-comments-likes'
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-comments-likes-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppCommentsLikesTableArn:
+    Description: clap-app comments-likes Table ARN
+    Value: !GetAtt ClapAppCommentsLikesTable.Arn
+    Export:
+      Name: clap-app-comments-likes-table-arn
+
+  ClapAppCommentsLikesTableStreamArn:
+    Description: clap-app comments-likes table stream ARN
+    Value: !GetAtt ClapAppCommentsLikesTable.StreamArn
+    Export:
+      Name: clap-app-comments-likes-table-stream-arn
+

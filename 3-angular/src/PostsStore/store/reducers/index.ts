@@ -4,11 +4,13 @@ import {
   createSelector,
 } from '@ngrx/store';
 import { AppState } from '../../../app/store/reducers';
+import * as fromCommentLikes from './comments-likes.reducer';
+import * as fromPendingCommentLikes from './pending-comment-likes.reducer';
 import * as fromPendingPostLikes from './pending-posts-likes.reducer';
-import * as fromPostsLikes from './posts-likes.reducer';
 import * as fromPostsComments from './posts-comments.reducer';
-import * as fromPosts from './posts.reducer';
+import * as fromPostsLikes from './posts-likes.reducer';
 import * as fromPostsUi from './posts-ui.reducer';
+import * as fromPosts from './posts.reducer';
 
 export const featureKey = 'post';
 export interface PostsFeatureState {
@@ -17,6 +19,8 @@ export interface PostsFeatureState {
   postsLikes: fromPostsLikes.PostsLikesState;
   postsComments: fromPostsComments.PostsCommentsState;
   pendingPostLikes: fromPendingPostLikes.PendingPostLikesState;
+  commentsLikes: fromCommentLikes.CommentsLikesState;
+  pendingCommentLikes: fromPendingCommentLikes.PendingCommentLikesState;
 }
 
 export interface PostsExtendedAppState extends AppState {
@@ -29,6 +33,8 @@ export const reducers: ActionReducerMap<PostsFeatureState> = {
   postsLikes: fromPostsLikes.reducer,
   postsComments: fromPostsComments.reducer,
   pendingPostLikes: fromPendingPostLikes.reducer,
+  commentsLikes: fromCommentLikes.reducer,
+  pendingCommentLikes: fromPendingCommentLikes.reducer,
 };
 
 const getPostsFeatureState =
@@ -54,11 +60,29 @@ export const getPostsCommentsState = createSelector(
   getPostsComments
 );
 
-const getPending =
+const getPendingPostLikes =
   createFeatureSelector<fromPendingPostLikes.PendingPostLikesState>(
     'pendingPostLikes'
   );
 export const getPendingPostLikesState = createSelector(
   getPostsFeatureState,
-  getPending
+  getPendingPostLikes
+);
+
+const getPendingCommentLikes =
+  createFeatureSelector<fromPendingCommentLikes.PendingCommentLikesState>(
+    'pendingCommentLikes'
+  );
+export const getPendingCommentLikesState = createSelector(
+  getPostsFeatureState,
+  getPendingCommentLikes
+);
+
+const getCommentLikes =
+  createFeatureSelector<fromCommentLikes.CommentsLikesState>(
+    'pendingCommentLikes'
+  );
+export const getCommentLikesState = createSelector(
+  getPostsFeatureState,
+  getCommentLikes
 );
