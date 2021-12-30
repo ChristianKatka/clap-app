@@ -1,6 +1,7 @@
 import { createSelector } from '@ngrx/store';
 //  I COULD USE LOADSH INSTEAD
-import { sortByCreatedDate } from '@shared/helpers/sort-by-created-at-time';
+import { sortByCreatedAtDateAscending } from '@shared/helpers/sort-by-created-at-date-ascending';
+import { sortByCreatedAtDateDescending } from '@shared/helpers/sort-by-created-at-date-descending';
 import {
   PostComment,
   PostCommentDraft,
@@ -68,7 +69,7 @@ export const getPosts = createSelector(
           return {
             ...post,
             postLikes,
-            comments,
+            comments: sortByCreatedAtDateDescending(comments),
             newComments,
             iLikeThisPost: iLikeThisPost.id,
           };
@@ -76,7 +77,7 @@ export const getPosts = createSelector(
           return {
             ...post,
             postLikes,
-            comments,
+            comments: sortByCreatedAtDateDescending(comments),
             newComments,
             iLikeThisPost: undefined,
           };
@@ -85,7 +86,9 @@ export const getPosts = createSelector(
     );
 
     if (sortBy === 'latest') {
-      const sortedPosts: (Post | PostWithMedia)[] = sortByCreatedDate(posts);
+      console.log('sort by latest');
+
+      const sortedPosts: (Post | PostWithMedia)[] = sortByCreatedAtDateAscending(posts);
       return sortedPosts;
     } else {
       return posts;
