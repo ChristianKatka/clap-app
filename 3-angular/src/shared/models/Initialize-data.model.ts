@@ -5,4 +5,5 @@ export interface InitializeData {
   myProfileImage: any;
   postsComments: any;
   commentsLikes: any;
+  myNotifications: any;
 }

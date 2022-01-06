@@ -20,6 +20,7 @@ export class InitEffects {
               myProfileImage,
               postsComments,
               commentsLikes,
+              myNotifications
             }) =>
               InitActions.loadApplicationInitializeDataSuccess({
                 PostsApiResponse,
@@ -28,6 +29,7 @@ export class InitEffects {
                 myProfileImage,
                 postsComments,
                 commentsLikes,
+                myNotifications
               })
           ),
           catchError((error: HttpErrorResponse) =>

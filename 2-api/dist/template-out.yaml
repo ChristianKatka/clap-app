@@ -78,7 +78,7 @@ Resources:
   API:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://clap-app-api-lambda/4f561cc9c430dde1aba4548f322c55df
+      CodeUri: s3://clap-app-api-lambda/c70f07940923390088370488b90090c0
       Handler: index.handler
       MemorySize: 256
       Role:

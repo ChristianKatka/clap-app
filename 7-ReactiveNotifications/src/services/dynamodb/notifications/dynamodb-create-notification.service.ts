@@ -1,11 +1,11 @@
-// import { NOTIFICATIONS_TABLE } from '../../../../../2-api/server/constants';
-// import { docClient } from '../../../../../2-api/server/instances/aws';
+import { NOTIFICATIONS_TABLE } from '../../../constants';
+import { docClient } from '../../../instances/aws';
 
-// export const dynamodbCreateNotification = (notification: any) =>
-//   docClient
-//     .put({
-//       TableName: NOTIFICATIONS_TABLE,
-//       Item: notification,
-//     })
-//     .promise()
-//     .then((res) => res);
+export const dynamodbCreateNotification = (notification: any) =>
+  docClient
+    .put({
+      TableName: NOTIFICATIONS_TABLE,
+      Item: notification,
+    })
+    .promise()
+    .then((res) => res);
