@@ -1,0 +1,37 @@
+{
+  "name": "clap-app-reactive-notifications",
+  "version": "0.0.0",
+  "config": {
+    "region": "eu-west-1",
+    "s3ReactiveNotificationsLambdaBucket": "clap-app-reactive-notifications-lambda",
+    "myCloudFormationStackName": "clap-app-reactive-notifications-lambda"
+  },
+  "scripts": {
+    "start": "ts-node test/index.ts",
+    "prebuild": "rm -rf build && rm -rf dist && mkdir build && mkdir dist",
+    "build": "tsc -p tsconfig.json && cp package.json build && cd build && npm install --production",
+    "delete-objects-in-s3": "aws s3 rm s3://$npm_package_config_s3ReactiveNotificationsLambdaBucket --recursive",
+    "package": "aws cloudformation package --template-file sam/template.yaml --s3-bucket $npm_package_config_s3ReactiveNotificationsLambdaBucket --output-template dist/template-out.yaml --region $npm_package_config_region",
+    "deploy": "aws cloudformation deploy --template-file dist/template-out.yaml --stack-name $npm_package_config_myCloudFormationStackName --capabilities CAPABILITY_IAM --region $npm_package_config_region",
+    "package-deploy": "npm run package && npm run deploy",
+    "build-package-deploy": "npm run build && npm run delete-objects-in-s3 && npm run package && npm run deploy"
+  },
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "luxon": "^2.2.0",
+    "rxjs": "^7.5.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.89",
+    "@types/lodash": "^4.14.178",
+    "@types/luxon": "^2.0.8",
+    "@types/node": "^17.0.5",
+    "@types/uuid": "^8.3.4",
+    "aws-sdk": "^2.1048.0",
+    "dotenv": "^10.0.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  }
+}

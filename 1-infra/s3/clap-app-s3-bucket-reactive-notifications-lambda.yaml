@@ -1,0 +1,38 @@
+
+Description: S3 Bucket for reactive notifications lambda
+
+Resources:
+  ClapAppReactiveNotificationsLambda:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: clap-app-reactive-notifications-lambda
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            MaxAge: "300"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+      Tags:
+        - Key: name
+          Value: S3 Bucket for clap-app reactive notifications lambda
+
+
+Outputs:
+  ClapAppReactiveNotificationsLambdaDomainName:
+    Description: S3 Bucket for clap-app reactive notifications lambda Domain Name
+    Value: !GetAtt ClapAppReactiveNotificationsLambda.DomainName
+    Export:
+      Name: clap-app-reactive-notifications-lambda-domain-name

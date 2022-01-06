@@ -1,0 +1,85 @@
+Transform: AWS::Serverless-2016-10-31
+Description: Reactive Notifications powered by Lambda functions
+
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Path: '/'
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+
+  AllowLambdaDynamoDB:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - LambdaExecutionRole
+    Properties:
+      PolicyName: 'AllowLambdaDynamoDB'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:*
+            Resource:
+              - '*'
+      Roles:
+        - !Ref LambdaExecutionRole
+
+  AllowDynamoDBStreamSource:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - LambdaExecutionRole
+    Properties:
+      PolicyName: 'AllowDynamoDBStreamSource'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:GetRecords
+              - dynamodb:GetShardIterator
+              - dynamodb:DescribeStream
+              - dynamodb:ListStreams
+            Resource:
+              - Fn::ImportValue: clap-app-posts-likes-table-stream-arn
+      Roles:
+        - !Ref LambdaExecutionRole
+
+
+  AfterPostLikeLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../build
+      Handler: after-post-like-lambda.handler
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: nodejs14.x
+      Timeout: 30
+
+  AfterPostLikeStreamEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    DependsOn:
+      - AllowDynamoDBStreamSource
+    Properties:
+      EventSourceArn:
+        Fn::ImportValue: clap-app-posts-likes-table-stream-arn
+      FunctionName: !GetAtt AfterPostLikeLambda.Arn
+      StartingPosition: 'TRIM_HORIZON'
+
