@@ -1,3 +1,5 @@
+import { CommentLike, CommentLikeDraft } from './comment-like.model';
+
 export interface PostCommentDraft {
   id: string;
   postId: string;
@@ -25,4 +27,5 @@ export interface PostComment {
   userId: string;
   createdAt: number;
   iLikeThisComment: string | undefined;
+  commentLikes: (CommentLike | CommentLikeDraft)[] | [];
 }

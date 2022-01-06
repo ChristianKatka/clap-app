@@ -1,10 +1,16 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
 } from '@angular/core';
+import {
+  CommentLike,
+  CommentLikeDraft,
+} from '@shared/models/comment-like.model';
 import {
   PostComment,
   PostCommentDraft,
@@ -17,29 +23,27 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostCommentsComponent implements OnChanges {
-  // @Input()
-  // comments: (PostCommentDraft | PostComment)[] = [];
   @Input()
-  comments: any;
+  comments: (PostComment | PostCommentDraft)[] = [];
   @Input()
   newComments: PostComment[] = [];
+
+  @Output()
+  giveLikeToComment: EventEmitter<PostComment> = new EventEmitter();
+
+  @Output()
+  removeLikeFromComment: EventEmitter<CommentLike | CommentLikeDraft> =
+    new EventEmitter();
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.comments);
+    // console.log(this.comments);
   }
 
-  giveLikeToComment(comment: any) {
-    console.log(comment);
-  }
-
-  // isMediaPost(post: Post | PostWithMedia): post is PostWithMedia {
-  //   return (<PostWithMedia>post).mediaUrl !== undefined;
-  // }
-  isCommentDraft(
+  isTypePostComment(
     comment: PostComment | PostCommentDraft
   ): comment is PostComment {
-    return (<PostComment>comment).createdAt === undefined;
+    return (<PostComment>comment).createdAt !== undefined;
   }
 }

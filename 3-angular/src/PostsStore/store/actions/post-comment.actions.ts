@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import {
-  PostComment,
-  PostCommentDraft,
+  PostCommentApiResponse,
+  PostCommentDraft
 } from '@shared/models/post-comment.model';
 
 export const createCommentToPostWithoutId = createAction(
@@ -15,7 +15,7 @@ export const createCommentToPost = createAction(
 );
 export const createCommentToPostSuccess = createAction(
   '[Post Comment] Create Comment To Post Success',
-  props<{ postComment: PostComment }>()
+  props<{ postComment: PostCommentApiResponse }>()
 );
 export const createCommentToPostFailure = createAction(
   '[Post Comment] Create Comment To Post Failure',
@@ -24,5 +24,5 @@ export const createCommentToPostFailure = createAction(
 
 export const newPostCommentHappenedViaSocket = createAction(
   '[Post Comment] New Post Comment Happened Via Socket',
-  props<{ postComment: PostComment }>()
+  props<{ postComment: PostCommentApiResponse }>()
 );

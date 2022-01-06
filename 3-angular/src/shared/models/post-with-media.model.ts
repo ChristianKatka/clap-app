@@ -1,4 +1,8 @@
-import { PostComment, PostCommentDraft } from './post-comment.model';
+import {
+  PostComment,
+  PostCommentApiResponse,
+  PostCommentDraft,
+} from './post-comment.model';
 import { PostLike, PostLikeDraft } from './post-like.model';
 
 export interface PostWithMediaDraftToDb {
@@ -37,7 +41,7 @@ export interface PostWithMedia {
   nickname: string;
   createdAt: number;
   iLikeThisPost: string | undefined;
-  postLikes: PostLike[] | PostLikeDraft[] | [];
-  comments: PostComment[] | PostCommentDraft[] | [];
+  postLikes: (PostLike | PostLikeDraft | PostCommentApiResponse)[] | [];
+  comments: (PostComment | PostCommentDraft | PostCommentApiResponse)[] | [];
   newComments: PostComment[] | [];
 }

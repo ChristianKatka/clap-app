@@ -3,10 +3,13 @@ import { AuthHTTPService } from '@app/services/auth-http.service';
 import { CommentLike } from '@shared/models/comment-like.model';
 import {
   PostComment,
-  PostCommentDraft
+  PostCommentDraft,
 } from '@shared/models/post-comment.model';
 import { PostLike } from '@shared/models/post-like.model';
-import { PostWithMediaApiRes, PostWithMediaImageUploaded } from '@shared/models/post-with-media.model';
+import {
+  PostWithMediaApiRes,
+  PostWithMediaImageUploaded,
+} from '@shared/models/post-with-media.model';
 import { PostApiResponse, PostDraft } from '@shared/models/post.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -17,8 +20,13 @@ import { environment } from '../../environments/environment';
 export class PostsService {
   constructor(private authHttp: AuthHTTPService) {}
 
-  createPostWithMedia(postWithMediaDraft: PostWithMediaImageUploaded): Observable<PostWithMediaApiRes> {
-    return this.authHttp.post(`${environment.apiBaseUrl}/posts/with-media`, postWithMediaDraft);
+  createPostWithMedia(
+    postWithMediaDraft: PostWithMediaImageUploaded
+  ): Observable<PostWithMediaApiRes> {
+    return this.authHttp.post(
+      `${environment.apiBaseUrl}/posts/with-media`,
+      postWithMediaDraft
+    );
   }
 
   createPost(postDraftToDb: PostDraft): Observable<PostApiResponse> {
@@ -51,7 +59,10 @@ export class PostsService {
     );
   }
 
-  giveLikeToComment(commentId: string, likeId: string): Observable<CommentLike> {
+  giveLikeToComment(
+    commentId: string,
+    likeId: string
+  ): Observable<CommentLike> {
     return this.authHttp.post(
       `${environment.apiBaseUrl}/posts/comment/like/${commentId}/${likeId}`,
       {}

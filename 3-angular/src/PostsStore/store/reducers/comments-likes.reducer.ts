@@ -1,14 +1,14 @@
 import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { CommentLike, CommentLikeDraft } from '@shared/models/comment-like.model';
+import { PostCommentApiResponse } from '@shared/models/post-comment.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { deleteFromObjectIndexList } from '@shared/utils/delete-from-object-index-list';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { CommentLikeActions } from '../actions';
 
-
 export interface CommentsLikesState {
-  commentsLikes: { [id: string]: CommentLike | CommentLikeDraft };
+  commentsLikes: { [id: string]: CommentLikeDraft | CommentLike };
 }
 
 export const initialState: CommentsLikesState = {
@@ -21,8 +21,9 @@ const CommentsLikesReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { commentsLikes }) => {
+      console.log(commentsLikes);
+      
       const myCommentsLikes = createObjectIndexList(commentsLikes);
-
       return {
         ...state,
         commentsLikes: myCommentsLikes,
@@ -31,7 +32,9 @@ const CommentsLikesReducer = createReducer(
   ),
 
   on(CommentLikeActions.giveLikeToComment, (state, { commentLikeDraft }) => {
-    const commentsLikes: { [id: string]: CommentLikeDraft } = {
+    const commentsLikes: {
+      [id: string]: CommentLikeDraft | CommentLike;
+    } = {
       ...state.commentsLikes,
       [commentLikeDraft.id]: commentLikeDraft,
     };
@@ -54,7 +57,10 @@ const CommentsLikesReducer = createReducer(
   }),
 
   on(CommentLikeActions.removeLikeFromComment, (state, { like }) => {
-    const commentsLikes = deleteFromObjectIndexList(state.commentsLikes, like.id);
+    const commentsLikes = deleteFromObjectIndexList(
+      state.commentsLikes,
+      like.id
+    );
 
     return {
       ...state,
@@ -62,7 +68,10 @@ const CommentsLikesReducer = createReducer(
     };
   }),
   on(CommentLikeActions.removeLikeFromCommentSuccess, (state, { likeId }) => {
-    const commentsLikes = deleteFromObjectIndexList(state.commentsLikes, likeId);
+    const commentsLikes = deleteFromObjectIndexList(
+      state.commentsLikes,
+      likeId
+    );
 
     return {
       ...state,
@@ -73,5 +82,7 @@ const CommentsLikesReducer = createReducer(
   on(AuthenticatedActions.signOut, () => initialState)
 );
 
-export const reducer = (state: CommentsLikesState | undefined, action: Action) =>
-  CommentsLikesReducer(state, action);
+export const reducer = (
+  state: CommentsLikesState | undefined,
+  action: Action
+) => CommentsLikesReducer(state, action);

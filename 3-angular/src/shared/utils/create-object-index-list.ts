@@ -1,5 +1,5 @@
 export const createObjectIndexList = (items: any[]) => {
-  if (!items) return [];
+  if (!items) return {};
   return items.reduce(
     (items: { [id: string]: any }, item: any) => ({
       ...items,

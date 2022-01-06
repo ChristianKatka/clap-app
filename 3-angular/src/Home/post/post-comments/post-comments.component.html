@@ -16,32 +16,22 @@
       </span>
 
       <div class="comment-info-wrapper">
-        <span *ngIf="this.isCommentDraft(comment)">just now</span>
-        <span *ngIf="!this.isCommentDraft(comment)">{{
+        <span *ngIf="!this.isTypePostComment(comment)">just now</span>
+        <span *ngIf="this.isTypePostComment(comment)">{{
           comment.createdAt | timeAgo
         }}</span>
-        <span class="comment-likes-amount">100 likes</span>
+        <span *ngIf="isTypePostComment(comment)" class="comment-likes-amount">{{
+          comment.commentLikes.length
+        }} likes</span>
       </div>
     </div>
   </section>
 
-  <!-- <mat-icon (click)="giveLikeToComment(comment)" class="comment-like material-icons-outlined"
-    >favorite_border</mat-icon
-  > -->
-  <div fxLayout="row">
-    <mat-icon
-      (click)="giveLikeToComment(comment)"
-      class="material-icons-outlined comment-like"
-      >favorite_border</mat-icon
-    >
-    <!-- <mat-icon
-      *ngIf="post.iLikeThisPost"
-      (click)="onRemoveLikeFromPost(post.iLikeThisPost, post.postLikes)"
-      class="material-icons-outlined comment-like liked"
-    >
-      favorite
-    </mat-icon> -->
-  </div>
+  <clap-app-comment-like-button
+    [comment]="comment"
+    (giveLikeToComment)="this.giveLikeToComment.emit($event)"
+    (removeLikeFromComment)="this.removeLikeFromComment.emit($event)"
+  ></clap-app-comment-like-button>
 </div>
 
 <!-- New comments via socket -->
@@ -70,7 +60,7 @@
         </p>
       </div>
     </section>
-    <p>{{ isCommentDraft(comment) }}</p>
+    <p>{{ isTypePostComment(comment) }}</p>
 
     <mat-icon class="comment-like material-icons-outlined"
       >favorite_border</mat-icon

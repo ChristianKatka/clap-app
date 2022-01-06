@@ -2,6 +2,7 @@ import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import {
   PostComment,
+  PostCommentApiResponse,
   PostCommentDraft,
 } from '@shared/models/post-comment.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
@@ -9,8 +10,8 @@ import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { PostCommentActions } from '../actions';
 
 export interface PostsCommentsState {
-  postsComments: { [id: string]: PostComment | PostCommentDraft };
-  newPostCommentViaSocket: { [id: string]: PostComment };
+  postsComments: { [id: string]:  PostCommentDraft | PostCommentApiResponse};
+  newPostCommentViaSocket: { [id: string]: PostCommentApiResponse };
 }
 
 export const initialState: PostsCommentsState = {

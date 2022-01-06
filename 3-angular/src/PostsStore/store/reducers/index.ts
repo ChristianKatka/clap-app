@@ -80,7 +80,7 @@ export const getPendingCommentLikesState = createSelector(
 
 const getCommentLikes =
   createFeatureSelector<fromCommentLikes.CommentsLikesState>(
-    'pendingCommentLikes'
+    'commentsLikes'
   );
 export const getCommentLikesState = createSelector(
   getPostsFeatureState,

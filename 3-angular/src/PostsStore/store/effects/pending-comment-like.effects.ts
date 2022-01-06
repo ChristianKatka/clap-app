@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { of, tap } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { PostsService } from 'src/PostsStore/services/posts.service';
 import { CommentLikeActions, PendingCommentLikeActions } from '../actions';
@@ -20,6 +20,7 @@ export class PendingCommentLikeEffects {
           return this.postsService
             .giveLikeToComment(commentLikeDraft.commentId, commentLikeDraft.id)
             .pipe(
+              tap((x) => console.log(x)),
               map((like) =>
                 CommentLikeActions.giveLikeToCommentSuccess({ like })
               ),

@@ -15,6 +15,7 @@ const validateEvent = (event: DynamoDBStreamEvent) => {
   return comment;
 };
 
+// TODO ASYNC HANDLER
 const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
   console.log("Received event:", JSON.stringify(event, null, 4));
 
@@ -32,6 +33,7 @@ const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
     return Promise.resolve("Lambda processed successfully");
   };
 
+  // RETURN AWAIT MAIN PROCESS
   mainProcess()
     .then(() => {
       console.log("Successfully sent new comment via socket");

@@ -7,6 +7,7 @@ import {
 } from '@shared/models/comment-like.model';
 import { PostComment } from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
+import { PostWithMedia } from '@shared/models/post-with-media.model';
 import { Post } from '@shared/models/post.model';
 import { Observable } from 'rxjs';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
@@ -27,7 +28,7 @@ import {
   styleUrls: ['post.container.scss'],
 })
 export class PostContainerComponent implements OnInit, OnDestroy {
-  selectedPost$: Observable<Post> = this.store.select(
+  selectedPost$: Observable<Post | PostWithMedia> = this.store.select(
     PostsSelectors.getSelectedPost
   );
   myProfileImage$: Observable<string> = this.store.select(
@@ -75,8 +76,6 @@ export class PostContainerComponent implements OnInit, OnDestroy {
   }
 
   onGiveLikeToComment(comment: PostComment) {
-    console.log('TODO CHECK ability to give like to post comment draft');
-
     this.store.dispatch(
       CommentLikeActions.giveLikeToCommentWithoutId({ commentId: comment.id })
     );

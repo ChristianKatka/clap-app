@@ -9,7 +9,16 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import {
+  CommentLike,
+  CommentLikeDraft,
+} from '@shared/models/comment-like.model';
+import {
+  PostComment,
+  PostCommentDraft,
+} from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
+import { PostWithMedia } from '@shared/models/post-with-media.model';
 import { Post } from '@shared/models/post.model';
 
 @Component({
@@ -22,7 +31,7 @@ export class PostComponent implements OnChanges, AfterViewChecked {
   // @ViewChild('element') private ref: ElementRef = new ElementRef('');
 
   @Input()
-  post: Post | null = null;
+  post: Post | PostWithMedia | null = null;
   @Input()
   myProfileImage: string | null = null;
 
@@ -36,6 +45,13 @@ export class PostComponent implements OnChanges, AfterViewChecked {
   giveLikeToPost: EventEmitter<Post> = new EventEmitter();
   @Output()
   removeLikeFromPost: EventEmitter<PostLike | PostLikeDraft> =
+    new EventEmitter();
+
+  @Output()
+  giveLikeToComment: EventEmitter<PostComment> = new EventEmitter();
+
+  @Output()
+  removeLikeFromComment: EventEmitter<CommentLike | CommentLikeDraft> =
     new EventEmitter();
 
   newCommentHappened = false;
@@ -72,5 +88,9 @@ export class PostComponent implements OnChanges, AfterViewChecked {
       (postLike) => postLike.id === likeId
     )[0];
     this.removeLikeFromPost.emit(postLike);
+  }
+
+  isMediaPost(post: Post | PostWithMedia): post is PostWithMedia {
+    return (<PostWithMedia>post).mediaUrl !== undefined;
   }
 }

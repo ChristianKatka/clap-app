@@ -11,6 +11,7 @@ import { PostComponent } from './post/post.component';
 import { PostAddCommentFormComponent } from './post/post-add-comment-form/post-add-comment-form.component';
 import { PostCommentsComponent } from './post/post-comments/post-comments.component';
 import { NewCommentsBelowComponent } from './post/post-comments/new-comments-below/new-comments-below.component';
+import { CommentLikeButtonComponent } from './post/post-comments/comment-like-button/comment-like-button.component';
 
 export const components: any[] = [
   HomeFeatureContainerComponent,
@@ -25,5 +26,6 @@ export const components: any[] = [
   PostTopBarComponent,
   PostComponent,
   PostCommentsComponent,
-  NewCommentsBelowComponent
+  NewCommentsBelowComponent,
+  CommentLikeButtonComponent
 ];

@@ -1,15 +1,6 @@
 import { createSelector } from '@ngrx/store';
 //  I COULD USE LOADSH INSTEAD
 import { sortByCreatedAtDateAscending } from '@shared/helpers/sort-by-created-at-date-ascending';
-import { sortByCreatedAtDateDescending } from '@shared/helpers/sort-by-created-at-date-descending';
-import {
-  CommentLike,
-  CommentLikeDraft,
-} from '@shared/models/comment-like.model';
-import {
-  PostComment,
-  PostCommentDraft,
-} from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import {
   PostWithMedia,
@@ -22,6 +13,13 @@ import {
   getPostsLikesState,
   getPostsState,
 } from '../reducers';
+import {
+  attachAllNecessaryDataInsidePost,
+  checkIfILikeThisPost,
+  getCommentsThatBelongToGivePostWithlikeInfoInside,
+  getLikesThatBelongToGivenPost,
+  getNewCommentsThatCameViaSocket,
+} from '../utils/posts.utils';
 import {
   getNewPostCommentsViaSocket,
   getPostsComments,
@@ -37,9 +35,13 @@ const getCommentLikes = createSelector(getCommentLikesState, (state) =>
   Object.values(state.commentsLikes)
 );
 
+const getPostLikes = createSelector(getPostsLikesState, (state) =>
+  Object.values(state.postsLikes)
+);
+
 export const getPosts = createSelector(
   getPostsState,
-  getPostsLikesState,
+  getPostLikes,
   getMyProfileState,
   getSortBy,
   getPostsComments,
@@ -47,7 +49,7 @@ export const getPosts = createSelector(
   getCommentLikes,
   (
     postsState,
-    postsLikesState,
+    postsLikes,
     profileState,
     sortBy,
     postsComments,
@@ -56,66 +58,38 @@ export const getPosts = createSelector(
   ) => {
     const postEntities: (PostApiResponse | PostWithMediaApiRes)[] =
       Object.values(postsState.entities);
-    const postsLikes = Object.values(postsLikesState.postsLikes);
+
     const userId = profileState.myProfile?.id;
     if (!userId) return [];
 
     const posts: (Post | PostWithMedia)[] | [] = postEntities.map(
       (post: PostApiResponse | PostWithMediaApiRes) => {
-        const postLikes = postsLikes.filter(
-          (postLike: PostLike | PostLikeDraft) => post.id === postLike.postId
-        );
-
+        const postLikes = getLikesThatBelongToGivenPost(post, postsLikes);
         const iLikeThisPost: PostLikeDraft | PostLike | undefined =
-          postLikes.filter(
-            (postLike: PostLike | PostLikeDraft) => postLike.userId === userId
-          )[0];
-        const comments = postsComments.filter(
-          (comment: PostCommentDraft | PostComment) =>
-            comment.postId === post.id
-        );
-        const newComments = newCommentsViaSocket.filter(
-          (comment: PostCommentDraft | PostComment) =>
-            comment.postId === post.id
+          checkIfILikeThisPost(postLikes, userId, post);
+        const comments =
+          getCommentsThatBelongToGivePostWithlikeInfoInside(
+            post,
+            postsComments,
+            commentLikes,
+            userId
+          );
+        const newComments = getNewCommentsThatCameViaSocket(
+          post,
+          newCommentsViaSocket
         );
 
-        // TODO KATO MITEN SAAT TYKKÄYS TIEDON KOMMENTIN SISÄÄN
-        const commentsWithIlikeThisInfoInside = comments.map((comment: any) => {
-          const iLikeThisComment: CommentLikeDraft | CommentLike | undefined =
-            commentLikes.filter(
-              (commentLike: CommentLike | CommentLikeDraft) =>
-                commentLike.userId === comment.userId
-            )[0];
-          if (iLikeThisComment) {
-            return { ...comment, iLikeThisComment: iLikeThisComment.id };
-          } else {
-            return { ...comment, iLikeThisComment: undefined };
-          }
-        });
-
-        if (iLikeThisPost) {
-          return {
-            ...post,
-            postLikes,
-            comments: sortByCreatedAtDateDescending(comments),
-            newComments,
-            iLikeThisPost: iLikeThisPost.id,
-          };
-        } else {
-          return {
-            ...post,
-            postLikes,
-            comments: sortByCreatedAtDateDescending(comments),
-            newComments,
-            iLikeThisPost: undefined,
-          };
-        }
+        return attachAllNecessaryDataInsidePost(
+          iLikeThisPost,
+          post,
+          postLikes,
+          comments,
+          newComments
+        );
       }
     );
 
     if (sortBy === 'latest') {
-      console.log('sort by latest');
-
       const sortedPosts: (Post | PostWithMedia)[] =
         sortByCreatedAtDateAscending(posts);
       return sortedPosts;

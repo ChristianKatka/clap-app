@@ -1,4 +1,4 @@
-import { PostComment, PostCommentDraft } from './post-comment.model';
+import { PostComment, PostCommentApiResponse, PostCommentDraft } from './post-comment.model';
 import { PostLike, PostLikeDraft } from './post-like.model';
 
 export interface PostDraft {
@@ -22,7 +22,7 @@ export interface Post {
   nickname: string;
   createdAt: number;
   iLikeThisPost: string | undefined;
-  postLikes: PostLike[] | PostLikeDraft[] | [];
-  comments: PostComment[] | PostCommentDraft[] | [];
+  postLikes: (PostLike | PostLikeDraft)[] | [];
+  comments: (PostComment | PostCommentDraft | PostCommentApiResponse)[] | [];
   newComments: PostComment[] | [];
 }
