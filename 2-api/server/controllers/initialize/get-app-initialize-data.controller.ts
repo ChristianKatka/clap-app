@@ -6,6 +6,7 @@ import { dynamodbGetUserById } from '../../services/dynamodb/users/dynamodb-get-
 import { dynamodbGetUsersProfileImageById } from '../../services/dynamodb/users/profile-image/dynamodb-get-users-profile-image-by-id.service';
 import { getAllPostsCommentsUtil } from '../../utils/get-all-posts-comments.util';
 import { getAllPostsUtil } from '../../utils/get-all-posts.util';
+import { getMyNotificationisUtil } from '../../utils/get-my-notifications.util';
 
 export const getAppInitializeData = async (ctx: Context, next: Next) => {
   const userId = ctx.state.jwtPayload.sub;
@@ -17,7 +18,7 @@ export const getAppInitializeData = async (ctx: Context, next: Next) => {
   const commentsLikes = await dynamodbGetAllCommentsLikes();
   const myProfile = await dynamodbGetUserById(userId);
   const myProfileImage = await dynamodbGetUsersProfileImageById(userId);
-  const myNotifications = await dynamodbGetNotificationsByUserId(userId);
+  const myNotifications = await getMyNotificationisUtil(userId);
 
   ctx.response.status = 200;
   ctx.response.body = {

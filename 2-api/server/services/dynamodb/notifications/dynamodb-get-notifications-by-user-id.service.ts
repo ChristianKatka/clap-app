@@ -11,5 +11,6 @@ export const dynamodbGetNotificationsByUserId = async (userId: string) => {
         ':userId': userId,
       },
     })
-    .promise();
+    .promise()
+    .then((res) => res.Items);
 };

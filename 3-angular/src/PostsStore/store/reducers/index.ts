@@ -11,6 +11,7 @@ import * as fromPostsComments from './posts-comments.reducer';
 import * as fromPostsLikes from './posts-likes.reducer';
 import * as fromPostsUi from './posts-ui.reducer';
 import * as fromPosts from './posts.reducer';
+import * as fromNotifications from './notifications.reducer';
 
 export const featureKey = 'post';
 export interface PostsFeatureState {
@@ -21,6 +22,7 @@ export interface PostsFeatureState {
   pendingPostLikes: fromPendingPostLikes.PendingPostLikesState;
   commentsLikes: fromCommentLikes.CommentsLikesState;
   pendingCommentLikes: fromPendingCommentLikes.PendingCommentLikesState;
+  notifications: fromNotifications.NotificiationsState;
 }
 
 export interface PostsExtendedAppState extends AppState {
@@ -35,6 +37,7 @@ export const reducers: ActionReducerMap<PostsFeatureState> = {
   pendingPostLikes: fromPendingPostLikes.reducer,
   commentsLikes: fromCommentLikes.reducer,
   pendingCommentLikes: fromPendingCommentLikes.reducer,
+  notifications: fromNotifications.reducer,
 };
 
 const getPostsFeatureState =
@@ -79,10 +82,15 @@ export const getPendingCommentLikesState = createSelector(
 );
 
 const getCommentLikes =
-  createFeatureSelector<fromCommentLikes.CommentsLikesState>(
-    'commentsLikes'
-  );
+  createFeatureSelector<fromCommentLikes.CommentsLikesState>('commentsLikes');
 export const getCommentLikesState = createSelector(
   getPostsFeatureState,
   getCommentLikes
+);
+
+const getNotifications =
+  createFeatureSelector<fromNotifications.NotificiationsState>('notifications');
+export const getNotificationsState = createSelector(
+  getPostsFeatureState,
+  getNotifications
 );

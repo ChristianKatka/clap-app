@@ -1,4 +1,4 @@
-export interface Notification {
+export interface MyNotification {
   id: string;
   seen: boolean;
   createdAt: number;
@@ -7,4 +7,5 @@ export interface Notification {
   postText: string;
   postMediaUrl: string | boolean;
   postLikersProfileImage: string;
+  postLikersNickname: string;
 }

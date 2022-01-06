@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import { NotificationsSelectors } from 'src/PostsStore/store/selectors';
 
 @Component({
-  templateUrl: 'notifications.container.html',
-  styleUrls: ['notifications.container.scss'],
+  selector: 'clap-app-navbar',
+  templateUrl: 'navbar.container.html',
+  styleUrls: ['navbar.container.scss'],
 })
-export class NotificationsContainerComponent implements OnInit {
+export class NavbarContainerComponent {
   notifications$ = this.store.select(NotificationsSelectors.getNotifications);
   constructor(private store: Store<PostsExtendedAppState>) {}
-
-  ngOnInit() {}
 }

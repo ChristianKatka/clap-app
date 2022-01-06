@@ -99,16 +99,6 @@ const PostsReducer = createReducer(
       imageUploadProgressAmount,
     })
   ),
-  // on(PostsActions.createPostWithMediaSuccess, (state, { postWithMedia }) => ({
-  //   ...state,
-  //   loading: false,
-  //   postsWithImage: {
-  //     ...state.postsWithImage,
-  //     [postWithMedia.id]: {
-  //       ...postWithMedia,
-  //     },
-  //   },
-  // })),
 
   on(AuthenticatedActions.signOut, () => initialState)
 );

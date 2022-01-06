@@ -3,6 +3,7 @@ import * as PostsMySelectors from './posts-my-profile.selectors';
 import * as PendingSelectors from './pending.selectors';
 import * as PostsUiSelectors from './posts-ui.selectors';
 import * as PostsCommentsSelectors from './posts-comments.selectors';
+import * as NotificationsSelectors from './notifications.selectors';
 
 export {
   PostsSelectors,
@@ -10,4 +11,5 @@ export {
   PendingSelectors,
   PostsUiSelectors,
   PostsCommentsSelectors,
+  NotificationsSelectors,
 };

@@ -1,7 +1,9 @@
 import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
-import { CommentLike, CommentLikeDraft } from '@shared/models/comment-like.model';
-import { PostCommentApiResponse } from '@shared/models/post-comment.model';
+import {
+  CommentLike,
+  CommentLikeDraft,
+} from '@shared/models/comment-like.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { deleteFromObjectIndexList } from '@shared/utils/delete-from-object-index-list';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
@@ -21,8 +23,6 @@ const CommentsLikesReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { commentsLikes }) => {
-      console.log(commentsLikes);
-      
       const myCommentsLikes = createObjectIndexList(commentsLikes);
       return {
         ...state,
