@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@use "../../../styles.scss" as s;
 
 .profile-image {
   height: 35px;
@@ -15,10 +15,33 @@
 
 .date-text {
   margin-left: 3px;
-  color: $clap-gray;
+  color: s.$clap-gray;
 }
 
 .posted-image {
   height: 45px;
   object-fit: cover;
 }
+
+// ---
+
+
+.profile-image {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.date-text {
+  margin-left: 5px;
+  color: s.$clap-gray;
+}
+
+.posted-image {
+  margin-left: 12px;
+  height: 45px;
+  object-fit: cover;
+}
+

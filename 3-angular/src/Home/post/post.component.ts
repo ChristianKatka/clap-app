@@ -8,15 +8,13 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import {
   CommentLike,
   CommentLikeDraft,
 } from '@shared/models/comment-like.model';
-import {
-  PostComment,
-  PostCommentDraft,
-} from '@shared/models/post-comment.model';
+import { PostComment } from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithMedia } from '@shared/models/post-with-media.model';
 import { Post } from '@shared/models/post.model';
@@ -28,7 +26,7 @@ import { Post } from '@shared/models/post.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent implements OnChanges, AfterViewChecked {
-  // @ViewChild('element') private ref: ElementRef = new ElementRef('');
+  @ViewChild('scroll') private scroll: ElementRef = {} as ElementRef;
 
   @Input()
   post: Post | PostWithMedia | null = null;
@@ -56,7 +54,7 @@ export class PostComponent implements OnChanges, AfterViewChecked {
 
   newCommentHappened = false;
 
-  constructor(private ref: ElementRef) {}
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.post) return;
@@ -66,18 +64,9 @@ export class PostComponent implements OnChanges, AfterViewChecked {
   }
   ngAfterViewChecked(): void {
     if (this.newCommentHappened) {
-      this.scrollBottomOfPage();
+      this.scrollBottom();
       this.newCommentHappened = false;
     }
-  }
-
-  scrollBottomOfPage() {
-    // console.log(this.ref.nativeElement.scrollTop);
-    // console.log(this.ref.nativeElement.scrollHeight);
-
-    try {
-      this.ref.nativeElement.scrollTop = this.ref.nativeElement.scrollHeight;
-    } catch (err) {}
   }
 
   onRemoveLikeFromPost(
@@ -92,5 +81,13 @@ export class PostComponent implements OnChanges, AfterViewChecked {
 
   isMediaPost(post: Post | PostWithMedia): post is PostWithMedia {
     return (<PostWithMedia>post).mediaUrl !== undefined;
+  }
+
+  scrollBottom() {
+    console.log('scrollBottom');
+    try {
+      this.scroll.nativeElement.scrollTop =
+        this.scroll.nativeElement.scrollHeight;
+    } catch (err) {}
   }
 }

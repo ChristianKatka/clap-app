@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ScrollService } from '@app/services/scroll.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, of } from 'rxjs';
@@ -6,9 +7,7 @@ import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 import { PostsService } from 'src/PostsStore/services/posts.service';
 import { v4 as uuid } from 'uuid';
-import {
-  PostCommentActions
-} from '../actions';
+import { PostCommentActions } from '../actions';
 
 @Injectable()
 export class PostCommentEffects {
@@ -38,11 +37,33 @@ export class PostCommentEffects {
     )
   );
 
+  // createCommentToPost$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(PostCommentActions.createCommentToPost),
+  //     switchMap(({ postCommentDraft }) =>
+  //       this.postsService.createCommentToPost(postCommentDraft).pipe(
+  //         map((postComment) =>
+  //           PostCommentActions.createCommentToPostSuccess({
+  //             postComment,
+  //           })
+  //         ),
+  //         catchError(() =>
+  //           of(
+  //             PostCommentActions.createCommentToPostFailure({
+  //               error: 'Error adding comment to post',
+  //             })
+  //           )
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
+
   createCommentToPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostCommentActions.createCommentToPost),
-      switchMap(({ postCommentDraft }) =>
-        this.postsService.createCommentToPost(postCommentDraft).pipe(
+      switchMap(({ postCommentDraft }) => {
+        return this.postsService.createCommentToPost(postCommentDraft).pipe(
           map((postComment) =>
             PostCommentActions.createCommentToPostSuccess({
               postComment,
@@ -55,14 +76,15 @@ export class PostCommentEffects {
               })
             )
           )
-        )
-      )
+        );
+      })
     )
   );
 
   constructor(
     private actions$: Actions,
     private store: Store,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private scrollService: ScrollService
   ) {}
 }

@@ -1,4 +1,4 @@
-<div
+<!-- <div
   class="some-one-liked-your-post-wrapper"
   fxLayoutAlign="space-between center"
 >
@@ -15,24 +15,46 @@
   <img class="posted-image" src="assets/images/photo1.jpg" alt="" />
 </div>
 
-<!-- 
 <div
-  *ngFor="let notification of notifications"
+  *ngIf="notifications"
   class="some-one-liked-your-post-wrapper"
   fxLayoutAlign="space-between center"
 >
   <section fxLayout="row" fxLayoutAlign="center center">
     <img
-      [src]="notification.postLikersProfileImage"
+      [src]="notifications[0].postLikersProfileImage"
       alt="profile-image"
       class="profile-image"
     />
-    <span class="user-name">{{ notification.postLikersNickname }}</span
+    <span class="user-name">{{ notifications[0].postLikersNickname }}</span
     ><span>liked your post,</span
-    ><span class="date-text">{{ notification.createdAt | timeAgo }}</span>
+    ><span class="date-text">{{ notifications[0].createdAt | timeAgo }}</span>
   </section>
 
   <img class="posted-image" src="assets/images/photo1.jpg" alt="" />
 </div>
 
 <pre>{{ notifications | json }}</pre> -->
+
+<div
+  *ngIf="notifications"
+  style="margin-top: 1rem"
+  class="some-one-commented-your-post-wrapper"
+  fxLayoutAlign="space-between start"
+>
+  <section fxLayout="row" fxLayoutAlign="start center">
+    <img
+      [src]="notifications[0].postLikersProfileImage"
+      alt="profile-image"
+      class="profile-image"
+    />
+    <span style="line-height: 17px"
+      ><b>{{ notifications[0].postLikersNickname }}</b> liked your post,<span
+        class="date-text"
+        >{{ notifications[0].createdAt | timeAgo }}</span
+      ></span
+    >
+  </section>
+
+  <img class="posted-image" src="assets/images/photo1.jpg" alt="" />
+</div>

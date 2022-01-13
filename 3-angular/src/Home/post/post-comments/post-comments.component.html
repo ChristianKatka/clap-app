@@ -1,7 +1,10 @@
+
+
 <div
-  *ngFor="let comment of comments"
+  *ngFor="let comment of comments; let i=index; last as isLast"
   style="margin-top: 1rem"
   class="some-one-commented-your-post-wrapper"
+  [class.last-element] = "isLast"
   fxLayoutAlign="space-between start"
 >
   <section fxLayout="row" fxLayoutAlign="start start">
