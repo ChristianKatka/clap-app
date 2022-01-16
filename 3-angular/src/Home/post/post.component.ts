@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   Output,
@@ -14,6 +15,7 @@ import {
   CommentLike,
   CommentLikeDraft,
 } from '@shared/models/comment-like.model';
+import { CommentUI } from '@shared/models/comment-ui.model';
 import { PostComment } from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithMedia } from '@shared/models/post-with-media.model';
@@ -32,25 +34,25 @@ export class PostComponent implements OnChanges, AfterViewChecked {
   post: Post | PostWithMedia | null = null;
   @Input()
   myProfileImage: string | null = null;
-
   @Input()
   isAddCommentClicked = false;
+  @Input()
+  commentUIStatus: CommentUI | null = null;
 
   @Output()
   createCommentToPost: EventEmitter<string> = new EventEmitter();
-
   @Output()
   giveLikeToPost: EventEmitter<Post> = new EventEmitter();
   @Output()
   removeLikeFromPost: EventEmitter<PostLike | PostLikeDraft> =
     new EventEmitter();
-
   @Output()
   giveLikeToComment: EventEmitter<PostComment> = new EventEmitter();
-
   @Output()
   removeLikeFromComment: EventEmitter<CommentLike | CommentLikeDraft> =
     new EventEmitter();
+  @Output()
+  hideNewCommentsBelowPopUp = new EventEmitter();
 
   newCommentHappened = false;
 
@@ -61,10 +63,12 @@ export class PostComponent implements OnChanges, AfterViewChecked {
     if (changes['post']) {
       this.newCommentHappened = true;
     }
+    if (this.commentUIStatus && this.commentUIStatus.iCreatedNewComment) {
+      this.scrollBottom();
+    }
   }
   ngAfterViewChecked(): void {
     if (this.newCommentHappened) {
-      this.scrollBottom();
       this.newCommentHappened = false;
     }
   }
@@ -90,4 +94,5 @@ export class PostComponent implements OnChanges, AfterViewChecked {
         this.scroll.nativeElement.scrollHeight;
     } catch (err) {}
   }
+
 }

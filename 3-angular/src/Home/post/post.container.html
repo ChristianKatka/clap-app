@@ -5,9 +5,11 @@
   [post]="selectedPost$ | async"
   [myProfileImage]="myProfileImage$ | async"
   [isAddCommentClicked]="isAddCommentClicked$ | async | onlyBoolean"
+  [commentUIStatus]="commentUIStatus$ | async"
   (createCommentToPost)="onCreateCommentToPost($event)"
   (giveLikeToPost)="onGiveLikeToPost($event)"
   (removeLikeFromPost)="onRemoveLikeFromPost($event)"
   (giveLikeToComment)="onGiveLikeToComment($event)"
   (removeLikeFromComment)="onRemoveLikeFromComment($event)"
+  (hideNewCommentsBelowPopUp)="onHideNewCommentsBelowPopUp()"
 ></clap-app-post>

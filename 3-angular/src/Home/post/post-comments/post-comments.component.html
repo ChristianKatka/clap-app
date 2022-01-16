@@ -1,50 +1,9 @@
-
-
-<div
-  *ngFor="let comment of comments; let i=index; last as isLast"
-  style="margin-top: 1rem"
-  class="some-one-commented-your-post-wrapper"
-  [class.last-element] = "isLast"
-  fxLayoutAlign="space-between start"
->
-  <section fxLayout="row" fxLayoutAlign="start start">
-    <img
-      src="{{ comment.commentersProfileImage }}"
-      alt="profile-image"
-      class="profile-image"
-    />
-    <div>
-      <span style="line-height: 17px"
-        ><b>{{ comment.nickname }}</b> {{ comment.text }}
-      </span>
-
-      <div class="comment-info-wrapper">
-        <span *ngIf="!this.isTypePostComment(comment)">just now</span>
-        <span *ngIf="this.isTypePostComment(comment)">{{
-          comment.createdAt | timeAgo
-        }}</span>
-        <span *ngIf="isTypePostComment(comment)" class="comment-likes-amount">{{
-          comment.commentLikes.length
-        }} likes</span>
-      </div>
-    </div>
-  </section>
-
-  <clap-app-comment-like-button
-    [comment]="comment"
-    (giveLikeToComment)="this.giveLikeToComment.emit($event)"
-    (removeLikeFromComment)="this.removeLikeFromComment.emit($event)"
-  ></clap-app-comment-like-button>
-</div>
-
-<!-- New comments via socket -->
-<section *ngIf="newComments.length">
-  <clap-app-divider-with-text>New comments</clap-app-divider-with-text>
-
+<main>
   <div
-    *ngFor="let comment of newComments"
+    *ngFor="let comment of comments; let i = index; last as isLast"
     style="margin-top: 1rem"
     class="some-one-commented-your-post-wrapper"
+    [class.last-element]="isLast && newComments.length === 0"
     fxLayoutAlign="space-between start"
   >
     <section fxLayout="row" fxLayoutAlign="start start">
@@ -57,20 +16,62 @@
         <span style="line-height: 17px"
           ><b>{{ comment.nickname }}</b> {{ comment.text }}
         </span>
-        <p class="comment-info">
-          {{ comment.createdAt | timeAgo
-          }}<b class="comment-likes-amount">200 likes</b>
-        </p>
+
+        <div class="comment-info-wrapper">
+          <span *ngIf="!this.isTypePostComment(comment)">just now</span>
+          <span *ngIf="this.isTypePostComment(comment)">{{
+            comment.createdAt | timeAgo
+          }}</span>
+          <span *ngIf="isTypePostComment(comment)" class="comment-likes-amount"
+            >{{ comment.commentLikes.length }} likes</span
+          >
+        </div>
       </div>
     </section>
-    <p>{{ isTypePostComment(comment) }}</p>
 
-    <mat-icon class="comment-like material-icons-outlined"
-      >favorite_border</mat-icon
-    >
+    <clap-app-comment-like-button
+      [comment]="comment"
+      (giveLikeToComment)="this.giveLikeToComment.emit($event)"
+      (removeLikeFromComment)="this.removeLikeFromComment.emit($event)"
+    ></clap-app-comment-like-button>
   </div>
-</section>
+  <div #afterLastCommentElement>p</div>
+  <!-- New comments via socket -->
+  <section *ngIf="newComments.length">
+    <clap-app-divider-with-text>New comments</clap-app-divider-with-text>
 
-<clap-app-new-comments-below
-  *ngIf="newComments.length"
-></clap-app-new-comments-below>
+    <div
+      *ngFor="let comment of newComments; let i = index; last as isLast"
+      style="margin-top: 1rem"
+      class="some-one-commented-your-post-wrapper"
+      [class.last-element]="isLast"
+      fxLayoutAlign="space-between start"
+    >
+      <section fxLayout="row" fxLayoutAlign="start start">
+        <img
+          src="{{ comment.commentersProfileImage }}"
+          alt="profile-image"
+          class="profile-image"
+        />
+        <div>
+          <span style="line-height: 17px"
+            ><b>{{ comment.nickname }}</b> {{ comment.text }}
+          </span>
+          <p class="comment-info">
+            {{ comment.createdAt | timeAgo
+            }}<b class="comment-likes-amount">200 likes</b>
+          </p>
+        </div>
+      </section>
+      <p>{{ isTypePostComment(comment) }}</p>
+
+      <mat-icon class="comment-like material-icons-outlined"
+        >favorite_border</mat-icon
+      >
+    </div>
+  </section>
+
+  <clap-app-new-comments-below
+    *ngIf="commentUIStatus && commentUIStatus.showNewMessagesBelowPopUp"
+  ></clap-app-new-comments-below>
+</main>

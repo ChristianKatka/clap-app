@@ -5,6 +5,7 @@ import {
   CommentLike,
   CommentLikeDraft,
 } from '@shared/models/comment-like.model';
+import { CommentUI } from '@shared/models/comment-ui.model';
 import { PostComment } from '@shared/models/post-comment.model';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithMedia } from '@shared/models/post-with-media.model';
@@ -14,11 +15,13 @@ import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 import {
   CommentLikeActions,
   PostCommentActions,
+  PostCommentUIActions,
   PostLikeActions,
   PostsActions,
 } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import {
+  PostsCommentsUISelectors,
   PostsSelectors,
   PostsUiSelectors,
 } from 'src/PostsStore/store/selectors';
@@ -39,6 +42,10 @@ export class PostContainerComponent implements OnInit, OnDestroy {
   );
 
   postId: string | undefined;
+
+  commentUIStatus$: Observable<CommentUI> = this.store.select(
+    PostsCommentsUISelectors.getCommentUiStatus
+  );
 
   constructor(
     private store: Store<PostsExtendedAppState>,
@@ -83,5 +90,9 @@ export class PostContainerComponent implements OnInit, OnDestroy {
 
   onRemoveLikeFromComment(like: CommentLike | CommentLikeDraft) {
     this.store.dispatch(CommentLikeActions.removeLikeFromComment({ like }));
+  }
+
+  onHideNewCommentsBelowPopUp() {
+    this.store.dispatch(PostCommentUIActions.hideNewMessagesBelowPopUp());
   }
 }

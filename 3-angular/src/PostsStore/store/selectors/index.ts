@@ -4,6 +4,7 @@ import * as PendingSelectors from './pending.selectors';
 import * as PostsUiSelectors from './posts-ui.selectors';
 import * as PostsCommentsSelectors from './posts-comments.selectors';
 import * as NotificationsSelectors from './notifications.selectors';
+import * as PostsCommentsUISelectors from './posts-comments-ui.selectors';
 
 export {
   PostsSelectors,
@@ -12,4 +13,5 @@ export {
   PostsUiSelectors,
   PostsCommentsSelectors,
   NotificationsSelectors,
+  PostsCommentsUISelectors,
 };

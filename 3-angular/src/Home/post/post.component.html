@@ -53,8 +53,10 @@
     <clap-app-post-comments
       [comments]="post.comments"
       [newComments]="post.newComments"
+      [commentUIStatus]="commentUIStatus"
       (giveLikeToComment)="this.giveLikeToComment.emit($event)"
       (removeLikeFromComment)="this.removeLikeFromComment.emit($event)"
+      (hideNewCommentsBelowPopUp)="this.hideNewCommentsBelowPopUp.emit()"
     ></clap-app-post-comments>
 
     <clap-app-post-add-comment-form
