@@ -28,7 +28,7 @@ const handler: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent) => {
       return Promise.resolve('User liked hes own post, dont send notification');
     }
 
-    await createNotificationUtil(post);
+    await createNotificationUtil(post, like.nickname, like.userId);
 
     return Promise.resolve('Lambda processed successfully');
   };

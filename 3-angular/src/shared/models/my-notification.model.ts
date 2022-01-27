@@ -3,6 +3,7 @@ export interface MyNotification {
   seen: boolean;
   createdAt: number;
   userId: string;
+  userIdThisNotificationBelongsTo: string;
   postId: string;
   postText: string;
   postMediaUrl: string | boolean;

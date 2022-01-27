@@ -3,6 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { MyNotification } from '@shared/models/my-notification.model';
 import { createObjectIndexList } from '@shared/utils/create-object-index-list';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
+import { PostNotificationActions } from '../actions';
 
 export interface NotificiationsState {
   notifications: { [id: string]: MyNotification };
@@ -26,6 +27,17 @@ const PostsReducer = createReducer(
       };
     }
   ),
+
+  on(PostNotificationActions.iHaveSeenNotifications, (state) => {
+    const myNotifications: MyNotification[] = Object.values({
+      ...state.notifications,
+    }).map((notification: MyNotification) => ({ ...notification, seen: true }));
+
+    return {
+      ...state,
+      notifications: createObjectIndexList(myNotifications),
+    };
+  }),
 
   on(AuthenticatedActions.signOut, () => initialState)
 );

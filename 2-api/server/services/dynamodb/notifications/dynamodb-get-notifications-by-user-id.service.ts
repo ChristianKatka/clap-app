@@ -6,9 +6,9 @@ export const dynamodbGetNotificationsByUserId = async (userId: string) => {
     .query({
       TableName: NOTIFICATIONS_TABLE,
       IndexName: USER_ID_INDEX,
-      KeyConditionExpression: 'userId = :userId',
+      KeyConditionExpression: 'userIdThisNotificationBelongsTo = :userIdThisNotificationBelongsTo',
       ExpressionAttributeValues: {
-        ':userId': userId,
+        ':userIdThisNotificationBelongsTo': userId,
       },
     })
     .promise()

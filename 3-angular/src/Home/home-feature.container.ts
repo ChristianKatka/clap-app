@@ -9,7 +9,7 @@ import { NotificationsSelectors } from 'src/PostsStore/store/selectors';
   styleUrls: ['home-feature.container.scss'],
 })
 export class HomeFeatureContainerComponent implements OnInit {
-  notifications$ = this.store.select(NotificationsSelectors.getNotifications);
+  notificationsAmount$ = this.store.select(NotificationsSelectors.getAmountOfNotificationsThatIhaventSeen);
   constructor(private store: Store<PostsExtendedAppState>) {}
 
   ngOnInit() {}

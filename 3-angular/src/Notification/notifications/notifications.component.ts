@@ -8,5 +8,5 @@ import { MyNotification } from '@shared/models/my-notification.model';
 })
 export class NotificationsComponent {
   @Input()
-  notifications: MyNotification[] | null = null;
+  notifications: any[] | null = null;
 }

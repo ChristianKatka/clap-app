@@ -12,20 +12,20 @@
     <mat-icon class="material-icons-outlined">add</mat-icon>
   </a>
   <a
-    *ngIf="notifications && notifications.length > 0"
+    *ngIf="notificationsAmount && notificationsAmount >= 1"
     mat-icon-button
     routerLink="/notification"
     routerLinkActive="active"
   >
     <mat-icon
       class="material-icons-outlined"
-      [matBadge]="notifications.length"
+      [matBadge]="notificationsAmount"
       matBadgeColor="warn"
       >favorite_border</mat-icon
     >
   </a>
   <a
-    *ngIf="notifications && notifications.length === 0"
+    *ngIf="notificationsAmount === 0"
     mat-icon-button
     routerLink="/notification"
     routerLinkActive="active"

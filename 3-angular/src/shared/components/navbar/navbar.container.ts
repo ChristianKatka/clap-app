@@ -9,6 +9,6 @@ import { NotificationsSelectors } from 'src/PostsStore/store/selectors';
   styleUrls: ['navbar.container.scss'],
 })
 export class NavbarContainerComponent {
-  notifications$ = this.store.select(NotificationsSelectors.getNotifications);
+  notificationsAmount$ = this.store.select(NotificationsSelectors.getAmountOfNotificationsThatIhaventSeen);
   constructor(private store: Store<PostsExtendedAppState>) {}
 }

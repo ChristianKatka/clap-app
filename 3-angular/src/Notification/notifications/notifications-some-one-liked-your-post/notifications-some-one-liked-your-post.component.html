@@ -56,5 +56,18 @@
     >
   </section>
 
-  <img class="posted-image" src="assets/images/photo1.jpg" alt="" />
+  <img
+    *ngIf="notifications[0].postMediaUrl"
+    class="posted-image"
+    [src]="notifications[0].postMediaUrl"
+    alt=""
+  />
+
+  <div
+    class="posted-text-wrapper"
+    *ngIf="notifications[0].postMediaUrl === false"
+    fxLayoutAlign="center center"
+  >
+    <span>{{ notifications[0].postText }}</span>
+  </div>
 </div>

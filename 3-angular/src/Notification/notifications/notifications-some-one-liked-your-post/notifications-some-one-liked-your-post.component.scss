@@ -42,6 +42,19 @@
 .posted-image {
   margin-left: 12px;
   height: 45px;
+  min-width: 75px;
+  width: 75px;
   object-fit: cover;
 }
 
+.posted-text-wrapper {
+  margin-left: 5px;
+  min-width: 75px;
+  width: 75px;
+  height: 45px;
+  background: linear-gradient(163deg, #ffffff 0%, #aab7ff 100%);
+
+  span {
+    font-size: 7px;
+  }
+}

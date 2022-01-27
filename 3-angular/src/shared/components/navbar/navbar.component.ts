@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { MyNotification } from '@shared/models/my-notification.model';
 
 @Component({
   selector: 'clap-app-navbar-component',
@@ -8,5 +7,5 @@ import { MyNotification } from '@shared/models/my-notification.model';
 })
 export class NavbarComponent {
   @Input()
-  notifications: MyNotification[] | null = null;
+  notificationsAmount: number | null = null;
 }

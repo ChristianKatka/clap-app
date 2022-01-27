@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MyNotification } from '@shared/models/my-notification.model';
 
 @Component({
   selector: 'clap-app-home-top-bar',
@@ -8,7 +7,7 @@ import { MyNotification } from '@shared/models/my-notification.model';
 })
 export class HomeTopBarComponent implements OnInit {
   @Input()
-  notifications: MyNotification[] | null = null;
+  notificationsAmount: number | null = null;
 
   constructor() {}
 
