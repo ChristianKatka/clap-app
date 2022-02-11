@@ -1,8 +1,8 @@
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from "aws-lambda";
 import { convertDynamoDBRecord } from "./helpers";
 import { dynamodbGetActiveWsConnectionsService } from "./services/dynamodb/dynamodb-get-active-ws-connections.service";
-import { attachProfileImageToCommentUtil } from "./utils/attach-profile-image-to-comment.util";
-import { sendCommentToAllActiveClientsUtil } from "./utils/send-comment-to-all-active-clients.util";
+import { attachProfileImageToNotificationUtil } from "./utils/attach-profile-image-to-notification.util";
+import { sendNotificationToUserItBelongsIfHeHasActiveConnectionUtil } from "./utils/send-notification-to-user-it-belongs-if-he-has-active-connection.util";
 
 const validateEvent = (event: DynamoDBStreamEvent) => {
   const insertEvent = event.Records.filter(
@@ -11,24 +11,25 @@ const validateEvent = (event: DynamoDBStreamEvent) => {
   if (!insertEvent) return undefined;
   if (!insertEvent.dynamodb) return undefined;
 
-  const comment = convertDynamoDBRecord(insertEvent.dynamodb.NewImage);
-  return comment;
+  return convertDynamoDBRecord(insertEvent.dynamodb.NewImage);
 };
 
 const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
-  console.log("Received event:", JSON.stringify(event, null, 4));
+  // console.log("Received event:", JSON.stringify(event, null, 4));
 
-  const comment = validateEvent(event);
-  if (!comment) return;
+  const notification = validateEvent(event);
+  if (!notification) return;
+
+  console.log(notification);
 
   const mainProcess = async () => {
-    const commentWithCommentersImage = await attachProfileImageToCommentUtil(
-      comment
-    );
+    const notificationWithNotificationCreatorsProfileImage =
+      await attachProfileImageToNotificationUtil(notification);
     const connectedClients = await dynamodbGetActiveWsConnectionsService();
-    await sendCommentToAllActiveClientsUtil(
+
+    await sendNotificationToUserItBelongsIfHeHasActiveConnectionUtil(
       connectedClients,
-      commentWithCommentersImage
+      notificationWithNotificationCreatorsProfileImage
     );
 
     return Promise.resolve("Lambda processed successfully");
@@ -36,7 +37,7 @@ const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
 
   mainProcess()
     .then(() => {
-      console.log("Successfully sent new comment via socket");
+      console.log("Successfully sent new notification via socket");
     })
     .catch((error) => {
       console.log(error);

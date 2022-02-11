@@ -22,7 +22,12 @@ export const getNotifications = createSelector(
       },
       {}
     );
-    return Object.values(groupedNotificationsByPostId);
+    
+
+    const myNotificationsGroupedByPosts: MyNotification[][] = Object.values(
+      groupedNotificationsByPostId
+    );
+    return myNotificationsGroupedByPosts;
   }
 );
 

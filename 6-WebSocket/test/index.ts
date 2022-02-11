@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 config();
 import { Context } from 'aws-lambda';
 // import { handler } from '../src/socket-lambda';
-import { handler } from '../src/socket-send-new-comment-lambda';
+import { handler } from '../src/socket-send-new-notification-lambda';
 import { event } from './event';
 
 const context = {

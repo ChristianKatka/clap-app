@@ -5,6 +5,7 @@ import json from 'koa-json';
 import { decodeCognitoToken } from './middlewares/cognito-token.middleware';
 import { logRequestAndResponse } from './middlewares/request-response-logger.middleware';
 import { initializeRouter } from './routers/initialize.router';
+import { notificationRouter } from './routers/notification.router';
 import { postsRouter } from './routers/posts.router';
 import { userRouter } from './routers/user.router';
 
@@ -23,5 +24,6 @@ app.use(decodeCognitoToken);
 app.use(initializeRouter.routes()).use(initializeRouter.allowedMethods());
 app.use(postsRouter.routes()).use(postsRouter.allowedMethods());
 app.use(userRouter.routes()).use(userRouter.allowedMethods());
+app.use(notificationRouter.routes()).use(notificationRouter.allowedMethods());
 
 export { app };

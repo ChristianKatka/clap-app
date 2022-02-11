@@ -16,7 +16,7 @@ import {
 import {
   attachAllNecessaryDataInsidePost,
   checkIfILikeThisPost,
-  getCommentsThatBelongToGivePostWithlikeInfoInside,
+  getCommentsThatBelongToGivenPostWithlikeInfoInside,
   getLikesThatBelongToGivenPost,
   getNewCommentsThatCameViaSocket,
 } from '../utils/posts.utils';
@@ -68,7 +68,7 @@ export const getPosts = createSelector(
         const iLikeThisPost: PostLikeDraft | PostLike | undefined =
           checkIfILikeThisPost(postLikes, userId, post);
         const comments =
-          getCommentsThatBelongToGivePostWithlikeInfoInside(
+          getCommentsThatBelongToGivenPostWithlikeInfoInside(
             post,
             postsComments,
             commentLikes,

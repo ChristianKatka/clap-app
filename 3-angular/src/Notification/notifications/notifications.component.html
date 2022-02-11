@@ -4,15 +4,15 @@
   </section>
   <h1>notifications</h1>
 
-  <div style="width: 100%" *ngFor="let postNotifs of notifications">
+  <div style="width: 100%" *ngFor="let postNotifications of notifications">
     <clap-app-notifications-some-one-liked-your-post
-      *ngIf="postNotifs && postNotifs.length === 1"
-      [notifications]="postNotifs"
+      *ngIf="postNotifications && postNotifications.length === 1"
+      [notifications]="postNotifications"
     ></clap-app-notifications-some-one-liked-your-post>
 
     <clap-app-notifications-multiple-people-liked-your-post
-      *ngIf="postNotifs && postNotifs.length > 1"
-      [notifications]="postNotifs"
+      *ngIf="postNotifications && postNotifications.length > 1"
+      [notifications]="postNotifications"
     ></clap-app-notifications-multiple-people-liked-your-post>
   </div>
 

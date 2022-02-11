@@ -8,10 +8,10 @@ const handler: Handler = async (event: APIGatewayProxyEvent) => {
 
   if (!event.requestContext.connectionId)
     return lambdaAcceptableReturnTypeUtil("error: no connection id");
-
   if (!event.queryStringParameters)
     return lambdaAcceptableReturnTypeUtil("error: no user id");
   const userId = event.queryStringParameters["userId"];
+  if (!userId) return;
 
   // WHAT ROUTE IS CALLED
   const routeKey = event.requestContext.routeKey;

@@ -14,10 +14,8 @@ export class PostNotificationEffects {
           .setMyNotificationsAsSeen(notificationsThatIhaventSeen)
           .pipe(
             tap((x) => console.log(x)),
-            map((notifications) =>
-              PostNotificationActions.iHaveSeenNotificationsSuccess({
-                notifications,
-              })
+            map(() =>
+              PostNotificationActions.iHaveSeenNotificationsSuccess()
             ),
             catchError(() => {
               return of(

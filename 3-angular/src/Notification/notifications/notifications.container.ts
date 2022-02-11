@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MyNotification } from '@shared/models/my-notification.model';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { PostNotificationActions } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import { NotificationsSelectors } from 'src/PostsStore/store/selectors';
@@ -11,7 +11,9 @@ import { NotificationsSelectors } from 'src/PostsStore/store/selectors';
   styleUrls: ['notifications.container.scss'],
 })
 export class NotificationsContainerComponent implements OnInit {
-  notifications$ = this.store.select(NotificationsSelectors.getNotifications);
+  notifications$: Observable<MyNotification[][]> = this.store.select(
+    NotificationsSelectors.getNotifications
+  );
   constructor(private store: Store<PostsExtendedAppState>) {}
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class NotificationsContainerComponent implements OnInit {
           }
         },
         error: (e) => console.error(e),
-        complete: () => console.info('complete'),
+        complete: () => console.info(),
       });
   }
 }

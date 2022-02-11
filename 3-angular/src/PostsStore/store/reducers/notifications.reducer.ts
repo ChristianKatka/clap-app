@@ -19,15 +19,12 @@ const PostsReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { myNotifications }) => {
-      console.log(myNotifications);
-
       return {
         ...state,
         notifications: createObjectIndexList(myNotifications),
       };
     }
   ),
-
   on(PostNotificationActions.iHaveSeenNotifications, (state) => {
     const myNotifications: MyNotification[] = Object.values({
       ...state.notifications,
@@ -38,6 +35,20 @@ const PostsReducer = createReducer(
       notifications: createObjectIndexList(myNotifications),
     };
   }),
+  on(
+    PostNotificationActions.newNotificationHappenedViaSocket,
+    (state, { notification }) => {
+      return {
+        ...state,
+        notifications: {
+          ...state.notifications,
+          [notification.id]: {
+            ...notification,
+          },
+        },
+      };
+    }
+  ),
 
   on(AuthenticatedActions.signOut, () => initialState)
 );

@@ -6,11 +6,15 @@ export const iHaveSeenNotifications = createAction(
   props<{ notificationsThatIhaventSeen: MyNotification[] }>()
 );
 export const iHaveSeenNotificationsSuccess = createAction(
-  '[Notifications] I Have Seen Notifications Success',
-  props<{ notifications: MyNotification[] }>()
+  '[Notifications] I Have Seen Notifications Success'
 );
 
 export const iHaveSeenNotificationsFailure = createAction(
   '[Notifications] I Have Seen Notifications Failure',
   props<{ error: string }>()
+);
+
+export const newNotificationHappenedViaSocket = createAction(
+  '[Notifications] New Notification Happened Via Socket',
+  props<{ notification: MyNotification }>()
 );

@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { PostCommentActions } from 'src/PostsStore/store/actions';
+import {
+  PostCommentActions,
+  PostNotificationActions,
+} from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
 import { environment } from '../../environments/environment';
 
@@ -44,6 +47,14 @@ export class WebSocketService {
           postComment: event.newComment,
         })
       );
+    }
+    if (event.newNotification) {
+      this.store.dispatch(
+        PostNotificationActions.newNotificationHappenedViaSocket({
+          notification: event.newNotification,
+        })
+      );
+      console.log(event.newNotification);
     }
   }
 }

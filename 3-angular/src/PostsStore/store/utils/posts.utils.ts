@@ -38,7 +38,7 @@ export const isCommentTypeApiRes = (
   return (<PostCommentApiResponse>comment).userId !== undefined;
 };
 
-export const getCommentsThatBelongToGivePostWithlikeInfoInside = (
+export const getCommentsThatBelongToGivenPostWithlikeInfoInside = (
   post: PostApiResponse | PostWithMediaApiRes,
   postsComments: (PostCommentDraft | PostCommentApiResponse)[],
   commentsLikes: (CommentLikeDraft | CommentLike)[],

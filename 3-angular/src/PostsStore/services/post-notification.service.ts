@@ -10,22 +10,11 @@ import { environment } from '../../environments/environment';
 export class PostNotificationService {
   constructor(private authHttp: AuthHTTPService) {}
 
-  //   createPostWithMedia(
-  //     postWithMediaDraft: PostWithMediaImageUploaded
-  //   ): Observable<PostWithMediaApiRes> {
-  //     return this.authHttp.post(
-  //       `${environment.apiBaseUrl}/posts/with-media`,
-  //       postWithMediaDraft
-  //     );
-  //   }
-
   setMyNotificationsAsSeen(
     notifications: MyNotification[]
   ): Observable<MyNotification[]> {
-    console.log(notifications);
-
     return this.authHttp.post(
-      `${environment.apiBaseUrl}/postsaxx`,
+      `${environment.apiBaseUrl}/notification/set-notification-as-seen`,
       notifications
     );
   }
