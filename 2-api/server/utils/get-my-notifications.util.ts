@@ -6,13 +6,13 @@ export const getMyNotificationsUtil = async (userId: string) => {
   if (!notifications) return [];
 
   const richNotifications = notifications.map(async (notification) => {
-    const postLikersProfileImage = await dynamodbGetUsersProfileImageById(
+    const notificationCreatorsProfileImage = await dynamodbGetUsersProfileImageById(
       notification.userId
     );
     return {
       ...notification,
-      postLikersProfileImage: postLikersProfileImage
-        ? postLikersProfileImage.imageUrl
+      notificationCreatorsProfileImage: notificationCreatorsProfileImage
+        ? notificationCreatorsProfileImage.imageUrl
         : 'assets/images/default_profile_image.png',
     };
   });

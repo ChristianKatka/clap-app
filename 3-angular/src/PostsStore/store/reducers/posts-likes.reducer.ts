@@ -51,7 +51,17 @@ const PostsLikesReducer = createReducer(
       },
     };
   }),
-
+  on(PostLikeActions.newLikeHappenedViaSocket, (state, { like }) => {
+    return {
+      ...state,
+      postsLikes: {
+        ...state.postsLikes,
+        [like.id]: {
+          ...like,
+        },
+      },
+    };
+  }),
   on(PostLikeActions.removeLikeFromPost, (state, { like }) => {
     const postsLikes = deleteFromObjectIndexList(state.postsLikes, like.id);
 

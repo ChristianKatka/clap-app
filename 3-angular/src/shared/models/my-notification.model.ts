@@ -7,6 +7,6 @@ export interface MyNotification {
   postId: string;
   postText: string;
   postMediaUrl: string | boolean;
-  postLikersProfileImage: string;
+  notificationCreatorsProfileImage: string;
   postLikersNickname: string;
 }

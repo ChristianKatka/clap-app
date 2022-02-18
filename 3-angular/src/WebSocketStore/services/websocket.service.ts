@@ -4,6 +4,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import {
   PostCommentActions,
+  PostLikeActions,
   PostNotificationActions,
 } from 'src/PostsStore/store/actions';
 import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
@@ -54,7 +55,11 @@ export class WebSocketService {
           notification: event.newNotification,
         })
       );
-      console.log(event.newNotification);
+    }
+    if (event.newLike) {
+      this.store.dispatch(
+        PostLikeActions.newLikeHappenedViaSocket({ like: event.newLike })
+      );
     }
   }
 }

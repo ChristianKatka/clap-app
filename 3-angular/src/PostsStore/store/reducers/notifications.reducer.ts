@@ -38,6 +38,17 @@ const PostsReducer = createReducer(
   on(
     PostNotificationActions.newNotificationHappenedViaSocket,
     (state, { notification }) => {
+      // createdAt: 1645206041684
+      // id: "4d9756fb-db8d-45c6-bbc6-82743f5a14ee"
+      // notificationCreatorsProfileImage: "https://d3ots36zj10h1e.cloudfront.net/profile-images/89dca1f7-d6a6-4b43-9168-9be565690dc7-avatar.jpg"
+      // postId: "4f05ade0-53b5-4600-876a-b598caaa6c4f"
+      // postLikersNickname: "MattiSeppo"
+      // postMediaUrl: false
+      // postText: "csa"
+      // seen: false
+      // userId: "9d8320bf-728d-44e9-96e0-48cda0838f6c"
+      // userIdThisNotificationBelongsTo: "0668311c-3c1d-4cf8-b12d-ef4ebba91d37"
+
       return {
         ...state,
         notifications: {

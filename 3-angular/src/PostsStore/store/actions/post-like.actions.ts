@@ -31,3 +31,8 @@ export const removeLikeFromPostFailure = createAction(
   '[Posts] Remove Like From Post Failure',
   props<{ error: string }>()
 );
+
+export const newLikeHappenedViaSocket = createAction(
+  '[Posts] New Like Happened Via Socket',
+  props<{ like: PostLike }>()
+);

@@ -6,3 +6,4 @@ export const WEBSOCKET_CONNECTIONS_INDEX_CONNECTION = `${APPLICATION_NAME}-webso
 export const PROFILE_IMAGES_TABLE = 'clap-app-profile-images';
 export const USER_ID_INDEX = 'userId-gsi';
 export const CONNECTION_ID_INDEX = 'connectionId-gsi';
+export const POSTS_TABLE = 'clap-app-posts';

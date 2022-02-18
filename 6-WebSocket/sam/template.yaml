@@ -224,6 +224,36 @@ Resources:
       FunctionName: !GetAtt SocketSendNewNotificationLambdaLambda.Arn
       StartingPosition: 'TRIM_HORIZON'
 
+
+  SocketSendNewLikeLambdaLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../build
+      Handler: socket-send-new-like-lambda.handler
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: nodejs14.x
+      Environment:
+        Variables:
+          ENDPOINT:
+            Fn::Join:
+              - ""
+              - - Ref: WebSocketApi
+                - .execute-api.
+                - Ref: AWS::Region
+                - .amazonaws.com/
+                - production
+
+  SocketSendNewLikeLambdaStreamEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    DependsOn:
+      - AllowDynamoDBStreamSource
+    Properties:
+      EventSourceArn:
+        Fn::ImportValue: clap-app-posts-likes-table-stream-arn
+      FunctionName: !GetAtt SocketSendNewLikeLambdaLambda.Arn
+      StartingPosition: 'TRIM_HORIZON'
+
 Outputs:
   SocketFunctionArn:
     Description: "Socket function ARN"
