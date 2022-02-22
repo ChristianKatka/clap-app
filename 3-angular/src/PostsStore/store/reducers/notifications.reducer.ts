@@ -19,6 +19,8 @@ const PostsReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { myNotifications }) => {
+      console.log(myNotifications);
+
       return {
         ...state,
         notifications: createObjectIndexList(myNotifications),

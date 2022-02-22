@@ -1,0 +1,15 @@
+.location-button {
+  position: fixed;
+  top: 0;
+  transition: top 0.4s;
+  margin-top: 4.8rem;
+  background-color: white;
+  cursor: pointer;
+  font-size: 19px;
+  border-radius: 4px;
+  padding: 4px 12px;
+
+  mat-icon {
+    margin-left: 5px;
+  }
+}

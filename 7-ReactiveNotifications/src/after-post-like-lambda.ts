@@ -1,5 +1,6 @@
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from 'aws-lambda';
 import { convertDynamoDBRecord } from './helpers';
+import { dynamodbGetNotificationsByUserId } from './services/dynamodb/notifications/dynamodb-get-notifications-by-user-id.service';
 import { dynamodbGetPostById } from './services/dynamodb/posts/dynamodb-get-post-by-id.service';
 import { createNotificationUtil } from './utils/create-notification.util';
 
@@ -14,8 +15,20 @@ const validateEvent = (event: DynamoDBStreamEvent) => {
   return comment;
 };
 
-// TODO ASYNC HANDLER
-const handler: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent) => {
+const checkIfUserHasAlreadyPrevioslyGivenLikeToGivenPost = async (
+  post: any,
+  like: any
+) => {
+  const userNotifications = await dynamodbGetNotificationsByUserId(post.userId);
+
+  const likeAlreadyExistedInThePastOnThisPost = userNotifications?.filter(
+    (notification: any) =>
+      notification.userId === like.userId && notification.postId === like.postId
+  )[0];
+  return likeAlreadyExistedInThePastOnThisPost;
+};
+
+const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
   console.log('Received event:', JSON.stringify(event, null, 4));
 
   const like = validateEvent(event);
@@ -28,13 +41,21 @@ const handler: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent) => {
       return Promise.resolve('User liked hes own post, dont send notification');
     }
 
+    const userHasLikedThisPostInThePast =
+      await checkIfUserHasAlreadyPrevioslyGivenLikeToGivenPost(post, like);
+
+    if (userHasLikedThisPostInThePast) {
+      return Promise.resolve(
+        'User has liked this post previosly, removed like and liked again. So not gonna send notification'
+      );
+    }
+
     await createNotificationUtil(post, like.nickname, like.userId);
 
     return Promise.resolve('Lambda processed successfully');
   };
 
-  // RETURN AWAIT MAIN PROCESS
-  await mainProcess()
+  mainProcess()
     .then((res) => {
       console.log(res);
     })

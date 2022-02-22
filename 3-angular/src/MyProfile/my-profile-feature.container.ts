@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { MyProfile } from '@shared/models/my-profile.model';
+import { Observable } from 'rxjs';
 import { MyProfileBottomSheetService } from './services/my-profile-bottom-sheet.service';
 import { ProfileExtendedAppState } from './store/reducers';
 import { MyProfileSelectors } from './store/selectors';

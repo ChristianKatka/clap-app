@@ -1,23 +1,23 @@
 @import "../../styles.scss";
 
-.user-name-and-image-wrapper {
+.profile-image-wrapper {
   position: relative;
-}
 
-.profile-picture {
-  margin-top: 5rem;
-  height: 120px;
-  width: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1rem;
-}
+  .profile-picture {
+    margin-top: 5rem;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
 
-.edit-button {
-  position: absolute;
-  right: 86px;
-  bottom: 77px;
-  background-color: white;
+  .edit-button {
+    position: absolute;
+    right: -13px;
+    bottom: 21px;
+    background-color: white;
+  }
 }
 
 .user-name {

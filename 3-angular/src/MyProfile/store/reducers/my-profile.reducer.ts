@@ -5,7 +5,10 @@ import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { MyProfileActions } from '../actions';
 
 export interface MyProfileState {
-  myProfile: MyProfile | undefined;
+  // myProfile: MyProfile | undefined;
+  myProfile:
+    | MyProfile
+    | undefined;
   loading: boolean;
 }
 
@@ -19,6 +22,7 @@ const PostsReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { myProfile }) => {
+      // myProfile: { email: string; nickname: string; id: string }
       return {
         ...state,
         myProfile,

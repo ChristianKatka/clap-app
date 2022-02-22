@@ -12,6 +12,10 @@ import { PostAddCommentFormComponent } from './post/post-add-comment-form/post-a
 import { PostCommentsComponent } from './post/post-comments/post-comments.component';
 import { NewCommentsBelowComponent } from './post/post-comments/new-comments-below/new-comments-below.component';
 import { CommentLikeButtonComponent } from './post/post-comments/comment-like-button/comment-like-button.component';
+import { LocationContainerComponent } from './location/location.container';
+import { LocationComponent } from './location/location.component';
+import { ChangeLocationBottomSheetContainerComponent } from './location/change-location-bottom-sheet/change-location-bottom-sheet.container';
+import { ChangeLocationBottomSheetSearchFormComponent } from './location/change-location-bottom-sheet/change-location-bottom-sheet-search-form/change-location-bottom-sheet-search-form.component';
 
 export const components: any[] = [
   HomeFeatureContainerComponent,
@@ -27,5 +31,9 @@ export const components: any[] = [
   PostComponent,
   PostCommentsComponent,
   NewCommentsBelowComponent,
-  CommentLikeButtonComponent
+  CommentLikeButtonComponent,
+  LocationContainerComponent,
+  LocationComponent,
+  ChangeLocationBottomSheetContainerComponent,
+  ChangeLocationBottomSheetSearchFormComponent
 ];

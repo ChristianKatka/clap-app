@@ -1,23 +1,20 @@
-
 <clap-app-container *ngIf="myProfileData" [width]="'90%'">
-  <section
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    class="user-name-and-image-wrapper"
-  >
-    <img
-      src="{{ myProfileData.profileImageUrl }}"
-      alt=""
-      class="profile-picture"
-    />
+  <section fxLayout="column" fxLayoutAlign="center center">
+    <div class="profile-image-wrapper">
+      <img
+        src="{{ myProfileData.profileImageUrl }}"
+        alt=""
+        class="profile-picture"
+      />
 
-    <button
-      (click)="this.openEditProfileBottomSheet.emit()"
-      class="mat-elevation-z3 edit-button"
-      mat-icon-button
-    >
-      <mat-icon class="material-icons-outlined">edit</mat-icon>
-    </button>
+      <button
+        (click)="this.openEditProfileBottomSheet.emit()"
+        class="mat-elevation-z3 edit-button"
+        mat-icon-button
+      >
+        <mat-icon class="material-icons-outlined">edit</mat-icon>
+      </button>
+    </div>
 
     <div fxLayoutAlign="start start">
       <p class="user-name">{{ myProfileData.nickname }}</p>
