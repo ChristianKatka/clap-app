@@ -13,7 +13,7 @@ export const initialState: NotificiationsState = {
   notifications: {},
 };
 
-const PostsReducer = createReducer(
+const NotificationsReducer = createReducer(
   initialState,
 
   on(
@@ -69,4 +69,4 @@ const PostsReducer = createReducer(
 export const reducer = (
   state: NotificiationsState | undefined,
   action: Action
-) => PostsReducer(state, action);
+) => NotificationsReducer(state, action);

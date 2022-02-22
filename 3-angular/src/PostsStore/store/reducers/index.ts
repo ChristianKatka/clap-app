@@ -13,6 +13,7 @@ import * as fromPostsUi from './posts-ui.reducer';
 import * as fromPosts from './posts.reducer';
 import * as fromNotifications from './notifications.reducer';
 import * as fromPostsCommentsUI from './posts-comments-ui.reducer';
+import * as fromLocations from './locations.reducer';
 
 export const featureKey = 'post';
 export interface PostsFeatureState {
@@ -25,6 +26,7 @@ export interface PostsFeatureState {
   commentsLikes: fromCommentLikes.CommentsLikesState;
   pendingCommentLikes: fromPendingCommentLikes.PendingCommentLikesState;
   notifications: fromNotifications.NotificiationsState;
+  locations: fromLocations.LocationsState;
 }
 
 export interface PostsExtendedAppState extends AppState {
@@ -41,6 +43,7 @@ export const reducers: ActionReducerMap<PostsFeatureState> = {
   commentsLikes: fromCommentLikes.reducer,
   pendingCommentLikes: fromPendingCommentLikes.reducer,
   notifications: fromNotifications.reducer,
+  locations: fromLocations.reducer,
 };
 
 const getPostsFeatureState =
@@ -103,4 +106,11 @@ const getNotifications =
 export const getNotificationsState = createSelector(
   getPostsFeatureState,
   getNotifications
+);
+
+const getLocations =
+  createFeatureSelector<fromLocations.LocationsState>('locations');
+export const getLocationsState = createSelector(
+  getPostsFeatureState,
+  getLocations
 );

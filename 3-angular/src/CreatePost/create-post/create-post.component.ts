@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PostDraft } from '@shared/models/post.model';
 
 @Component({
   selector: 'clap-app-create-post',
@@ -11,11 +12,14 @@ export class CreatePostComponent implements OnInit {
   loading = false;
 
   @Output()
-  createPost: EventEmitter<string> = new EventEmitter();
+  createPost: EventEmitter<PostDraft> = new EventEmitter();
 
   @Output()
-  createPostWithMedia: EventEmitter<{ media: File; text: string }> =
-    new EventEmitter();
+  createPostWithMedia: EventEmitter<{
+    media: File;
+    text: string;
+    postLocation: string;
+  }> = new EventEmitter();
 
   @Output()
   postImageSelected: EventEmitter<File> = new EventEmitter();
@@ -28,12 +32,16 @@ export class CreatePostComponent implements OnInit {
     this.mediaSelected = media;
   }
 
-  onCreatePost(text: string) {
+  onCreatePost(post: PostDraft) {
     if (this.mediaSelected) {
-      const postWithMedia = { media: this.mediaSelected, text };
+      const postWithMedia = {
+        media: this.mediaSelected,
+        text: post.text,
+        postLocation: post.postLocation,
+      };
       this.createPostWithMedia.emit(postWithMedia);
     } else {
-      this.createPost.emit(text);
+      this.createPost.emit(post);
     }
   }
 }

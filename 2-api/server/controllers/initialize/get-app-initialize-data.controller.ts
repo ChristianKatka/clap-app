@@ -1,4 +1,5 @@
 import { Context, Next } from 'koa';
+import { dynamoDbGetLocations } from '../../services/dynamodb/locations/dynamodb-get-locations.service';
 import { dynamodbGetAllCommentsLikes } from '../../services/dynamodb/posts/comments/likes/dynamodb-get-all-comment-likes.service';
 import { dynamodbGetAllPostsLikes } from '../../services/dynamodb/posts/likes/dynamodb-get-all-posts-likes.service';
 import { dynamodbGetUserById } from '../../services/dynamodb/users/dynamodb-get-user-by-id.service';
@@ -18,6 +19,7 @@ export const getAppInitializeData = async (ctx: Context, next: Next) => {
   const myProfile = await dynamodbGetUserById(userId);
   const myProfileImage = await dynamodbGetUsersProfileImageById(userId);
   const myNotifications = await getMyNotificationsUtil(userId);
+  const postLocations = await dynamoDbGetLocations()
 
   ctx.response.status = 200;
   ctx.response.body = {
@@ -28,6 +30,7 @@ export const getAppInitializeData = async (ctx: Context, next: Next) => {
     myProfileImage,
     commentsLikes,
     myNotifications,
+    postLocations
   };
 
   await next();

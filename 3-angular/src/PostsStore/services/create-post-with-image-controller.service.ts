@@ -72,6 +72,7 @@ export class CreatePostWithImageControllerService {
               const postWithMediaDraft: PostWithMediaImageUploaded = {
                 id: postWithImageDraft.id,
                 text: postWithImageDraft.text,
+                postLocation: postWithImageDraft.postLocation,
                 mimeType: postWithImageDraft.mimeType,
                 s3Key: this.s3Key,
               };

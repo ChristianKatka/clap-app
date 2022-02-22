@@ -36,7 +36,14 @@
     Something funny in your mind you would like to share?
   </p>
 
+
+
   <form [formGroup]="createPostForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Paikkakunta</mat-label>
+      <input formControlName="postLocation" matInput placeholder="Esim. Jyväskylä">
+    </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-error *ngIf="createPostForm.get('text')?.hasError('required')"
         >To create post you must write something</mat-error

@@ -12,7 +12,6 @@ export class InitEffects {
       ofType(InitActions.loadApplicationInitializeData),
       switchMap(() =>
         this.initializeService.loadApplicationInitializeData().pipe(
-          tap((x) => console.log(x)),
           map(
             ({
               PostsApiResponse,
@@ -21,7 +20,8 @@ export class InitEffects {
               myProfileImage,
               postsComments,
               commentsLikes,
-              myNotifications
+              myNotifications,
+              postLocations,
             }) =>
               InitActions.loadApplicationInitializeDataSuccess({
                 PostsApiResponse,
@@ -30,7 +30,8 @@ export class InitEffects {
                 myProfileImage,
                 postsComments,
                 commentsLikes,
-                myNotifications
+                myNotifications,
+                postLocations,
               })
           ),
           catchError((error: HttpErrorResponse) =>
@@ -45,8 +46,7 @@ export class InitEffects {
     )
   );
 
-  // ROUTING AFTER SUCCESS
-  itemSuccess$ = createEffect(() =>
+  loadedAppInitDataSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(InitActions.loadApplicationInitializeDataSuccess),
       map(() =>

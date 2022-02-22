@@ -6,4 +6,5 @@ export interface InitializeData {
   postsComments: any;
   commentsLikes: any;
   myNotifications: any;
+  postLocations: any;
 }

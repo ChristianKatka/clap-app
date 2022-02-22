@@ -4,11 +4,12 @@ import { CLOUDFRONT_URL } from '../../constants';
 import { dynamodbCreatePost } from '../../services/dynamodb/posts/dynamodb-create-post.service';
 import { dynamodbStorePostMedia } from '../../services/dynamodb/posts/media/dynamodb-store-post-media.service';
 import { attachProfileImageToPost } from '../../utils/attach-profile-image-to-post.util';
+import { createNewLocationIfNotExistsAlready } from '../../utils/create-new-location-if-not-exist-already-util';
 
 export const createPostWithMedia = async (ctx: Context, next: Next) => {
   const userId = ctx.state.jwtPayload.sub;
   const nickname = ctx.state.jwtPayload.nickname;
-  const { id, text, mimeType, s3Key } = ctx.request.body;
+  const { id, text, mimeType, s3Key, postLocation } = ctx.request.body;
 
   const post = {
     id,
@@ -25,6 +26,7 @@ export const createPostWithMedia = async (ctx: Context, next: Next) => {
     mediaUrl: `${CLOUDFRONT_URL}${s3Key}`,
   };
 
+  await createNewLocationIfNotExistsAlready(postLocation);
   await dynamodbCreatePost(post);
   await dynamodbStorePostMedia(postMedia);
 

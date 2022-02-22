@@ -12,6 +12,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
+import { PostDraft } from '@shared/models/post.model';
 
 @Component({
   selector: 'clap-app-create-post-form',
@@ -23,16 +24,17 @@ export class CreatePostFormComponent implements OnInit {
   loading = false;
 
   @Output()
-  createPost: EventEmitter<string> = new EventEmitter();
+  createPost: EventEmitter<PostDraft> = new EventEmitter();
 
   createPostForm = new FormGroup({
     text: new FormControl('', Validators.required),
+    postLocation: new FormControl('', Validators.required),
   });
 
   ngOnInit() {}
 
   submit() {
-    this.createPost.emit(this.createPostForm.value.text);
+    this.createPost.emit(this.createPostForm.value);
   }
 
   // FRUIT

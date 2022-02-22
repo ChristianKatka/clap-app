@@ -22,23 +22,21 @@ export class CreatePostContainerComponent implements OnInit {
 
   ngOnInit() {}
 
-  onCreatePostWithMedia(post: { media: File; text: string }) {
-    console.log('onCreatePostWithMedia');
+  onCreatePostWithMedia(post: { media: File; text: string; postLocation: string }) {
     const postWithMediaDraftToDb: PostWithMediaDraftToDb = {
       id: uuid(),
       text: post.text,
+      postLocation: post.postLocation,
       mimeType: post.media.type,
     };
-    this.createPostWithImageControllerService.createPostWithImage(postWithMediaDraftToDb, post.media)
+    this.createPostWithImageControllerService.createPostWithImage(
+      postWithMediaDraftToDb,
+      post.media
+    );
   }
 
-  onCreatePost(text: string) {
-    console.log('onCreatePost');
-
-    console.log(text);
-    const postDraftToDb: PostDraft = {
-      text,
-    };
+  onCreatePost(post: PostDraft) {
+    const postDraftToDb: PostDraft = post;
     this.store.dispatch(PostsActions.createPost({ postDraftToDb }));
   }
 }

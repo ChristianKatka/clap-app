@@ -5,6 +5,7 @@ import * as PostsUiSelectors from './posts-ui.selectors';
 import * as PostsCommentsSelectors from './posts-comments.selectors';
 import * as NotificationsSelectors from './notifications.selectors';
 import * as PostsCommentsUISelectors from './posts-comments-ui.selectors';
+import * as LocationSelectors from './location.selectors';
 
 export {
   PostsSelectors,
@@ -14,4 +15,5 @@ export {
   PostsCommentsSelectors,
   NotificationsSelectors,
   PostsCommentsUISelectors,
+  LocationSelectors,
 };

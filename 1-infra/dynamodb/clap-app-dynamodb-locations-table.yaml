@@ -1,0 +1,38 @@
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: DynamoDB table for clap-app locations
+
+Resources:
+  ClapAppLocationsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'postLocation'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'postLocation'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+      TableName: 'clap-app-locations'
+      StreamSpecification:
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
+      Tags:
+        - Key: Name
+          Value: 'clap-app-locations-table'
+        - Key: Application
+          Value: 'clap-app'
+
+Outputs:
+  ClapAppLocationsTableArn:
+    Description: clap-app locations Table ARN
+    Value: !GetAtt ClapAppLocationsTable.Arn
+    Export:
+      Name: clap-app-locations-table-arn
+
+  ClapAppLocationsTableStreamArn:
+    Description: clap-app locations table stream ARN
+    Value: !GetAtt ClapAppLocationsTable.StreamArn
+    Export:
+      Name: clap-app-locations-table-stream-arn
+

@@ -3,6 +3,7 @@ import { PostLike, PostLikeDraft } from './post-like.model';
 
 export interface PostDraft {
   text: string;
+  postLocation: string;
 }
 
 export interface PostApiResponse {
@@ -10,6 +11,7 @@ export interface PostApiResponse {
   userId: string;
   creatorsProfileImage: string;
   text: string;
+  postLocation: string;
   nickname: string;
   createdAt: number;
 }
@@ -19,6 +21,7 @@ export interface Post {
   userId: string;
   creatorsProfileImage: string;
   text: string;
+  postLocation: string;
   nickname: string;
   createdAt: number;
   iLikeThisPost: string | undefined;
