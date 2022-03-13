@@ -10,6 +10,7 @@ export const dynamodbCreateUser = (
     id: sub,
     email,
     nickname,
+    selectedLocation: "Jyväskylä",
   };
 
   return docClient

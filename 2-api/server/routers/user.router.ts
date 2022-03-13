@@ -1,9 +1,12 @@
 import Router from 'koa-router';
 import { getSignedUrlForUploadingProfileImage } from '../controllers/user/profile-image/get-signed-url-for-uploading-profile-image.controller';
 import { storeUploadedProfileImageInformation } from '../controllers/user/profile-image/store-uploaded-profile-image-information.controller';
+import { selectLocation } from '../controllers/user/select-location.controller';
 import { updateUserBio } from '../controllers/user/update-user-bio.controller';
 
 const userRouter = new Router({ prefix: '/user' });
+
+userRouter.put('/select-location', selectLocation);
 
 userRouter.put('/bio', updateUserBio);
 

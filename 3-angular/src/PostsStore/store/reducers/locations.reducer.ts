@@ -20,9 +20,10 @@ const LocationsReducer = createReducer(
 
   on(
     InitActions.loadApplicationInitializeDataSuccess,
-    (state, { postLocations }) => {
+    (state, { postLocations, myProfile }) => {
       return {
         ...state,
+        selectedPostLocation: myProfile.selectedLocation,
         postLocations: postLocations.reduce(
           (items: { [postLocation: string]: any }, item: any) => ({
             ...items,

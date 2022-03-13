@@ -6,6 +6,7 @@ import { PostCommentEffects } from './post-comment.effects';
 import { PostLikeEffects } from './post-like.effects';
 import { PostEffects } from './post.effects';
 import { PostNotificationEffects } from './post-notification.effects';
+import { LocationEffects } from './location.effects';
 
 export const effects: any[] = [
   PostEffects,
@@ -16,4 +17,5 @@ export const effects: any[] = [
   PendingCommentLikeEffects,
   PostCommentUIEffects,
   PostNotificationEffects,
+  LocationEffects,
 ];

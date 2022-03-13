@@ -13,4 +13,10 @@ export class MyProfileService {
   updateUserBio(bio: string): Observable<MyProfile> {
     return this.authHttp.put(`${environment.apiBaseUrl}/user/bio`, { bio });
   }
+
+  updateUsersSelectedLocation(selectedLocation: string): Observable<MyProfile> {
+    return this.authHttp.put(`${environment.apiBaseUrl}/user/select-location`, {
+      selectedLocation,
+    });
+  }
 }

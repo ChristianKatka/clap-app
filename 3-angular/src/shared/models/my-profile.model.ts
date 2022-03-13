@@ -4,4 +4,5 @@ export interface MyProfile {
   nickname: string;
   bio: string;
   profileImageUrl: string;
+  selectedLocation: string;
 }
