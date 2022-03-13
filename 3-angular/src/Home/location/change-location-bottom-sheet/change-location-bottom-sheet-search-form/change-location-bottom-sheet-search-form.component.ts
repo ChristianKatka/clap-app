@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, map } from 'rxjs';
 
 @Component({
   selector: 'clap-app-change-location-bottom-sheet-search-form',
@@ -16,11 +15,10 @@ export class ChangeLocationBottomSheetSearchFormComponent implements OnDestroy {
     search: this.searchFormControl,
   });
 
-  searchValue$ = this.searchFormGroup.valueChanges
-    .pipe(map((searchText) => searchText.search.trim(), distinctUntilChanged()))
-    .subscribe({
-      next: (searchText) => this.inputtedSearchText.emit(searchText),
-    });
+  searchValue$ = this.searchFormGroup.valueChanges.subscribe({
+    next: (searchForm) =>
+      this.inputtedSearchText.emit(searchForm.search.trim()),
+  });
 
   ngOnDestroy(): void {
     this.searchValue$.unsubscribe();

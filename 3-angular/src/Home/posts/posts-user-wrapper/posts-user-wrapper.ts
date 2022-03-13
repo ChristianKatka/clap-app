@@ -11,6 +11,9 @@ export class PostsUserWrapperComponent implements OnInit {
 
   @Input()
   creatorsProfileImage = '';
+
+  @Input()
+  postLocation = '';
   
   constructor() {}
 

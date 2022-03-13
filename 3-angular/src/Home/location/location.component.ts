@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   HostListener,
+  Input,
   OnInit,
   Output,
   ViewChild,
@@ -13,6 +14,8 @@ import {
   styleUrls: ['location.component.scss'],
 })
 export class LocationComponent {
+  @Input() selectedPostLocation = '';
+
   @Output()
   openChangeLocationBottomSheet = new EventEmitter();
 

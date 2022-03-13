@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button
+    mat-icon-button
+    aria-label="Close"
+    (click)="close()"
+    class="top-button"
+  >
+    <mat-icon class="material-icons-outlined">maximize</mat-icon>
+  </button>
+</div>
+<p class="heading" style="font-size: 19px">
+  <b>{{ selectedPostLocation }}</b>
+</p>
+
+<mat-divider class="divider"></mat-divider>
+
+<main>
+  <p class="info-text">Valitse paikkakunta jonka postaukset haluat nähdä</p>
+
+  <clap-app-change-location-bottom-sheet-search-form
+    (inputtedSearchText)="searchTextInputted($event)"
+  ></clap-app-change-location-bottom-sheet-search-form>
+
+  <div class="scroll-overflow">
+    <section
+      matRipple
+      fxLayoutAlign="start center"
+      *ngFor="let location of postLocations"
+      [class.selected]="location.selected"
+      (click)="selectLocation(location)"
+    >
+      <mat-icon class="material-icons-outlined" matListIcon
+        >location_on</mat-icon
+      >
+      <p>{{ location.name }}</p>
+    </section>
+  </div>
+
+  <div fxLayoutAlign="center center">
+    <a (click)="close()" class="done-button">Valmis</a>
+  </div>
+</main>

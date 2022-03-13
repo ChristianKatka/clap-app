@@ -7,6 +7,7 @@ import * as PendingCommentLikeActions from './pending-comment-like.actions';
 import * as CommentLikeActions from './comment-like.actions';
 import * as PostCommentUIActions from './post-comment-ui.actions';
 import * as PostNotificationActions from './post-notification.actions';
+import * as LocationActions from './location.actions';
 
 export {
   PostsActions,
@@ -18,4 +19,5 @@ export {
   CommentLikeActions,
   PostCommentUIActions,
   PostNotificationActions,
+  LocationActions,
 };

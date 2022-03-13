@@ -45,7 +45,7 @@ export interface PostWithMedia {
   nickname: string;
   createdAt: number;
   iLikeThisPost: string | undefined;
-  postLikes: (PostLike | PostLikeDraft | PostCommentApiResponse)[] | [];
+  postLikes: (PostLike | PostLikeDraft)[] | [];
   comments: (PostComment | PostCommentDraft | PostCommentApiResponse)[] | [];
   newComments: PostComment[] | [];
 }

@@ -1,13 +1,18 @@
 import { InitActions } from '@app/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
+import { LocationActions } from '../actions';
 
 export interface LocationsState {
   postLocations: { [postLocation: string]: string };
+  selectedPostLocation: string;
+  searchText: string;
 }
 
 export const initialState: LocationsState = {
   postLocations: {},
+  selectedPostLocation: 'Jyväskylä',
+  searchText: '',
 };
 
 const LocationsReducer = createReducer(
@@ -28,6 +33,18 @@ const LocationsReducer = createReducer(
       };
     }
   ),
+  on(LocationActions.selectLocation, (state, { location }) => {
+    return {
+      ...state,
+      selectedPostLocation: location,
+    };
+  }),
+  on(LocationActions.searchLocation, (state, { searchText }) => {
+    return {
+      ...state,
+      searchText,
+    };
+  }),
 
   on(AuthenticatedActions.signOut, () => initialState)
 );

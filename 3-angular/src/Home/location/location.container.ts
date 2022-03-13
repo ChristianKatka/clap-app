@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { PostsExtendedAppState } from 'src/PostsStore/store/reducers';
+import { LocationSelectors } from 'src/PostsStore/store/selectors';
 import { LocationBottomSheetService } from './change-location.service';
 
 @Component({
@@ -6,7 +9,14 @@ import { LocationBottomSheetService } from './change-location.service';
   templateUrl: 'location.container.html',
 })
 export class LocationContainerComponent {
-  constructor(private locationBottomSheetService: LocationBottomSheetService) {}
+  selectedPostLocation$ = this.store.select(
+    LocationSelectors.getSelectedPostLocation
+  );
+
+  constructor(
+    private locationBottomSheetService: LocationBottomSheetService,
+    private store: Store<PostsExtendedAppState>
+  ) {}
 
   openChangeLocationBottomSheet() {
     this.locationBottomSheetService.openChangeLocationBottomSheet();

@@ -16,6 +16,7 @@ import { LocationContainerComponent } from './location/location.container';
 import { LocationComponent } from './location/location.component';
 import { ChangeLocationBottomSheetContainerComponent } from './location/change-location-bottom-sheet/change-location-bottom-sheet.container';
 import { ChangeLocationBottomSheetSearchFormComponent } from './location/change-location-bottom-sheet/change-location-bottom-sheet-search-form/change-location-bottom-sheet-search-form.component';
+import { ChangeLocationBottomSheetComponent } from './location/change-location-bottom-sheet/change-location-bottom-sheet.component';
 
 export const components: any[] = [
   HomeFeatureContainerComponent,
@@ -35,5 +36,6 @@ export const components: any[] = [
   LocationContainerComponent,
   LocationComponent,
   ChangeLocationBottomSheetContainerComponent,
-  ChangeLocationBottomSheetSearchFormComponent
+  ChangeLocationBottomSheetSearchFormComponent,
+  ChangeLocationBottomSheetComponent
 ];
