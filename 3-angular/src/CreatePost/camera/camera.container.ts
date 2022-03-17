@@ -60,7 +60,19 @@ export class CameraContainerComponent implements OnInit {
     return this.nextWebcam.asObservable();
   }
 
-  convertWebCamImageToFile(webcamImage: WebcamImage) {
+  //--------------------
+
+  public get videoOptions(): MediaTrackConstraints {
+    //you can set ideal,min,max for width and height
+    const result: MediaTrackConstraints = {
+      width: { min: 640, ideal: 1920 },
+      height: { min: 480, ideal: 1080 },
+    };
+
+    return result;
+  }
+
+  convertWebCamImageToFile(webcamImage: WebcamImage): File {
     const arr = webcamImage.imageAsDataUrl.split(',');
     // const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);
