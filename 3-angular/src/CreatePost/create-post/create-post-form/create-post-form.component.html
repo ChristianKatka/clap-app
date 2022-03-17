@@ -1,36 +1,4 @@
 <section style="padding: 1rem; border-radius: 6px">
-  <!-- <p style="font-size: 25px; line-height: 26px">
-    Want to add tags?
-  </p>
-  <mat-form-field class="example-chip-list" appearance="fill">
-    <mat-label>Favorite Fruits</mat-label>
-    <mat-chip-list #chipList aria-label="Fruit selection">
-      <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
-        {{ fruit }}
-        <button matChipRemove>
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip>
-      <input
-        placeholder="New fruit..."
-        #fruitInput
-        [formControl]="fruitCtrl"
-        [matAutocomplete]="auto"
-        [matChipInputFor]="chipList"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="add($event)"
-      />
-    </mat-chip-list>
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      (optionSelected)="selected($event)"
-    >
-      <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-        {{ fruit }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field> -->
-
   <p
     style="
       font-size: 19px;
@@ -44,6 +12,9 @@
 
   <form [formGroup]="createPostForm">
     <mat-form-field class="example-full-width" appearance="fill">
+      <mat-error *ngIf="createPostForm.get('postLocation')?.hasError('pattern')">
+        White space is not allowed in the start or the end
+      </mat-error>
       <mat-label>Paikkakunta</mat-label>
       <input
         formControlName="postLocation"

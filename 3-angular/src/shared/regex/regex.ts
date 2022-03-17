@@ -2,7 +2,6 @@
 
 export const noOnlyWhiteSpacePattern = /^(\s+\S+\s*)*(?!\s).*$/;
 
-//Cognito password regex
 export const noWhiteSpaceAtStartOrEndPattern = /^[\S]+.*[\S]+$/;
 
 export const onlyLettersAndNumbers = /^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$/;

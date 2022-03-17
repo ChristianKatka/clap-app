@@ -1,18 +1,7 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, Observable, startWith } from 'rxjs';
 import { PostDraft } from '@shared/models/post.model';
+import { noWhiteSpaceAtStartOrEndPattern } from '@shared/regex/regex';
 
 @Component({
   selector: 'clap-app-create-post-form',
@@ -28,67 +17,28 @@ export class CreatePostFormComponent implements OnInit {
 
   createPostForm = new FormGroup({
     text: new FormControl('', Validators.required),
-    postLocation: new FormControl('', Validators.required),
+    postLocation: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(35),
+      Validators.pattern(noWhiteSpaceAtStartOrEndPattern),
+    ]),
   });
 
   ngOnInit() {}
 
   submit() {
-    this.createPost.emit(this.createPostForm.value);
+    const validatedPostFormData = {
+      ...this.createPostForm.value,
+      postLocation: this.capitalizeFirstLetter(
+        this.createPostForm.value.postLocation
+      ),
+    };
+    console.log(validatedPostFormData);
+
+    // this.createPost.emit(validatedPostFormData);
   }
 
-  // FRUIT
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement> =
-    {} as ElementRef;
-
-  constructor() {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) =>
-        fruit ? this._filter(fruit) : this.allFruits.slice()
-      )
-    );
-  }
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.fruits.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter((fruit) =>
-      fruit.toLowerCase().includes(filterValue)
-    );
+  capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
