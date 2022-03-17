@@ -16,6 +16,7 @@ export const createPostWithMedia = async (ctx: Context, next: Next) => {
     userId,
     nickname,
     text,
+    postLocation,
     createdAt: Date.now(),
   };
   const postMedia = {

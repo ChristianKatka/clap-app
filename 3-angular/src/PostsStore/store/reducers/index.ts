@@ -14,6 +14,7 @@ import * as fromPosts from './posts.reducer';
 import * as fromNotifications from './notifications.reducer';
 import * as fromPostsCommentsUI from './posts-comments-ui.reducer';
 import * as fromLocations from './locations.reducer';
+import * as fromCamera from './camera.reducer';
 
 export const featureKey = 'post';
 export interface PostsFeatureState {
@@ -27,6 +28,7 @@ export interface PostsFeatureState {
   pendingCommentLikes: fromPendingCommentLikes.PendingCommentLikesState;
   notifications: fromNotifications.NotificiationsState;
   locations: fromLocations.LocationsState;
+  camera: fromCamera.CameraState;
 }
 
 export interface PostsExtendedAppState extends AppState {
@@ -44,6 +46,7 @@ export const reducers: ActionReducerMap<PostsFeatureState> = {
   pendingCommentLikes: fromPendingCommentLikes.reducer,
   notifications: fromNotifications.reducer,
   locations: fromLocations.reducer,
+  camera: fromCamera.reducer,
 };
 
 const getPostsFeatureState =
@@ -114,3 +117,6 @@ export const getLocationsState = createSelector(
   getPostsFeatureState,
   getLocations
 );
+
+const getCamera = createFeatureSelector<fromCamera.CameraState>('camera');
+export const getCameraState = createSelector(getPostsFeatureState, getCamera);

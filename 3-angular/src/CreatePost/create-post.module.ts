@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material.module';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { CreatePostRoutingModule } from './create-post-routing.module';
-import { components } from '.';
-import { SharedModule } from '@shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { SharedModule } from '@shared/shared.module';
+import { WebcamModule } from 'ngx-webcam';
+import { components } from '.';
+import { MaterialModule } from '../material.module';
+import { CreatePostRoutingModule } from './create-post-routing.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     CreatePostRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    WebcamModule,
   ],
   declarations: [...components],
   exports: [...components],

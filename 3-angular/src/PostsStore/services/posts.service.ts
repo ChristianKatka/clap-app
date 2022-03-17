@@ -23,6 +23,8 @@ export class PostsService {
   createPostWithMedia(
     postWithMediaDraft: PostWithMediaImageUploaded
   ): Observable<PostWithMediaApiRes> {
+    console.log(postWithMediaDraft);
+    
     return this.authHttp.post(
       `${environment.apiBaseUrl}/posts/with-media`,
       postWithMediaDraft

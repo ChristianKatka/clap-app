@@ -8,6 +8,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class CreatePostAddMediaComponent implements OnInit {
   @Output()
   postMediaSelected: EventEmitter<File> = new EventEmitter();
+  @Output()
+  openCamera = new EventEmitter();
 
   constructor() {}
 

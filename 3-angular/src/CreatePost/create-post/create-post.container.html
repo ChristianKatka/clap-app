@@ -1,5 +1,8 @@
 <clap-app-create-post
   [loading]="loading$ | async | onlyBoolean"
+  [isCameraOpen]="isCameraOpen$ | async | onlyBoolean"
   (createPost)="onCreatePost($event)"
   (createPostWithMedia)="onCreatePostWithMedia($event)"
+  (openCamera)="openCamera()"
+  (closeCamera)="closeCamera()"
 ></clap-app-create-post>

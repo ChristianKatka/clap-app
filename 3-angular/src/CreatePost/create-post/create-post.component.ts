@@ -7,9 +7,11 @@ import { PostDraft } from '@shared/models/post.model';
   styleUrls: ['create-post.component.scss'],
 })
 export class CreatePostComponent implements OnInit {
-  mediaSelected: File | undefined;
   @Input()
   loading = false;
+
+  @Input()
+  isCameraOpen = false;
 
   @Output()
   createPost: EventEmitter<PostDraft> = new EventEmitter();
@@ -24,11 +26,23 @@ export class CreatePostComponent implements OnInit {
   @Output()
   postImageSelected: EventEmitter<File> = new EventEmitter();
 
+  @Output()
+  openCamera = new EventEmitter();
+
+  @Output()
+  closeCamera = new EventEmitter();
+
+  mediaSelected: File | undefined;
+
   constructor() {}
 
   ngOnInit() {}
 
   holdPostMedia(media: File) {
+    if (this.isCameraOpen) {
+      this.closeCamera.emit();
+    }
+
     this.mediaSelected = media;
   }
 

@@ -4,9 +4,15 @@
 
 <clap-app-container [width]="'90%'">
   <h1>Create post</h1>
+
+  <clap-app-camera
+    *ngIf="isCameraOpen"
+    (getPicture)="holdPostMedia($event)"
+  ></clap-app-camera>
   <clap-app-create-post-add-media
     *ngIf="!mediaSelected"
     (postMediaSelected)="holdPostMedia($event)"
+    (openCamera)="this.openCamera.emit()"
   ></clap-app-create-post-add-media>
   <clap-app-create-post-media-holder
     *ngIf="mediaSelected"
