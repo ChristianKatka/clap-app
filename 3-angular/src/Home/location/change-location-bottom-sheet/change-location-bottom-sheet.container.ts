@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { AuthExtendedAppState } from '@auth/store/reducers';
 import { Store } from '@ngrx/store';
-import { PostLocation } from '@shared/models/post-location.model';
 import { LocationActions } from 'src/PostsStore/store/actions';
 import { LocationSelectors } from 'src/PostsStore/store/selectors';
+import { LocationBottomSheetService } from '../change-location.service';
 
 @Component({
   templateUrl: 'change-location-bottom-sheet.container.html',
@@ -17,14 +16,14 @@ export class ChangeLocationBottomSheetContainerComponent implements OnInit {
   postLocations$ = this.store.select(LocationSelectors.getPostLocations);
 
   constructor(
-    private bottomSheetRef: MatBottomSheetRef<ChangeLocationBottomSheetContainerComponent>,
-    private store: Store<AuthExtendedAppState>
+    private store: Store<AuthExtendedAppState>,
+    private locationBottomSheetService: LocationBottomSheetService
   ) {}
 
   ngOnInit() {}
 
   close() {
-    this.bottomSheetRef.dismiss();
+    this.locationBottomSheetService.closeChangeLocationBottomSheet();
   }
 
   logOut() {

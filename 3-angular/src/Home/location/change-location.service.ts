@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   MatBottomSheet,
-  MatBottomSheetRef,
+  MatBottomSheetRef
 } from '@angular/material/bottom-sheet';
 import { ChangeLocationBottomSheetContainerComponent } from './change-location-bottom-sheet/change-location-bottom-sheet.container';
 
@@ -12,6 +12,15 @@ export class LocationBottomSheetService {
   constructor(private bottomSheet: MatBottomSheet) {}
 
   openChangeLocationBottomSheet() {
-    this.bottomSheet.open(ChangeLocationBottomSheetContainerComponent);
+    this.bottomSheetRef = this.bottomSheet.open(
+      ChangeLocationBottomSheetContainerComponent
+    );
+  }
+
+  closeChangeLocationBottomSheet() {
+    if (this.bottomSheetRef) {
+      this.bottomSheetRef.dismiss();
+      this.bottomSheetRef = undefined;
+    }
   }
 }

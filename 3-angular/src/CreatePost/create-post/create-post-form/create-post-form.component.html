@@ -1,6 +1,5 @@
 <section style="padding: 1rem; border-radius: 6px">
-
-  <p style="font-size: 25px; line-height: 26px">
+  <!-- <p style="font-size: 25px; line-height: 26px">
     Want to add tags?
   </p>
   <mat-form-field class="example-chip-list" appearance="fill">
@@ -30,18 +29,27 @@
         {{ fruit }}
       </mat-option>
     </mat-autocomplete>
-  </mat-form-field>
+  </mat-form-field> -->
 
-  <p style="font-size: 25px; line-height: 26px; margin-top: 30px;">
+  <p
+    style="
+      font-size: 19px;
+      line-height: 27px;
+      font-weight: bold;
+      margin-top: 30px;
+    "
+  >
     Something funny in your mind you would like to share?
   </p>
-
-
 
   <form [formGroup]="createPostForm">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Paikkakunta</mat-label>
-      <input formControlName="postLocation" matInput placeholder="Esim. Jyväskylä">
+      <input
+        formControlName="postLocation"
+        matInput
+        placeholder="Esim. Jyväskylä"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
