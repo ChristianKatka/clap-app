@@ -1,5 +1,7 @@
 <main *ngIf="comments.length">
-  <p class="view-all-comments-text">View all {{ comments.length }} comments</p>
+  <p [routerLink]="['/home', postId]" class="view-all-comments-text">
+    View all {{ comments.length }} comments
+  </p>
 
   <div fxLayoutAlign="space-between center">
     <p>

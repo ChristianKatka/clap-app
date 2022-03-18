@@ -8,5 +8,9 @@ import { Component, Input } from '@angular/core';
 export class PostCommentsMinifiedComponent {
   @Input()
   comments: any;
+
+  @Input()
+  postId = '';
+
   constructor() {}
 }

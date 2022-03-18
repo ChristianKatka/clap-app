@@ -15,10 +15,14 @@
       <mat-error *ngIf="createPostForm.get('postLocation')?.hasError('pattern')">
         White space is not allowed in the start or the end
       </mat-error>
+      <mat-error *ngIf="createPostForm.get('postLocation')?.hasError('required')"
+        >To create post you must choose location</mat-error
+      >
       <mat-label>Paikkakunta</mat-label>
       <input
         formControlName="postLocation"
         matInput
+        maxlength="35"
         placeholder="Esim. Jyväskylä"
       />
     </mat-form-field>

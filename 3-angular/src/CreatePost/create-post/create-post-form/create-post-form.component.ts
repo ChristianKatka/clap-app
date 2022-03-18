@@ -33,12 +33,11 @@ export class CreatePostFormComponent implements OnInit {
         this.createPostForm.value.postLocation
       ),
     };
-    console.log(validatedPostFormData);
-
-    // this.createPost.emit(validatedPostFormData);
+    this.createPost.emit(validatedPostFormData);
   }
 
   capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    const allLowerCase = string.toLowerCase();
+    return allLowerCase.charAt(0).toUpperCase() + allLowerCase.slice(1);
   }
 }
