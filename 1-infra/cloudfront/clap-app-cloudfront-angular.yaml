@@ -61,8 +61,7 @@ Resources:
         PriceClass: PriceClass_100
 
         ViewerCertificate:
-        #  TÄMÄ VAIN TARVII MUUTTAA!!
-          AcmCertificateArn: arn:aws:acm:us-east-1:177244120069:certificate/4a5213a3-040a-4019-9750-5626de57e7bc
+          AcmCertificateArn: arn:aws:acm:us-east-1:177244120069:certificate/359c2568-8b53-434d-b39b-8a6e2b661d1d
           MinimumProtocolVersion: TLSv1.2_2018
           SslSupportMethod: sni-only
 
