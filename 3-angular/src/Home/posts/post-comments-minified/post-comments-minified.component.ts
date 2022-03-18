@@ -1,4 +1,9 @@
 import { Component, Input } from '@angular/core';
+import {
+  PostComment,
+  PostCommentApiResponse,
+  PostCommentDraft,
+} from '@shared/models/post-comment.model';
 
 @Component({
   selector: 'clap-app-post-comments-minified',
@@ -7,7 +12,7 @@ import { Component, Input } from '@angular/core';
 })
 export class PostCommentsMinifiedComponent {
   @Input()
-  comments: any;
+  comments: (PostComment | PostCommentDraft | PostCommentApiResponse)[] = [];
 
   @Input()
   postId = '';

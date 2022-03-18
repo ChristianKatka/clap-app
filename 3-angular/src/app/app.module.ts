@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
 import { effects } from './store/effects';
 import { reducers } from './store/reducers';
 import { RouterStateSerializer } from './store/router-state.serializer';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent, ...components],
@@ -46,7 +47,13 @@ import { RouterStateSerializer } from './store/router-state.serializer';
     AboutModule,
     PostsStoreModule,
     MyProfileModule,
-    WebSocketStoreModule
+    WebSocketStoreModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
