@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { MyProfile } from '@shared/models/my-profile.model';
+import { MyProfileWithProfileImage } from '@shared/models/my-profile.model';
 import { getMyProfileState, getProfileImageState } from '../reducers';
 
 export const isLoading = createSelector(
@@ -10,7 +10,7 @@ export const isLoading = createSelector(
 export const getMyProfile = createSelector(
   getMyProfileState,
   getProfileImageState,
-  (profileState, imageState) => {
+  (profileState, imageState): MyProfileWithProfileImage => {
     if (!imageState.myProfileImage)
       return {
         ...profileState.myProfile,

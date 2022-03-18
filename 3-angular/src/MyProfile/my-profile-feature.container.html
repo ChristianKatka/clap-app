@@ -1,6 +1,6 @@
 <clap-app-my-profile-top-bar></clap-app-my-profile-top-bar>
-<clap-app-my-profile
-  [myProfileData]="myProfileData$ | async"
+<clap-app-my-profile *ngIf="myProfileData$ | async as myProfileData"
+  [myProfileData]="myProfileData"
   (openEditProfileBottomSheet)="onOpenEditProfileBottomSheet()"
 ></clap-app-my-profile>
 

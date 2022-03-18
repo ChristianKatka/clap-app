@@ -4,28 +4,27 @@ import { sortByCreatedAtDateAscending } from '@shared/helpers/sort-by-created-at
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import {
   PostWithMedia,
-  PostWithMediaApiRes
+  PostWithMediaApiRes,
 } from '@shared/models/post-with-media.model';
 import { Post, PostApiResponse } from '@shared/models/post.model';
 import { getMyProfileState } from '../../../MyProfile/store/reducers';
 import {
   getCommentLikesState,
   getPostsLikesState,
-  getPostsState
+  getPostsState,
 } from '../reducers';
 import {
   attachAllNecessaryDataInsidePost,
   checkIfILikeThisPost,
   getCommentsThatBelongToGivenPostWithlikeInfoInside,
   getLikesThatBelongToGivenPost,
-  getNewCommentsThatCameViaSocket
+  getNewCommentsThatCameViaSocket,
 } from '../utils/posts.utils';
 import { getSelectedPostLocation } from './location.selectors';
 import {
   getNewPostCommentsViaSocket,
-  getPostsComments
+  getPostsComments,
 } from './posts-comments.selectors';
-
 
 export const getSortBy = createSelector(getPostsState, (state) => state.sortBy);
 export const isLoading = createSelector(
@@ -41,7 +40,7 @@ const getPostLikes = createSelector(getPostsLikesState, (state) =>
   Object.values(state.postsLikes)
 );
 
-export const getPosts = createSelector(
+export const getAllPosts = createSelector(
   getPostsState,
   getPostLikes,
   getMyProfileState,
@@ -49,7 +48,6 @@ export const getPosts = createSelector(
   getPostsComments,
   getNewPostCommentsViaSocket,
   getCommentLikes,
-  getSelectedPostLocation,
   (
     postsState,
     postsLikes,
@@ -57,8 +55,7 @@ export const getPosts = createSelector(
     sortBy,
     postsComments,
     newCommentsViaSocket,
-    commentLikes,
-    selectedLocation
+    commentLikes
   ) => {
     const postEntities: (PostApiResponse | PostWithMediaApiRes)[] =
       Object.values(postsState.entities);
@@ -92,23 +89,31 @@ export const getPosts = createSelector(
       }
     );
 
+    if (sortBy === 'latest') {
+      const sortedPosts: (Post | PostWithMedia)[] =
+        sortByCreatedAtDateAscending(allPosts);
+      return sortedPosts;
+    } else {
+      return allPosts;
+    }
+  }
+);
+
+export const getPosts = createSelector(
+  getAllPosts,
+  getSelectedPostLocation,
+  (allPosts, selectedLocation) => {
     const postsBySelectedLocation = allPosts.filter(
       (post) => post.postLocation === selectedLocation
     );
 
-    if (sortBy === 'latest') {
-      const sortedPosts: (Post | PostWithMedia)[] =
-        sortByCreatedAtDateAscending(postsBySelectedLocation);
-      return sortedPosts;
-    } else {
-      return postsBySelectedLocation;
-    }
+    return postsBySelectedLocation;
   }
 );
 
 export const getSelectedPost = createSelector(
   getPostsState,
-  getPosts,
+  getAllPosts,
   (state, posts) => {
     return posts.filter(
       (post: Post | PostWithMedia) => post.id === state.selectedPostId

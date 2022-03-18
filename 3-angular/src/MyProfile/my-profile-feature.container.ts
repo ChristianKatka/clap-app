@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MyProfile } from '@shared/models/my-profile.model';
+import { MyProfileWithProfileImage } from '@shared/models/my-profile.model';
 import { Observable } from 'rxjs';
 import { MyProfileBottomSheetService } from './services/my-profile-bottom-sheet.service';
 import { ProfileExtendedAppState } from './store/reducers';
@@ -15,7 +15,9 @@ export class MyProfileFeatureContainerComponent {
     { label: 'Saved', path: ['saved'] },
   ];
 
-  myProfileData$ = this.store.select(MyProfileSelectors.getMyProfile);
+  myProfileData$: Observable<MyProfileWithProfileImage> = this.store.select(
+    MyProfileSelectors.getMyProfile
+  );
 
   constructor(
     private myProfileBottomSheetService: MyProfileBottomSheetService,

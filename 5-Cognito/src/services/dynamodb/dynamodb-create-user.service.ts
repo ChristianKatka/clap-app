@@ -11,6 +11,7 @@ export const dynamodbCreateUser = (
     email,
     nickname,
     selectedLocation: "Jyväskylä",
+    bio: "Hello there I am new user",
   };
 
   return docClient

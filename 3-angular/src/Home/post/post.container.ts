@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RouterActions } from '@app/store/actions';
 import { Store } from '@ngrx/store';
 import {
   CommentLike,
@@ -94,5 +95,9 @@ export class PostContainerComponent implements OnInit, OnDestroy {
 
   onHideNewCommentsBelowPopUp() {
     this.store.dispatch(PostCommentUIActions.hideNewMessagesBelowPopUp());
+  }
+
+  goBack() {
+    this.store.dispatch(RouterActions.back());
   }
 }

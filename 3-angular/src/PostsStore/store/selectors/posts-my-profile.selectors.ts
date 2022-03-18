@@ -1,24 +1,22 @@
 import { createSelector } from '@ngrx/store';
+import { sortByCreatedAtDateAscending } from '@shared/helpers/sort-by-created-at-date-ascending';
 import { of } from 'rxjs';
 import { getMyProfileState } from '../../../MyProfile/store/reducers';
 import { getPostsState } from '../reducers';
+import { getAllPosts } from './posts.selectors';
 
 export const getSortBy = createSelector(getPostsState, (state) => state.sortBy);
 
 export const getMyOwnPosts = createSelector(
-  getPostsState,
+  getAllPosts,
   getMyProfileState,
-  (state, profileState) => {
-    // const posts = Object.values(state.entities);
-    // const userId = profileState.myProfile?.id;
-    // if (!userId) return [];
+  (allPosts, profileState) => {
+    const userId = profileState.myProfile?.id;
+    if (!userId) return [];
 
-    // const myPosts = posts.filter(
-    //   (post: PostWithoutImage) => post.userId === userId
-    // );
+    const myPosts = allPosts.filter((post) => post.userId === userId);
 
-    // return sortByCreatedDate(myPosts);
-    return [];
+    return sortByCreatedAtDateAscending(myPosts);
   }
 );
 

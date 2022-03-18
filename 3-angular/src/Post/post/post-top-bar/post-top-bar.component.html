@@ -1,12 +1,12 @@
 <mat-toolbar fxLayoutAlign="space-between center">
   <div
     class="go-back-button"
-    routerLink="/home"
+    (click)="this.goBack.emit()"
     fxFlex="33"
     fxLayoutAlign="start center"
   >
     <mat-icon class="material-icons-outlined">arrow_back_ios</mat-icon>
-    <p class="back-button-text">Home</p>
+    <p class="back-button-text">Back</p>
   </div>
 
   <p

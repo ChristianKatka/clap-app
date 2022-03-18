@@ -1,19 +1,22 @@
 import { InitActions } from '@app/store/actions';
-import { createReducer, on, Action } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { MyProfile } from '@shared/models/my-profile.model';
 import { AuthenticatedActions } from '../../../Auth/store/actions';
 import { MyProfileActions } from '../actions';
 
 export interface MyProfileState {
-  // myProfile: MyProfile | undefined;
-  myProfile:
-    | MyProfile
-    | undefined;
+  myProfile: MyProfile;
   loading: boolean;
 }
 
 export const initialState: MyProfileState = {
-  myProfile: undefined,
+  myProfile: {
+    id: '',
+    email: '',
+    nickname: '',
+    bio: '',
+    selectedLocation: '',
+  },
   loading: false,
 };
 
@@ -22,7 +25,6 @@ const PostsReducer = createReducer(
   on(
     InitActions.loadApplicationInitializeDataSuccess,
     (state, { myProfile }) => {
-      // myProfile: { email: string; nickname: string; id: string }
       return {
         ...state,
         myProfile,
