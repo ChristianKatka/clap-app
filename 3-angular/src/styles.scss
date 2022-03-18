@@ -37,6 +37,10 @@ body {
   height: 100vh;
 }
 
+.media-dialog .mat-dialog-container {
+  padding: 0;
+}
+
 $clap-blue: #3f51b5;
 $clap-gray: #666666;
 $clap-dark-gray: rgb(53, 53, 53);

@@ -8,6 +8,7 @@ import { MyProfileSavedContainerComponent } from './my-profile-saved/my-profile-
 import { MyProfileEditComponent } from './my-profile-edit/my-profile-edit.component';
 import { MyProfileEditContainerComponent } from './my-profile-edit/my-profile-edit.container';
 import { MyProfileEditFormComponent } from './my-profile-edit/my-profile-edit-form.component';
+import { ProfileImageDialogContainerComponent } from './profile-image-dialog/profile-image-dialog.container';
 
 export const components: any[] = [
   MyProfileFeatureContainerComponent,
@@ -20,5 +21,6 @@ export const components: any[] = [
   MyProfileEditComponent,
   MyProfileEditContainerComponent,
   MyProfileEditComponent,
-  MyProfileEditFormComponent
+  MyProfileEditFormComponent,
+  ProfileImageDialogContainerComponent
 ];

@@ -1,16 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   EventEmitter,
   HostListener,
   Input,
-  OnChanges,
   Output,
-  QueryList,
-  SimpleChanges,
   ViewChild,
-  ViewChildren,
 } from '@angular/core';
 import {
   CommentLike,
@@ -28,7 +23,7 @@ import {
   styleUrls: ['post-comments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostCommentsComponent implements OnChanges {
+export class PostCommentsComponent {
   @ViewChild('afterLastCommentElement') afterLastCommentElement: Element =
     {} as Element;
 
@@ -50,12 +45,6 @@ export class PostCommentsComponent implements OnChanges {
   hideNewCommentsBelowPopUp = new EventEmitter();
 
   // constructor(private ref: ElementRef) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.commentUIStatus);
-  }
-
-  
 
   previousScrollPosition = 0;
   @HostListener('window:scroll', [])

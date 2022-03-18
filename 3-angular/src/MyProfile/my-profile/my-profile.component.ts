@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MyProfileWithProfileImage } from '@shared/models/my-profile.model';
+import { ProfileImageDialogContainerComponent } from '../profile-image-dialog/profile-image-dialog.container';
 
 @Component({
   selector: 'clap-app-my-profile',
@@ -19,4 +21,16 @@ export class MyProfileComponent {
 
   @Output()
   openEditProfileBottomSheet = new EventEmitter();
+
+  constructor(public dialog: MatDialog) {}
+
+  showProfileImage() {
+    this.dialog.open(
+      ProfileImageDialogContainerComponent,
+      {
+        panelClass: 'media-dialog',
+        maxWidth: '100vw',
+      }
+    );
+  }
 }

@@ -1,0 +1,6 @@
+<main *ngIf="myProfileData$ | async as myProfileData">
+  <button (click)="exitDialog()" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+  <img [src]="myProfileData.profileImageUrl" />
+</main>
