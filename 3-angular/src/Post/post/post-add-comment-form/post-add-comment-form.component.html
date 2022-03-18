@@ -1,0 +1,51 @@
+<div
+  class="add-comment-wrapper"
+  fxLayout="row"
+  fxLayoutAlign="center end"
+>
+  <img src="{{ myProfileImage }}" alt="profile-image" class="profile-image" />
+  <form
+    *ngIf="isAddCommentClicked"
+    [formGroup]="commentForm"
+    fxLayoutAlign="center center"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Add a comment...</mat-label>
+      <textarea
+        matInput
+        clapAppAutofocus
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="4"
+        formControlName="comment"
+        maxlength="1000"
+      ></textarea>
+      <mat-icon (click)="submit()" matSuffix class="material-icons-outlined"
+        >send</mat-icon
+      >
+    </mat-form-field>
+  </form>
+
+  <form
+    *ngIf="!isAddCommentClicked"
+    [formGroup]="commentForm"
+    fxLayoutAlign="center center"
+  >
+    <mat-form-field appearance="outline" >
+      <mat-label>Add a comment...</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="4"
+        formControlName="comment"
+        maxlength="1000"
+      ></textarea>
+      <mat-icon (click)="submit()" matSuffix class="material-icons-outlined"
+        >send</mat-icon
+      >
+    </mat-form-field>
+  </form>
+</div>

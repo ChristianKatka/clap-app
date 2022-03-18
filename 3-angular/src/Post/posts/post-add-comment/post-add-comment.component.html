@@ -1,0 +1,13 @@
+<div class="add-comment-wrapper" fxLayoutAlign="space-between center">
+  <section fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <img src="{{ myProfileImage }}" alt="profile-image" class="profile-image" />
+    <a
+      [routerLink]="['/home', postId]"
+      (click)="this.clickedAddComment.emit()"
+      class="add-comment-text"
+    >
+      Add a comment...
+    </a>
+  </section>
+  <p>👏</p>
+</div>

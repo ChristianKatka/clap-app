@@ -1,0 +1,24 @@
+@use "../../../styles.scss" as s;
+
+p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.add-comment-wrapper {
+  margin-top: 0.1rem;
+
+  .profile-image {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .add-comment-text {
+    cursor: pointer;
+    color: s.$clap-gray;
+  }
+}

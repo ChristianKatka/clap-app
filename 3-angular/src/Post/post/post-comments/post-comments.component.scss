@@ -1,0 +1,29 @@
+@use "../../../styles.scss" as s;
+
+.profile-image {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.comment-date-text {
+  margin-left: 5px;
+  color: s.$clap-gray;
+}
+
+.comment-info-wrapper {
+  color: s.$clap-gray;
+  margin-top: 3px;
+
+  .comment-likes-amount {
+    margin-left: 10px;
+    font-weight: bold;
+  }
+}
+
+
+.last-element {
+  margin-bottom: 5rem;
+}

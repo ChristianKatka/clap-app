@@ -1,0 +1,14 @@
+<main *ngIf="comments.length">
+  <p [routerLink]="['/home', postId]" class="view-all-comments-text">
+    View all {{ comments.length }} comments
+  </p>
+
+  <div fxLayoutAlign="space-between center">
+    <p>
+      <b>{{ comments[0].nickname }}</b> {{ comments[0].text }}
+    </p>
+    <mat-icon style="transform: scale(0.5)" class="material-icons-outlined"
+      >favorite_border</mat-icon
+    >
+  </div>
+</main>
