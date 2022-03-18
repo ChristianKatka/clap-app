@@ -1,17 +1,18 @@
+import { PostAddCommentFormComponent } from './post/post-add-comment-form/post-add-comment-form.component';
+import { CommentLikeButtonComponent } from './post/post-comments/comment-like-button/comment-like-button.component';
+import { NewCommentsBelowComponent } from './post/post-comments/new-comments-below/new-comments-below.component';
 import { PostCommentsComponent } from './post/post-comments/post-comments.component';
 import { PostTopBarComponent } from './post/post-top-bar/post-top-bar.component';
 import { PostComponent } from './post/post.component';
-import { NewCommentsBelowComponent } from './post/post-comments/new-comments-below/new-comments-below.component';
-import { CommentLikeButtonComponent } from './post/post-comments/comment-like-button/comment-like-button.component';
 import { PostAddCommentComponent } from './posts/post-add-comment/post-add-comment.component';
 import { PostCommentsMinifiedComponent } from './posts/post-comments-minified/post-comments-minified.component';
-import { PostsUserWrapperComponent } from './posts/posts-user-wrapper/posts-user-wrapper';
+import { PostUserWrapperComponent } from './post-user-wrapper/post-user-wrapper';
 import { PostsComponent } from './posts/posts.component';
-import { PostAddCommentFormComponent } from './post/post-add-comment-form/post-add-comment-form.component';
+import { SnackbarReportedComponent } from './snackbar-reported/snackbar-reported.component';
 
 export const components: any[] = [
   PostsComponent,
-  PostsUserWrapperComponent,
+  PostUserWrapperComponent,
   PostCommentsMinifiedComponent,
   PostAddCommentComponent,
   PostComponent,
@@ -19,5 +20,6 @@ export const components: any[] = [
   PostCommentsComponent,
   NewCommentsBelowComponent,
   CommentLikeButtonComponent,
-  PostAddCommentFormComponent
+  PostAddCommentFormComponent,
+  SnackbarReportedComponent
 ];

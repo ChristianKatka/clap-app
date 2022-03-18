@@ -1,0 +1,28 @@
+<clap-app-container [width]="'97%'">
+  <div class="profile-wrapper" fxLayoutAlign="space-between center">
+    <section fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <img
+        src="{{creatorsProfileImage}}"
+        alt="profile-image"
+        class="profile-image"
+      />
+      <div>
+        <p class="user-name">{{ nickname }}</p>
+        <p>{{ postLocation }}</p>
+      </div>
+    </section>
+    <!-- <mat-icon class="material-icons-outlined">more_horiz</mat-icon> -->
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="postMenu"
+    >
+      <mat-icon class="material-icons-outlined">more_horiz</mat-icon>
+    </button>
+    <mat-menu #postMenu="matMenu" xPosition="before">
+      <div mat-menu-item fxLayoutAlign="center center" (click)="reportInappropriate()">
+        <mat-icon  class="material-icons-outlined">outlined_flag</mat-icon>
+        <span>Report inappropriate</span>
+      </div>
+    </mat-menu>
+  </div>
+</clap-app-container>

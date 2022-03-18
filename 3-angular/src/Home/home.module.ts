@@ -1,29 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '../material.module';
-import { components } from '.';
-import { SharedModule } from 'src/shared/shared.module';
-import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { PostModule } from 'src/Post/post.module';
-
-// import { StoreModule } from '@ngrx/store';
-// import { reducers } from './store/reducers';
-// import { effects } from './store/effects';
-// import { EffectsModule } from '@ngrx/effects';
+import { SharedModule } from 'src/shared/shared.module';
+import { components } from '.';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    // StoreModule.forFeature('home-feature', reducers),
-    // EffectsModule.forFeature(effects),
     MaterialModule,
     FlexLayoutModule,
     SharedModule,
     ReactiveFormsModule,
-    PostModule
+    PostModule,
   ],
   declarations: [...components],
   entryComponents: [],

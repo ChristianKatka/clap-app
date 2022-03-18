@@ -1,8 +1,9 @@
 <main *ngIf="post" #scroll>
-  <clap-app-posts-user-wrapper
+  <clap-app-post-user-wrapper
     [nickname]="post.nickname"
     [creatorsProfileImage]="post.creatorsProfileImage"
-  ></clap-app-posts-user-wrapper>
+    [postLocation]="post.postLocation"
+  ></clap-app-post-user-wrapper>
 
   <img
     *ngIf="this.isMediaPost(post)"
