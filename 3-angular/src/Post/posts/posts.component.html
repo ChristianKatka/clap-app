@@ -1,4 +1,4 @@
-<main fxLayout="column" fxLayoutGap="20px">
+<main *ngIf="posts.length >= 1" fxLayout="column" fxLayoutGap="20px">
   <section *ngFor="let post of posts">
     <clap-app-post-user-wrapper
       [nickname]="post.nickname"
@@ -71,3 +71,6 @@
     </clap-app-container>
   </section>
 </main>
+<section *ngIf="posts.length <= 0">
+  <h1>no posts</h1>
+</section>

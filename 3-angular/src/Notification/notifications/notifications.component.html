@@ -3,18 +3,23 @@
     <object data="assets/art/notification.svg" type="image/svg+xml"></object>
   </section>
   <h1>notifications</h1>
+  <section *ngIf="notifications && notifications.length >= 1">
+    <div style="width: 100%" *ngFor="let postNotifications of notifications">
+      <clap-app-notifications-some-one-liked-your-post
+        *ngIf="postNotifications && postNotifications.length === 1"
+        [notifications]="postNotifications"
+      ></clap-app-notifications-some-one-liked-your-post>
 
-  <div style="width: 100%" *ngFor="let postNotifications of notifications">
-    <clap-app-notifications-some-one-liked-your-post
-      *ngIf="postNotifications && postNotifications.length === 1"
-      [notifications]="postNotifications"
-    ></clap-app-notifications-some-one-liked-your-post>
+      <clap-app-notifications-multiple-people-liked-your-post
+        *ngIf="postNotifications && postNotifications.length > 1"
+        [notifications]="postNotifications"
+      ></clap-app-notifications-multiple-people-liked-your-post>
+    </div>
+  </section>
 
-    <clap-app-notifications-multiple-people-liked-your-post
-      *ngIf="postNotifications && postNotifications.length > 1"
-      [notifications]="postNotifications"
-    ></clap-app-notifications-multiple-people-liked-your-post>
-  </div>
+  <section *ngIf="notifications && notifications.length <= 1">
+    <h1>no notifications</h1>
+  </section>
 
   <!-- <clap-app-notifications-some-one-commented-on-your-post></clap-app-notifications-some-one-commented-on-your-post>
 
