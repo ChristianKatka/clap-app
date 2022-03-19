@@ -7,7 +7,7 @@ const handler: Handler = async (
 ) => {
   console.log("Received event:", JSON.stringify(event, null, 4));
 
-  if (event && event.triggerSource === "PostAuthentication_Authentication") {
+  if (event && event.triggerSource === "PostConfirmation_ConfirmSignUp") {
     if (!event.userName) return;
     await dynamodbCreateUser(
       event.request.userAttributes.sub,
