@@ -21,7 +21,7 @@ Resources:
         ErrorDocument: index.html
       Tags:
         - Key: name
-          Value: clap-app-s3-bucket-angular
+          Value: clap-app-angular
 
 
   CloudFrontOAIs3BucketAngular:

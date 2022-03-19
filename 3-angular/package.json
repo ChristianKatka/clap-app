@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "test": "ng test",
+    "e2e": "ng e2e",
     "deleteobjectsins3": "aws s3 rm s3://clap-app-angular --recursive",
     "copytos3": "aws s3 cp dist/angular s3://clap-app-angular --recursive",
     "deploy": "npm run build && npm run deleteobjectsins3 && npm run copytos3",
