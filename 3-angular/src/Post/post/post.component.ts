@@ -53,6 +53,8 @@ export class PostComponent implements OnChanges, AfterViewChecked {
     new EventEmitter();
   @Output()
   hideNewCommentsBelowPopUp = new EventEmitter();
+  @Output()
+  openLikesDialog: EventEmitter<any> = new EventEmitter();
 
   newCommentHappened = false;
 

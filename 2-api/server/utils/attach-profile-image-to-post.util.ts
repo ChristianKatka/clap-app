@@ -9,10 +9,9 @@ export const attachProfileImageToPost = async (post: any) => {
       ...post,
       creatorsProfileImage: (creatorsProfileImage as any).imageUrl,
     };
-  } else {
-    return {
-      ...post,
-      creatorsProfileImage: 'assets/images/default_profile_image.png',
-    };
   }
+  return {
+    ...post,
+    creatorsProfileImage: 'assets/images/default_profile_image.png',
+  };
 };

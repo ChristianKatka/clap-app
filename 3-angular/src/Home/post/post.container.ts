@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterActions } from '@app/store/actions';
+import { PostDialogService } from '@home/services/post-dialog.service';
 import { Store } from '@ngrx/store';
 import {
   CommentLike,
@@ -50,7 +51,8 @@ export class PostContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<PostsExtendedAppState>,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private postDialogService: PostDialogService
   ) {}
 
   ngOnInit() {
@@ -95,6 +97,10 @@ export class PostContainerComponent implements OnInit, OnDestroy {
 
   onHideNewCommentsBelowPopUp() {
     this.store.dispatch(PostCommentUIActions.hideNewMessagesBelowPopUp());
+  }
+
+  openLikesDialog(postLikes: (PostLikeDraft | PostLike)[]) {
+    this.postDialogService.openLikesDialog(postLikes);
   }
 
   goBack() {

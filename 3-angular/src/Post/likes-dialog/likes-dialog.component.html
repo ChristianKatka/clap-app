@@ -1,0 +1,32 @@
+<main>
+  <section class="likes-top-bar" fxLayoutAlign="space-between center">
+    <h1>Likes</h1>
+    <button (click)="closeDialog()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </section>
+  <section class="likes-wrapper" fxLayout="column" fxLayoutGap="18px">
+    <div
+      class="like-wrapper"
+      fxLayoutAlign="space-between center"
+      *ngFor="let like of postLikes"
+    >
+      <section fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <img
+          *ngIf="isTypePostLike(like)"
+          src="{{ like.likersProfileImage }}"
+          alt="profile-image"
+          class="profile-image"
+        />
+        <div>
+          <p *ngIf="isTypePostLike(like)" class="user-name">
+            {{ like.nickname }}
+          </p>
+        </div>
+      </section>
+      <p *ngIf="isTypePostLike(like)" class="date-text">
+        {{ like.createdAt | timeAgo }}
+      </p>
+    </div>
+  </section>
+</main>

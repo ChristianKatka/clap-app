@@ -15,4 +15,5 @@ export interface PostLike {
   userId: string;
   createdAt: 1638635426735;
   nickname: string;
+  likersProfileImage: string;
 }

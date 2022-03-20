@@ -1,7 +1,24 @@
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from "aws-lambda";
 import { convertDynamoDBRecord } from "./helpers";
 import { dynamodbGetActiveWsConnectionsService } from "./services/dynamodb/dynamodb-get-active-ws-connections.service";
+import { dynamodbGetUsersProfileImageByIdService } from "./services/dynamodb/dynamodb-get-users-profile-image-by-id.service";
 import { sendLikeToUserItBelongsIfHeHasActiveConnectionUtil } from "./utils/send-like-to-user-it-belongs-if-he-has-active-connection.util";
+
+const fetchProfileImageToLikeCreator = async (like: any) => {
+  const likersProfileImage = await dynamodbGetUsersProfileImageByIdService(
+    like.userId
+  );
+  if (likersProfileImage) {
+    return {
+      ...like,
+      likersProfileImage: (likersProfileImage as any).imageUrl,
+    };
+  }
+  return {
+    ...like,
+    likersProfileImage: "assets/images/default_profile_image.png",
+  };
+};
 
 const validateEvent = (event: DynamoDBStreamEvent) => {
   const insertEvent = event.Records.filter(
@@ -19,14 +36,14 @@ const handler: DynamoDBStreamHandler = (event: DynamoDBStreamEvent) => {
   const like = validateEvent(event);
   if (!like) return;
 
-  console.log(like);
-
   const mainProcess = async () => {
+    const likeWithProfileImage = await fetchProfileImageToLikeCreator(like);
+
     const connectedClients = await dynamodbGetActiveWsConnectionsService();
 
     await sendLikeToUserItBelongsIfHeHasActiveConnectionUtil(
       connectedClients,
-      like
+      likeWithProfileImage
     );
 
     return Promise.resolve("Lambda processed successfully");

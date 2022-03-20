@@ -22,6 +22,9 @@ export class PostsComponent {
   removeLikeFromPost: EventEmitter<PostLike | PostLikeDraft> =
     new EventEmitter();
 
+  @Output()
+  openLikesDialog: EventEmitter<any> = new EventEmitter();
+
   onRemoveLikeFromPost(
     likeId: string,
     postLikes: PostLike[] | PostLikeDraft[]

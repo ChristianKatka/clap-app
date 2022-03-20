@@ -10,12 +10,11 @@ const fetchProfileImageToCommentCreator = async (comment: any) => {
       ...comment,
       commentersProfileImage: (commentersProfileImage as any).imageUrl,
     };
-  } else {
-    return {
-      ...comment,
-      commentersProfileImage: 'assets/images/default_profile_image.png',
-    };
   }
+  return {
+    ...comment,
+    commentersProfileImage: 'assets/images/default_profile_image.png',
+  };
 };
 
 export const getAllPostsCommentsUtil = async () => {

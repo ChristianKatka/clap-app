@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { PostDialogService } from '@home/services/post-dialog.service';
 import { Store } from '@ngrx/store';
 import { PostLike, PostLikeDraft } from '@shared/models/post-like.model';
 import { PostWithMedia } from '@shared/models/post-with-media.model';
@@ -14,7 +15,7 @@ import { PostsSelectors } from 'src/PostsStore/store/selectors';
   templateUrl: 'posts.container.html',
   styleUrls: ['posts.container.scss'],
 })
-export class PostsContainerComponent implements OnInit {
+export class PostsContainerComponent {
   posts$: Observable<(Post | PostWithMedia)[]> = this.store.select(
     PostsSelectors.getPosts
   );
@@ -23,9 +24,10 @@ export class PostsContainerComponent implements OnInit {
     MyProfileSelectors.getMyProfileImage
   );
 
-  constructor(private store: Store<PostsExtendedAppState>) {}
-
-  ngOnInit() {}
+  constructor(
+    private store: Store<PostsExtendedAppState>,
+    private postDialogService: PostDialogService
+  ) {}
 
   onGiveLikeToPost(post: Post) {
     this.store.dispatch(
@@ -39,5 +41,9 @@ export class PostsContainerComponent implements OnInit {
 
   onClickedAddComment() {
     this.store.dispatch(PostsUiActions.clickedAddComment());
+  }
+
+  openLikesDialog(postLikes: (PostLikeDraft | PostLike)[]) {
+    this.postDialogService.openLikesDialog(postLikes);
   }
 }

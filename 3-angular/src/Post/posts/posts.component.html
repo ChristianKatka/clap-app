@@ -45,17 +45,19 @@
             </mat-icon>
           </div>
 
-          <mat-icon class="material-icons-outlined"
+          <mat-icon
+            [routerLink]="['/home', post.id]"
+            class="material-icons-outlined"
             >chat_bubble_outline</mat-icon
           >
           <mat-icon class="material-icons-outlined">share</mat-icon>
         </section>
         <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
       </div>
-      <p *ngIf="post.postLikes.length === 1" class="likes-text">
+      <p (click)="this.openLikesDialog.emit(post.postLikes)" *ngIf="post.postLikes.length === 1" class="likes-text">
         {{ post.postLikes.length }} like
       </p>
-      <p *ngIf="post.postLikes.length > 1" class="likes-text">
+      <p (click)="this.openLikesDialog.emit(post.postLikes)" *ngIf="post.postLikes.length > 1" class="likes-text">
         {{ post.postLikes.length }} likes
       </p>
       <p>

@@ -18,6 +18,7 @@ import { MaterialModule } from '../material.module';
     ReactiveFormsModule,
     PostModule,
   ],
+
   declarations: [...components],
   entryComponents: [],
   exports: [...components],
