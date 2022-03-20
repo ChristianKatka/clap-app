@@ -9,29 +9,28 @@ import * as fromServices from '@auth/services/cognito.service';
 
 @Injectable()
 export class AuthenticatedEffects {
-
   checkOldUserSession$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(AuthenticatedActions.checkOldUserSession),
-    switchMap(() => this.cognitoService.isSessionValid()),
-    switchMap((isValid) => {
-      if (isValid) {
-        return this.cognitoService.getCurrentUser();
-      } else {
-        return of(undefined);
-      }
-    }),
-    map((user) => {
-      if (user) {
-        return AuthenticatedActions.userRemembered({
-          username: user.getUsername(),
-        });
-      } else {
-        return AuthenticatedActions.userNotRemembered();
-      }
-    })
-  )
-);
+    this.actions$.pipe(
+      ofType(AuthenticatedActions.checkOldUserSession),
+      switchMap(() => this.cognitoService.isSessionValid()),
+      switchMap((isValid) => {
+        if (isValid) {
+          return this.cognitoService.getCurrentUser();
+        } else {
+          return of(undefined);
+        }
+      }),
+      map((user) => {
+        if (user) {
+          return AuthenticatedActions.userRemembered({
+            username: user.getUsername(),
+          });
+        } else {
+          return AuthenticatedActions.userNotRemembered();
+        }
+      })
+    )
+  );
 
   signOut$ = createEffect(() =>
     this.actions$.pipe(
@@ -45,7 +44,10 @@ export class AuthenticatedEffects {
 
   signOutSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthenticatedActions.signOutSuccess),
+      ofType(
+        AuthenticatedActions.signOutSuccess,
+        AuthenticatedActions.userNotRemembered
+      ),
       map(() =>
         RouterActions.navigate({
           commands: ['/sign-in'],
