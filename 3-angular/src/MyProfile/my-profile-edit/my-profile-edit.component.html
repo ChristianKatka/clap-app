@@ -24,7 +24,7 @@
   ></clap-app-profile-image-file-select>
 </section>
 
-<clap-app-my-profile-edit-form
+<clap-app-my-profile-edit-form *ngIf="myProfileData"
   [myProfileData]="myProfileData"
   [loading]="loading"
   (addBio)="this.addBio.emit($event)"

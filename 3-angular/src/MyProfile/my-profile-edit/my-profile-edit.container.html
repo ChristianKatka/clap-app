@@ -1,6 +1,6 @@
 <main>
-  <clap-app-my-profile-edit
-    [myProfileData]="myProfileData$ | async"
+  <clap-app-my-profile-edit *ngIf="myProfileData$ | async as myProfileData"
+    [myProfileData]="myProfileData"
     [loading]="loading$ | async | onlyBoolean"
     [uploading]="uploading$ | async | onlyBoolean"
     (profileImageSelected)="onProfileImageSelected($event)"

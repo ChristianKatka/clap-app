@@ -7,7 +7,10 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MyProfile } from '@shared/models/my-profile.model';
+import {
+  MyProfile,
+  MyProfileWithProfileImage,
+} from '@shared/models/my-profile.model';
 
 @Component({
   selector: 'clap-app-my-profile-edit-form',
@@ -16,7 +19,14 @@ import { MyProfile } from '@shared/models/my-profile.model';
 })
 export class MyProfileEditFormComponent implements OnChanges {
   @Input()
-  myProfileData: MyProfile | undefined;
+  myProfileData: MyProfileWithProfileImage = {
+    id: '',
+    email: '',
+    nickname: '',
+    bio: '',
+    selectedLocation: '',
+    profileImageUrl: '',
+  };
 
   @Output()
   addBio: EventEmitter<string> = new EventEmitter();
@@ -35,11 +45,9 @@ export class MyProfileEditFormComponent implements OnChanges {
   });
 
   ngOnChanges() {
-    if (this.myProfileData) {
-      this.emailFormControl.setValue(this.myProfileData.email);
-      this.nicknameFormControl.setValue(this.myProfileData.nickname);
-      this.bioFormControl.setValue(this.myProfileData.bio);
-    }
+    this.emailFormControl.setValue(this.myProfileData.email);
+    this.nicknameFormControl.setValue(this.myProfileData.nickname);
+    this.bioFormControl.setValue(this.myProfileData.bio);
   }
 
   submit(): void {

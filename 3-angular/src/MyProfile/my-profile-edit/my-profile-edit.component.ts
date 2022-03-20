@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MyProfileWithProfileImage } from '@shared/models/my-profile.model';
 
 @Component({
   selector: 'clap-app-my-profile-edit',
@@ -7,7 +8,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class MyProfileEditComponent {
   @Input()
-  myProfileData: any;
+  myProfileData: MyProfileWithProfileImage = {
+    id: '',
+    email: '',
+    nickname: '',
+    bio: '',
+    selectedLocation: '',
+    profileImageUrl: '',
+  };
 
   @Input()
   loading = false;
