@@ -16,7 +16,10 @@ export class MyProfileBottomSheetService {
 
   openCreateNewAccountOrLogOutBottomSheet() {
     this.bottomSheet.open(
-      CreateNewAccountOrLogOutBottomSheetContainerComponent
+      CreateNewAccountOrLogOutBottomSheetContainerComponent,
+      {
+        panelClass: 'rounded-corners-bottomsheet',
+      }
     );
   }
 

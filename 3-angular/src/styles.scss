@@ -37,6 +37,10 @@ body {
   height: 100vh;
 }
 
+.rounded-corners-bottomsheet {
+  border-radius: 16px 16px 0px 0px;
+}
+
 .media-dialog .mat-dialog-container {
   padding: 0;
 }

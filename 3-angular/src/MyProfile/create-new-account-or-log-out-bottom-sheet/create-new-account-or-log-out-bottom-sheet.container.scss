@@ -1,9 +1,5 @@
 @import "../../styles.scss";
 
-::ng-deep .mat-bottom-sheet-container {
-  border-radius: 16px 16px 0px 0px;
-}
-
 p {
   margin: 0;
 }
@@ -31,7 +27,7 @@ main {
 section {
   padding: 10px 0;
   cursor: pointer;
-  
+
   p {
     margin-left: 10px;
   }
