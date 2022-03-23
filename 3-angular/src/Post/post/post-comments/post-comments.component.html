@@ -2,7 +2,6 @@
   <div
     *ngFor="let comment of comments; let i = index; last as isLast"
     style="margin-top: 1rem"
-    class="some-one-commented-your-post-wrapper"
     [class.last-element]="isLast && newComments.length === 0"
     fxLayoutAlign="space-between start"
   >
@@ -36,6 +35,11 @@
     ></clap-app-comment-like-button>
   </div>
   <div #afterLastCommentElement>p</div>
+
+
+
+
+  
   <!-- New comments via socket -->
   <section *ngIf="newComments.length">
     <clap-app-divider-with-text>New comments</clap-app-divider-with-text>
@@ -43,7 +47,6 @@
     <div
       *ngFor="let comment of newComments; let i = index; last as isLast"
       style="margin-top: 1rem"
-      class="some-one-commented-your-post-wrapper"
       [class.last-element]="isLast"
       fxLayoutAlign="space-between start"
     >

@@ -1,4 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+// * {
+//   font-family: "Nunito", sans-serif;
+// }
+
+// *:not(mat-icon) {
+//   font-family: Roboto, "Helvetica Neue", sans-serif !important;
+// }
 
 html,
 body {
@@ -6,7 +12,14 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  // font-family: 'Nunito', sans-serif;
+
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+}
+body::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }
 
 @mixin disable-auto-zoom-on-iphone-input-fields {
