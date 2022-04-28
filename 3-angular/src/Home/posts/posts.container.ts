@@ -43,7 +43,7 @@ export class PostsContainerComponent {
     this.store.dispatch(PostsUiActions.clickedAddComment());
   }
 
-  openLikesDialog(postLikes: (PostLikeDraft | PostLike)[]) {
-    this.postDialogService.openLikesDialog(postLikes);
+  openPostLikesDialog(postLikes: (PostLikeDraft | PostLike)[]) {
+    this.postDialogService.openPostLikesDialog(postLikes);
   }
 }

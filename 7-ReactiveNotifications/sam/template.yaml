@@ -63,6 +63,8 @@ Resources:
         - !Ref LambdaExecutionRole
 
 
+# eli tänne voi filtteröidä suoraan minkä tyyppinen dynamodb tapahtuman kyseessä
+
   AfterPostLikeLambda:
     Type: AWS::Serverless::Function
     Properties:

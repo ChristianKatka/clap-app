@@ -54,10 +54,10 @@
         </section>
         <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
       </div>
-      <p (click)="this.openLikesDialog.emit(post.postLikes)" *ngIf="post.postLikes.length === 1" class="likes-text">
+      <p (click)="this.openPostLikesDialog.emit(post.postLikes)" *ngIf="post.postLikes.length === 1" class="likes-text">
         {{ post.postLikes.length }} like
       </p>
-      <p (click)="this.openLikesDialog.emit(post.postLikes)" *ngIf="post.postLikes.length > 1" class="likes-text">
+      <p (click)="this.openPostLikesDialog.emit(post.postLikes)" *ngIf="post.postLikes.length > 1" class="likes-text">
         {{ post.postLikes.length }} likes
       </p>
       <p>

@@ -32,16 +32,16 @@ Resources:
         - Key: Application
           Value: 'clap-app'
 
+  ClapAppPostsLikesTableStreamArn:
+    Description: clap-app posts-likes table stream ARN
+    Value: !GetAtt ClapAppPostsLikesTable.StreamArn
+    Export:
+      Name: clap-app-posts-likes-table-stream-arn
+
 Outputs:
   ClapAppPostsLikesTableArn:
     Description: clap-app posts-likes Table ARN
     Value: !GetAtt ClapAppPostsLikesTable.Arn
     Export:
       Name: clap-app-posts-likes-table-arn
-
-  ClapAppPostsLikesTableStreamArn:
-    Description: clap-app posts-likes table stream ARN
-    Value: !GetAtt ClapAppPostsLikesTable.StreamArn
-    Export:
-      Name: clap-app-posts-likes-table-stream-arn
 

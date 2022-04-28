@@ -16,7 +16,7 @@ import {
 import {
   attachAllNecessaryDataInsidePost,
   checkIfILikeThisPost,
-  getCommentsThatBelongToGivenPostWithlikeInfoInside,
+  getCommentsThatBelongToGivenPostWithLikeInfoInside,
   getLikesThatBelongToGivenPost,
   getNewCommentsThatCameViaSocket,
 } from '../utils/posts.utils';
@@ -68,7 +68,7 @@ export const getAllPosts = createSelector(
         const postLikes = getLikesThatBelongToGivenPost(post, postsLikes);
         const iLikeThisPost: PostLikeDraft | PostLike | undefined =
           checkIfILikeThisPost(postLikes, userId, post);
-        const comments = getCommentsThatBelongToGivenPostWithlikeInfoInside(
+        const comments = getCommentsThatBelongToGivenPostWithLikeInfoInside(
           post,
           postsComments,
           commentLikes,
@@ -88,7 +88,7 @@ export const getAllPosts = createSelector(
         );
       }
     );
-
+    // in future to support sorting
     if (sortBy === 'latest') {
       const sortedPosts: (Post | PostWithMedia)[] =
         sortByCreatedAtDateAscending(allPosts);

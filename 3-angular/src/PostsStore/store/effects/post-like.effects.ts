@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
-import { delay, of } from 'rxjs';
+import { delay, of, debounceTime } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
 import { v4 as uuid } from 'uuid';
@@ -49,7 +49,7 @@ export class PostLikeEffects {
   giveLikeToPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostLikeActions.giveLikeToPost),
-      delay(environment.pendingDelayTime),
+      debounceTime(environment.pendingDelayTime),
       switchMap(({ postLikeDraft }) => {
         return of(
           PendingPostLikeActions.resolvePendingPostLike({ postLikeDraft })
@@ -61,7 +61,7 @@ export class PostLikeEffects {
   removeLikeFromPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostLikeActions.removeLikeFromPost),
-      delay(environment.pendingDelayTime),
+      debounceTime(environment.pendingDelayTime),
       map(({ like }) =>
         PendingPostLikeActions.resolvePendingRemoveLikeFromPost({
           likeId: like.id,

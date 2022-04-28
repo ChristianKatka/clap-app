@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostDraft } from '@shared/models/post.model';
 import { noWhiteSpaceAtStartOrEndPattern } from '@shared/regex/regex';
@@ -8,7 +8,8 @@ import { noWhiteSpaceAtStartOrEndPattern } from '@shared/regex/regex';
   templateUrl: 'create-post-form.component.html',
   styleUrls: ['create-post-form.component.scss'],
 })
-export class CreatePostFormComponent implements OnInit {
+export class CreatePostFormComponent {
+
   @Input()
   loading = false;
 
@@ -23,8 +24,6 @@ export class CreatePostFormComponent implements OnInit {
       Validators.pattern(noWhiteSpaceAtStartOrEndPattern),
     ]),
   });
-
-  ngOnInit() {}
 
   submit() {
     const validatedPostFormData = {

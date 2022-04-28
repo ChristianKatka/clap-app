@@ -1,4 +1,5 @@
-import { LikesDialogComponent } from './likes-dialog/likes-dialog.component';
+import { CommentLikesDialogComponent } from './comment-likes-dialog/comment-likes-dialog.component';
+import { PostLikesDialogComponent } from './post-likes-dialog/post-likes-dialog.component';
 import { PostUserWrapperComponent } from './post-user-wrapper/post-user-wrapper';
 import { PostAddCommentFormComponent } from './post/post-add-comment-form/post-add-comment-form.component';
 import { CommentLikeButtonComponent } from './post/post-comments/comment-like-button/comment-like-button.component';
@@ -23,5 +24,6 @@ export const components: any[] = [
   CommentLikeButtonComponent,
   PostAddCommentFormComponent,
   SnackbarReportedComponent,
-  LikesDialogComponent,
+  PostLikesDialogComponent,
+  CommentLikesDialogComponent,
 ];

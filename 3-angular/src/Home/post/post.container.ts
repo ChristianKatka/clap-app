@@ -99,8 +99,12 @@ export class PostContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(PostCommentUIActions.hideNewMessagesBelowPopUp());
   }
 
-  openLikesDialog(postLikes: (PostLikeDraft | PostLike)[]) {
-    this.postDialogService.openLikesDialog(postLikes);
+  openPostLikesDialog(postLikes: (PostLikeDraft | PostLike)[]) {
+    this.postDialogService.openPostLikesDialog(postLikes);
+  }
+
+  openCommentLikesDialog(commentLike: (CommentLikeDraft | CommentLike)[]) {
+    this.postDialogService.openCommentLikesDialog(commentLike);
   }
 
   goBack() {

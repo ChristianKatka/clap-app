@@ -1,0 +1,48 @@
+@use "../../styles.scss" as s;
+
+p {
+  margin: 0;
+}
+
+main {
+  width: 80vw;
+  max-height: 80vh;
+}
+
+.likes-top-bar {
+  width: 80%;
+  border-radius: 4px 4px 0px 0px;
+  background-color: white;
+  border-bottom: solid 1px rgb(199, 199, 199);
+  position: fixed;
+  padding: 2px 2px;
+  h1 {
+    margin: 0;
+    margin-left: 13px;
+  }
+}
+
+.likes-wrapper {
+  padding-top: 3.5rem;
+  padding-bottom: 1rem;
+
+  .profile-image {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-name {
+    font-weight: bold;
+  }
+
+  .date-text {
+    margin-top: 0.1rem;
+    color: s.$clap-gray;
+  }
+}
+
+.like-wrapper {
+  padding: 0px 15px;
+}

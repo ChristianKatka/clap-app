@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { delay, of } from 'rxjs';
+import { debounceTime, of } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MyProfileSelectors } from 'src/MyProfile/store/selectors';
@@ -49,7 +49,7 @@ export class CommentLikeEffects {
   giveLikeToComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CommentLikeActions.giveLikeToComment),
-      delay(environment.pendingDelayTime),
+      debounceTime(environment.pendingDelayTime),
       switchMap(({ commentLikeDraft }) => {
         return of(
           PendingCommentLikeActions.resolvePendingCommentLike({
@@ -63,7 +63,7 @@ export class CommentLikeEffects {
   removeLikeFromComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CommentLikeActions.removeLikeFromComment),
-      delay(environment.pendingDelayTime),
+      debounceTime(environment.pendingDelayTime),
       map(({ like }) =>
         PendingCommentLikeActions.resolvePendingRemoveLikeFromComment({
           likeId: like.id,

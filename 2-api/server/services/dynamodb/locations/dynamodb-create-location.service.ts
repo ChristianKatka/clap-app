@@ -7,5 +7,4 @@ export const dynamodbCreateLocation = (postLocation: string) =>
       TableName: LOCATIONS_TABLE,
       Item: { postLocation },
     })
-    .promise()
-    .then((res) => res);
+    .promise();

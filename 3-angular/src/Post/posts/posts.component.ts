@@ -23,7 +23,11 @@ export class PostsComponent {
     new EventEmitter();
 
   @Output()
-  openLikesDialog: EventEmitter<any> = new EventEmitter();
+  openPostLikesDialog: EventEmitter<(PostLikeDraft | PostLike)[]> =
+    new EventEmitter();
+
+  @Output()
+  openCommentLikesDialog = new EventEmitter();
 
   onRemoveLikeFromPost(
     likeId: string,
