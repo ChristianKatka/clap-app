@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-info',
+  selector: 'clap-app-info',
   template: ` <ng-content></ng-content> `,
   styleUrls: ['./info.component.scss'],
 })

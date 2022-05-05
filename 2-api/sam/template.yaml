@@ -1,7 +1,6 @@
 Transform: AWS::Serverless-2016-10-31
 Description: API powered by API Gateway and Lambda using Koa
 
-
 Resources:
   ApiGatewayHttpApi:
     Type: AWS::Serverless::HttpApi
@@ -62,7 +61,6 @@ Resources:
       Roles:
         - !Ref LambdaExecutionRole
 
-# s3 policy mahdollistaa että voi käyttää signed urleja. signed urlit ei siis toimi jos ei ole näitä oikeuksia
   AllowLambdaDocumentsBucket:
     Type: AWS::IAM::Policy
     DependsOn:

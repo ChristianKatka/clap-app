@@ -9,7 +9,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { SuccessComponent } from './components/success/success.component';
 import { NavbarContainerComponent } from './components/navbar/navbar.container';
 import { ClapAppContainer } from './components/clap-app-container/clap-app-container';
-import { TrunctateTextComponent } from './components/trunctate-text/trunctate-text.component';
+import { TruncateTextComponent } from './components/truncate-text/truncate-text.component';
 import { SpaceGiverUsedWithFixedElementsComponent } from './components/space-giver-used-with-navbar/space-giver-used-with-fixed-elements.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { LoadingDotsComponent } from './components/loading-dots/loading-dots.component';
@@ -20,7 +20,7 @@ import { DividerWithTextComponent } from './components/divider-with-text/divider
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 export const components: any[] = [
-  TrunctateTextComponent,
+  TruncateTextComponent,
   ProfileImageFileSelectComponent,
   ProgressBarComponent,
   LogoComponent,
