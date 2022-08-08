@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Fellowship of the ring",
+    "reservation": { "startDate": "30.1.2022", "loanPeriod": "30 days" },
+    "category": "Fantasy"
+  },
+  {
+    "title": "Harry Potter and the Chamber of Secrets",
+    "category": "Fantasy"
+  },
+
+  {
+    "firstName": "J.R.R.",
+    "lastName": "Tolkien"
+  },
+  {
+    "firstName": "J.K.",
+    "lastName": "Rowling"
+  },
+
+
+  {
+    "title": "Fellowship of the ring",
+    "bookId": "7d93ef56-2709-4b32-878b-4e5b707f2375",
+    "firstName": "J.R.R.",
+    "lastName": "Tolkien"
+  },
+  {
+    "title": "Harry Potter and the Chamber of Secrets",
+    "bookId": "837a8336-c747-4bcb-9d45-832cde06a541",
+    "firstName": "J.K.",
+    "lastName": "Rowling"
+  },
+  {
+    "title": "Harry Potter and the Philosopher's Stone",
+    "bookId": "9efde89f-a069-486c-9a57-aac6456e18af",
+    "firstName": "J.K.",
+    "lastName": "Rowling"
+  }
+]
